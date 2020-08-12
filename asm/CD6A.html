@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-b">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="CD31.html">CD31</a></span></td>
+<td class="prev">
+Prev: <a href="CD31.html">CD31</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#cd6a">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="CD9A.html">CD9A</a></span></td>
+<td class="next">
+Next: <a href="CD9A.html">CD9A</a>
+</td>
 </tr>
 </table>
 <div class="description">CD6A: Default locations of items.</div>
@@ -61,144 +64,120 @@ An array of 16 three-byte structures.
 #define ITEM_ROOM(room_no, flags) ((room_no &amp; 0x3F) | (flags &lt;&lt; 6)) do the next flags mean that the wiresnips are always or /never/ found?
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">default_item_locations</td>
+<td class="asm-label">default_item_locations</td>
 <td class="address-1"><span id="cd6a"></span>CD6A</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $FF,$40,$20</td>
-<td class="comment-11" rowspan="1">item_WIRESNIPS        { ITEM_ROOM(room_NONE, 3),       ... }</td>
+<td class="comment-1" rowspan="1">item_WIRESNIPS        { ITEM_ROOM(room_NONE, 3), ... }</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd6d"></span>CD6D</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $09,$3E,$30</td>
-<td class="comment-11" rowspan="1">item_SHOVEL           { ITEM_ROOM(room_9, 0),          ... }</td>
+<td class="comment-1" rowspan="1">item_SHOVEL           { ITEM_ROOM(room_9, 0), ... }</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd70"></span>CD70</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $0A,$49,$24</td>
-<td class="comment-11" rowspan="1">item_LOCKPICK         { ITEM_ROOM(room_10, 0),         ... }</td>
+<td class="comment-1" rowspan="1">item_LOCKPICK         { ITEM_ROOM(room_10, 0), ... }</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd73"></span>CD73</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $0B,$2A,$3A</td>
-<td class="comment-11" rowspan="1">item_PAPERS           { ITEM_ROOM(room_11, 0),         ... }</td>
+<td class="comment-1" rowspan="1">item_PAPERS           { ITEM_ROOM(room_11, 0), ... }</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd76"></span>CD76</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $0E,$32,$18</td>
-<td class="comment-11" rowspan="1">item_TORCH            { ITEM_ROOM(room_14, 0),         ... }</td>
+<td class="comment-1" rowspan="1">item_TORCH            { ITEM_ROOM(room_14, 0), ... }</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd79"></span>CD79</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $3F,$24,$2C</td>
-<td class="comment-11" rowspan="1">item_BRIBE            { ITEM_ROOM(room_NONE, 0),       ... }</td>
+<td class="comment-1" rowspan="1">item_BRIBE            { ITEM_ROOM(room_NONE, 0), ... }</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd7c"></span>CD7C</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $0F,$2C,$41</td>
-<td class="comment-11" rowspan="1">item_UNIFORM          { ITEM_ROOM(room_15, 0),         ... }</td>
+<td class="comment-1" rowspan="1">item_UNIFORM          { ITEM_ROOM(room_15, 0), ... }</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd7f"></span>CD7F</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $13,$40,$30</td>
-<td class="comment-11" rowspan="1">item_FOOD             { ITEM_ROOM(room_19, 0),         ... }</td>
+<td class="comment-1" rowspan="1">item_FOOD             { ITEM_ROOM(room_19, 0), ... }</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd82"></span>CD82</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $01,$42,$34</td>
-<td class="comment-11" rowspan="1">item_POISON           { ITEM_ROOM(room_1, 0),          ... }</td>
+<td class="comment-1" rowspan="1">item_POISON           { ITEM_ROOM(room_1, 0), ... }</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd85"></span>CD85</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $16,$3C,$2A</td>
-<td class="comment-11" rowspan="1">item_RED_KEY          { ITEM_ROOM(room_22, 0),         ... }</td>
+<td class="comment-1" rowspan="1">item_RED_KEY          { ITEM_ROOM(room_22, 0), ... }</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd88"></span>CD88</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $0B,$1C,$22</td>
-<td class="comment-11" rowspan="1">item_YELLOW_KEY       { ITEM_ROOM(room_11, 0),         ... }</td>
+<td class="comment-1" rowspan="1">item_YELLOW_KEY       { ITEM_ROOM(room_11, 0), ... }</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd8b"></span>CD8B</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $00,$4A,$48</td>
-<td class="comment-11" rowspan="1">item_GREEN_KEY        { ITEM_ROOM(room_0_OUTDOORS, 0), ... }</td>
+<td class="comment-1" rowspan="1">item_GREEN_KEY        { ITEM_ROOM(room_0_OUTDOORS, 0), ... }</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd8e"></span>CD8E</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $3F,$1C,$32</td>
-<td class="comment-11" rowspan="1">item_RED_CROSS_PARCEL { ITEM_ROOM(room_NONE, 0),       ... }</td>
+<td class="comment-1" rowspan="1">item_RED_CROSS_PARCEL { ITEM_ROOM(room_NONE, 0), ... }</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd91"></span>CD91</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $12,$24,$3A</td>
-<td class="comment-11" rowspan="1">item_RADIO            { ITEM_ROOM(room_18, 0),         ... }</td>
+<td class="comment-1" rowspan="1">item_RADIO            { ITEM_ROOM(room_18, 0), ... }</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd94"></span>CD94</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $3F,$1E,$22</td>
-<td class="comment-11" rowspan="1">item_PURSE            { ITEM_ROOM(room_NONE, 0),       ... }</td>
+<td class="comment-1" rowspan="1">item_PURSE            { ITEM_ROOM(room_NONE, 0), ... }</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd97"></span>CD97</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $3F,$34,$1C</td>
-<td class="comment-11" rowspan="1">item_COMPASS          { ITEM_ROOM(room_NONE, 0),       ... }</td>
+<td class="comment-1" rowspan="1">item_COMPASS          { ITEM_ROOM(room_NONE, 0), ... }</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="CD31.html">CD31</a></span></td>
+<td class="prev">
+Prev: <a href="CD31.html">CD31</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#cd6a">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="CD9A.html">CD9A</a></span></td>
+<td class="next">
+Next: <a href="CD9A.html">CD9A</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

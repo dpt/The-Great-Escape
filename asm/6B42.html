@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="6AB5.html">6AB5</a></span></td>
+<td class="prev">
+Prev: <a href="6AB5.html">6AB5</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#6b42">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="6B79.html">6B79</a></span></td>
+<td class="next">
+Next: <a href="6B79.html">6B79</a>
+</td>
 </tr>
 </table>
 <div class="description">6B42: Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer.</div>
@@ -30,40 +33,25 @@
 Used by the routines at <a href="68F4.html">enter_room</a>, <a href="7B36.html">pick_up_item</a>, <a href="9E07.html">process_player_input</a>, <a href="A289.html">wake_up</a>, <a href="A2E2.html">end_of_breakfast</a>, <a href="A479.html">select_room_and_plot</a>, <a href="A50B.html">screen_reset</a>, <a href="AB6B.html">choose_game_window_attributes</a> and <a href="B3F6.html">action_shovel</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_interior_tiles</td>
+<td class="asm-label">plot_interior_tiles</td>
 <td class="address-2"><span id="6b42"></span>6B42</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$F290</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the screen buffer's start address</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the screen buffer's start address</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b45"></span>6B45</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$F0F8</td>
-<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the visible tiles array</td>
+<td class="comment-1" rowspan="1">Point <span class="register">DE</span> at the visible tiles array</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b48"></span>6B48</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,$10</td>
-<td class="comment-11" rowspan="1">Set row counter to 16</td>
+<td class="comment-1" rowspan="1">Set row counter to 16</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -76,11 +64,10 @@ For every row
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">row_loop</td>
+<td class="asm-label">row_loop</td>
 <td class="address-2"><span id="6b4a"></span>6B4A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$18</td>
-<td class="comment-11" rowspan="1">Set column counter to 24</td>
+<td class="comment-1" rowspan="1">Set column counter to 24</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -93,151 +80,118 @@ For every column
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">column_loop</td>
+<td class="asm-label">column_loop</td>
 <td class="address-2"><span id="6b4c"></span>6B4C</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Stack screen buffer pointer while we form a tile pointer</td>
+<td class="comment-1" rowspan="1">Stack screen buffer pointer while we form a tile pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b4d"></span>6B4D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Load a tile index</td>
+<td class="comment-1" rowspan="1">Load a tile index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b4e"></span>6B4E</td>
-<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1">Bank outer registers</td>
+<td class="comment-1" rowspan="1">Bank outer registers</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b4f"></span>6B4F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="7">Point <span class="register">HL</span> at interior_tiles[tile index]</td>
+<td class="comment-1" rowspan="7">Point <span class="register">HL</span> at interior_tiles[tile index]</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b50"></span>6B50</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD H,$00</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b52"></span>6B52</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b53"></span>6B53</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b54"></span>6B54</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b55"></span>6B55</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$9768</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b58"></span>6B58</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b59"></span>6B59</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">Unstack screen buffer pointer</td>
+<td class="comment-1" rowspan="1">Unstack screen buffer pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b5a"></span>6B5A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0818</td>
-<td class="comment-11" rowspan="1">Simultaneously set <span class="register">B</span> for eight iterations and <span class="register">C</span> for a 24 byte stride</td>
+<td class="comment-1" rowspan="1">Simultaneously set <span class="register">B</span> for eight iterations and <span class="register">C</span> for a 24 byte stride</td>
 </tr>
 <tr>
-<td class="asm-label-1">tile_loop</td>
+<td class="asm-label">tile_loop</td>
 <td class="address-2"><span id="6b5d"></span>6B5D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">Transfer a byte (a row) of tile across</td>
+<td class="comment-1" rowspan="2">Transfer a byte (a row) of tile across</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b5e"></span>6B5E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b5f"></span>6B5F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="6">Advance the screen buffer pointer by the stride</td>
+<td class="comment-1" rowspan="6">Advance the screen buffer pointer by the stride</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b60"></span>6B60</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b61"></span>6B61</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="6B42.html#6b64">plot_interior_tiles_0</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b63"></span>6B63</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC D</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_interior_tiles_0</td>
+<td class="asm-label">plot_interior_tiles_0</td>
 <td class="address-2"><span id="6b64"></span>6B64</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b65"></span>6B65</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b66"></span>6B66</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="6B42.html#6b5d">tile_loop</a></td>
-<td class="comment-11" rowspan="1">...loop for each byte of the tile</td>
+<td class="comment-1" rowspan="1">...loop for each byte of the tile</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -250,32 +204,28 @@ End of column
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b68"></span>6B68</td>
-<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1">Unbank outer registers</td>
+<td class="comment-1" rowspan="1">Unbank outer registers</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b69"></span>6B69</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Move to next input tile</td>
+<td class="comment-1" rowspan="1">Move to next input tile</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b6a"></span>6B6A</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">Move to next screen buffer output</td>
+<td class="comment-1" rowspan="1">Move to next screen buffer output</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b6b"></span>6B6B</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="6B42.html#6b4c">column_loop</a></td>
-<td class="comment-11" rowspan="1">...loop for each column</td>
+<td class="comment-1" rowspan="1">...loop for each column</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -288,53 +238,41 @@ End of row
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b6d"></span>6B6D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$A8</td>
-<td class="comment-11" rowspan="5">Move to the next screen buffer row (seven rows down)</td>
+<td class="comment-1" rowspan="5">Move to the next screen buffer row (seven rows down)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b6f"></span>6B6F</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b70"></span>6B70</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="6B42.html#6b73">plot_interior_tiles_1</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b72"></span>6B72</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC H</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_interior_tiles_1</td>
+<td class="asm-label">plot_interior_tiles_1</td>
 <td class="address-2"><span id="6b73"></span>6B73</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b74"></span>6B74</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC C</td>
-<td class="comment-11" rowspan="2">...loop for each row</td>
+<td class="comment-1" rowspan="2">...loop for each row</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b75"></span>6B75</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="6B42.html#6b4a">row_loop</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -347,24 +285,27 @@ End
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6b78"></span>6B78</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="6AB5.html">6AB5</a></span></td>
+<td class="prev">
+Prev: <a href="6AB5.html">6AB5</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#6b42">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="6B79.html">6B79</a></span></td>
+<td class="next">
+Next: <a href="6B79.html">6B79</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

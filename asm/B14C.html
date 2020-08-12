@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="B107.html">B107</a></span></td>
+<td class="prev">
+Prev: <a href="B107.html">B107</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#b14c">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="B1C7.html">B1C7</a></span></td>
+<td class="next">
+Next: <a href="B1C7.html">B1C7</a>
+</td>
 </tr>
 </table>
 <div class="description">B14C: Tests whether the position in saved_pos touches any wall or fence boundary.</div>
@@ -27,13 +30,13 @@
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-A position (x,y,h) touches a wall if the following returns true: (minx + 2 &gt;= x &lt;= maxx + 3) and (miny     &gt;= y &lt;= maxy + 3) and (minh     &gt;= h &lt;= maxh + 1)
+A position (x,y,h) touches a wall if (minx + 2 &gt;= x &lt;= maxx + 3) and (miny &gt;= y &lt;= maxy + 3) and (minh &gt;= h &lt;= maxh + 1).
 </div>
 <div class="paragraph">
 Used by the routines at <a href="AF8F.html">touch</a> and <a href="C4E0.html">spawn_character</a>.
 </div>
 </div>
-<table class="input-1">
+<table class="input">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
@@ -42,7 +45,7 @@ Used by the routines at <a href="AF8F.html">touch</a> and <a href="C4E0.html">sp
 <td class="register-desc">Pointer to visible character.</td>
 </tr>
 </table>
-<table class="output-1">
+<table class="output">
 <tr class="asm-output-header">
 <th colspan="2">Output</th>
 </tr>
@@ -54,11 +57,10 @@ Used by the routines at <a href="AF8F.html">touch</a> and <a href="C4E0.html">sp
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">bounds_check</td>
+<td class="asm-label">bounds_check</td>
 <td class="address-2"><span id="b14c"></span>B14C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="1">Get the global current room index</td>
+<td class="comment-1" rowspan="1">Get the global current room index</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -71,32 +73,28 @@ Interior boundaries are handled by another routine.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b14f"></span>B14F</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Is it indoors?</td>
+<td class="comment-1" rowspan="1">Is it indoors?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b150"></span>B150</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="B29F.html">interior_bounds_check</a></td>
-<td class="comment-11" rowspan="1">Use the interior bounds check routine instead, if so (exit via)</td>
+<td class="comment-1" rowspan="1">Use the interior bounds check routine instead, if so (exit via)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b153"></span>B153</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$18</td>
-<td class="comment-11" rowspan="1">24 iterations / 24 wall definitions</td>
+<td class="comment-1" rowspan="1">24 iterations / 24 wall definitions</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b155"></span>B155</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$B53E</td>
-<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the first wall definition</td>
+<td class="comment-1" rowspan="1">Point <span class="register">DE</span> at the first wall definition</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -109,18 +107,16 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">bounds_loop</td>
+<td class="asm-label">bounds_loop</td>
 <td class="address-2"><span id="b158"></span>B158</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">Preserve the loop counter</td>
+<td class="comment-1" rowspan="1">Preserve the loop counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b159"></span>B159</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1">Preserve the wall definition pointer</td>
+<td class="comment-1" rowspan="1">Preserve the wall definition pointer</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -133,53 +129,45 @@ Check against minimum X
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b15a"></span>B15A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Read minimum x</td>
+<td class="comment-1" rowspan="1">Read minimum x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b15b"></span>B15B</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B1C7.html">multiply_by_8</a></td>
-<td class="comment-11" rowspan="1">Multiply it by 8 returning the result in <span class="register">BC</span></td>
+<td class="comment-1" rowspan="1">Multiply it by 8 returning the result in <span class="register">BC</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b15e"></span>B15E</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
-<td class="comment-11" rowspan="2">And add two</td>
+<td class="comment-1" rowspan="2">And add two</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b15f"></span>B15F</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b160"></span>B160</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,($81A4)</td>
-<td class="comment-11" rowspan="1">Read saved_pos_x</td>
+<td class="comment-1" rowspan="1">Read saved_pos_x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b163"></span>B163</td>
-<td class="bytes-0"></td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="1">Compute saved_pos_x - ((wall minimum x) * 8 + 2)</td>
+<td class="comment-1" rowspan="1">Compute saved_pos_x - ((wall minimum x) * 8 + 2)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b165"></span>B165</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="B14C.html#b1ba">bounds_next</a></td>
-<td class="comment-11" rowspan="1">Jump to the next iteration if saved_pos_x is left of minimum x</td>
+<td class="comment-1" rowspan="1">Jump to the next iteration if saved_pos_x is left of minimum x</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -192,74 +180,61 @@ Check against maximum X
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b167"></span>B167</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Move to maximum x field</td>
+<td class="comment-1" rowspan="1">Move to maximum x field</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b168"></span>B168</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Read maximum x</td>
+<td class="comment-1" rowspan="1">Read maximum x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b169"></span>B169</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B1C7.html">multiply_by_8</a></td>
-<td class="comment-11" rowspan="1">Multiply it by 8 returning the result in <span class="register">BC</span></td>
+<td class="comment-1" rowspan="1">Multiply it by 8 returning the result in <span class="register">BC</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b16c"></span>B16C</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
-<td class="comment-11" rowspan="4">And add four</td>
+<td class="comment-1" rowspan="4">And add four</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b16d"></span>B16D</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b16e"></span>B16E</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b16f"></span>B16F</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b170"></span>B170</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,($81A4)</td>
-<td class="comment-11" rowspan="1">Re-read saved_pos_x</td>
+<td class="comment-1" rowspan="1">Re-read saved_pos_x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b173"></span>B173</td>
-<td class="bytes-0"></td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="1">Compute saved_pos_x - ((wall maximum x) * 8 + 4)</td>
+<td class="comment-1" rowspan="1">Compute saved_pos_x - ((wall maximum x) * 8 + 4)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b175"></span>B175</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="B14C.html#b1ba">bounds_next</a></td>
-<td class="comment-11" rowspan="1">Jump to next iteration if saved_pos_x is right of maximum x</td>
+<td class="comment-1" rowspan="1">Jump to next iteration if saved_pos_x is right of maximum x</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -272,46 +247,40 @@ Check against minimum Y
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b177"></span>B177</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Move to minimum y field</td>
+<td class="comment-1" rowspan="1">Move to minimum y field</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b178"></span>B178</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Read minimum y</td>
+<td class="comment-1" rowspan="1">Read minimum y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b179"></span>B179</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B1C7.html">multiply_by_8</a></td>
-<td class="comment-11" rowspan="1">Multiply it by 8 returning the result in <span class="register">BC</span></td>
+<td class="comment-1" rowspan="1">Multiply it by 8 returning the result in <span class="register">BC</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b17c"></span>B17C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,($81A6)</td>
-<td class="comment-11" rowspan="1">Read saved_pos_y</td>
+<td class="comment-1" rowspan="1">Read saved_pos_y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b17f"></span>B17F</td>
-<td class="bytes-0"></td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="1">Compute saved_pos_y - ((wall minimum y) * 8)</td>
+<td class="comment-1" rowspan="1">Compute saved_pos_y - ((wall minimum y) * 8)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b181"></span>B181</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="B14C.html#b1ba">bounds_next</a></td>
-<td class="comment-11" rowspan="1">Jump to the next iteration if saved_pos_y is below minimum y</td>
+<td class="comment-1" rowspan="1">Jump to the next iteration if saved_pos_y is below minimum y</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -324,74 +293,61 @@ Check against maximum Y
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b183"></span>B183</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Move to maximum y field</td>
+<td class="comment-1" rowspan="1">Move to maximum y field</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b184"></span>B184</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Read maximum y</td>
+<td class="comment-1" rowspan="1">Read maximum y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b185"></span>B185</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B1C7.html">multiply_by_8</a></td>
-<td class="comment-11" rowspan="1">Multiply it by 8 returning the result in <span class="register">BC</span></td>
+<td class="comment-1" rowspan="1">Multiply it by 8 returning the result in <span class="register">BC</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b188"></span>B188</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
-<td class="comment-11" rowspan="4">And add four</td>
+<td class="comment-1" rowspan="4">And add four</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b189"></span>B189</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b18a"></span>B18A</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b18b"></span>B18B</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b18c"></span>B18C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,($81A6)</td>
-<td class="comment-11" rowspan="1">Re-read saved_pos_y</td>
+<td class="comment-1" rowspan="1">Re-read saved_pos_y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b18f"></span>B18F</td>
-<td class="bytes-0"></td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="1">Compute saved_pos_y - ((wall maximum y) * 8 + 4)</td>
+<td class="comment-1" rowspan="1">Compute saved_pos_y - ((wall maximum y) * 8 + 4)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b191"></span>B191</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="B14C.html#b1ba">bounds_next</a></td>
-<td class="comment-11" rowspan="1">Jump to next iteration if saved_pos_y is above maximum y</td>
+<td class="comment-1" rowspan="1">Jump to next iteration if saved_pos_y is above maximum y</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -404,46 +360,40 @@ Check minimum height
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b193"></span>B193</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Move to minimum height field</td>
+<td class="comment-1" rowspan="1">Move to minimum height field</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b194"></span>B194</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Read minimum height</td>
+<td class="comment-1" rowspan="1">Read minimum height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b195"></span>B195</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B1C7.html">multiply_by_8</a></td>
-<td class="comment-11" rowspan="1">Multiply it by 8 returning the result in <span class="register">BC</span></td>
+<td class="comment-1" rowspan="1">Multiply it by 8 returning the result in <span class="register">BC</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b198"></span>B198</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,($81A8)</td>
-<td class="comment-11" rowspan="1">Read saved_height</td>
+<td class="comment-1" rowspan="1">Read saved_height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b19b"></span>B19B</td>
-<td class="bytes-0"></td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="1">Compute saved_height - ((wall minimum height) * 8)</td>
+<td class="comment-1" rowspan="1">Compute saved_height - ((wall minimum height) * 8)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b19d"></span>B19D</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="B14C.html#b1ba">bounds_next</a></td>
-<td class="comment-11" rowspan="1">Jump to the next iteration if saved_height is below minimum height</td>
+<td class="comment-1" rowspan="1">Jump to the next iteration if saved_height is below minimum height</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -456,60 +406,51 @@ Check maximum height
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b19f"></span>B19F</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Move to maximum height field</td>
+<td class="comment-1" rowspan="1">Move to maximum height field</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1a0"></span>B1A0</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Read maximum height</td>
+<td class="comment-1" rowspan="1">Read maximum height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1a1"></span>B1A1</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B1C7.html">multiply_by_8</a></td>
-<td class="comment-11" rowspan="1">Multiply it by 8 returning the result in <span class="register">BC</span></td>
+<td class="comment-1" rowspan="1">Multiply it by 8 returning the result in <span class="register">BC</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1a4"></span>B1A4</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
-<td class="comment-11" rowspan="2">And add two</td>
+<td class="comment-1" rowspan="2">And add two</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1a5"></span>B1A5</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1a6"></span>B1A6</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,($81A8)</td>
-<td class="comment-11" rowspan="1">Re-read saved_height</td>
+<td class="comment-1" rowspan="1">Re-read saved_height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1a9"></span>B1A9</td>
-<td class="bytes-0"></td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="1">Compute saved_height - ((wall maximum height) * 8)</td>
+<td class="comment-1" rowspan="1">Compute saved_height - ((wall maximum height) * 8)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1ab"></span>B1AB</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="B14C.html#b1ba">bounds_next</a></td>
-<td class="comment-11" rowspan="1">Jump to the next iteration if saved_height is above maximum height</td>
+<td class="comment-1" rowspan="1">Jump to the next iteration if saved_height is above maximum height</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -522,129 +463,114 @@ Passed all checks - in contact with wall
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1ad"></span>B1AD</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">Restore the wall definition pointer</td>
+<td class="comment-1" rowspan="1">Restore the wall definition pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1ae"></span>B1AE</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">Restore the loop counter</td>
+<td class="comment-1" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1af"></span>B1AF</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$07)</td>
-<td class="comment-11" rowspan="3">Toggle counter_and_flags vischar_BYTE7_Y_DOMINANT flag</td>
+<td class="comment-1" rowspan="3">Toggle counter_and_flags vischar_BYTE7_Y_DOMINANT flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1b2"></span>B1B2</td>
-<td class="bytes-0"></td>
 <td class="instruction">XOR $20</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1b4"></span>B1B4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (IY+$07),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1b7"></span>B1B7</td>
-<td class="bytes-0"></td>
 <td class="instruction">OR $01</td>
-<td class="comment-11" rowspan="1">Clear Z flag</td>
+<td class="comment-1" rowspan="1">Clear Z flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1b9"></span>B1B9</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return with Z clear</td>
+<td class="comment-1" rowspan="1">Return with Z clear</td>
 </tr>
 <tr>
-<td class="asm-label-1">bounds_next</td>
+<td class="asm-label">bounds_next</td>
 <td class="address-2"><span id="b1ba"></span>B1BA</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">Restore the wall definition pointer</td>
+<td class="comment-1" rowspan="1">Restore the wall definition pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1bb"></span>B1BB</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">Restore the loop counter</td>
+<td class="comment-1" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1bc"></span>B1BC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$0006</td>
-<td class="comment-11" rowspan="1">Set the wall definition stride</td>
+<td class="comment-1" rowspan="1">Set the wall definition stride</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1bf"></span>B1BF</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-11" rowspan="1">Point to next wall definition</td>
+<td class="comment-1" rowspan="1">Point to next wall definition</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1c0"></span>B1C0</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">Move the wall definition pointer into <span class="register">DE</span></td>
+<td class="comment-1" rowspan="1">Move the wall definition pointer into <span class="register">DE</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1c1"></span>B1C1</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC B</td>
-<td class="comment-11" rowspan="2">...loop</td>
+<td class="comment-1" rowspan="2">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1c2"></span>B1C2</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="B14C.html#b158">bounds_loop</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1c5"></span>B1C5</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND B</td>
-<td class="comment-11" rowspan="1"><span class="register">B</span> is zero, AND it with itself to set Z flag</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span> is zero, AND it with itself to set Z flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b1c6"></span>B1C6</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return with Z set</td>
+<td class="comment-1" rowspan="1">Return with Z set</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="B107.html">B107</a></span></td>
+<td class="prev">
+Prev: <a href="B107.html">B107</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#b14c">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="B1C7.html">B1C7</a></span></td>
+<td class="next">
+Next: <a href="B1C7.html">B1C7</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

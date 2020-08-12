@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="C41A.html">C41A</a></span></td>
+<td class="prev">
+Prev: <a href="C41A.html">C41A</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#c41c">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="C47E.html">C47E</a></span></td>
+<td class="next">
+Next: <a href="C47E.html">C47E</a>
+</td>
 </tr>
 </table>
 <div class="description">C41C: Spawn characters.</div>
@@ -30,18 +33,6 @@
 Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href="9D7B.html">main_loop</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
@@ -55,81 +46,70 @@ Form a clamped map position in <span class="register">DE</span>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">spawn_characters</td>
+<td class="asm-label">spawn_characters</td>
 <td class="address-2"><span id="c41c"></span>C41C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,($81BB)</td>
-<td class="comment-11" rowspan="1">Read the current map position into <span class="register">HL</span></td>
+<td class="comment-1" rowspan="1">Read the current map position into <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c41f"></span>C41F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="1">Get map_position.x</td>
+<td class="comment-1" rowspan="1">Get map_position.x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c420"></span>C420</td>
-<td class="bytes-0"></td>
 <td class="instruction">SUB $08</td>
-<td class="comment-11" rowspan="1">Subtract 8</td>
+<td class="comment-1" rowspan="1">Subtract 8</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c422"></span>C422</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C41C.html#c425">spawn_characters_0</a></td>
-<td class="comment-11" rowspan="1">Jump if it was &gt;= 8</td>
+<td class="comment-1" rowspan="1">Jump if it was &gt;= 8</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c424"></span>C424</td>
-<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">Otherwise zero it</td>
+<td class="comment-1" rowspan="1">Otherwise zero it</td>
 </tr>
 <tr>
-<td class="asm-label-1">spawn_characters_0</td>
+<td class="asm-label">spawn_characters_0</td>
 <td class="address-2"><span id="c425"></span>C425</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
-<td class="comment-11" rowspan="1"><span class="register">E</span> is the result: map_x_clamped</td>
+<td class="comment-1" rowspan="1"><span class="register">E</span> is the result: map_x_clamped</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c426"></span>C426</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,H</td>
-<td class="comment-11" rowspan="1">Get map_position.y</td>
+<td class="comment-1" rowspan="1">Get map_position.y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c427"></span>C427</td>
-<td class="bytes-0"></td>
 <td class="instruction">SUB $08</td>
-<td class="comment-11" rowspan="1">Subtract 8</td>
+<td class="comment-1" rowspan="1">Subtract 8</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c429"></span>C429</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C41C.html#c42c">spawn_characters_1</a></td>
-<td class="comment-11" rowspan="1">Jump if it was &gt;= 8</td>
+<td class="comment-1" rowspan="1">Jump if it was &gt;= 8</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c42b"></span>C42B</td>
-<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">Otherwise zero it</td>
+<td class="comment-1" rowspan="1">Otherwise zero it</td>
 </tr>
 <tr>
-<td class="asm-label-1">spawn_characters_1</td>
+<td class="asm-label">spawn_characters_1</td>
 <td class="address-2"><span id="c42c"></span>C42C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD D,A</td>
-<td class="comment-11" rowspan="1"><span class="register">D</span> is the result: map_y_clamped</td>
+<td class="comment-1" rowspan="1"><span class="register">D</span> is the result: map_y_clamped</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -142,18 +122,16 @@ Walk all character structs.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c42d"></span>C42D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$7612</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at character_structs[0] (charstr)</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at character_structs[0] (charstr)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c430"></span>C430</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$1A</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for 26 iterations (26 characters)</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for 26 iterations (26 characters)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -166,18 +144,16 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">sc_loop</td>
+<td class="asm-label">sc_loop</td>
 <td class="address-2"><span id="c432"></span>C432</td>
-<td class="bytes-0"></td>
 <td class="instruction">BIT 6,(HL)</td>
-<td class="comment-11" rowspan="1">Fetch flags and test for characterstruct_FLAG_ON_SCREEN</td>
+<td class="comment-1" rowspan="1">Fetch flags and test for characterstruct_FLAG_ON_SCREEN</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c434"></span>C434</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="C41C.html#c474">sc_next</a></td>
-<td class="comment-11" rowspan="1">Jump if already on-screen</td>
+<td class="comment-1" rowspan="1">Jump if already on-screen</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -190,53 +166,46 @@ Is this character in the current room?
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c436"></span>C436</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Preserve the character struct pointer</td>
+<td class="comment-1" rowspan="1">Preserve the character struct pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c437"></span>C437</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at charstr.room</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at charstr.room</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c438"></span>C438</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="1">Get the global current room index</td>
+<td class="comment-1" rowspan="1">Get the global current room index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c43b"></span>C43B</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="1">Same room?</td>
+<td class="comment-1" rowspan="1">Same room?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c43c"></span>C43C</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="C41C.html#c473">sc_unstash_next</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c43e"></span>C43E</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Outdoors?</td>
+<td class="comment-1" rowspan="1">Outdoors?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c43f"></span>C43F</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="C41C.html#c46a">sc_indoors</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -249,18 +218,20 @@ Handle outdoors.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c441"></span>C441</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at charstr.pos.x</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at charstr.pos.x</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="c442"></span>
 <div class="comments">
 <div class="paragraph">
-Do screen Y calculation: y = ((256 - charstr.pos.x) - charstr.pos.y) - charstr.pos.height
+Do screen Y calculation:
+</div>
+<div class="paragraph">
+y = ((256 - charstr.pos.x) - charstr.pos.y) - charstr.pos.height
 </div>
 <div class="paragraph">
 <span class="register">A</span> is zero here, and represents 0x100.
@@ -269,335 +240,292 @@ Do screen Y calculation: y = ((256 - charstr.pos.x) - charstr.pos.y) - charstr.p
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c442"></span>C442</td>
-<td class="bytes-0"></td>
 <td class="instruction">SUB (HL)</td>
-<td class="comment-11" rowspan="1">Subtract charstr.pos.x</td>
+<td class="comment-1" rowspan="1">Subtract charstr.pos.x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c443"></span>C443</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to charstr.pos.y</td>
+<td class="comment-1" rowspan="1">Advance <span class="register">HL</span> to charstr.pos.y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c444"></span>C444</td>
-<td class="bytes-0"></td>
 <td class="instruction">SUB (HL)</td>
-<td class="comment-11" rowspan="1">Subtract charstr.pos.y</td>
+<td class="comment-1" rowspan="1">Subtract charstr.pos.y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c445"></span>C445</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to charstr.pos.height</td>
+<td class="comment-1" rowspan="1">Advance <span class="register">HL</span> to charstr.pos.height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c446"></span>C446</td>
-<td class="bytes-0"></td>
 <td class="instruction">SUB (HL)</td>
-<td class="comment-11" rowspan="1">Subtract charstr.pos.height</td>
+<td class="comment-1" rowspan="1">Subtract charstr.pos.height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c447"></span>C447</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">Copy y to <span class="register">C</span></td>
+<td class="comment-1" rowspan="1">Copy y to <span class="register">C</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c448"></span>C448</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,D</td>
-<td class="comment-11" rowspan="1">Copy map_y_clamped to <span class="register">D</span></td>
+<td class="comment-1" rowspan="1">Copy map_y_clamped to <span class="register">D</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c449"></span>C449</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP C</td>
-<td class="comment-11" rowspan="1">Is map_y_clamped &gt;= y?</td>
+<td class="comment-1" rowspan="1">Is map_y_clamped &gt;= y?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c44a"></span>C44A</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C41C.html#c473">sc_unstash_next</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c44c"></span>C44C</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,$20</td>
-<td class="comment-11" rowspan="1">Add 16 + 2 * 8 (16 =&gt; screen height, 8 =&gt; spawn zone size)</td>
+<td class="comment-1" rowspan="1">Add 16 + 2 * 8 (16 =&gt; screen height, 8 =&gt; spawn zone size)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c44e"></span>C44E</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C41C.html#c452">spawn_characters_2</a></td>
-<td class="comment-11" rowspan="2">Clamp to a maximum of 255</td>
+<td class="comment-1" rowspan="2">Clamp to a maximum of 255</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c450"></span>C450</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">spawn_characters_2</td>
+<td class="asm-label">spawn_characters_2</td>
 <td class="address-2"><span id="c452"></span>C452</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP C</td>
-<td class="comment-11" rowspan="1">Is y &gt; (map_y_clamped + spawn size, clamped to 255)?</td>
+<td class="comment-1" rowspan="1">Is y &gt; (map_y_clamped + spawn size, clamped to 255)?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c453"></span>C453</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="C41C.html#c473">sc_unstash_next</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="c455"></span>
 <div class="comments">
 <div class="paragraph">
-Do screen X calculation: x = (64 - charstr.pos.x + charstr.pos.y) * 2
+Do screen X calculation:
+</div>
+<div class="paragraph">
+x = (64 - charstr.pos.x + charstr.pos.y) * 2
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c455"></span>C455</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
-<td class="comment-11" rowspan="1">Step <span class="register">HL</span> back to charstr.pos.y</td>
+<td class="comment-1" rowspan="1">Step <span class="register">HL</span> back to charstr.pos.y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c456"></span>C456</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$40</td>
-<td class="comment-11" rowspan="1">Start with x = 64</td>
+<td class="comment-1" rowspan="1">Start with x = 64</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c458"></span>C458</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,(HL)</td>
-<td class="comment-11" rowspan="1">Add charstr.pos.y</td>
+<td class="comment-1" rowspan="1">Add charstr.pos.y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c459"></span>C459</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
-<td class="comment-11" rowspan="1">Step <span class="register">HL</span> back to charstr.pos.x</td>
+<td class="comment-1" rowspan="1">Step <span class="register">HL</span> back to charstr.pos.x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c45a"></span>C45A</td>
-<td class="bytes-0"></td>
 <td class="instruction">SUB (HL)</td>
-<td class="comment-11" rowspan="1">Subtract charstr.pos.x</td>
+<td class="comment-1" rowspan="1">Subtract charstr.pos.x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c45b"></span>C45B</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="1">Double it</td>
+<td class="comment-1" rowspan="1">Double it</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c45c"></span>C45C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">Copy x to <span class="register">C</span></td>
+<td class="comment-1" rowspan="1">Copy x to <span class="register">C</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c45d"></span>C45D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,E</td>
-<td class="comment-11" rowspan="1">Copy map_x_clamped to <span class="register">E</span></td>
+<td class="comment-1" rowspan="1">Copy map_x_clamped to <span class="register">E</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c45e"></span>C45E</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP C</td>
-<td class="comment-11" rowspan="1">Is map_x_clamped &gt;= x?</td>
+<td class="comment-1" rowspan="1">Is map_x_clamped &gt;= x?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c45f"></span>C45F</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C41C.html#c473">sc_unstash_next</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c461"></span>C461</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,$28</td>
-<td class="comment-11" rowspan="1">Add 24 + 2 * 8 (24 =&gt; screen width, 8 =&gt; spawn zone size)</td>
+<td class="comment-1" rowspan="1">Add 24 + 2 * 8 (24 =&gt; screen width, 8 =&gt; spawn zone size)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c463"></span>C463</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C41C.html#c467">spawn_characters_3</a></td>
-<td class="comment-11" rowspan="2">Clamp to a maximum of 255</td>
+<td class="comment-1" rowspan="2">Clamp to a maximum of 255</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c465"></span>C465</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">spawn_characters_3</td>
+<td class="asm-label">spawn_characters_3</td>
 <td class="address-2"><span id="c467"></span>C467</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP C</td>
-<td class="comment-11" rowspan="1">Is x &gt; (map_x_clamped + spawn size, clamped to 255)?</td>
+<td class="comment-1" rowspan="1">Is x &gt; (map_x_clamped + spawn size, clamped to 255)?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c468"></span>C468</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="C41C.html#c473">sc_unstash_next</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
-<td class="asm-label-1">sc_indoors</td>
+<td class="asm-label">sc_indoors</td>
 <td class="address-2"><span id="c46a"></span>C46A</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore the character struct pointer (spawn_character arg)</td>
+<td class="comment-1" rowspan="1">Restore the character struct pointer (spawn_character arg)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c46b"></span>C46B</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Preserve the character struct pointer over the call</td>
+<td class="comment-1" rowspan="1">Preserve the character struct pointer over the call</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c46c"></span>C46C</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1">Preserve map_x/y_clamped</td>
+<td class="comment-1" rowspan="1">Preserve map_x/y_clamped</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c46d"></span>C46D</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">Preserve the loop counter</td>
+<td class="comment-1" rowspan="1">Preserve the loop counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c46e"></span>C46E</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="C4E0.html">spawn_character</a></td>
-<td class="comment-11" rowspan="1">Add characters to the visible character list</td>
+<td class="comment-1" rowspan="1">Add characters to the visible character list</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c471"></span>C471</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">Restore the loop counter</td>
+<td class="comment-1" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c472"></span>C472</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">Restore map_x/y_clamped</td>
+<td class="comment-1" rowspan="1">Restore map_x/y_clamped</td>
 </tr>
 <tr>
-<td class="asm-label-1">sc_unstash_next</td>
+<td class="asm-label">sc_unstash_next</td>
 <td class="address-2"><span id="c473"></span>C473</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore the character struct pointer</td>
+<td class="comment-1" rowspan="1">Restore the character struct pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1">sc_next</td>
+<td class="asm-label">sc_next</td>
 <td class="address-2"><span id="c474"></span>C474</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="5">Advance to the next characterstruct</td>
+<td class="comment-1" rowspan="5">Advance to the next characterstruct</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c475"></span>C475</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,$07</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c477"></span>C477</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c478"></span>C478</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C41C.html#c47b">spawn_characters_4</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c47a"></span>C47A</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC H</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">spawn_characters_4</td>
+<td class="asm-label">spawn_characters_4</td>
 <td class="address-2"><span id="c47b"></span>C47B</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="C41C.html#c432">sc_loop</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c47d"></span>C47D</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="C41A.html">C41A</a></span></td>
+<td class="prev">
+Prev: <a href="C41A.html">C41A</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#c41c">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="C47E.html">C47E</a></span></td>
+<td class="next">
+Next: <a href="C47E.html">C47E</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

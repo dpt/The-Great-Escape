@@ -174,9 +174,9 @@
 ; room_20_REDCROSS                              = 20,
 ; room_21_CORRIDOR                              = 21,
 ; room_22_REDKEY                                = 22,
-; room_23_BREAKFAST                             = 23,
+; room_23_MESS_HALL                             = 23,
 ; room_24_SOLITARY                              = 24,
-; room_25_BREAKFAST                             = 25,
+; room_25_MESS_HALL                             = 25,
 ; room_26                                       = 26,   ; unused room index
 ; room_27                                       = 27,   ; unused room index
 ; room_28_HUT1LEFT                              = 28,
@@ -362,7 +362,7 @@
 ; vischar_PURSUIT_SAW_BRIBE                     = 4 << 0,       ; this flag is set when a visible hostile was nearby when a bribe was used. perhaps it distracts the guards?
 ;
 ; vischar_FLAGS_TARGET_IS_DOOR                  = 1 << 6,       ; affects scaling
-; vischar_FLAGS_NO_COLLIDE                      = 1 << 7,       ; don't do collision() for this vischar
+; vischar.FLAGS.NO.COLLIDE                      = 1 << 7,       ; don't do collision() for this vischar
 ;
 ; ; $8002, $8022, $8042, ...
 ; route_REVERSED                                = 1 << 7,       ; set if the route is to be followed in reverse order
@@ -372,7 +372,7 @@
 ; vischar_BYTE7_COUNTER_MASK                    = $F0,
 ; vischar_BYTE7_Y_DOMINANT                      = 1 << 5,       ; set when hero hits an obstacle
 ; vischar_BYTE7_DONT_MOVE_MAP                   = 1 << 6,       ; set while touch() entered
-; vischar_TOUCH_ENTERED                         = 1 << 7,       ; stops locate_vischar_or_itemstruct considering a vischar
+; vischar_DRAWABLE                              = 1 << 7,       ; vischar should be drawn
 ;
 ; ; $800C, $802C, $804C, ...
 ; vischar_ANIMINDEX_BIT7                        = 1 << 7,       ; is this a kick flag?
@@ -570,7 +570,7 @@
 ;          $07 -> character faces bottom left  (crawling)
 ; w $800F position on X axis (along the line of - bottom right to top left of screen) (set by process_player_input)
 ; w $8011 position on Y axis (along the line of - bottom left to top right of screen) (set by process_player_input)  i think this might be relative to the current size of the map. each step seems to be two pixels.
-; w $8013 character's height // set to 24 in process_player_input, cutting_wire,  set to 12 in action_wiresnips,  reset in calc_vischar_iso_pos_from_vischar,  read by animate ($B68C) (via IY), locate_vischar_or_itemstruct ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by touch ($AFD5)  often written as a byte, but suspect it's a word-sized value
+; w $8013 character's height // set to 24 in process_player_input, cutting_wire,  set to 12 in action_wiresnips,  reset in calc_vischar_iso_pos_from_vischar,  read by animate ($B68C) (via IY), get_next_drawable ($B8DE), setup_vischar_plotting ($E433), in_permitted_area ($9F4F)  written by touch ($AFD5)  often written as a byte, but suspect it's a word-sized value
 ; w $8015 pointer to current character sprite set (gets pointed to the 'tl_4' sprite)
 ; b $8017 touch sets this to touch_stashed_A
 ; w $8018 points to something (gets $06C8 subtracted from it) (<- in_permitted_area)
@@ -2500,15 +2500,15 @@ roomdef_1_hut1_right:
   DEFB $04                ; 4 // count of mask bytes
   DEFB $00,$01,$03,$0A    ; [0, 1, 3, 10] // data mask bytes
   DEFB $0A                ; 10 // count of objects
-  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
-  DEFB $08,$08,$00        ; interiorobject_WIDE_WINDOW,                  8,  0 },
-  DEFB $08,$02,$03        ; interiorobject_WIDE_WINDOW,                  2,  3 },
-  DEFB $17,$0A,$05        ; interiorobject_OCCUPIED_BED,                10,  5 },
-  DEFB $17,$06,$07        ; interiorobject_OCCUPIED_BED,                 6,  7 },
-  DEFB $0F,$0F,$08        ; interiorobject_DOOR_FRAME_SW_NE,            15,  8 },
-  DEFB $18,$12,$05        ; interiorobject_ORNATE_WARDROBE_FACING_SW,   18,  5 },
-  DEFB $18,$14,$06        ; interiorobject_ORNATE_WARDROBE_FACING_SW,   20,  6 },
-  DEFB $09,$02,$09        ; interiorobject_EMPTY_BED,                    2,  9 },
+  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
+  DEFB $08,$08,$00        ; interiorobject_WIDE_WINDOW,                  8, 0 },
+  DEFB $08,$02,$03        ; interiorobject_WIDE_WINDOW,                  2, 3 },
+  DEFB $17,$0A,$05        ; interiorobject_OCCUPIED_BED,                10, 5 },
+  DEFB $17,$06,$07        ; interiorobject_OCCUPIED_BED,                 6, 7 },
+  DEFB $0F,$0F,$08        ; interiorobject_DOOR_FRAME_SW_NE,            15, 8 },
+  DEFB $18,$12,$05        ; interiorobject_ORNATE_WARDROBE_FACING_SW,   18, 5 },
+  DEFB $18,$14,$06        ; interiorobject_ORNATE_WARDROBE_FACING_SW,   20, 6 },
+  DEFB $09,$02,$09        ; interiorobject_EMPTY_BED,                    2, 9 },
   DEFB $10,$07,$0A        ; interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
 
 ; Illustration
@@ -2550,15 +2550,15 @@ roomdef_2_hut2_left:
   DEFB $02                ; 2 // count of mask bytes
   DEFB $0D,$08            ; [13, 8] // data mask bytes
   DEFB $08                ; 8 // count of objects
-  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
-  DEFB $08,$06,$02        ; interiorobject_WIDE_WINDOW,                  6,  2 },
-  DEFB $28,$10,$05        ; interiorobject_END_DOOR_FRAME_NW_SE,        16,  5 },
-  DEFB $1E,$04,$05        ; interiorobject_STOVE_PIPE,                   4,  5 },
+  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
+  DEFB $08,$06,$02        ; interiorobject_WIDE_WINDOW,                  6, 2 },
+  DEFB $28,$10,$05        ; interiorobject_END_DOOR_FRAME_NW_SE,        16, 5 },
+  DEFB $1E,$04,$05        ; interiorobject_STOVE_PIPE,                   4, 5 },
 roomdef_2_hut2_left_heros_bed:
-  DEFB $17,$08,$07        ; interiorobject_OCCUPIED_BED,                 8,  7 },
-  DEFB $10,$07,$09        ; interiorobject_DOOR_FRAME_NW_SE,             7,  9 },
+  DEFB $17,$08,$07        ; interiorobject_OCCUPIED_BED,                 8, 7 },
+  DEFB $10,$07,$09        ; interiorobject_DOOR_FRAME_NW_SE,             7, 9 },
   DEFB $1D,$0B,$0C        ; interiorobject_TABLE,                       11, 12 },
-  DEFB $01,$05,$09        ; interiorobject_SMALL_TUNNEL_ENTRANCE,        5,  9 },
+  DEFB $01,$05,$09        ; interiorobject_SMALL_TUNNEL_ENTRANCE,        5, 9 },
 
 ; Room 3: Hut 2, far side.
 roomdef_3_hut2_right:
@@ -2570,18 +2570,18 @@ roomdef_3_hut2_right:
   DEFB $04                ; 4 // count of mask bytes
   DEFB $00,$01,$03,$0A    ; [0, 1, 3, 10] // data mask bytes
   DEFB $0A                ; 10 // count of objects
-  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
-  DEFB $08,$08,$00        ; interiorobject_WIDE_WINDOW,                  8,  0 },
-  DEFB $08,$02,$03        ; interiorobject_WIDE_WINDOW,                  2,  3 },
+  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
+  DEFB $08,$08,$00        ; interiorobject_WIDE_WINDOW,                  8, 0 },
+  DEFB $08,$02,$03        ; interiorobject_WIDE_WINDOW,                  2, 3 },
 roomdef_3_hut2_right_bed_A:
-  DEFB $17,$0A,$05        ; interiorobject_OCCUPIED_BED,                10,  5 },
+  DEFB $17,$0A,$05        ; interiorobject_OCCUPIED_BED,                10, 5 },
 roomdef_3_hut2_right_bed_B:
-  DEFB $17,$06,$07        ; interiorobject_OCCUPIED_BED,                 6,  7 },
+  DEFB $17,$06,$07        ; interiorobject_OCCUPIED_BED,                 6, 7 },
 roomdef_3_hut2_right_bed_C:
-  DEFB $17,$02,$09        ; interiorobject_OCCUPIED_BED,                 2,  9 },
-  DEFB $0B,$10,$05        ; interiorobject_CHEST_OF_DRAWERS,            16,  5 },
-  DEFB $0F,$0F,$08        ; interiorobject_DOOR_FRAME_SW_NE,            15,  8 },
-  DEFB $0A,$12,$05        ; interiorobject_SHORT_WARDROBE,              18,  5 },
+  DEFB $17,$02,$09        ; interiorobject_OCCUPIED_BED,                 2, 9 },
+  DEFB $0B,$10,$05        ; interiorobject_CHEST_OF_DRAWERS,            16, 5 },
+  DEFB $0F,$0F,$08        ; interiorobject_DOOR_FRAME_SW_NE,            15, 8 },
+  DEFB $0A,$12,$05        ; interiorobject_SHORT_WARDROBE,              18, 5 },
   DEFB $10,$07,$0A        ; interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
 
 ; Room 4: Hut 3, near side.
@@ -2593,12 +2593,12 @@ roomdef_4_hut3_left:
   DEFB $03                ; 3 // count of mask bytes
   DEFB $12,$14,$08        ; [18, 20, 8] // data mask bytes
   DEFB $09                ; 9 // count of objects
-  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
-  DEFB $28,$10,$05        ; interiorobject_END_DOOR_FRAME_NW_SE,        16,  5 },
-  DEFB $08,$06,$02        ; interiorobject_WIDE_WINDOW,                  6,  2 },
-  DEFB $1E,$04,$05        ; interiorobject_STOVE_PIPE,                   4,  5 },
-  DEFB $09,$08,$07        ; interiorobject_EMPTY_BED,                    8,  7 },
-  DEFB $10,$07,$09        ; interiorobject_DOOR_FRAME_NW_SE,             7,  9 },
+  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
+  DEFB $28,$10,$05        ; interiorobject_END_DOOR_FRAME_NW_SE,        16, 5 },
+  DEFB $08,$06,$02        ; interiorobject_WIDE_WINDOW,                  6, 2 },
+  DEFB $1E,$04,$05        ; interiorobject_STOVE_PIPE,                   4, 5 },
+  DEFB $09,$08,$07        ; interiorobject_EMPTY_BED,                    8, 7 },
+  DEFB $10,$07,$09        ; interiorobject_DOOR_FRAME_NW_SE,             7, 9 },
   DEFB $16,$0B,$0B        ; interiorobject_CHAIR_FACING_SE,             11, 11 },
   DEFB $19,$0D,$0A        ; interiorobject_CHAIR_FACING_SW,             13, 10 },
   DEFB $1F,$0E,$0E        ; interiorobject_STUFF,                       14, 14 },
@@ -2613,18 +2613,18 @@ roomdef_5_hut3_right:
   DEFB $04                ; 4 // count of mask bytes
   DEFB $00,$01,$03,$0A    ; [0, 1, 3, 10] // data mask bytes
   DEFB $0A                ; 10 // count of objects
-  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
-  DEFB $08,$08,$00        ; interiorobject_WIDE_WINDOW,                  8,  0 },
-  DEFB $08,$02,$03        ; interiorobject_WIDE_WINDOW,                  2,  3 },
+  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
+  DEFB $08,$08,$00        ; interiorobject_WIDE_WINDOW,                  8, 0 },
+  DEFB $08,$02,$03        ; interiorobject_WIDE_WINDOW,                  2, 3 },
 roomdef_5_hut2_right_bed_D:
-  DEFB $17,$0A,$05        ; interiorobject_OCCUPIED_BED,                10,  5 },
+  DEFB $17,$0A,$05        ; interiorobject_OCCUPIED_BED,                10, 5 },
 roomdef_5_hut2_right_bed_E:
-  DEFB $17,$06,$07        ; interiorobject_OCCUPIED_BED,                 6,  7 },
+  DEFB $17,$06,$07        ; interiorobject_OCCUPIED_BED,                 6, 7 },
 roomdef_5_hut2_right_bed_F:
-  DEFB $17,$02,$09        ; interiorobject_OCCUPIED_BED,                 2,  9 },
-  DEFB $0F,$0F,$08        ; interiorobject_DOOR_FRAME_SW_NE,            15,  8 },
-  DEFB $0B,$10,$05        ; interiorobject_CHEST_OF_DRAWERS,            16,  5 },
-  DEFB $0B,$14,$07        ; interiorobject_CHEST_OF_DRAWERS,            20,  7 },
+  DEFB $17,$02,$09        ; interiorobject_OCCUPIED_BED,                 2, 9 },
+  DEFB $0F,$0F,$08        ; interiorobject_DOOR_FRAME_SW_NE,            15, 8 },
+  DEFB $0B,$10,$05        ; interiorobject_CHEST_OF_DRAWERS,            16, 5 },
+  DEFB $0B,$14,$07        ; interiorobject_CHEST_OF_DRAWERS,            20, 7 },
   DEFB $10,$07,$0A        ; interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
 
 ; Room 8: Corridor.
@@ -2648,16 +2648,16 @@ roomdef_9_crate:
   DEFB $02                ; 2 // count of mask bytes
   DEFB $04,$15            ; [4, 21] // data mask bytes
   DEFB $0A                ; 10 // count of objects
-  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
-  DEFB $23,$06,$03        ; interiorobject_SMALL_WINDOW,                 6,  3 },
-  DEFB $21,$09,$04        ; interiorobject_SMALL_SHELF,                  9,  4 },
-  DEFB $24,$0C,$06        ; interiorobject_TINY_DOOR_FRAME_NW_SE,       12,  6 },
+  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
+  DEFB $23,$06,$03        ; interiorobject_SMALL_WINDOW,                 6, 3 },
+  DEFB $21,$09,$04        ; interiorobject_SMALL_SHELF,                  9, 4 },
+  DEFB $24,$0C,$06        ; interiorobject_TINY_DOOR_FRAME_NW_SE,       12, 6 },
   DEFB $0F,$0D,$0A        ; interiorobject_DOOR_FRAME_SW_NE,            13, 10 },
-  DEFB $20,$10,$06        ; interiorobject_TALL_WARDROBE,               16,  6 },
-  DEFB $0A,$12,$08        ; interiorobject_SHORT_WARDROBE,              18,  8 },
-  DEFB $1A,$03,$06        ; interiorobject_CUPBOARD,                     3,  6 },
-  DEFB $22,$06,$08        ; interiorobject_SMALL_CRATE,                  6,  8 },
-  DEFB $22,$04,$09        ; interiorobject_SMALL_CRATE,                  4,  9 },
+  DEFB $20,$10,$06        ; interiorobject_TALL_WARDROBE,               16, 6 },
+  DEFB $0A,$12,$08        ; interiorobject_SHORT_WARDROBE,              18, 8 },
+  DEFB $1A,$03,$06        ; interiorobject_CUPBOARD,                     3, 6 },
+  DEFB $22,$06,$08        ; interiorobject_SMALL_CRATE,                  6, 8 },
+  DEFB $22,$04,$09        ; interiorobject_SMALL_CRATE,                  4, 9 },
 
 ; Room 10: Room with lockpick.
 roomdef_10_lockpick:
@@ -2668,20 +2668,20 @@ roomdef_10_lockpick:
   DEFB $03                ; 3 // count of mask bytes
   DEFB $06,$0E,$16        ; [6, 14, 22] // data mask bytes
   DEFB $0E                ; 14 // count of objects
-  DEFB $2F,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_B,         1,  4 },
+  DEFB $2F,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_B,         1, 4 },
   DEFB $0F,$0F,$0A        ; interiorobject_DOOR_FRAME_SW_NE,            15, 10 },
-  DEFB $23,$04,$01        ; interiorobject_SMALL_WINDOW,                 4,  1 },
-  DEFB $35,$02,$03        ; interiorobject_KEY_RACK,                     2,  3 },
-  DEFB $35,$07,$02        ; interiorobject_KEY_RACK,                     7,  2 },
-  DEFB $20,$0A,$02        ; interiorobject_TALL_WARDROBE,               10,  2 },
-  DEFB $2A,$0D,$03        ; interiorobject_CUPBOARD_42,                 13,  3 },
-  DEFB $2A,$0F,$04        ; interiorobject_CUPBOARD_42,                 15,  4 },
-  DEFB $2A,$11,$05        ; interiorobject_CUPBOARD_42,                 17,  5 },
-  DEFB $1D,$0E,$08        ; interiorobject_TABLE,                       14,  8 },
-  DEFB $0B,$12,$08        ; interiorobject_CHEST_OF_DRAWERS,            18,  8 },
-  DEFB $0B,$14,$09        ; interiorobject_CHEST_OF_DRAWERS,            20,  9 },
-  DEFB $22,$06,$05        ; interiorobject_SMALL_CRATE,                  6,  5 },
-  DEFB $1D,$02,$06        ; interiorobject_TABLE,                        2,  6 },
+  DEFB $23,$04,$01        ; interiorobject_SMALL_WINDOW,                 4, 1 },
+  DEFB $35,$02,$03        ; interiorobject_KEY_RACK,                     2, 3 },
+  DEFB $35,$07,$02        ; interiorobject_KEY_RACK,                     7, 2 },
+  DEFB $20,$0A,$02        ; interiorobject_TALL_WARDROBE,               10, 2 },
+  DEFB $2A,$0D,$03        ; interiorobject_CUPBOARD_42,                 13, 3 },
+  DEFB $2A,$0F,$04        ; interiorobject_CUPBOARD_42,                 15, 4 },
+  DEFB $2A,$11,$05        ; interiorobject_CUPBOARD_42,                 17, 5 },
+  DEFB $1D,$0E,$08        ; interiorobject_TABLE,                       14, 8 },
+  DEFB $0B,$12,$08        ; interiorobject_CHEST_OF_DRAWERS,            18, 8 },
+  DEFB $0B,$14,$09        ; interiorobject_CHEST_OF_DRAWERS,            20, 9 },
+  DEFB $22,$06,$05        ; interiorobject_SMALL_CRATE,                  6, 5 },
+  DEFB $1D,$02,$06        ; interiorobject_TABLE,                        2, 6 },
 
 ; Room 11: Room with papers.
 roomdef_11_papers:
@@ -2691,14 +2691,14 @@ roomdef_11_papers:
   DEFB $01                ; 1 // count of mask bytes
   DEFB $17                ; [23] // data mask bytes
   DEFB $09                ; 9 // count of objects
-  DEFB $2F,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_B,         1,  4 },
-  DEFB $21,$06,$03        ; interiorobject_SMALL_SHELF,                  6,  3 },
-  DEFB $20,$0C,$03        ; interiorobject_TALL_WARDROBE,               12,  3 },
-  DEFB $32,$0A,$03        ; interiorobject_TALL_DRAWERS,                10,  3 },
-  DEFB $0A,$0E,$05        ; interiorobject_SHORT_WARDROBE,              14,  5 },
-  DEFB $26,$02,$02        ; interiorobject_END_DOOR_FRAME_SW_NE,         2,  2 },
-  DEFB $32,$12,$07        ; interiorobject_TALL_DRAWERS,                18,  7 },
-  DEFB $32,$14,$08        ; interiorobject_TALL_DRAWERS,                20,  8 },
+  DEFB $2F,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_B,         1, 4 },
+  DEFB $21,$06,$03        ; interiorobject_SMALL_SHELF,                  6, 3 },
+  DEFB $20,$0C,$03        ; interiorobject_TALL_WARDROBE,               12, 3 },
+  DEFB $32,$0A,$03        ; interiorobject_TALL_DRAWERS,                10, 3 },
+  DEFB $0A,$0E,$05        ; interiorobject_SHORT_WARDROBE,              14, 5 },
+  DEFB $26,$02,$02        ; interiorobject_END_DOOR_FRAME_SW_NE,         2, 2 },
+  DEFB $32,$12,$07        ; interiorobject_TALL_DRAWERS,                18, 7 },
+  DEFB $32,$14,$08        ; interiorobject_TALL_DRAWERS,                20, 8 },
   DEFB $33,$0C,$0A        ; interiorobject_DESK,                        12, 10 },
 
 ; Room 12: Corridor.
@@ -2737,15 +2737,15 @@ roomdef_14_torch:
   DEFB $01                ; 1 // count of mask bytes
   DEFB $01                ; [1] // data mask bytes
   DEFB $09                ; 9 // count of objects
-  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
-  DEFB $26,$04,$03        ; interiorobject_END_DOOR_FRAME_SW_NE,         4,  3 },
-  DEFB $31,$08,$05        ; interiorobject_TINY_DRAWERS,                 8,  5 },
-  DEFB $09,$0A,$05        ; interiorobject_EMPTY_BED,                   10,  5 },
-  DEFB $0B,$10,$05        ; interiorobject_CHEST_OF_DRAWERS,            16,  5 },
-  DEFB $0A,$12,$05        ; interiorobject_SHORT_WARDROBE,              18,  5 },
-  DEFB $28,$14,$04        ; interiorobject_END_DOOR_FRAME_NW_SE,        20,  4 },
-  DEFB $21,$02,$07        ; interiorobject_SMALL_SHELF,                  2,  7 },
-  DEFB $09,$02,$09        ; interiorobject_EMPTY_BED,                    2,  9 },
+  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
+  DEFB $26,$04,$03        ; interiorobject_END_DOOR_FRAME_SW_NE,         4, 3 },
+  DEFB $31,$08,$05        ; interiorobject_TINY_DRAWERS,                 8, 5 },
+  DEFB $09,$0A,$05        ; interiorobject_EMPTY_BED,                   10, 5 },
+  DEFB $0B,$10,$05        ; interiorobject_CHEST_OF_DRAWERS,            16, 5 },
+  DEFB $0A,$12,$05        ; interiorobject_SHORT_WARDROBE,              18, 5 },
+  DEFB $28,$14,$04        ; interiorobject_END_DOOR_FRAME_NW_SE,        20, 4 },
+  DEFB $21,$02,$07        ; interiorobject_SMALL_SHELF,                  2, 7 },
+  DEFB $09,$02,$09        ; interiorobject_EMPTY_BED,                    2, 9 },
 
 ; Room 15: Room with uniform.
 roomdef_15_uniform:
@@ -2758,16 +2758,16 @@ roomdef_15_uniform:
   DEFB $04                ; 4 // count of mask bytes
   DEFB $01,$05,$0A,$0F    ; [1, 5, 10, 15] // data mask bytes
   DEFB $0A                ; 10 // count of objects
-  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
-  DEFB $0A,$10,$04        ; interiorobject_SHORT_WARDROBE,              16,  4 },
-  DEFB $09,$0A,$05        ; interiorobject_EMPTY_BED,                   10,  5 },
-  DEFB $31,$08,$05        ; interiorobject_TINY_DRAWERS,                 8,  5 },
-  DEFB $31,$06,$06        ; interiorobject_TINY_DRAWERS,                 6,  6 },
-  DEFB $21,$02,$07        ; interiorobject_SMALL_SHELF,                  2,  7 },
-  DEFB $09,$02,$09        ; interiorobject_EMPTY_BED,                    2,  9 },
+  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
+  DEFB $0A,$10,$04        ; interiorobject_SHORT_WARDROBE,              16, 4 },
+  DEFB $09,$0A,$05        ; interiorobject_EMPTY_BED,                   10, 5 },
+  DEFB $31,$08,$05        ; interiorobject_TINY_DRAWERS,                 8, 5 },
+  DEFB $31,$06,$06        ; interiorobject_TINY_DRAWERS,                 6, 6 },
+  DEFB $21,$02,$07        ; interiorobject_SMALL_SHELF,                  2, 7 },
+  DEFB $09,$02,$09        ; interiorobject_EMPTY_BED,                    2, 9 },
   DEFB $10,$07,$0A        ; interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
-  DEFB $0F,$0D,$09        ; interiorobject_DOOR_FRAME_SW_NE,            13,  9 },
-  DEFB $1D,$12,$08        ; interiorobject_TABLE,                       18,  8 },
+  DEFB $0F,$0D,$09        ; interiorobject_DOOR_FRAME_SW_NE,            13, 9 },
+  DEFB $1D,$12,$08        ; interiorobject_TABLE,                       18, 8 },
 
 ; Room 16: Corridor.
 roomdef_16_corridor:
@@ -2803,16 +2803,16 @@ roomdef_18_radio:
   DEFB $05                ; 5 // count of mask bytes
   DEFB $0B,$11,$10,$18,$19 ; [11, 17, 16, 24, 25] // data mask bytes
   DEFB $0A                ; 10 // count of objects
-  DEFB $2F,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_B,         1,  4 },
-  DEFB $1A,$01,$04        ; interiorobject_CUPBOARD,                     1,  4 },
-  DEFB $23,$04,$01        ; interiorobject_SMALL_WINDOW,                 4,  1 },
-  DEFB $21,$07,$02        ; interiorobject_SMALL_SHELF,                  7,  2 },
-  DEFB $28,$0A,$01        ; interiorobject_END_DOOR_FRAME_NW_SE,        10,  1 },
-  DEFB $1D,$0C,$07        ; interiorobject_TABLE,                       12,  7 },
-  DEFB $2D,$0C,$09        ; interiorobject_MESS_BENCH_SHORT,            12,  9 },
-  DEFB $1D,$12,$0A        ; interiorobject_TABLE,                       18, 10 },
-  DEFB $30,$10,$0C        ; interiorobject_TINY_TABLE,                  16, 12 },
-  DEFB $10,$05,$07        ; interiorobject_DOOR_FRAME_NW_SE,             5,  7 },
+  DEFB $2F,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_B, 1,  4 },
+  DEFB $1A,$01,$04        ; interiorobject_CUPBOARD, 1,  4 },
+  DEFB $23,$04,$01        ; interiorobject_SMALL_WINDOW, 4,  1 },
+  DEFB $21,$07,$02        ; interiorobject_SMALL_SHELF, 7,  2 },
+  DEFB $28,$0A,$01        ; interiorobject_END_DOOR_FRAME_NW_SE, 10,  1 },
+  DEFB $1D,$0C,$07        ; interiorobject_TABLE, 12,  7 },
+  DEFB $2D,$0C,$09        ; interiorobject_MESS_BENCH_SHORT, 12,  9 },
+  DEFB $1D,$12,$0A        ; interiorobject_TABLE, 18, 10 },
+  DEFB $30,$10,$0C        ; interiorobject_TINY_TABLE, 16, 12 },
+  DEFB $10,$05,$07        ; interiorobject_DOOR_FRAME_NW_SE, 5,  7 },
 
 ; Room 19: Room with food.
 roomdef_19_food:
@@ -2822,16 +2822,16 @@ roomdef_19_food:
   DEFB $01                ; 1 // count of mask bytes
   DEFB $07                ; [7] // data mask bytes
   DEFB $0B                ; 11 // count of objects
-  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
-  DEFB $23,$06,$03        ; interiorobject_SMALL_WINDOW,                 6,  3 },
-  DEFB $1A,$09,$03        ; interiorobject_CUPBOARD,                     9,  3 },
-  DEFB $2A,$0C,$03        ; interiorobject_CUPBOARD_42,                 12,  3 },
-  DEFB $2A,$0E,$04        ; interiorobject_CUPBOARD_42,                 14,  4 },
-  DEFB $1D,$09,$06        ; interiorobject_TABLE,                        9,  6 },
-  DEFB $21,$03,$05        ; interiorobject_SMALL_SHELF,                  3,  5 },
-  DEFB $34,$03,$07        ; interiorobject_SINK,                         3,  7 },
-  DEFB $0B,$0E,$07        ; interiorobject_CHEST_OF_DRAWERS,            14,  7 },
-  DEFB $28,$10,$05        ; interiorobject_END_DOOR_FRAME_NW_SE,        16,  5 },
+  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
+  DEFB $23,$06,$03        ; interiorobject_SMALL_WINDOW,                 6, 3 },
+  DEFB $1A,$09,$03        ; interiorobject_CUPBOARD,                     9, 3 },
+  DEFB $2A,$0C,$03        ; interiorobject_CUPBOARD_42,                 12, 3 },
+  DEFB $2A,$0E,$04        ; interiorobject_CUPBOARD_42,                 14, 4 },
+  DEFB $1D,$09,$06        ; interiorobject_TABLE,                        9, 6 },
+  DEFB $21,$03,$05        ; interiorobject_SMALL_SHELF,                  3, 5 },
+  DEFB $34,$03,$07        ; interiorobject_SINK,                         3, 7 },
+  DEFB $0B,$0E,$07        ; interiorobject_CHEST_OF_DRAWERS,            14, 7 },
+  DEFB $28,$10,$05        ; interiorobject_END_DOOR_FRAME_NW_SE,        16, 5 },
   DEFB $10,$09,$0A        ; interiorobject_DOOR_FRAME_NW_SE,             9, 10 },
 
 ; Room 20: Room with red cross parcel.
@@ -2843,17 +2843,17 @@ roomdef_20_redcross:
   DEFB $02                ; 2 // count of mask bytes
   DEFB $15,$04            ; [21, 4] // data mask bytes
   DEFB $0B                ; 11 // count of objects
-  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
+  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
   DEFB $0F,$0D,$0A        ; interiorobject_DOOR_FRAME_SW_NE,            13, 10 },
-  DEFB $21,$09,$04        ; interiorobject_SMALL_SHELF,                  9,  4 },
-  DEFB $1A,$03,$06        ; interiorobject_CUPBOARD,                     3,  6 },
-  DEFB $22,$06,$08        ; interiorobject_SMALL_CRATE,                  6,  8 },
-  DEFB $22,$04,$09        ; interiorobject_SMALL_CRATE,                  4,  9 },
-  DEFB $1D,$09,$06        ; interiorobject_TABLE,                        9,  6 },
-  DEFB $20,$0E,$05        ; interiorobject_TALL_WARDROBE,               14,  5 },
-  DEFB $20,$10,$06        ; interiorobject_TALL_WARDROBE,               16,  6 },
-  DEFB $18,$12,$08        ; interiorobject_ORNATE_WARDROBE_FACING_SW,   18,  8 },
-  DEFB $30,$0B,$08        ; interiorobject_TINY_TABLE,                  11,  8 },
+  DEFB $21,$09,$04        ; interiorobject_SMALL_SHELF,                  9, 4 },
+  DEFB $1A,$03,$06        ; interiorobject_CUPBOARD,                     3, 6 },
+  DEFB $22,$06,$08        ; interiorobject_SMALL_CRATE,                  6, 8 },
+  DEFB $22,$04,$09        ; interiorobject_SMALL_CRATE,                  4, 9 },
+  DEFB $1D,$09,$06        ; interiorobject_TABLE,                        9, 6 },
+  DEFB $20,$0E,$05        ; interiorobject_TALL_WARDROBE,               14, 5 },
+  DEFB $20,$10,$06        ; interiorobject_TALL_WARDROBE,               16, 6 },
+  DEFB $18,$12,$08        ; interiorobject_ORNATE_WARDROBE_FACING_SW,   18, 8 },
+  DEFB $30,$0B,$08        ; interiorobject_TINY_TABLE,                  11, 8 },
 
 ; Room 22: Room with red key.
 roomdef_22_red_key:
@@ -2864,13 +2864,13 @@ roomdef_22_red_key:
   DEFB $02                ; 2 // count of mask bytes
   DEFB $0C,$15            ; [12, 21] // data mask bytes
   DEFB $07                ; 7 // count of objects
-  DEFB $29,$05,$06        ; interiorobject_ROOM_OUTLINE_15x8,            5,  6 },
-  DEFB $25,$04,$04        ; interiorobject_NOTICEBOARD,                  4,  4 },
-  DEFB $21,$09,$04        ; interiorobject_SMALL_SHELF,                  9,  4 },
-  DEFB $22,$06,$08        ; interiorobject_SMALL_CRATE,                  6,  8 },
-  DEFB $10,$09,$08        ; interiorobject_DOOR_FRAME_NW_SE,             9,  8 },
-  DEFB $1D,$09,$06        ; interiorobject_TABLE,                        9,  6 },
-  DEFB $28,$0E,$04        ; interiorobject_END_DOOR_FRAME_NW_SE,        14,  4 },
+  DEFB $29,$05,$06        ; interiorobject_ROOM_OUTLINE_15x8,            5, 6 },
+  DEFB $25,$04,$04        ; interiorobject_NOTICEBOARD,                  4, 4 },
+  DEFB $21,$09,$04        ; interiorobject_SMALL_SHELF,                  9, 4 },
+  DEFB $22,$06,$08        ; interiorobject_SMALL_CRATE,                  6, 8 },
+  DEFB $10,$09,$08        ; interiorobject_DOOR_FRAME_NW_SE,             9, 8 },
+  DEFB $1D,$09,$06        ; interiorobject_TABLE,                        9, 6 },
+  DEFB $28,$0E,$04        ; interiorobject_END_DOOR_FRAME_NW_SE,        14, 4 },
 
 ; Room 23: Breakfast room.
 roomdef_23_breakfast:
@@ -2880,21 +2880,21 @@ roomdef_23_breakfast:
   DEFB $02                ; 2 // count of mask bytes
   DEFB $0A,$03            ; [10, 3] // data mask bytes
   DEFB $0C                ; 12 // count of objects
-  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
-  DEFB $23,$08,$00        ; interiorobject_SMALL_WINDOW,                 8,  0 },
-  DEFB $23,$02,$03        ; interiorobject_SMALL_WINDOW,                 2,  3 },
+  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
+  DEFB $23,$08,$00        ; interiorobject_SMALL_WINDOW,                 8, 0 },
+  DEFB $23,$02,$03        ; interiorobject_SMALL_WINDOW,                 2, 3 },
   DEFB $10,$07,$0A        ; interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
-  DEFB $2C,$05,$04        ; interiorobject_MESS_TABLE,                   5,  4 },
-  DEFB $2A,$12,$04        ; interiorobject_CUPBOARD_42,                 18,  4 },
-  DEFB $28,$14,$04        ; interiorobject_END_DOOR_FRAME_NW_SE,        20,  4 },
-  DEFB $0F,$0F,$08        ; interiorobject_DOOR_FRAME_SW_NE,            15,  8 },
-  DEFB $2B,$07,$06        ; interiorobject_MESS_BENCH,                   7,  6 },
+  DEFB $2C,$05,$04        ; interiorobject_MESS_TABLE,                   5, 4 },
+  DEFB $2A,$12,$04        ; interiorobject_CUPBOARD_42,                 18, 4 },
+  DEFB $28,$14,$04        ; interiorobject_END_DOOR_FRAME_NW_SE,        20, 4 },
+  DEFB $0F,$0F,$08        ; interiorobject_DOOR_FRAME_SW_NE,            15, 8 },
+  DEFB $2B,$07,$06        ; interiorobject_MESS_BENCH,                   7, 6 },
 roomdef_23_breakfast_bench_A:
-  DEFB $0D,$0C,$05        ; interiorobject_EMPTY_BENCH,                 12,  5 },
+  DEFB $0D,$0C,$05        ; interiorobject_EMPTY_BENCH,                 12, 5 },
 roomdef_23_breakfast_bench_B:
-  DEFB $0D,$0A,$06        ; interiorobject_EMPTY_BENCH,                 10,  6 },
+  DEFB $0D,$0A,$06        ; interiorobject_EMPTY_BENCH,                 10, 6 },
 roomdef_23_breakfast_bench_C:
-  DEFB $0D,$08,$07        ; interiorobject_EMPTY_BENCH,                  8,  7 },
+  DEFB $0D,$08,$07        ; interiorobject_EMPTY_BENCH,                  8, 7 },
 
 ; Room 24: Solitary confinement cell.
 roomdef_24_solitary:
@@ -2904,9 +2904,9 @@ roomdef_24_solitary:
   DEFB $01                ; 1 // count of mask bytes
   DEFB $1A                ; [26] // data mask bytes
   DEFB $03                ; 3 // count of objects
-  DEFB $29,$05,$06        ; interiorobject_ROOM_OUTLINE_15x8,            5,  6 },
-  DEFB $28,$0E,$04        ; interiorobject_END_DOOR_FRAME_NW_SE,        14,  4 },
-  DEFB $30,$0A,$09        ; interiorobject_TINY_TABLE,                  10,  9 },
+  DEFB $29,$05,$06        ; interiorobject_ROOM_OUTLINE_15x8,            5, 6 },
+  DEFB $28,$0E,$04        ; interiorobject_END_DOOR_FRAME_NW_SE,        14, 4 },
+  DEFB $30,$0A,$09        ; interiorobject_TINY_TABLE,                  10, 9 },
 
 ; Room 25: Breakfast room.
 roomdef_25_breakfast:
@@ -2915,21 +2915,21 @@ roomdef_25_breakfast:
   DEFB $36,$44,$22,$44    ; 54, 68, 34, 68 }, // boundary
   DEFB $00                ; 0 // count of mask bytes
   DEFB $0B                ; 11 // count of objects
-  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1,  4 },
-  DEFB $23,$08,$00        ; interiorobject_SMALL_WINDOW,                 8,  0 },
-  DEFB $1A,$05,$03        ; interiorobject_CUPBOARD,                     5,  3 },
-  DEFB $23,$02,$03        ; interiorobject_SMALL_WINDOW,                 2,  3 },
-  DEFB $28,$12,$03        ; interiorobject_END_DOOR_FRAME_NW_SE,        18,  3 },
-  DEFB $2C,$05,$04        ; interiorobject_MESS_TABLE,                   5,  4 },
-  DEFB $2B,$07,$06        ; interiorobject_MESS_BENCH,                   7,  6 },
+  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
+  DEFB $23,$08,$00        ; interiorobject_SMALL_WINDOW,                 8, 0 },
+  DEFB $1A,$05,$03        ; interiorobject_CUPBOARD,                     5, 3 },
+  DEFB $23,$02,$03        ; interiorobject_SMALL_WINDOW,                 2, 3 },
+  DEFB $28,$12,$03        ; interiorobject_END_DOOR_FRAME_NW_SE,        18, 3 },
+  DEFB $2C,$05,$04        ; interiorobject_MESS_TABLE,                   5, 4 },
+  DEFB $2B,$07,$06        ; interiorobject_MESS_BENCH,                   7, 6 },
 roomdef_25_breakfast_bench_D:
-  DEFB $0D,$0C,$05        ; interiorobject_EMPTY_BENCH,                 12,  5 },
+  DEFB $0D,$0C,$05        ; interiorobject_EMPTY_BENCH,                 12, 5 },
 roomdef_25_breakfast_bench_E:
-  DEFB $0D,$0A,$06        ; interiorobject_EMPTY_BENCH,                 10,  6 },
+  DEFB $0D,$0A,$06        ; interiorobject_EMPTY_BENCH,                 10, 6 },
 roomdef_25_breakfast_bench_F:
-  DEFB $0D,$08,$07        ; interiorobject_EMPTY_BENCH,                  8,  7 },
+  DEFB $0D,$08,$07        ; interiorobject_EMPTY_BENCH,                  8, 7 },
 roomdef_25_breakfast_bench_G:
-  DEFB $0D,$0E,$04        ; interiorobject_EMPTY_BENCH,                 14,  4 },
+  DEFB $0D,$0E,$04        ; interiorobject_EMPTY_BENCH,                 14, 4 },
 
 ; Room 28: Hut 1, near side.
 roomdef_28_hut1_left:
@@ -2940,12 +2940,12 @@ roomdef_28_hut1_left:
   DEFB $03                ; 3 // count of mask bytes
   DEFB $08,$0D,$13        ; [8, 13, 19] // data mask bytes
   DEFB $08                ; 8 // count of objects
-  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
-  DEFB $08,$06,$02        ; interiorobject_WIDE_WINDOW,                  6,  2 },
-  DEFB $28,$0E,$04        ; interiorobject_END_DOOR_FRAME_NW_SE,        14,  4 },
-  DEFB $1A,$03,$06        ; interiorobject_CUPBOARD,                     3,  6 },
-  DEFB $17,$08,$07        ; interiorobject_OCCUPIED_BED,                 8,  7 },
-  DEFB $10,$07,$09        ; interiorobject_DOOR_FRAME_NW_SE,             7,  9 },
+  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
+  DEFB $08,$06,$02        ; interiorobject_WIDE_WINDOW,                  6, 2 },
+  DEFB $28,$0E,$04        ; interiorobject_END_DOOR_FRAME_NW_SE,        14, 4 },
+  DEFB $1A,$03,$06        ; interiorobject_CUPBOARD,                     3, 6 },
+  DEFB $17,$08,$07        ; interiorobject_OCCUPIED_BED,                 8, 7 },
+  DEFB $10,$07,$09        ; interiorobject_DOOR_FRAME_NW_SE,             7, 9 },
   DEFB $19,$0F,$0A        ; interiorobject_CHAIR_FACING_SW,             15, 10 },
   DEFB $1D,$0B,$0C        ; interiorobject_TABLE,                       11, 12 },
 
@@ -2956,12 +2956,12 @@ roomdef_29_second_tunnel_start:
   DEFB $06                ; 6 // count of mask bytes
   DEFB $1E,$1F,$20,$21,$22,$23 ; [30, 31, 32, 33, 34, 35] // data mask bytes
   DEFB $06                ; 6 // count of objects
-  DEFB $00,$14,$00        ; interiorobject_TUNNEL_SW_NE,                20,  0 },
-  DEFB $00,$10,$02        ; interiorobject_TUNNEL_SW_NE,                16,  2 },
-  DEFB $00,$0C,$04        ; interiorobject_TUNNEL_SW_NE,                12,  4 },
-  DEFB $00,$08,$06        ; interiorobject_TUNNEL_SW_NE,                 8,  6 },
-  DEFB $00,$04,$08        ; interiorobject_TUNNEL_SW_NE,                 4,  8 },
-  DEFB $00,$00,$0A        ; interiorobject_TUNNEL_SW_NE,                 0, 10 },
+  DEFB $00,$14,$00        ; interiorobject_TUNNEL_SW_NE, 20,  0 },
+  DEFB $00,$10,$02        ; interiorobject_TUNNEL_SW_NE, 16,  2 },
+  DEFB $00,$0C,$04        ; interiorobject_TUNNEL_SW_NE, 12,  4 },
+  DEFB $00,$08,$06        ; interiorobject_TUNNEL_SW_NE, 8,  6 },
+  DEFB $00,$04,$08        ; interiorobject_TUNNEL_SW_NE, 4,  8 },
+  DEFB $00,$00,$0A        ; interiorobject_TUNNEL_SW_NE, 0, 10 },
 
 ; Room 31.
 roomdef_31:
@@ -2970,12 +2970,12 @@ roomdef_31:
   DEFB $06                ; 6 // count of mask bytes
   DEFB $24,$25,$26,$27,$28,$29 ; [36, 37, 38, 39, 40, 41] // data mask bytes
   DEFB $06                ; 6 // count of objects
-  DEFB $03,$00,$00        ; interiorobject_TUNNEL_NW_SE,                 0,  0 },
-  DEFB $03,$04,$02        ; interiorobject_TUNNEL_NW_SE,                 4,  2 },
-  DEFB $03,$08,$04        ; interiorobject_TUNNEL_NW_SE,                 8,  4 },
-  DEFB $03,$0C,$06        ; interiorobject_TUNNEL_NW_SE,                12,  6 },
-  DEFB $03,$10,$08        ; interiorobject_TUNNEL_NW_SE,                16,  8 },
-  DEFB $03,$14,$0A        ; interiorobject_TUNNEL_NW_SE,                20, 10 },
+  DEFB $03,$00,$00        ; interiorobject_TUNNEL_NW_SE, 0,  0 },
+  DEFB $03,$04,$02        ; interiorobject_TUNNEL_NW_SE, 4,  2 },
+  DEFB $03,$08,$04        ; interiorobject_TUNNEL_NW_SE, 8,  4 },
+  DEFB $03,$0C,$06        ; interiorobject_TUNNEL_NW_SE, 12,  6 },
+  DEFB $03,$10,$08        ; interiorobject_TUNNEL_NW_SE, 16,  8 },
+  DEFB $03,$14,$0A        ; interiorobject_TUNNEL_NW_SE, 20, 10 },
 
 ; Room 36.
 roomdef_36:
@@ -2984,11 +2984,11 @@ roomdef_36:
   DEFB $06                ; 6 // count of mask bytes
   DEFB $1F,$20,$21,$22,$23,$2D ; [31, 32, 33, 34, 35, 45] // data mask bytes
   DEFB $05                ; 5 // count of objects
-  DEFB $00,$14,$00        ; interiorobject_TUNNEL_SW_NE,                20,  0 },
-  DEFB $00,$10,$02        ; interiorobject_TUNNEL_SW_NE,                16,  2 },
-  DEFB $00,$0C,$04        ; interiorobject_TUNNEL_SW_NE,                12,  4 },
-  DEFB $00,$08,$06        ; interiorobject_TUNNEL_SW_NE,                 8,  6 },
-  DEFB $0E,$04,$08        ; interiorobject_TUNNEL_14,                    4,  8 },
+  DEFB $00,$14,$00        ; interiorobject_TUNNEL_SW_NE, 20,  0 },
+  DEFB $00,$10,$02        ; interiorobject_TUNNEL_SW_NE, 16,  2 },
+  DEFB $00,$0C,$04        ; interiorobject_TUNNEL_SW_NE, 12,  4 },
+  DEFB $00,$08,$06        ; interiorobject_TUNNEL_SW_NE, 8,  6 },
+  DEFB $0E,$04,$08        ; interiorobject_TUNNEL_14, 4,  8 },
 
 ; Room 32.
 roomdef_32:
@@ -2997,11 +2997,11 @@ roomdef_32:
   DEFB $06                ; 6 // count of mask bytes
   DEFB $24,$25,$26,$27,$28,$2A ; [36, 37, 38, 39, 40, 42] // data mask bytes
   DEFB $05                ; 5 // count of objects
-  DEFB $03,$00,$00        ; interiorobject_TUNNEL_NW_SE,                 0,  0 },
-  DEFB $03,$04,$02        ; interiorobject_TUNNEL_NW_SE,                 4,  2 },
-  DEFB $03,$08,$04        ; interiorobject_TUNNEL_NW_SE,                 8,  4 },
-  DEFB $03,$0C,$06        ; interiorobject_TUNNEL_NW_SE,                12,  6 },
-  DEFB $11,$10,$08        ; interiorobject_TUNNEL_17,                   16,  8 },
+  DEFB $03,$00,$00        ; interiorobject_TUNNEL_NW_SE, 0,  0 },
+  DEFB $03,$04,$02        ; interiorobject_TUNNEL_NW_SE, 4,  2 },
+  DEFB $03,$08,$04        ; interiorobject_TUNNEL_NW_SE, 8,  4 },
+  DEFB $03,$0C,$06        ; interiorobject_TUNNEL_NW_SE, 12,  6 },
+  DEFB $11,$10,$08        ; interiorobject_TUNNEL_17, 16,  8 },
 
 ; Room 34.
 roomdef_34:
@@ -3010,12 +3010,12 @@ roomdef_34:
   DEFB $06                ; 6 // count of mask bytes
   DEFB $24,$25,$26,$27,$28,$2E ; [36, 37, 38, 39, 40, 46] // data mask bytes
   DEFB $06                ; 6 // count of objects
-  DEFB $03,$00,$00        ; interiorobject_TUNNEL_NW_SE,                 0,  0 },
-  DEFB $03,$04,$02        ; interiorobject_TUNNEL_NW_SE,                 4,  2 },
-  DEFB $03,$08,$04        ; interiorobject_TUNNEL_NW_SE,                 8,  4 },
-  DEFB $03,$0C,$06        ; interiorobject_TUNNEL_NW_SE,                12,  6 },
-  DEFB $03,$10,$08        ; interiorobject_TUNNEL_NW_SE,                16,  8 },
-  DEFB $12,$14,$0A        ; interiorobject_TUNNEL_JOIN_18,              20, 10 },
+  DEFB $03,$00,$00        ; interiorobject_TUNNEL_NW_SE, 0,  0 },
+  DEFB $03,$04,$02        ; interiorobject_TUNNEL_NW_SE, 4,  2 },
+  DEFB $03,$08,$04        ; interiorobject_TUNNEL_NW_SE, 8,  4 },
+  DEFB $03,$0C,$06        ; interiorobject_TUNNEL_NW_SE, 12,  6 },
+  DEFB $03,$10,$08        ; interiorobject_TUNNEL_NW_SE, 16,  8 },
+  DEFB $12,$14,$0A        ; interiorobject_TUNNEL_JOIN_18, 20, 10 },
 
 ; Room 35.
 roomdef_35:
@@ -3024,12 +3024,12 @@ roomdef_35:
   DEFB $06                ; 6 // count of mask bytes
   DEFB $24,$25,$26,$27,$28,$29 ; [36, 37, 38, 39, 40, 41] // data mask bytes
   DEFB $06                ; 6 // count of objects
-  DEFB $03,$00,$00        ; interiorobject_TUNNEL_NW_SE,                 0,  0 },
-  DEFB $03,$04,$02        ; interiorobject_TUNNEL_NW_SE,                 4,  2 },
-  DEFB $04,$08,$04        ; interiorobject_TUNNEL_T_JOIN_NW_SE,          8,  4 },
-  DEFB $03,$0C,$06        ; interiorobject_TUNNEL_NW_SE,                12,  6 },
-  DEFB $03,$10,$08        ; interiorobject_TUNNEL_NW_SE,                16,  8 },
-  DEFB $03,$14,$0A        ; interiorobject_TUNNEL_NW_SE,                20, 10 },
+  DEFB $03,$00,$00        ; interiorobject_TUNNEL_NW_SE, 0,  0 },
+  DEFB $03,$04,$02        ; interiorobject_TUNNEL_NW_SE, 4,  2 },
+  DEFB $04,$08,$04        ; interiorobject_TUNNEL_T_JOIN_NW_SE, 8,  4 },
+  DEFB $03,$0C,$06        ; interiorobject_TUNNEL_NW_SE, 12,  6 },
+  DEFB $03,$10,$08        ; interiorobject_TUNNEL_NW_SE, 16,  8 },
+  DEFB $03,$14,$0A        ; interiorobject_TUNNEL_NW_SE, 20, 10 },
 
 ; Room 30.
 roomdef_30:
@@ -3038,12 +3038,12 @@ roomdef_30:
   DEFB $07                ; 7 // count of mask bytes
   DEFB $1E,$1F,$20,$21,$22,$23,$2C ; [30, 31, 32, 33, 34, 35, 44] // data mask bytes
   DEFB $06                ; 6 // count of objects
-  DEFB $00,$14,$00        ; interiorobject_TUNNEL_SW_NE,                20,  0 },
-  DEFB $00,$10,$02        ; interiorobject_TUNNEL_SW_NE,                16,  2 },
-  DEFB $00,$0C,$04        ; interiorobject_TUNNEL_SW_NE,                12,  4 },
-  DEFB $06,$08,$06        ; interiorobject_TUNNEL_CORNER_6,              8,  6 },
-  DEFB $00,$04,$08        ; interiorobject_TUNNEL_SW_NE,                 4,  8 },
-  DEFB $00,$00,$0A        ; interiorobject_TUNNEL_SW_NE,                 0, 10 },
+  DEFB $00,$14,$00        ; interiorobject_TUNNEL_SW_NE, 20,  0 },
+  DEFB $00,$10,$02        ; interiorobject_TUNNEL_SW_NE, 16,  2 },
+  DEFB $00,$0C,$04        ; interiorobject_TUNNEL_SW_NE, 12,  4 },
+  DEFB $06,$08,$06        ; interiorobject_TUNNEL_CORNER_6, 8,  6 },
+  DEFB $00,$04,$08        ; interiorobject_TUNNEL_SW_NE, 4,  8 },
+  DEFB $00,$00,$0A        ; interiorobject_TUNNEL_SW_NE, 0, 10 },
 
 ; Room 40.
 roomdef_40:
@@ -3052,12 +3052,12 @@ roomdef_40:
   DEFB $06                ; 6 // count of mask bytes
   DEFB $1E,$1F,$20,$21,$22,$2B ; [30, 31, 32, 33, 34, 43] // data mask bytes
   DEFB $06                ; 6 // count of objects
-  DEFB $07,$14,$00        ; interiorobject_TUNNEL_CORNER_7,             20,  0 },
-  DEFB $00,$10,$02        ; interiorobject_TUNNEL_SW_NE,                16,  2 },
-  DEFB $00,$0C,$04        ; interiorobject_TUNNEL_SW_NE,                12,  4 },
-  DEFB $00,$08,$06        ; interiorobject_TUNNEL_SW_NE,                 8,  6 },
-  DEFB $00,$04,$08        ; interiorobject_TUNNEL_SW_NE,                 4,  8 },
-  DEFB $00,$00,$0A        ; interiorobject_TUNNEL_SW_NE,                 0, 10 },
+  DEFB $07,$14,$00        ; interiorobject_TUNNEL_CORNER_7, 20,  0 },
+  DEFB $00,$10,$02        ; interiorobject_TUNNEL_SW_NE, 16,  2 },
+  DEFB $00,$0C,$04        ; interiorobject_TUNNEL_SW_NE, 12,  4 },
+  DEFB $00,$08,$06        ; interiorobject_TUNNEL_SW_NE, 8,  6 },
+  DEFB $00,$04,$08        ; interiorobject_TUNNEL_SW_NE, 4,  8 },
+  DEFB $00,$00,$0A        ; interiorobject_TUNNEL_SW_NE, 0, 10 },
 
 ; Room 44.
 roomdef_44:
@@ -3066,11 +3066,11 @@ roomdef_44:
   DEFB $05                ; 5 // count of mask bytes
   DEFB $24,$25,$26,$27,$28 ; [36, 37, 38, 39, 40] // data mask bytes
   DEFB $05                ; 5 // count of objects
-  DEFB $03,$00,$00        ; interiorobject_TUNNEL_NW_SE,                 0,  0 },
-  DEFB $03,$04,$02        ; interiorobject_TUNNEL_NW_SE,                 4,  2 },
-  DEFB $03,$08,$04        ; interiorobject_TUNNEL_NW_SE,                 8,  4 },
-  DEFB $03,$0C,$06        ; interiorobject_TUNNEL_NW_SE,                12,  6 },
-  DEFB $0C,$10,$08        ; interiorobject_TUNNEL_CORNER_NW_NE,         16,  8 },
+  DEFB $03,$00,$00        ; interiorobject_TUNNEL_NW_SE, 0,  0 },
+  DEFB $03,$04,$02        ; interiorobject_TUNNEL_NW_SE, 4,  2 },
+  DEFB $03,$08,$04        ; interiorobject_TUNNEL_NW_SE, 8,  4 },
+  DEFB $03,$0C,$06        ; interiorobject_TUNNEL_NW_SE, 12,  6 },
+  DEFB $0C,$10,$08        ; interiorobject_TUNNEL_CORNER_NW_NE, 16,  8 },
 
 ; Room 50: Blocked tunnel.
 roomdef_50_blocked_tunnel:
@@ -3081,13 +3081,13 @@ roomdef_50_blocked_tunnel_boundary:
   DEFB $06                ; 6 // count of mask bytes
   DEFB $1E,$1F,$20,$21,$22,$2B ; [30, 31, 32, 33, 34, 43] // data mask bytes
   DEFB $06                ; 6 // count of objects
-  DEFB $07,$14,$00        ; interiorobject_TUNNEL_CORNER_7,             20,  0 },
-  DEFB $00,$10,$02        ; interiorobject_TUNNEL_SW_NE,                16,  2 },
-  DEFB $00,$0C,$04        ; interiorobject_TUNNEL_SW_NE,                12,  4 },
+  DEFB $07,$14,$00        ; interiorobject_TUNNEL_CORNER_7, 20,  0 },
+  DEFB $00,$10,$02        ; interiorobject_TUNNEL_SW_NE, 16,  2 },
+  DEFB $00,$0C,$04        ; interiorobject_TUNNEL_SW_NE, 12,  4 },
 roomdef_50_blocked_tunnel_collapsed_tunnel:
-  DEFB $14,$08,$06        ; interiorobject_COLLAPSED_TUNNEL_SW_NE,       8,  6 },
-  DEFB $00,$04,$08        ; interiorobject_TUNNEL_SW_NE,                 4,  8 },
-  DEFB $00,$00,$0A        ; interiorobject_TUNNEL_SW_NE,                 0, 10 },
+  DEFB $14,$08,$06        ; interiorobject_COLLAPSED_TUNNEL_SW_NE, 8, 6 },
+  DEFB $00,$04,$08        ; interiorobject_TUNNEL_SW_NE, 4,  8 },
+  DEFB $00,$00,$0A        ; interiorobject_TUNNEL_SW_NE, 0, 10 },
 
 ; Interior object definitions.
 interior_object_defs:
@@ -3634,33 +3634,33 @@ interior_object_tile_refs_27:
 ; | Route     | 2     | route               | The route the character's on            |
 ; +-----------+-------+---------------------+-----------------------------------------+
 character_structs:
-  DEFB $00,$0B,$2E,$2E,$18,$03,$00 ; character_0_COMMANDANT,   room_11_PAPERS,   ( 46,  46, 24), (0x03, 0x00)
-  DEFB $01,$00,$66,$44,$03,$01,$00 ; character_1_GUARD_1,      room_0_OUTDOORS,  (102,  68,  3), (0x01, 0x00)
-  DEFB $02,$00,$44,$68,$03,$01,$02 ; character_2_GUARD_2,      room_0_OUTDOORS,  ( 68, 104,  3), (0x01, 0x02)
-  DEFB $03,$10,$2E,$2E,$18,$03,$13 ; character_3_GUARD_3,      room_16_CORRIDOR, ( 46,  46, 24), (0x03, 0x13)
-  DEFB $04,$00,$3D,$67,$03,$02,$04 ; character_4_GUARD_4,      room_0_OUTDOORS,  ( 61, 103,  3), (0x02, 0x04)
-  DEFB $05,$00,$6A,$38,$0D,$00,$00 ; character_5_GUARD_5,      room_0_OUTDOORS,  (106,  56, 13), (0x00, 0x00)
-  DEFB $06,$00,$48,$5E,$0D,$00,$00 ; character_6_GUARD_6,      room_0_OUTDOORS,  ( 72,  94, 13), (0x00, 0x00)
-  DEFB $07,$00,$48,$46,$0D,$00,$00 ; character_7_GUARD_7,      room_0_OUTDOORS,  ( 72,  70, 13), (0x00, 0x00)
-  DEFB $08,$00,$50,$2E,$0D,$00,$00 ; character_8_GUARD_8,      room_0_OUTDOORS,  ( 80,  46, 13), (0x00, 0x00)
-  DEFB $09,$00,$6C,$47,$15,$04,$00 ; character_9_GUARD_9,      room_0_OUTDOORS,  (108,  71, 21), (0x04, 0x00)
-  DEFB $0A,$00,$5C,$34,$03,$FF,$38 ; character_10_GUARD_10,    room_0_OUTDOORS,  ( 92,  52,  3), (0xFF, 0x38)
-  DEFB $0B,$00,$6D,$45,$03,$00,$00 ; character_11_GUARD_11,    room_0_OUTDOORS,  (109,  69,  3), (0x00, 0x00)
-  DEFB $0C,$03,$28,$3C,$18,$00,$08 ; character_12_GUARD_12,    room_3_HUT2RIGHT, ( 40,  60, 24), (0x00, 0x08)
+  DEFB $00,$0B,$2E,$2E,$18,$03,$00 ; character_0_COMMANDANT, room_11_PAPERS,   ( 46,  46, 24), (0x03, 0x00)
+  DEFB $01,$00,$66,$44,$03,$01,$00 ; character_1_GUARD_1, room_0_OUTDOORS, (102,  68,  3), (0x01, 0x00)
+  DEFB $02,$00,$44,$68,$03,$01,$02 ; character_2_GUARD_2, room_0_OUTDOORS, ( 68, 104,  3), (0x01, 0x02)
+  DEFB $03,$10,$2E,$2E,$18,$03,$13 ; character_3_GUARD_3, room_16_CORRIDOR, ( 46,  46, 24), (0x03, 0x13)
+  DEFB $04,$00,$3D,$67,$03,$02,$04 ; character_4_GUARD_4, room_0_OUTDOORS, ( 61, 103,  3), (0x02, 0x04)
+  DEFB $05,$00,$6A,$38,$0D,$00,$00 ; character_5_GUARD_5, room_0_OUTDOORS, (106,  56, 13), (0x00, 0x00)
+  DEFB $06,$00,$48,$5E,$0D,$00,$00 ; character_6_GUARD_6, room_0_OUTDOORS, ( 72,  94, 13), (0x00, 0x00)
+  DEFB $07,$00,$48,$46,$0D,$00,$00 ; character_7_GUARD_7, room_0_OUTDOORS, ( 72,  70, 13), (0x00, 0x00)
+  DEFB $08,$00,$50,$2E,$0D,$00,$00 ; character_8_GUARD_8, room_0_OUTDOORS, ( 80,  46, 13), (0x00, 0x00)
+  DEFB $09,$00,$6C,$47,$15,$04,$00 ; character_9_GUARD_9, room_0_OUTDOORS, (108,  71, 21), (0x04, 0x00)
+  DEFB $0A,$00,$5C,$34,$03,$FF,$38 ; character_10_GUARD_10, room_0_OUTDOORS,  ( 92,  52,  3), (0xFF, 0x38)
+  DEFB $0B,$00,$6D,$45,$03,$00,$00 ; character_11_GUARD_11, room_0_OUTDOORS,  (109,  69,  3), (0x00, 0x00)
+  DEFB $0C,$03,$28,$3C,$18,$00,$08 ; character_12_GUARD_12, room_3_HUT2RIGHT, ( 40,  60, 24), (0x00, 0x08)
 ; Bug: The room field here is 2 but reset_map_and_characters will reset it to 3.
-  DEFB $0D,$02,$24,$30,$18,$00,$08 ; character_13_GUARD_13,    room_2_HUT2LEFT,  ( 36,  48, 24), (0x00, 0x08)
-  DEFB $0E,$05,$28,$3C,$18,$00,$10 ; character_14_GUARD_14,    room_5_HUT3RIGHT, ( 40,  60, 24), (0x00, 0x10)
-  DEFB $0F,$05,$24,$22,$18,$00,$10 ; character_15_GUARD_15,    room_5_HUT3RIGHT, ( 36,  34, 24), (0x00, 0x10)
+  DEFB $0D,$02,$24,$30,$18,$00,$08 ; character_13_GUARD_13, room_2_HUT2LEFT,  ( 36,  48, 24), (0x00, 0x08)
+  DEFB $0E,$05,$28,$3C,$18,$00,$10 ; character_14_GUARD_14, room_5_HUT3RIGHT, ( 40,  60, 24), (0x00, 0x10)
+  DEFB $0F,$05,$24,$22,$18,$00,$10 ; character_15_GUARD_15, room_5_HUT3RIGHT, ( 36,  34, 24), (0x00, 0x10)
   DEFB $10,$00,$44,$54,$01,$FF,$00 ; character_16_GUARD_DOG_1, room_0_OUTDOORS,  ( 68,  84,  1), (0xFF, 0x00)
   DEFB $11,$00,$44,$68,$01,$FF,$00 ; character_17_GUARD_DOG_2, room_0_OUTDOORS,  ( 68, 104,  1), (0xFF, 0x00)
   DEFB $12,$00,$66,$44,$01,$FF,$18 ; character_18_GUARD_DOG_3, room_0_OUTDOORS,  (102,  68,  1), (0xFF, 0x18)
   DEFB $13,$00,$58,$44,$01,$FF,$18 ; character_19_GUARD_DOG_4, room_0_OUTDOORS,  ( 88,  68,  1), (0xFF, 0x18)
-  DEFB $14,$FF,$34,$3C,$18,$00,$08 ; character_20_PRISONER_1,  room_NONE,        ( 52,  60, 24), (0x00, 0x08)
-  DEFB $15,$FF,$34,$2C,$18,$00,$08 ; character_21_PRISONER_2,  room_NONE,        ( 52,  44, 24), (0x00, 0x08)
-  DEFB $16,$FF,$34,$1C,$18,$00,$08 ; character_22_PRISONER_3,  room_NONE,        ( 52,  28, 24), (0x00, 0x08)
-  DEFB $17,$FF,$34,$3C,$18,$00,$10 ; character_23_PRISONER_4,  room_NONE,        ( 52,  60, 24), (0x00, 0x10)
-  DEFB $18,$FF,$34,$2C,$18,$00,$10 ; character_24_PRISONER_5,  room_NONE,        ( 52,  44, 24), (0x00, 0x10)
-  DEFB $19,$FF,$34,$1C,$18,$00,$10 ; character_25_PRISONER_6,  room_NONE,        ( 52,  28, 24), (0x00, 0x10)
+  DEFB $14,$FF,$34,$3C,$18,$00,$08 ; character_20_PRISONER_1,  room_NONE, ( 52,  60, 24), (0x00, 0x08)
+  DEFB $15,$FF,$34,$2C,$18,$00,$08 ; character_21_PRISONER_2,  room_NONE, ( 52,  44, 24), (0x00, 0x08)
+  DEFB $16,$FF,$34,$1C,$18,$00,$08 ; character_22_PRISONER_3,  room_NONE, ( 52,  28, 24), (0x00, 0x08)
+  DEFB $17,$FF,$34,$3C,$18,$00,$10 ; character_23_PRISONER_4,  room_NONE, ( 52,  60, 24), (0x00, 0x10)
+  DEFB $18,$FF,$34,$2C,$18,$00,$10 ; character_24_PRISONER_5,  room_NONE, ( 52,  44, 24), (0x00, 0x10)
+  DEFB $19,$FF,$34,$1C,$18,$00,$10 ; character_25_PRISONER_6,  room_NONE, ( 52,  28, 24), (0x00, 0x10)
 
 ; Item structures (a.k.a. itemstructs).
 ;
@@ -3675,23 +3675,23 @@ character_structs:
 ; | IsoPos  | 2     | iso_pos        | Isometric projected position of the item |
 ; +---------+-------+----------------+------------------------------------------+
 item_structs:
-  DEFB $00,$FF,$40,$20,$02,$78,$F4 ; item_WIRESNIPS,        room_NONE,        (64, 32,  2), (0x78, 0xF4) // <- item_to_itemstruct, find_nearby_item
-  DEFB $01,$09,$3E,$30,$00,$7C,$F2 ; item_SHOVEL,           room_9_CRATE,     (62, 48,  0), (0x7C, 0xF2)
-  DEFB $02,$0A,$49,$24,$10,$77,$F0 ; item_LOCKPICK,         room_10_LOCKPICK, (73, 36, 16), (0x77, 0xF0)
-  DEFB $03,$0B,$2A,$3A,$04,$84,$F3 ; item_PAPERS,           room_11_PAPERS,   (42, 58,  4), (0x84, 0xF3)
-  DEFB $04,$0E,$32,$18,$02,$7A,$F6 ; item_TORCH,            room_14_TORCH,    (34, 24,  2), (0x7A, 0xF6)
-  DEFB $05,$FF,$24,$2C,$04,$7E,$F4 ; item_BRIBE,            room_NONE,        (36, 44,  4), (0x7E, 0xF4) // <- accept_bribe
-  DEFB $06,$0F,$2C,$41,$10,$87,$F1 ; item_UNIFORM,          room_15_UNIFORM,  (44, 65, 16), (0x87, 0xF1)
+  DEFB $00,$FF,$40,$20,$02,$78,$F4 ; item_WIRESNIPS,        room_NONE, (64, 32,  2), (0x78, 0xF4) // <- item_to_itemstruct, find_nearby_item
+  DEFB $01,$09,$3E,$30,$00,$7C,$F2 ; item_SHOVEL,           room_9_CRATE, (62, 48,  0), (0x7C, 0xF2)
+  DEFB $02,$0A,$49,$24,$10,$77,$F0 ; item_LOCKPICK, room_10_LOCKPICK, (73, 36, 16), (0x77, 0xF0)
+  DEFB $03,$0B,$2A,$3A,$04,$84,$F3 ; item_PAPERS, room_11_PAPERS,   (42, 58,  4), (0x84, 0xF3)
+  DEFB $04,$0E,$32,$18,$02,$7A,$F6 ; item_TORCH,            room_14_TORCH, (34, 24,  2), (0x7A, 0xF6)
+  DEFB $05,$FF,$24,$2C,$04,$7E,$F4 ; item_BRIBE,            room_NONE, (36, 44,  4), (0x7E, 0xF4) // <- accept_bribe
+  DEFB $06,$0F,$2C,$41,$10,$87,$F1 ; item_UNIFORM, room_15_UNIFORM,  (44, 65, 16), (0x87, 0xF1)
 item_structs_food:
-  DEFB $07,$13,$40,$30,$10,$7E,$F0 ; item_FOOD,             room_19_FOOD,     (64, 48, 16), (0x7E, 0xF0) // <- action_poison, called_from_main_loop
-  DEFB $08,$01,$42,$34,$04,$7C,$F1 ; item_POISON,           room_1_HUT1RIGHT, (66, 52,  4), (0x7C, 0xF1)
-  DEFB $09,$16,$3C,$2A,$00,$7B,$F2 ; item_RED_KEY,          room_22_REDKEY,   (60, 42,  0), (0x7B, 0xF2)
-  DEFB $0A,$0B,$1C,$22,$00,$81,$F8 ; item_YELLOW_KEY,       room_11_PAPERS,   (28, 34,  0), (0x81, 0xF8)
-  DEFB $0B,$00,$4A,$48,$00,$7A,$6E ; item_GREEN_KEY,        room_0_OUTDOORS,  (74, 72,  0), (0x7A, 0x6E)
-  DEFB $0C,$FF,$1C,$32,$0C,$85,$F6 ; item_RED_CROSS_PARCEL, room_NONE,        (28, 50, 12), (0x85, 0xF6) // <- event_new_red_cross_parcel, new_red_cross_parcel
-  DEFB $0D,$12,$24,$3A,$08,$85,$F4 ; item_RADIO,            room_18_RADIO,    (36, 58,  8), (0x85, 0xF4)
-  DEFB $0E,$FF,$24,$2C,$04,$7E,$F4 ; item_PURSE,            room_NONE,        (36, 44,  4), (0x7E, 0xF4)
-  DEFB $0F,$FF,$34,$1C,$04,$7E,$F4 ; item_COMPASS,          room_NONE,        (52, 28,  4), (0x7E, 0xF4)
+  DEFB $07,$13,$40,$30,$10,$7E,$F0 ; item_FOOD,             room_19_FOOD, (64, 48, 16), (0x7E, 0xF0) // <- action_poison, called_from_main_loop
+  DEFB $08,$01,$42,$34,$04,$7C,$F1 ; item_POISON, room_1_HUT1RIGHT, (66, 52,  4), (0x7C, 0xF1)
+  DEFB $09,$16,$3C,$2A,$00,$7B,$F2 ; item_RED_KEY, room_22_REDKEY,   (60, 42,  0), (0x7B, 0xF2)
+  DEFB $0A,$0B,$1C,$22,$00,$81,$F8 ; item_YELLOW_KEY, room_11_PAPERS, (28, 34,  0), (0x81, 0xF8)
+  DEFB $0B,$00,$4A,$48,$00,$7A,$6E ; item_GREEN_KEY, room_0_OUTDOORS, (74, 72,  0), (0x7A, 0x6E)
+  DEFB $0C,$FF,$1C,$32,$0C,$85,$F6 ; item_RED_CROSS_PARCEL, room_NONE, (28, 50, 12), (0x85, 0xF6) // <- event_new_red_cross_parcel, new_red_cross_parcel
+  DEFB $0D,$12,$24,$3A,$08,$85,$F4 ; item_RADIO,            room_18_RADIO, (36, 58,  8), (0x85, 0xF4)
+  DEFB $0E,$FF,$24,$2C,$04,$7E,$F4 ; item_PURSE,            room_NONE, (36, 44,  4), (0x7E, 0xF4)
+  DEFB $0F,$FF,$34,$1C,$04,$7E,$F4 ; item_COMPASS,          room_NONE, (52, 28,  4), (0x7E, 0xF4)
 
 ; Table of pointers to routes.
 routes:
@@ -3743,11 +3743,11 @@ routes:
   DEFW route_hero_roll_call       ;
   DEFB $FF                ; Fake terminator used by get_target
 route_7795:
-  DEFB $48,$49,$4A,$FF    ; L-shaped route in the fenced area  [ location(32), location(33), location(34), (end) ]
+  DEFB $48,$49,$4A,$FF    ; L-shaped route in the fenced area [ location(32), location(33), location(34), (end) ]
 route_7799:
   DEFB $4B,$4C,$4D,$4E,$4F,$50,$FF ; guard's route around the front perimeter wall  [ location(35), location(36), location(37), location(38), location(39), location(40), (end) ]
 route_commandant:
-  DEFB $56,$1F,$1D,$20,$1A,$23,$99,$96 ; the commandant's route - the longest of all the routes  [ location(46), door(31), door(29), door(32), door(26), door(35), door(25 reversed), door(22 reversed), door(21 reversed), door(20 reversed),
+  DEFB $56,$1F,$1D,$20,$1A,$23,$99,$96 ; the commandant's route - the longest of all the routes [ location(46), door(31), door(29), door(32), door(26), door(35), door(25 reversed), door(22 reversed), door(21 reversed), door(20 reversed),
   DEFB $95,$94,$97,$52,$17,$8A,$0B,$8B ; door(23 reversed), location(42), door(23), door(10 reversed), door(11), door(11 reversed), door(12), door(27 reversed), door(28), door(29 reversed), door(13 reversed), location(11), location(55),
   DEFB $0C,$9B,$1C,$9D,$8D,$33,$5F,$80 ; door(0 reversed), door(1 reversed), location(60), door(1), door(0), door(4), door(16), door(5 reversed), location(11), door(7), door(17 reversed), door(6 reversed), door(8), door(18), door(9
   DEFB $81,$64,$01,$00,$04,$10,$85,$33 ; reversed), location(45), door(14), door(34), door(34 reversed), door(33), door(33 reversed), (end) ]
@@ -3760,11 +3760,11 @@ route_exit_hut2:
 route_exit_hut3:
   DEFB $89,$55,$36,$FF    ; route_exit_hut3  [ door(9 reversed), location(45), location(14), (end) ]
 route_prisoner_sleeps_1:
-  DEFB $56,$FF            ; route_prisoner_sleeps_1  [ location(46), (end) ]
+  DEFB $56,$FF            ; route_prisoner_sleeps_1 [ location(46), (end) ]
 route_prisoner_sleeps_2:
-  DEFB $57,$FF            ; route_prisoner_sleeps_2  [ location(47), (end) ]
+  DEFB $57,$FF            ; route_prisoner_sleeps_2 [ location(47), (end) ]
 route_prisoner_sleeps_3:
-  DEFB $58,$FF            ; route_prisoner_sleeps_3  [ location(48), (end) ]
+  DEFB $58,$FF            ; route_prisoner_sleeps_3 [ location(48), (end) ]
 route_77DE:
   DEFB $5C,$5D,$FF        ; route_77DE  [ location(52), location(53), (end) ]
 route_77E1:
@@ -3774,39 +3774,39 @@ route_77E7:
 route_77EC:
   DEFB $38,$34,$0A,$14,$FF ; route_77EC  [ location(16), location(12), door(10), door(20), (end) ]
 route_prisoner_sits_1:
-  DEFB $68,$FF            ; route_prisoner_sits_1  [ location(64), (end) ]
+  DEFB $68,$FF            ; route_prisoner_sits_1 [ location(64), (end) ]
 route_prisoner_sits_2:
-  DEFB $69,$FF            ; route_prisoner_sits_2  [ location(65), (end) ]
+  DEFB $69,$FF            ; route_prisoner_sits_2 [ location(65), (end) ]
 route_prisoner_sits_3:
-  DEFB $6A,$FF            ; route_prisoner_sits_3  [ location(66), (end) ]
+  DEFB $6A,$FF            ; route_prisoner_sits_3 [ location(66), (end) ]
 route_guardA_breakfast:
-  DEFB $6C,$FF            ; route_guardA_breakfast  [ location(68), (end) ]
+  DEFB $6C,$FF            ; route_guardA_breakfast [ location(68), (end) ]
 route_guardB_breakfast:
-  DEFB $6D,$FF            ; route_guardB_breakfast  [ location(69), (end) ]
+  DEFB $6D,$FF            ; route_guardB_breakfast [ location(69), (end) ]
 route_guard_12_roll_call:
-  DEFB $31,$FF            ; route_guard_12_roll_call  [ location(9), (end) ]
+  DEFB $31,$FF            ; route_guard_12_roll_call [ location(9), (end) ]
 route_guard_13_roll_call:
-  DEFB $33,$FF            ; route_guard_13_roll_call  [ location(11), (end) ]
+  DEFB $33,$FF            ; route_guard_13_roll_call [ location(11), (end) ]
 route_guard_14_roll_call:
-  DEFB $39,$FF            ; route_guard_14_roll_call  [ location(17), (end) ]
+  DEFB $39,$FF            ; route_guard_14_roll_call [ location(17), (end) ]
 route_guard_15_roll_call:
-  DEFB $59,$FF            ; route_guard_15_roll_call  [ location(49), (end) ]
+  DEFB $59,$FF            ; route_guard_15_roll_call [ location(49), (end) ]
 route_prisoner_1_roll_call:
-  DEFB $70,$FF            ; route_prisoner_1_roll_call  [ location(72), (end) ]
+  DEFB $70,$FF            ; route_prisoner_1_roll_call [ location(72), (end) ]
 route_prisoner_2_roll_call:
-  DEFB $71,$FF            ; route_prisoner_2_roll_call  [ location(73), (end) ]
+  DEFB $71,$FF            ; route_prisoner_2_roll_call [ location(73), (end) ]
 route_prisoner_3_roll_call:
-  DEFB $72,$FF            ; route_prisoner_3_roll_call  [ location(74), (end) ]
+  DEFB $72,$FF            ; route_prisoner_3_roll_call [ location(74), (end) ]
 route_prisoner_4_roll_call:
-  DEFB $73,$FF            ; route_prisoner_4_roll_call  [ location(75), (end) ]
+  DEFB $73,$FF            ; route_prisoner_4_roll_call [ location(75), (end) ]
 route_prisoner_5_roll_call:
-  DEFB $74,$FF            ; route_prisoner_5_roll_call  [ location(76), (end) ]
+  DEFB $74,$FF            ; route_prisoner_5_roll_call [ location(76), (end) ]
 route_prisoner_6_roll_call:
-  DEFB $75,$FF            ; route_prisoner_6_roll_call  [ location(77), (end) ]
+  DEFB $75,$FF            ; route_prisoner_6_roll_call [ location(77), (end) ]
 route_go_to_solitary:
-  DEFB $36,$0A,$97,$98,$52,$FF ; route_go_to_solitary  [ location(14), door(10), door(23 reversed), door(24 reversed), location(42), (end) ]
+  DEFB $36,$0A,$97,$98,$52,$FF ; route_go_to_solitary [ location(14), door(10), door(23 reversed), door(24 reversed), location(42), (end) ]
 route_hero_leave_solitary:
-  DEFB $18,$17,$8A,$36,$FF ; route_hero_leave_solitary  [ door(24), door(23), door(10 reversed), location(14), (end) ]
+  DEFB $18,$17,$8A,$36,$FF ; route_hero_leave_solitary [ door(24), door(23), door(10 reversed), location(14), (end) ]
 route_guard_12_bed:
   DEFB $34,$33,$07,$5C,$FF ; route_guard_12_bed  [ location(12), location(11), door(7), location(52), (end) ]
 route_guard_13_bed:
@@ -3816,13 +3816,13 @@ route_guard_14_bed:
 route_guard_15_bed:
   DEFB $34,$33,$55,$09,$5D,$FF ; route_guard_15_bed  [ location(12), location(11), location(45), door(9), location(53), (end) ]
 route_hut2_left_to_right:
-  DEFB $11,$FF            ; route_hut2_left_to_right  [ door(17), (end) ]
+  DEFB $11,$FF            ; route_hut2_left_to_right [ door(17), (end) ]
 route_7833:
   DEFB $6B,$FF            ; route_7833  [ location(67), (end) ]
 route_hut2_right_to_left:
-  DEFB $91,$6E,$FF        ; route_hut2_right_to_left  [ door(17 reversed), location(70), (end) ]
+  DEFB $91,$6E,$FF        ; route_hut2_right_to_left [ door(17 reversed), location(70), (end) ]
 route_hero_roll_call:
-  DEFB $5A,$FF            ; route_hero_roll_call  [ location(50), (end) ]
+  DEFB $5A,$FF            ; route_hero_roll_call [ location(50), (end) ]
 
 ; Table of map locations used in routes.
 ;
@@ -3921,39 +3921,39 @@ locations:
 ; Each door is stored as a pair of two "half doors". Each half of the pair contains (room, direction, position) where the room is the *target* room index, the direction is the direction in which the door faces and the position is the
 ; coordinates of the door. Outdoor coordinates are divided by four.
 doors:
-  DEFB $01,$B2,$8A,$06    ; BYTE(room_0_OUTDOORS,             1), 0xB2, 0x8A,  6 }, // 0
-  DEFB $03,$B2,$8E,$06    ; BYTE(room_0_OUTDOORS,             3), 0xB2, 0x8E,  6 },
-  DEFB $01,$B2,$7A,$06    ; BYTE(room_0_OUTDOORS,             1), 0xB2, 0x7A,  6 },
-  DEFB $03,$B2,$7E,$06    ; BYTE(room_0_OUTDOORS,             3), 0xB2, 0x7E,  6 },
-  DEFB $88,$8A,$B3,$06    ; BYTE(room_34,                     0), 0x8A, 0xB3,  6 },
+  DEFB $01,$B2,$8A,$06    ; BYTE(room_0_OUTDOORS,             1), 0xB2, 0x8A, 6 }, // 0
+  DEFB $03,$B2,$8E,$06    ; BYTE(room_0_OUTDOORS,             3), 0xB2, 0x8E, 6 },
+  DEFB $01,$B2,$7A,$06    ; BYTE(room_0_OUTDOORS,             1), 0xB2, 0x7A, 6 },
+  DEFB $03,$B2,$7E,$06    ; BYTE(room_0_OUTDOORS,             3), 0xB2, 0x7E, 6 },
+  DEFB $88,$8A,$B3,$06    ; BYTE(room_34,                     0), 0x8A, 0xB3, 6 },
   DEFB $02,$10,$34,$0C    ; BYTE(room_0_OUTDOORS,             2), 0x10, 0x34, 12 },
-  DEFB $C0,$CC,$79,$06    ; BYTE(room_48,                     0), 0xCC, 0x79,  6 },
+  DEFB $C0,$CC,$79,$06    ; BYTE(room_48,                     0), 0xCC, 0x79, 6 },
   DEFB $02,$10,$34,$0C    ; BYTE(room_0_OUTDOORS,             2), 0x10, 0x34, 12 },
-  DEFB $71,$D9,$A3,$06    ; BYTE(room_28_HUT1LEFT,            1), 0xD9, 0xA3,  6 },
+  DEFB $71,$D9,$A3,$06    ; BYTE(room_28_HUT1LEFT,            1), 0xD9, 0xA3, 6 },
   DEFB $03,$2A,$1C,$18    ; BYTE(room_0_OUTDOORS,             3), 0x2A, 0x1C, 24 },
-  DEFB $04,$D4,$BD,$06    ; BYTE(room_1_HUT1RIGHT,            0), 0xD4, 0xBD,  6 },
+  DEFB $04,$D4,$BD,$06    ; BYTE(room_1_HUT1RIGHT,            0), 0xD4, 0xBD, 6 },
   DEFB $02,$1E,$2E,$18    ; BYTE(room_0_OUTDOORS,             2), 0x1E, 0x2E, 24 },
 doors_home_to_outside:
-  DEFB $09,$C1,$A3,$06    ; BYTE(room_2_HUT2LEFT,             1), 0xC1, 0xA3,  6 },
+  DEFB $09,$C1,$A3,$06    ; BYTE(room_2_HUT2LEFT,             1), 0xC1, 0xA3, 6 },
   DEFB $03,$2A,$1C,$18    ; BYTE(room_0_OUTDOORS,             3), 0x2A, 0x1C, 24 },
-  DEFB $0C,$BC,$BD,$06    ; BYTE(room_3_HUT2RIGHT,            0), 0xBC, 0xBD,  6 },
+  DEFB $0C,$BC,$BD,$06    ; BYTE(room_3_HUT2RIGHT,            0), 0xBC, 0xBD, 6 },
   DEFB $02,$20,$2E,$18    ; BYTE(room_0_OUTDOORS,             2), 0x20, 0x2E, 24 },
-  DEFB $11,$A9,$A3,$06    ; BYTE(room_4_HUT3LEFT,             1), 0xA9, 0xA3,  6 },
+  DEFB $11,$A9,$A3,$06    ; BYTE(room_4_HUT3LEFT,             1), 0xA9, 0xA3, 6 },
   DEFB $03,$2A,$1C,$18    ; BYTE(room_0_OUTDOORS,             3), 0x2A, 0x1C, 24 },
-  DEFB $14,$A4,$BD,$06    ; BYTE(room_5_HUT3RIGHT,            0), 0xA4, 0xBD,  6 },
+  DEFB $14,$A4,$BD,$06    ; BYTE(room_5_HUT3RIGHT,            0), 0xA4, 0xBD, 6 },
   DEFB $02,$20,$2E,$18    ; BYTE(room_0_OUTDOORS,             2), 0x20, 0x2E, 24 },
-  DEFB $54,$FC,$CA,$06    ; BYTE(room_21_CORRIDOR,            0), 0xFC, 0xCA,  6 }, // 10
+  DEFB $54,$FC,$CA,$06    ; BYTE(room_21_CORRIDOR,            0), 0xFC, 0xCA, 6 }, // 10
   DEFB $02,$1C,$24,$18    ; BYTE(room_0_OUTDOORS,             2), 0x1C, 0x24, 24 },
-  DEFB $50,$FC,$DA,$06    ; BYTE(room_20_REDCROSS,            0), 0xFC, 0xDA,  6 },
+  DEFB $50,$FC,$DA,$06    ; BYTE(room_20_REDCROSS,            0), 0xFC, 0xDA, 6 },
   DEFB $02,$1A,$22,$18    ; BYTE(room_0_OUTDOORS,             2), 0x1A, 0x22, 24 },
-  DEFB $3D,$F7,$E3,$06    ; BYTE(room_15_UNIFORM,             1), 0xF7, 0xE3,  6 },
+  DEFB $3D,$F7,$E3,$06    ; BYTE(room_15_UNIFORM,             1), 0xF7, 0xE3, 6 },
   DEFB $03,$26,$19,$18    ; BYTE(room_0_OUTDOORS,             3), 0x26, 0x19, 24 },
-  DEFB $35,$DF,$E3,$06    ; BYTE(room_13_CORRIDOR,            1), 0xDF, 0xE3,  6 },
+  DEFB $35,$DF,$E3,$06    ; BYTE(room_13_CORRIDOR,            1), 0xDF, 0xE3, 6 },
   DEFB $03,$2A,$1C,$18    ; BYTE(room_0_OUTDOORS,             3), 0x2A, 0x1C, 24 },
-  DEFB $21,$97,$D3,$06    ; BYTE(room_8_CORRIDOR,             1), 0x97, 0xD3,  6 },
+  DEFB $21,$97,$D3,$06    ; BYTE(room_8_CORRIDOR,             1), 0x97, 0xD3, 6 },
   DEFB $03,$2A,$15,$18    ; BYTE(room_0_OUTDOORS,             3), 0x2A, 0x15, 24 },
 doors_unused:
-  DEFB $19,$00,$00,$00    ; BYTE(room_6,                      1), 0x00, 0x00,  0 },
+  DEFB $19,$00,$00,$00    ; BYTE(room_6,                      1), 0x00, 0x00, 0 },
   DEFB $03,$22,$22,$18    ; BYTE(room_0_OUTDOORS,             3), 0x22, 0x22, 24 },
   DEFB $05,$2C,$34,$18    ; BYTE(room_1_HUT1RIGHT,            1), 0x2C, 0x34, 24 },
   DEFB $73,$26,$1A,$18    ; BYTE(room_28_HUT1LEFT,            3), 0x26, 0x1A, 24 },
@@ -3962,12 +3962,12 @@ doors_home_to_inside:
   DEFB $0B,$26,$1A,$18    ; BYTE(room_2_HUT2LEFT,             3), 0x26, 0x1A, 24 },
   DEFB $15,$24,$36,$18    ; BYTE(room_5_HUT3RIGHT,            1), 0x24, 0x36, 24 },
   DEFB $13,$26,$1A,$18    ; BYTE(room_4_HUT3LEFT,             3), 0x26, 0x1A, 24 },
-  DEFB $5D,$28,$42,$18    ; BYTE(room_23_BREAKFAST,           1), 0x28, 0x42, 24 },
-  DEFB $67,$26,$18,$18    ; BYTE(room_25_BREAKFAST,           3), 0x26, 0x18, 24 },
-  DEFB $5C,$3E,$24,$18    ; BYTE(room_23_BREAKFAST,           0), 0x3E, 0x24, 24 }, // 20
+  DEFB $5D,$28,$42,$18    ; BYTE(room_23_MESS_HALL,           1), 0x28, 0x42, 24 },
+  DEFB $67,$26,$18,$18    ; BYTE(room_25_MESS_HALL,           3), 0x26, 0x18, 24 },
+  DEFB $5C,$3E,$24,$18    ; BYTE(room_23_MESS_HALL,           0), 0x3E, 0x24, 24 }, // 20
   DEFB $56,$20,$2E,$18    ; BYTE(room_21_CORRIDOR,            2), 0x20, 0x2E, 24 },
   DEFB $4D,$22,$42,$18    ; BYTE(room_19_FOOD,                1), 0x22, 0x42, 24 },
-  DEFB $5F,$22,$1C,$18    ; BYTE(room_23_BREAKFAST,           3), 0x22, 0x1C, 24 },
+  DEFB $5F,$22,$1C,$18    ; BYTE(room_23_MESS_HALL,           3), 0x22, 0x1C, 24 },
   DEFB $49,$24,$36,$18    ; BYTE(room_18_RADIO,               1), 0x24, 0x36, 24 },
   DEFB $4F,$38,$22,$18    ; BYTE(room_19_FOOD,                3), 0x38, 0x22, 24 },
   DEFB $55,$2C,$36,$18    ; BYTE(room_21_CORRIDOR,            1), 0x2C, 0x36, 24 },
@@ -5970,7 +5970,7 @@ main_loop:
   CALL process_player_input ; Process player input
   CALL in_permitted_area  ; Check the hero's map position and colour the flag accordingly
   CALL restore_tiles      ; Paint any tiles occupied by visible characters with tiles from tile_buf
-  CALL move_characters    ; Move characters around
+  CALL move_a_character   ; Move a character around
   CALL automatics         ; Make characters follow the hero if he's being suspicious
   CALL purge_invisible_characters ; Run through all visible characters, resetting them if they're off-screen
   CALL spawn_characters   ; Spawn characters
@@ -6823,8 +6823,8 @@ clock:
 ;
 ; Read-only by charevnt_bed, charevnt_breakfast.
 ;
-; Write/read-write by set_route, spawn_character, move_characters, automatics, set_route.
-entered_move_characters:
+; Write/read-write by set_route, spawn_character, move_character, automatics, set_route.
+entered_move_a_character:
   DEFB $00
 
 ; 'Hero in bed' flag.
@@ -7248,18 +7248,18 @@ end_of_breakfast_0:
 ; Position all six prisoners.
   LD HL,$769F             ; Point HL at characterstruct 20's room field (character 20 is the first of the prisoners)
   LD DE,$0007             ; Prepare the characterstruct stride
-  LD A,$19                ; Prepare room_25_BREAKFAST
+  LD A,$19                ; Prepare room_25_MESS_HALL
   LD B,$03                ; Do the first three prisoner characters
 ; Start loop
 end_of_breakfast_1:
-  LD (HL),A               ; Set this characterstruct's room to room_25_BREAKFAST
+  LD (HL),A               ; Set this characterstruct's room to room_25_MESS_HALL
   ADD HL,DE               ; Advance to the next characterstruct
   DJNZ end_of_breakfast_1 ; ...loop
-  LD A,$17                ; Prepare room_23_BREAKFAST
+  LD A,$17                ; Prepare room_23_MESS_HALL
   LD B,$03                ; Do the second three prisoner characters
 ; Start loop
 end_of_breakfast_2:
-  LD (HL),A               ; Set this characterstruct's room to room_23_BREAKFAST
+  LD (HL),A               ; Set this characterstruct's room to room_23_MESS_HALL
   ADD HL,DE               ; Advance to the next characterstruct
   DJNZ end_of_breakfast_2 ; ...loop
   LD A,$90                ; Set initial route index in A'. This gets incremented by set_prisoners_and_guards_route_B for every route it assigns
@@ -7435,8 +7435,8 @@ set_character_route_vischar_found:
 ; I:HL Points to route.step.
 ; O:BC Preserved.
 set_route:
-  XOR A                          ; Clear the entered_move_characters flag so that the vischar pointed to by IY is used for character events
-  LD (entered_move_characters),A ;
+  XOR A                           ; Clear the entered_move_a_character flag so that the vischar pointed to by IY is used for character events
+  LD (entered_move_a_character),A ;
   PUSH BC                 ; Preserve for callers
   PUSH HL                 ; Preserve route.step pointer
   DEC L                   ; Point HL at route.index
@@ -7490,7 +7490,7 @@ store_route:
   LD (HL),C               ;
   RET                     ; Return
 
-; Character goes to bed: used when entered_move_characters is non-zero.
+; Character goes to bed: used when entered_move_a_character is non-zero.
 ;
 ; Used by the routine at character_event.
 ;
@@ -7499,7 +7499,7 @@ character_bed_state:
   LD A,(character_index)  ; Get the current character index
   JR character_bed_common ; Jump to character_bed_common
 
-; Character goes to bed: used when entered_move_characters is zero.
+; Character goes to bed: used when entered_move_a_character is zero.
 ;
 ; Used by the routine at character_event.
 ;
@@ -7561,10 +7561,10 @@ character_sits_0:
   ADD HL,BC               ; Point to the required object
   LD (HL),$05             ; Set the object at HL to interiorobject_PRISONER_SAT_MID_TABLE ($05)
   POP AF                  ; Restore the route index
-  LD C,$19                ; Room is room_25_BREAKFAST
+  LD C,$19                ; Room is room_25_MESS_HALL
   CP $15                  ; Is the route index less than routeindex_21_PRISONER_SITS_1?
   JR C,character_sit_sleep_common ; Jump if so
-  LD C,$17                ; Otherwise room is room_23_BREAKFAST
+  LD C,$17                ; Otherwise room is room_23_MESS_HALL
   JR character_sit_sleep_common ; Jump to character_sit_sleep_common
 
 ; Character sleeps.
@@ -7704,7 +7704,7 @@ set_route_go_to_breakfast:
   LD C,$00                            ;
   JP set_prisoners_and_guards_route_B ;
 
-; Character event: used when entered_move_characters is non-zero.
+; Character event: used when entered_move_a_character is non-zero.
 ;
 ; Used by the routine at character_event.
 ;
@@ -7713,7 +7713,7 @@ charevnt_breakfast_state:
   LD A,(character_index)  ; Get the current character index
   JR charevnt_breakfast_common ; Jump to charevnt_breakfast_common
 
-; Character event: used when entered_move_characters is zero.
+; Character event: used when entered_move_a_character is zero.
 ;
 ; Used by the routine at character_event.
 charevnt_breakfast_vischar:
@@ -7903,7 +7903,8 @@ item_to_escapeitem_2:
 ;
 ; Used by the routines at escaped, user_confirm and plot_statics_and_menu_text.
 ;
-; I:HL Pointer to screenlocstring. O:HL Pointer to byte after screenlocstring.
+; I:HL Pointer to screenlocstring.
+; O:HL Pointer to byte after screenlocstring.
 screenlocstring_plot:
   LD E,(HL)               ; Read the screen address into DE
   INC HL                  ;
@@ -8815,7 +8816,9 @@ zoombox:
   XOR A                   ; Set zoombox_width and zoombox_height to zero
   LD (zoombox_width),A    ;
   LD (zoombox_height),A   ;
-; Start loop Shrink X and grow width until X is 1
+; Start loop
+;
+; Shrink X and grow width until X is 1
 zoombox_0:
   LD HL,zoombox_x         ; Point HL at zoombox_x
   LD A,(HL)               ; Fetch it
@@ -9442,7 +9445,7 @@ searchlight_caught:
 ; I:DE Pointer to screen attributes.
 searchlight_plot:
   EXX                     ; Bank the screen attribute pointer supplied in DE
-  LD DE,searchlight_shape ; Point DE at the spotlight bitmap searchlight_shape[0]
+  LD DE,searchlight_shape ; Point DE at the searchlight bitmap searchlight_shape[0]
   LD C,$10                ; 16 iterations - one per row of searchlight bitmap
 ; Start loop (outer)
 searchlight_plot_0:
@@ -9588,7 +9591,7 @@ touch:
   EX AF,AF'               ; Exchange A registers
   LD (touch_stashed_A),A  ; Stash the flip flag and sprite offset
   SET 6,(IY+$07)          ; Set the vischar's vischar_BYTE7_DONT_MOVE_MAP flag
-  SET 7,(IY+$07)          ; Set the vischar's vischar_TOUCH_ENTERED flag
+  SET 7,(IY+$07)          ; Set the vischar's vischar_DRAWABLE flag
   PUSH IY                 ; HL = IY
   POP HL                  ;
 ; If the hero is player controlled then check for door transitions.
@@ -9637,21 +9640,22 @@ touch_2:
 ; Used by the routines at touch and spawn_character.
 ;
 ; O:F Z/NZ => no collision/collision.
-;   Iterate over characters being collided with (e.g. stove).
+;
+; Iterate over characters being collided with (e.g. stove).
 collision:
   LD HL,$8001             ; Point HL at the first vischar's flags field
   LD B,$08                ; Set B for eight iterations
 ; Start loop
 collision_0:
   BIT 7,(HL)              ; Is the vischar_FLAGS_NO_COLLIDE flag bit set?
-  JP NZ,collision_19      ; Skip if so
+  JP NZ,collision_18      ; Skip if so
   PUSH BC                 ; Preserve the loop counter
   PUSH HL                 ; Preserve the vischar pointer
-; Check for contact between the current vischar and saved_pos.
+; Test for contact between the current vischar and saved_pos.
   LD A,$0E                ; Point HL at vischar's X position
   ADD A,L                 ;
   LD L,A                  ;
-; Check X
+; Check X is within (-4..+4)
   LD C,(HL)               ; Fetch X position
   INC L                   ;
   LD B,(HL)               ;
@@ -9679,7 +9683,7 @@ collision_2:
 collision_3:
   EX DE,HL                ; Restore our vischar pointer
   INC L                   ; Advance to Y position
-; Check Y
+; Check Y is within (-4..+4)
   LD C,(HL)               ; Fetch Y position
   INC L                   ;
   LD B,(HL)               ;
@@ -9707,7 +9711,7 @@ collision_5:
 collision_6:
   EX DE,HL                ; Restore our vischar pointer
   INC L                   ; Advance to height
-; Check height
+; Ensure that the heights are within 24 of each other. This will stop the character colliding with any guards high up in watchtowers.
   LD C,(HL)               ; Fetch height
   LD A,(saved_height)     ; Fetch saved_height
   SUB C                   ; Subtract height from saved_height
@@ -9716,23 +9720,28 @@ collision_6:
 collision_7:
   CP $18                   ; If the result is >= 24 then jump to the next iteration
   JP NC,collision_pop_next ;
+; Check for pursuit.
   LD A,(IY+$01)           ; Read the vischar's flags
   AND $0F                 ; AND the flags with vischar_FLAGS_PURSUIT_MASK
   CP $01                  ; Is the result vischar_PURSUIT_PURSUE?
   JR NZ,collision_9       ; If not, jump forward to collision checking
+; Vischar (IY) is pursuing.
   POP HL                  ; Restore vischar pointer
   PUSH HL                 ;
   DEC L                   ; Point at vischar base, not flags
-  LD A,L                  ; Is the current vischar the hero's? $8000
+  LD A,L                  ; Is the current vischar the hero's? ($8000)
   AND A                   ;
   JR NZ,collision_9       ;
+; Currently tested vischar (HL) is the hero's.
   LD A,(bribed_character) ; Fetch global bribed character
   CP (IY+$00)             ; Does it match IY's vischar character?
   JR NZ,collision_8       ; No, jump forward to solitary check
-; IY is a bribed character pursuing the hero. When the pursuer catches the hero the bribe will be accepted.
+; Vischar IY is a bribed character pursuing the hero.
+;
+; When the pursuer catches the hero the bribe will be accepted.
   CALL accept_bribe       ; Call accept_bribe
   JR collision_9          ; (else)
-; IY is a hostile who's caught the hero!
+; Vischar IY is a hostile who's caught the hero!
 collision_8:
   POP HL                  ; Restore vischar pointer
   POP BC                  ; Restore loop counter
@@ -9747,28 +9756,30 @@ collision_9:
   LD A,(HL)               ; Fetch the vischar's character
   CP $1A                  ; Is the character >= character_26_STOVE_1?
   JR C,collision_16       ; Jump if NOT
+; It's an item.
   PUSH HL                 ; Preserve the vischar pointer
   EX AF,AF'               ; Bank the character index
   LD A,$11                ; Point HL at vischar->mi.pos.y
   ADD A,L                 ;
   LD L,A                  ;
   EX AF,AF'               ; Retrieve the character index
+; By default, setup for the stove. It can move on the Y axis only (bottom left to top right).
   LD BC,$0723             ; Set B to 7 - the permitted range, in either direction, from the centre point and set C to 35 - the centre point
   CP $1C                  ; Compare character index with character_28_CRATE
   LD A,(IY+$0E)           ; (interleaved) Fetch IY's direction
   JR NZ,collision_10      ; If it's not the crate then jump to the stove handling
-; Handle the crate. It moves on the X axis (top left to bottom right) only.
+; Handle the crate. It can move on the X axis only (top left to bottom right).
   DEC L                   ; Point HL at vischar->mi.pos.x
   DEC L                   ;
   LD C,$36                ; Centre point is 54 (crate will move 47..54..61)
-  XOR $01                 ; Swap direction left<=>right
+  XOR $01                 ; Swap axis left<=>right
 ; Top left case.
 collision_10:
   AND A                   ; Test the direction: Is it top left? (zero)
   JR NZ,collision_12      ; Jump forward to next check if not
-; The player is pushing the movable item from the front, so centre it.
+; The player is pushing the movable item from its front, so centre it.
   LD A,(HL)               ; Load the coordinate
-  CP C                    ; Is it at the centre point?
+  CP C                    ; Is it already at the centre point?
   JR Z,collision_15       ; Jump forward if so
   JR C,collision_11       ; If the coordinate is larger than the centre point then decrement, else increment its position
   DEC (HL)                ;
@@ -9790,7 +9801,7 @@ collision_12:
 collision_13:
   CP $02                  ; Test the direction: Is it bottom right? (two)
   JR NZ,collision_14      ; Jump forward to next check if not
-  LD A,C                  ; Set the position to minimum (C-B) irrespective Note that this never seems to happen in practice in the game
+  LD A,C                  ; Set the position to minimum (C-B) irrespective. Note that this never seems to happen in practice in the game
   SUB B                   ;
   LD (HL),A               ;
   JR collision_15         ; (else)
@@ -9805,51 +9816,53 @@ collision_15:
   POP HL                  ; Restore the vischar pointer
 collision_16:
   POP BC                  ; Restore the loop counter
-; Reorient the character? Not well understood. (?)
+; Check for collisions with characters.
   LD A,L                  ; Point at vischar input field
   ADD A,$0D               ;
   LD L,A                  ;
   LD A,(HL)               ; Load the input field and mask off the input_KICK flag
   AND $7F                 ;
-  JR Z,collision_17       ; Jump forward if the input field is zero
+  JR Z,collided_facing    ; Jump forward if the input field is zero
   INC L                   ; Point at the direction field
   LD A,(HL)               ; Swap direction top <=> bottom
   XOR $02                 ;
   CP (IY+$0E)             ; If direction != state->IY->direction
-  JR Z,collision_17       ;
+  JR Z,collided_facing    ;
+collided_not_facing:
   LD (IY+$0D),$80         ; Set IY's input to input_KICK
 ; Delay calling character_behaviour for five turns. This delay controls how long it takes before a blocked character will try another direction.
-collided:
+collided_set_delay:
   LD A,(IY+$07)           ; IY->counter_and_flags = (IY->counter_and_flags & ~vischar_BYTE7_COUNTER_MASK) | 5
   AND $F0                 ;
   OR $05                  ;
   LD (IY+$07),A           ;
-  RET NZ                  ; Return  DPT: This return works but it's odd that it's conditional
-; ... new input stuff Note: C direction field doesn't get masked, so will access out-of-bounds in new_inputs[] if we collide when crawling.
-collision_17:
+; Note: The following return does work but it's odd that it's conditional.
+  RET NZ                  ; Return
+; Note: The C direction field ought to be masked so that we don't access out-of-bounds in new_inputs[] if we collide when crawling.
+collided_facing:
   LD C,(IY+$0E)           ; Fetch IY->direction, widening it to BC
   LD B,$00                ;
   LD HL,collision_new_inputs ; Point HL at collision_new_inputs
   ADD HL,BC               ; Index it by direction (in BC)
   LD A,(HL)               ; Fetch the direction
-  LD (IY+$0D),A           ; IY->input = A
-  BIT 0,C                 ; If the new direction is TR or BL
-  JR NZ,collision_18      ; Jump if so
+  LD (IY+$0D),A           ; IY->input = direction
+  BIT 0,C                 ; Is the new direction TR or BL?
+  JR NZ,collision_17      ; Jump if so
   RES 5,(IY+$07)          ; IY->counter_and_flags &= ~vischar_BYTE7_Y_DOMINANT
-  JR collided             ; Jump to 'collided'
-collision_18:
+  JR collided_set_delay   ; Jump to 'collided_set_delay'
+collision_17:
   SET 5,(IY+$07)          ; IY->counter_and_flags |= vischar_BYTE7_Y_DOMINAN
-  JR collided             ; Jump to 'collided'
-; New inputs.
+  JR collided_set_delay   ; Jump to 'collided_set_delay'
+; Inputs which move the character in the next anticlockwise direction.
 collision_new_inputs:
-  DEFB $85                ; = input_DOWN + input_LEFT  + input_KICK
-  DEFB $84                ; = input_UP   + input_LEFT  + input_KICK
-  DEFB $87                ; = input_UP   + input_RIGHT + input_KICK
-  DEFB $88                ; = input_DOWN + input_RIGHT + input_KICK
+  DEFB $85                ; = input_(DOWN+LEFT +KICK) => if facing TL, move D+L
+  DEFB $84                ; = input_(UP  +LEFT +KICK) => if facing TR, move U+L
+  DEFB $87                ; = input_(UP  +RIGHT+KICK) => if facing BR, move U+R
+  DEFB $88                ; = input_(DOWN+RIGHT+KICK) => if facing BL, move D+R
 collision_pop_next:
   POP HL                  ; Restore the vischar pointer
   POP BC                  ; Restore the loop counter
-collision_19:
+collision_18:
   LD A,L                  ; Step HL to the next vischar
   ADD A,$20               ;
   LD L,A                  ;
@@ -9909,7 +9922,7 @@ accept_bribe_2:
 
 ; Tests whether the position in saved_pos touches any wall or fence boundary.
 ;
-; A position (x,y,h) touches a wall if the following returns true: (minx + 2 >= x <= maxx + 3) and (miny     >= y <= maxy + 3) and (minh     >= h <= maxh + 1)
+; A position (x,y,h) touches a wall if (minx + 2 >= x <= maxx + 3) and (miny >= y <= maxy + 3) and (minh >= h <= maxh + 1).
 ;
 ; Used by the routines at touch and spawn_character.
 ;
@@ -10000,7 +10013,7 @@ bounds_next:
 
 ; Multiplies A by 8, returning the result in BC.
 ;
-; Used by the routines at bounds_check, spawn_character, vischar_move_x, vischar_move_y and get_greatest_itemstruct.
+; Used by the routines at bounds_check, spawn_character, vischar_move_x, vischar_move_y and get_next_drawable_itemstruct.
 ;
 ; I:A Argument.
 ; O:BC Result of (A << 3).
@@ -10484,7 +10497,9 @@ action_uniform:
   LD (HL),D               ;
   JP increase_morale_by_10_score_by_50 ; Increase morale by 10, score by 50 and exit via
 
-; Use shovel. The shovel only works in the room with the blocked tunnel: number 50.
+; Use shovel.
+;
+; The shovel only works in the room with the blocked tunnel: number 50.
 action_shovel:
   LD A,(room_index)       ; If the global current room index isn't room_50_BLOCKED_TUNNEL bail out
   CP $32                  ;
@@ -10702,7 +10717,9 @@ gnd_in_range:
   EXX                     ; Unbank
   XOR A                   ; Set Z flag (found)
   RET                     ; Return
-; Indoors. Locked doors 2..8 include interior doors.
+; Indoors.
+;
+; Locked doors 2..8 include interior doors.
 gnd_indoors:
   LD HL,$F05F             ; Point HL at the third locked door index
 ; Bug: Ought to be 7 iterations.
@@ -11283,7 +11300,7 @@ still_in_searchlight:
 ;
 ; This can return a vischar OR an itemstruct, but not both.
 plot_sprites:
-  CALL locate_vischar_or_itemstruct ; Locates a vischar or item to plot
+  CALL get_next_drawable  ; Finds the next vischar or item to draw
   RET NZ                  ; Return if nothing remains
   BIT 6,A                 ; Was an item returned?
   JR NZ,plot_item         ; Jump to item handling if so
@@ -11319,7 +11336,7 @@ plot_item:
 ; O:A Returns (vischars_LENGTH - iters) if vischar, or ((item__LIMIT - iters) | (1 << 6)) if itemstruct.
 ; O:IY The vischar or itemstruct to plot.
 ; O:HL The vischar or itemstruct to plot.
-locate_vischar_or_itemstruct:
+get_next_drawable:
   LD BC,$0000             ; BC and DE are previous_x and previous_y. Zero them both
   LD D,C                  ;
   LD E,C                  ;
@@ -11330,9 +11347,11 @@ locate_vischar_or_itemstruct:
   LD DE,$0000             ; Initialise the previous_height to zero
   LD BC,$0820             ; Set B for eight iterations and set C for a 32 byte stride simultaneously
   LD HL,$8007             ; Point HL at vischar 0's counter_and_flags
+; Find the rearmost vischar that is flagged for drawing.
+;
 ; Start loop
 lvoi_loop:
-  BIT 7,(HL)              ; Is counter_and_flags' vischar_TOUCH_ENTERED flag set?
+  BIT 7,(HL)              ; Is counter_and_flags' vischar_DRAWABLE flag set?
   JR Z,lvoi_next          ; Jump to next iteration if not
   PUSH HL                 ; Preserve the vischar pointer
   PUSH BC                 ; Preserve the loop counter and stride
@@ -11404,9 +11423,9 @@ lvoi_next:
   ADD A,C                 ;
   LD L,A                  ;
   DJNZ lvoi_loop          ; ...loop
-  CALL get_greatest_itemstruct ; Iterate over all item_structs looking for nearby items
+  CALL get_next_drawable_itemstruct ; Iterate over all item_structs looking for nearby items
   EX AF,AF'               ; Get the old A back
-; If the topmost bit of A' remains set from its initialisation at B8A1, then no vischar was found. It's preserved by the call to get_greatest_itemstruct.
+; If the topmost bit of A' remains set from its initialisation at B8A1, then no vischar was found. It's preserved by the call to get_next_drawable_itemstruct.
   BIT 7,A                 ; Does bit 7 remain set from initialisation?
   RET NZ                  ; Return with Z clear if so: nothing was found
 ; Otherwise we've found a vischar
@@ -11414,7 +11433,7 @@ lvoi_next:
   POP HL                  ;
   BIT 6,A                 ; Is item_FOUND set? ($40)
   JR NZ,lvoi_item_found   ; Jump if so
-  RES 7,(IY+$07)          ; Clear the vischar.counter_and_flags vischar_TOUCH_ENTERED flag
+  RES 7,(IY+$07)          ; Clear the vischar.counter_and_flags vischar_DRAWABLE flag
   RET                     ; Return with Z set
 lvoi_item_found:
   INC HL                  ; Point HL at itemstruct.room_and_flags
@@ -11709,7 +11728,7 @@ rmb_skipping_index:
 rmb_skip_went_negative:
   LD A,L                  ; How far did we overshoot?
   NEG                     ; Negate it to create a positive mask emit(?) count
-; A = Count of blocks to emit DE = Points to a value (if -ve case) .. but the upcoming code expects a flag byte...
+; A = Count of blocks to emit. DE = Points to a value (if -ve case) .. but the upcoming code expects a flag byte...
 rmb_start_drawing:
   LD HL,($81A0)           ; Get the mask buffer pointer
   LD C,$01                ; Set C for (self modified height) iterations
@@ -11725,7 +11744,7 @@ render_mask_buffer_13:
   AND A                   ; Is the MASK_RUN_FLAG set?
   JP P,render_mask_buffer_14 ; Jump if clear: it's a tile index (JP P => positive)
   AND $7F                 ; Otherwise mask it off, giving the repeat count
-  EX AF,AF'               ; Bank the repeat count; unbank the <repeat length>  REPLACING IT?
+  EX AF,AF'               ; Bank the repeat count; unbank the <repeat length> REPLACING IT?
   INC DE                  ; Advance the mask data pointer
   LD A,(DE)               ; Read the next byte (a tile)
 ; Shortcut tile 0 which is blank.
@@ -11866,7 +11885,9 @@ mat_loop:
 ; O:E Clipped height (rows).
 ;
 ; To determine visibility and sort out clipping there are five cases to consider per axis: (A) the vischar is completely off the left/top of window, (B) the vischar is clipped on its left/top, (C) the vischar is entirely visible, (D) the
-; vischar is clipped on its right/bottom, and (E) the vischar is completely off the right/bottom of window. Note that no vischar will ever be wider than the window so we never need to consider if clipping will occur on both sides.
+; vischar is clipped on its right/bottom, and (E) the vischar is completely off the right/bottom of window.
+;
+; Note that no vischar will ever be wider than the window so we never need to consider if clipping will occur on both sides.
 ;
 ; First handle the horizontal cases.
 vischar_visible:
@@ -12031,7 +12052,7 @@ rt_loop:
   AND $1F                 ; Mask away the rotated-out bits
   ADD A,$02               ; Add two
   PUSH AF                 ; Save the computed height
-; DPT: It seems that the following chunk from $BBDC to $BC01 (the clamp-to-5) duplicates the work done by vischar_visible. I can't see any benefit to it.
+; DPT: It seems that the following sequence (from $BBDC to $BC01) duplicates the work done by vischar_visible. I can't see any benefit to it.
 ;
 ; Compute bottom = height + iso_pos_y - map_position_y. This is the distance of the (clipped) bottom edge of the vischar from the top of the window.
   LD HL,iso_pos_y         ; Point HL at iso_pos_y
@@ -12043,7 +12064,7 @@ rt_loop:
   SUB $11                 ; Now reduce bottom by the height of the game window
   JR Z,rt_visible         ; Jump over if <= 17 (bottom edge off top of screen)
   JR C,rt_visible         ;
-; Bottom edge is now definitely visible
+; Bottom edge is now definitely visible.
   LD E,A                  ; Save new bottom
   POP AF                  ; Get computed height back
   SUB E                   ; Calculate visible height = computed height - bottom
@@ -12063,7 +12084,7 @@ restore_tiles_0:
   LD ($BC5F),A            ; Self modify the outer loop counter (= height)
   LD A,C                  ; Copy (clipped) width to A
   LD ($BC61),A            ; Self modify the inner loop counter (= width)
-  LD ($BC89),A            ; Self modify the "reset X" instruction (= width)
+  LD ($BC89),A            ; Self modify the "reset x" instruction (= width)
   LD A,$18                ; Compute tilebuf_skip = 24 - width (24 is window columns)
   SUB C                   ;
   LD ($BC8E),A            ; Self modify the "tilebuf row-to-row skip" instruction
@@ -12075,7 +12096,7 @@ restore_tiles_0:
   LD HL,map_position      ; Point HL at map_position.x
   LD A,B                  ; Copy the lefthand skip into A
   AND A                   ; Is it zero?
-  LD A,$00                ; Set X to zero (interleaved)
+  LD A,$00                ; Set x to zero (interleaved)
   JR NZ,restore_tiles_1   ; Jump if not
   LD A,(iso_pos_x)        ; Compute x = iso_pos_x - map_position.x
   SUB (HL)                ;
@@ -12168,17 +12189,17 @@ rt_copy_tile_nocarry:
   DJNZ rt_copy_tile       ; ...loop for each byte of the tile
 ; Move to next column.
   POP HL                  ; Restore x,y
-  INC H                   ; Increment X
+  INC H                   ; Increment x
   EXX                     ; Unbank
   INC DE                  ; Advance the tilebuf pointer
   INC HL                  ; Advance the windowbuf pointer
   DJNZ rt_copy_column     ; ...loop (width counter)
 ; Reset x offset. Advance to next row.
   EXX                     ; Bank
-  LD A,H                  ; Get X
-  SUB $00                 ; Reset X to initial value <self modified by $BC89>
-  LD H,A                  ; Save X
-  INC L                   ; Increment Y
+  LD A,H                  ; Get x
+  SUB $00                 ; Reset x to initial value <self modified by $BC89>
+  LD H,A                  ; Save x
+  INC L                   ; Increment y
   EXX                     ; Unbank
   LD A,$14                ; Get tilebuf row-to-row skip <self modified by $BC8E>
   ADD A,E                  ; Increment tilebuf pointer DE
@@ -12271,26 +12292,73 @@ sts_exit:
 
 ; Map super-tile refs. 54x34. Each byte represents a 32x32 tile.
 ;
-; The map, with blanks and grass replaced to show the outline more clearly: 5F 33 3C 58 5F 33 34 2E 3D 45 3C 58 55 5E 31                         33 34 2B 37 2D 3F 28 48 42 5B 58 82 3E 30 2E 57             33 34 2E 37 2A 2F 2C 41 26 47 43 53
-; 42 3C 57 75 76 81 5E 31 33 3C 5E 31 33 34 2B 35 2D 36 29 .. .. .. .. 49 44 54 43 3D 45 3C 58 75 76 7C 7F 80 3E 30 39 3D 3E 30 2E 35 2A 2F 38 .. .. .. .. .. .. .. .. 41 44 46 27 48 42 5B 58 75 76 7A 79 75 76 7C 7F 7E 3A 5D 40 31 3A 3F 40
-; 31 2D 2F 29 .. .. .. .. .. .. .. .. .. .. .. .. 41 26 47 43 53 42 3C 58 6A 74 77 78 7B 7F 7E 3A 2F 2C 49 3B 32 2C 41 3B 32 38 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 49 44 54 43 3D 52 59 53 63 64 66 6F 7D 3A 2F 38 .. .. .. .. ..
-; .. .. .. .. .. .. .. .. .. .. .. .. .. 06 07 .. .. .. .. .. .. .. .. 41 44 46 51 5D 58 5A 53 65 62 6C 6D 36 2C .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 02 03 04 08 1A .. .. .. .. .. .. .. .. .. 41 44 5C 5B 57 58 5A 53 63 64
-; 6B 6E 71 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 02 03 04 05 09 1C 1B .. .. .. .. .. .. .. .. .. .. .. 59 53 45 3C 57 58 5A 61 62 5A 73 72 70 71 .. .. .. .. .. .. .. .. .. .. .. .. .. 02 03 14 05 0A 17 1E 1D .. .. .. .. 06 07
-; .. .. .. .. .. .. 55 58 5A 53 45 3C 57 49 3B 68    5A 73 72 70 71 .. .. 75 76 7A 79 .. .. .. 00 01 04 05 0A 21 22 16 1F 19 .. .. 02 03 04 08 1A .. .. .. .. .. 4B 45 3C 58 5A 53 45 45 .. .. 41 56 68    5A 73 72 70 71 6A 74 84 85 7A 79 ..
-; 0D 0C 0B 17 20 16 15 18 .. .. 02 03 04 05 09 1C 1B .. .. .. .. .. 4A 50 4C 52 5B 58 5A .. .. .. .. 49 56 68 69 5A 73 72 63 86 88 74 77 78 .. 0E 0F 12 16 15 18 .. .. 02 03 14 05 0A 17 1E 1D .. .. .. .. 06 07 49 44 4D 51 4C 52 3C 58 .. ..
-; .. .. .. .. 49 67 68 69 5A 65 87 83 64 66 6F .. 10 11 13 18 .. .. 00 01 04 05 0A 21 22 16 1F 19 .. .. 02 03 04 08 1A .. 41 44 4E 51 4C 45 3C 58 .. .. .. .. .. .. .. .. 41 67 68 59 CC CD 62 8A 6D .. .. .. .. .. .. .. 0D 0C 0B 17 20 16 15
-; 18 .. .. 02 03 04 05 09 1C 1B .. .. .. 49 44 4E 28 4C 52 5B 58 .. .. .. .. .. .. .. .. .. .. 41 89 CE CF D2 D5 6F .. .. .. .. .. .. .. 0E 0F 12 16 15 18 .. .. 02 03 14 05 0A 17 1E 1D .. .. .. B9 BA .. 49 26 C8 C9 4C 45 3C 58 .. .. .. ..
-; .. .. .. B9 BA B1 B1 49 D0 D1 D3 D6 D8 9B 9C .. .. .. .. .. 10 11 13 18 .. .. 00 01 04 05 0A 21 22 16 1F 19 .. .. BB BC BD BE 9D 97 CA CB 4D 28 4C 45 .. .. .. .. .. .. BB BC BD BE AF B2 B7 93 D4 D7 D9 8E 90 9B 9C .. .. .. .. .. .. .. ..
-; .. 0D 0C 0B 17 20 16 15 18 .. .. .. .. .. C5 C0 97 96 93 95 94 41 26 C8 C9 .. .. .. .. .. B1 B1 C5 C0 97 96 B3 B5 B6 '' '' 8C 8D 8B 8E 90 9B 9C .. .. .. .. .. .. .. 0E 0F 12 16 15 18 .. .. .. .. .. 9C 9D C6 C2 93 95 94 '' 99 98 97 CA CB
-; .. .. .. B1 B1 B0 AF C6 C2 93 95 B4 8B 8E 90 8F '' '' 8C 8D 8B 8E A8 AA 9C .. .. .. .. .. 10 11 13 18 .. .. .. .. .. 9C 9D 97 96 C7 C4 94 '' 99 98 97 96 93 95 94 .. .. B1 B0 AF 97 96 C7 C4 94 '' B8 8C 8D 8B 8E 90 8F '' '' 8C 8D A7 A6 90
-; 9B 9C .. .. .. .. .. .. .. .. .. .. 9C 9D 97 96 93 95 94 '' 99 98 97 96 93 95 94 .. .. .. .. B0 B2 B7 93 95 94 '' '' '' '' '' '' 8C 8D 8B 8E A8 A9 '' '' A5 A4 8B 8E 90 9B 9C .. .. B9 BA .. .. 9C 9D 97 96 93 95 94 B8 99 98 97 96 93 95 94
-; .. .. .. .. .. .. B0 B3 B5 B6 '' '' '' '' '' '' '' '' '' '' 8C 8D A7 A6 90 8F '' '' 8C 8D 8B 8E 90 9B BB BC BD BE 9D 97 96 93 95 94 '' 99 98 97 96 93 95 94 .. .. .. .. .. .. .. .. B1 B4 8B 8E 90 8F '' '' '' '' '' '' '' '' '' '' A5 A4 8B
-; 8E 90 8F '' '' 8C 8D 8B 8E 90 BF C0 97 96 93 95 94 '' 99 98 97 96 93 95 94 .. .. .. .. .. .. .. .. .. .. .. .. 8C 8D 8B 8E 90 8F '' '' '' '' '' '' '' '' '' '' 8C 8D AB AC 90 8F '' '' 8C 8D 8B C1 C2 93 95 94 '' 99 98 97 96 93 95 94 .. ..
-; .. .. .. .. .. .. .. .. .. .. .. .. .. .. 8C 8D 8B 8E 90 8F '' '' '' B9 BA '' '' 99 98 97 AD AE 8B 8E 90 8F '' '' 8C C3 C4 94 '' 99 98 97 96 93 95 94 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 8C 8D 8B 8E 90 8F BB BC BD
-; BE 98 97 96 93 95 94 8C 8D 8B 8E 90 8F '' '' '' 99 98 97 96 93 95 94 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 8C 8D 8B 8E 90 BF C0 97 96 93 95 94 .. .. .. .. 8C 8D 8B 8E 90 A2 A3 97 96 93 95 94 .. .. .. ..
-; .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 8C 8D 8B C1 C2 93 95 94 .. .. .. .. .. .. .. .. 8C 8D 8B A0 A1 93 95 94 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
-; .. 8C C3 C4 94 .. .. .. .. .. .. .. .. .. .. .. .. 8C 9F 9E 94 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
-; .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+; The map, with blanks and grass replaced to show the outline more clearly:
+;
+; _______________________________________________________________________ 5F 33 3C 58 _____________________________________________________________________________
+;
+; _________________________________________________________________ 5F 33 34 2E 3D 45 3C 58 _______________________________________________________________________
+;
+; _____________________________ 55 5E 31________________________ 33 34 2B 37 2D 3F 28 48 42 5B 58 _________________________________________________________________
+;
+; _____________________________ 82 3E 30 2E 57____________ 33 34 2E 37 2A 2F 2C 41 26 47 43 53 42 3C 57 ___________________________________________________________
+;
+; _______________________ 75 76 81 5E 31 33 3C 5E 31 33 34 2B 35 2D 36 29 .. .. .. .. 49 44 54 43 3D 45 3C 58 _____________________________________________________
+;
+; _________________ 75 76 7C 7F 80 3E 30 39 3D 3E 30 2E 35 2A 2F 38 .. .. .. .. .. .. .. .. 41 44 46 27 48 42 5B 58 _______________________________________________
+;
+; 75 76 7A 79 75 76 7C 7F 7E 3A 5D 40 31 3A 3F 40 31 2D 2F 29 .. .. .. .. .. .. .. .. .. .. .. .. 41 26 47 43 53 42 3C 58 _________________________________________
+;
+; 6A 74 77 78 7B 7F 7E 3A 2F 2C 49 3B 32 2C 41 3B 32 38 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 49 44 54 43 3D 52 59 53 ___________________________________
+;
+; 63 64 66 6F 7D 3A 2F 38 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 06 07 .. .. .. .. .. .. .. .. 41 44 46 51 5D 58 5A 53 _____________________________
+;
+; 65 62 6C 6D 36 2C .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 02 03 04 08 1A .. .. .. .. .. .. .. .. .. 41 44 5C 5B 57 58 5A 53 _______________________
+;
+; 63 64 6B 6E 71 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 02 03 04 05 09 1C 1B .. .. .. .. .. .. .. .. .. .. .. 59 53 45 3C 57 58 5A ____________________
+;
+; 61 62 5A 73 72 70 71 .. .. .. .. .. .. .. .. .. .. .. .. .. 02 03 14 05 0A 17 1E 1D .. .. .. .. 06 07 .. .. .. .. .. .. 55 58 5A 53 45 3C 57 ____________________
+;
+; 49 3B 68    5A 73 72 70 71 .. .. 75 76 7A 79 .. .. .. 00 01 04 05 0A 21 22 16 1F 19 .. .. 02 03 04 08 1A .. .. .. .. .. 4B 45 3C 58 5A 53 45 45 _________________
+;
+; .. .. 41 56 68    5A 73 72 70 71 6A 74 84 85 7A 79 .. 0D 0C 0B 17 20 16 15 18 .. .. 02 03 04 05 09 1C 1B .. .. .. .. .. 4A 50 4C 52 5B 58 5A ____________________
+;
+; .. .. .. .. 49 56 68 69 5A 73 72 63 86 88 74 77 78 .. 0E 0F 12 16 15 18 .. .. 02 03 14 05 0A 17 1E 1D .. .. .. .. 06 07 49 44 4D 51 4C 52 3C 58 _________________
+;
+; .. .. .. .. .. .. 49 67 68 69 5A 65 87 83 64 66 6F .. 10 11 13 18 .. .. 00 01 04 05 0A 21 22 16 1F 19 .. .. 02 03 04 08 1A .. 41 44 4E 51 4C 45 3C 58 ___________
+;
+; .. .. .. .. .. .. .. .. 41 67 68 59 CC CD 62 8A 6D .. .. .. .. .. .. .. 0D 0C 0B 17 20 16 15 18 .. .. 02 03 04 05 09 1C 1B .. .. .. 49 44 4E 28 4C 52 5B 58 _____
+;
+; .. .. .. .. .. .. .. .. .. .. 41 89 CE CF D2 D5 6F .. .. .. .. .. .. .. 0E 0F 12 16 15 18 .. .. 02 03 14 05 0A 17 1E 1D .. .. .. B9 BA .. 49 26 C8 C9 4C 45 3C 58
+;
+; .. .. .. .. .. .. .. B9 BA B1 B1 49 D0 D1 D3 D6 D8 9B 9C .. .. .. .. .. 10 11 13 18 .. .. 00 01 04 05 0A 21 22 16 1F 19 .. .. BB BC BD BE 9D 97 CA CB 4D 28 4C 45
+;
+; .. .. .. .. .. .. BB BC BD BE AF B2 B7 93 D4 D7 D9 8E 90 9B 9C .. .. .. .. .. .. .. .. .. 0D 0C 0B 17 20 16 15 18 .. .. .. .. .. C5 C0 97 96 93 95 94 41 26 C8 C9
+;
+; .. .. .. .. .. B1 B1 C5 C0 97 96 B3 B5 B6 '' '' 8C 8D 8B 8E 90 9B 9C .. .. .. .. .. .. .. 0E 0F 12 16 15 18 .. .. .. .. .. 9C 9D C6 C2 93 95 94 '' 99 98 97 CA CB
+;
+; .. .. .. B1 B1 B0 AF C6 C2 93 95 B4 8B 8E 90 8F '' '' 8C 8D 8B 8E A8 AA 9C .. .. .. .. .. 10 11 13 18 .. .. .. .. .. 9C 9D 97 96 C7 C4 94 '' 99 98 97 96 93 95 94
+;
+; .. .. B1 B0 AF 97 96 C7 C4 94 '' B8 8C 8D 8B 8E 90 8F '' '' 8C 8D A7 A6 90 9B 9C .. .. .. .. .. .. .. .. .. .. 9C 9D 97 96 93 95 94 '' 99 98 97 96 93 95 94 .. ..
+;
+; .. .. B0 B2 B7 93 95 94 '' '' '' '' '' '' 8C 8D 8B 8E A8 A9 '' '' A5 A4 8B 8E 90 9B 9C .. .. B9 BA .. .. 9C 9D 97 96 93 95 94 B8 99 98 97 96 93 95 94 .. .. .. ..
+;
+; .. .. B0 B3 B5 B6 '' '' '' '' '' '' '' '' '' '' 8C 8D A7 A6 90 8F '' '' 8C 8D 8B 8E 90 9B BB BC BD BE 9D 97 96 93 95 94 '' 99 98 97 96 93 95 94 .. .. .. .. .. ..
+;
+; .. .. B1 B4 8B 8E 90 8F '' '' '' '' '' '' '' '' '' '' A5 A4 8B 8E 90 8F '' '' 8C 8D 8B 8E 90 BF C0 97 96 93 95 94 '' 99 98 97 96 93 95 94 .. .. .. .. .. .. .. ..
+;
+; .. .. .. .. 8C 8D 8B 8E 90 8F '' '' '' '' '' '' '' '' '' '' 8C 8D AB AC 90 8F '' '' 8C 8D 8B C1 C2 93 95 94 '' 99 98 97 96 93 95 94 .. .. .. .. .. .. .. .. .. ..
+;
+; .. .. .. .. .. .. 8C 8D 8B 8E 90 8F '' '' '' B9 BA '' '' 99 98 97 AD AE 8B 8E 90 8F '' '' 8C C3 C4 94 '' 99 98 97 96 93 95 94 .. .. .. .. .. .. .. .. .. .. .. ..
+;
+; .. .. .. .. .. .. .. .. 8C 8D 8B 8E 90 8F BB BC BD BE 98 97 96 93 95 94 8C 8D 8B 8E 90 8F '' '' '' 99 98 97 96 93 95 94 .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+;
+; .. .. .. .. .. .. .. .. .. .. 8C 8D 8B 8E 90 BF C0 97 96 93 95 94 .. .. .. .. 8C 8D 8B 8E 90 A2 A3 97 96 93 95 94 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+;
+; .. .. .. .. .. .. .. .. .. .. .. .. 8C 8D 8B C1 C2 93 95 94 .. .. .. .. .. .. .. .. 8C 8D 8B A0 A1 93 95 94 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+;
+; .. .. .. .. .. .. .. .. .. .. .. .. .. .. 8C C3 C4 94 .. .. .. .. .. .. .. .. .. .. .. .. 8C 9F 9E 94 .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
+;
+; .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. ..
 map_tiles:
   DEFB $60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$5F,$33,$3C,$58,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60
   DEFB $60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$5F,$33,$34,$2E,$3D,$45,$3C,$58,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60,$60
@@ -12369,7 +12437,9 @@ sc_loop:
   JR NZ,sc_indoors        ; Jump if not
 ; Handle outdoors.
   INC HL                  ; Point HL at charstr.pos.x
-; Do screen Y calculation: y = ((256 - charstr.pos.x) - charstr.pos.y) - charstr.pos.height
+; Do screen Y calculation:
+;
+; y = ((256 - charstr.pos.x) - charstr.pos.y) - charstr.pos.height
 ;
 ; A is zero here, and represents 0x100.
   SUB (HL)                ; Subtract charstr.pos.x
@@ -12387,7 +12457,9 @@ sc_loop:
 spawn_characters_2:
   CP C                    ; Is y > (map_y_clamped + spawn size, clamped to 255)?
   JR C,sc_unstash_next    ; Jump if so
-; Do screen X calculation: x = (64 - charstr.pos.x + charstr.pos.y) * 2
+; Do screen X calculation:
+;
+; x = (64 - charstr.pos.x + charstr.pos.y) * 2
   DEC HL                  ; Step HL back to charstr.pos.y
   LD A,$40                ; Start with x = 64
   ADD A,(HL)              ; Add charstr.pos.y
@@ -12533,14 +12605,14 @@ spawn_character:
 ; Start loop
 spawn_find_slot:
   CP (HL)                 ; Empty slot?
-  JR Z,spawn_found_slot   ; Jump if so
+  JR Z,spawn_found_empty_slot ; Jump if so
   ADD HL,DE               ; Advance to the next vischar
   DJNZ spawn_find_slot    ; ...loop
 spawn_no_spare_slot:
   POP HL                  ; Restore the character pointer
-  RET                     ; Return
+  RET                     ; Return (Z set)
 ; Found an empty slot.
-spawn_found_slot:
+spawn_found_empty_slot:
   POP DE                  ; Restore the character pointer to DE
   PUSH HL                 ; Point IY at the empty vischar slot
   POP IY                  ;
@@ -12659,8 +12731,8 @@ spawn_again:
   LD E,A                  ;
   JR spawn_end            ; (else)
 spawn_moving:
-  XOR A                          ; Clear the entered_move_characters flag
-  LD (entered_move_characters),A ;
+  XOR A                           ; Clear the entered_move_a_character flag
+  LD (entered_move_a_character),A ;
   PUSH DE                 ; Preserve the vischar.target pointer
   CALL get_target         ; Get our next target: a location, a door or 'route ends'. The result is returned in A, target pointer returned in HL
   CP $FF                  ; Did get_target return get_target_ROUTE_ENDS? ($FF)
@@ -12809,7 +12881,7 @@ rvc_end:
 ;
 ; If the route specifies 'wander' then one of eight random locations starting from route.step is chosen.
 ;
-; Used by the routines at set_route, spawn_character, move_characters and get_target_assign_pos.
+; Used by the routines at set_route, spawn_character, move_a_character and get_target_assign_pos.
 ;
 ; I:HL Pointer to route.
 ; O:A 0/128/255 => Target is a location / a door / the route ended.
@@ -12887,9 +12959,9 @@ gt_route_ends:
 ; Move one (off-screen) character around at a time.
 ;
 ; Used by the routine at main_loop.
-move_characters:
-  LD A,$FF                       ; Set the 'character index is valid' flag
-  LD (entered_move_characters),A ;
+move_a_character:
+  LD A,$FF                        ; Set the 'character index is valid' flag
+  LD (entered_move_a_character),A ;
 ; Move to the next character, wrapping around after character 26.
   LD A,(character_index)  ; Load and increment the current character index
   INC A                   ;
@@ -12898,10 +12970,10 @@ move_characters:
   XOR A                   ;
 mc_didnt_wrap:
   LD (character_index),A  ; Store the character index
-; Get its chararacter struct, or exit if the character isn't on-screen.
+; Get its chararacter struct and exit if the character is on-screen.
   CALL get_character_struct ; Get a pointer to the character struct for character index A, in HL
   BIT 6,(HL)              ; Is the character on-screen? characterstruct_FLAG_ON_SCREEN
-  RET NZ                  ; It's not - return
+  RET NZ                  ; It is - return
   PUSH HL                 ; Preserve the character struct pointer
 ; Are any items to be found in the same room as the character?
   INC HL                  ; Advance HL to charstr.room and fetch it
@@ -13039,6 +13111,7 @@ mc_door_prev:
   DEC HL                  ; Calculate the address of the previous door half
   DEC HL                  ;
   DEC HL                  ;
+; Copy the door's tinypos position into the charstr.
 mc_door_copy_pos:
   LD A,(DE)               ; Fetch charstr.room
   INC DE                  ; Advance to charstr.pos
@@ -13107,7 +13180,7 @@ mc_route_down:
 
 ; Moves the first value toward the second.
 ;
-; Used by the routine at move_characters.
+; Used by the routine at move_a_character.
 ;
 ; I:A' Largest movement allowed. Either 2 or 6.
 ; I:B Return code. Incremented if delta is zero.
@@ -13151,7 +13224,7 @@ move_towards_3:
 
 ; Get character struct.
 ;
-; Used by the routines at set_character_route, reset_visible_character and move_characters.
+; Used by the routines at set_character_route, reset_visible_character and move_a_character.
 ;
 ; I:A Character index.
 ; O:HL Points to character struct.
@@ -13170,7 +13243,7 @@ get_character_struct:
 
 ; Character event.
 ;
-; Used by the routines at move_characters and route_ended.
+; Used by the routines at move_a_character and route_ended.
 ;
 ; Makes characters sit, sleep or other things TBD.
 ;
@@ -13300,14 +13373,14 @@ character_event_3:
 ; charevnt_bed
 charevnt_bed:
   POP HL
-  LD A,(entered_move_characters) ; if (entered_move_characters == 0) goto character_bed_vischar; else goto character_bed_state;
-  AND A                          ;
-  JP Z,character_bed_vischar     ;
-  JP character_bed_state         ;
+  LD A,(entered_move_a_character) ; if (entered_move_a_character == 0) goto character_bed_vischar; else goto character_bed_state;
+  AND A                           ;
+  JP Z,character_bed_vischar      ;
+  JP character_bed_state          ;
 ; charevnt_breakfast
 charevnt_breakfast:
   POP HL
-  LD A,(entered_move_characters)  ; if (entered_move_characters == 0) goto charevnt_breakfast_vischar; else goto charevnt_breakfast_state;
+  LD A,(entered_move_a_character) ; if (entered_move_a_character == 0) goto charevnt_breakfast_vischar; else goto charevnt_breakfast_state;
   AND A                           ;
   JP Z,charevnt_breakfast_vischar ;
   JP charevnt_breakfast_state     ;
@@ -13339,8 +13412,8 @@ food_discovered_counter:
 ;
 ; Used by the routine at main_loop.
 automatics:
-  XOR A                          ; Clear the 'character index is valid' flag
-  LD (entered_move_characters),A ;
+  XOR A                           ; Clear the 'character index is valid' flag
+  LD (entered_move_a_character),A ;
 ; Hostiles pursue if the bell is not ringing.
   LD A,(bell)             ; Read the bell ring counter/flag
   AND A                   ; Is it bell_RING_PERPETUAL?
@@ -14274,7 +14347,7 @@ iid_nearby:
 ;
 ; A discoverable item is one which has been moved away from its default room, and one that isn't the red cross parcel.
 ;
-; Used by the routines at move_characters and is_item_discoverable.
+; Used by the routines at move_a_character and is_item_discoverable.
 ;
 ; I:A Room index to check against
 ; O:C Item (if found)
@@ -14330,7 +14403,7 @@ iidi_found:
 
 ; An item is discovered.
 ;
-; Used by the routines at reset_game, move_characters, automatics and solitary.
+; Used by the routines at reset_game, move_a_character, automatics and solitary.
 ;
 ; I:C Item index.
 item_discovered:
@@ -14385,22 +14458,22 @@ id_interior:
 ;
 ; #define ITEM_ROOM(room_no, flags) ((room_no & 0x3F) | (flags << 6)) do the next flags mean that the wiresnips are always or /never/ found?
 default_item_locations:
-  DEFB $FF,$40,$20        ; item_WIRESNIPS        { ITEM_ROOM(room_NONE, 3),       ... }
-  DEFB $09,$3E,$30        ; item_SHOVEL           { ITEM_ROOM(room_9, 0),          ... }
-  DEFB $0A,$49,$24        ; item_LOCKPICK         { ITEM_ROOM(room_10, 0),         ... }
-  DEFB $0B,$2A,$3A        ; item_PAPERS           { ITEM_ROOM(room_11, 0),         ... }
-  DEFB $0E,$32,$18        ; item_TORCH            { ITEM_ROOM(room_14, 0),         ... }
-  DEFB $3F,$24,$2C        ; item_BRIBE            { ITEM_ROOM(room_NONE, 0),       ... }
-  DEFB $0F,$2C,$41        ; item_UNIFORM          { ITEM_ROOM(room_15, 0),         ... }
-  DEFB $13,$40,$30        ; item_FOOD             { ITEM_ROOM(room_19, 0),         ... }
-  DEFB $01,$42,$34        ; item_POISON           { ITEM_ROOM(room_1, 0),          ... }
-  DEFB $16,$3C,$2A        ; item_RED_KEY          { ITEM_ROOM(room_22, 0),         ... }
-  DEFB $0B,$1C,$22        ; item_YELLOW_KEY       { ITEM_ROOM(room_11, 0),         ... }
+  DEFB $FF,$40,$20        ; item_WIRESNIPS        { ITEM_ROOM(room_NONE, 3), ... }
+  DEFB $09,$3E,$30        ; item_SHOVEL           { ITEM_ROOM(room_9, 0), ... }
+  DEFB $0A,$49,$24        ; item_LOCKPICK         { ITEM_ROOM(room_10, 0), ... }
+  DEFB $0B,$2A,$3A        ; item_PAPERS           { ITEM_ROOM(room_11, 0), ... }
+  DEFB $0E,$32,$18        ; item_TORCH            { ITEM_ROOM(room_14, 0), ... }
+  DEFB $3F,$24,$2C        ; item_BRIBE            { ITEM_ROOM(room_NONE, 0), ... }
+  DEFB $0F,$2C,$41        ; item_UNIFORM          { ITEM_ROOM(room_15, 0), ... }
+  DEFB $13,$40,$30        ; item_FOOD             { ITEM_ROOM(room_19, 0), ... }
+  DEFB $01,$42,$34        ; item_POISON           { ITEM_ROOM(room_1, 0), ... }
+  DEFB $16,$3C,$2A        ; item_RED_KEY          { ITEM_ROOM(room_22, 0), ... }
+  DEFB $0B,$1C,$22        ; item_YELLOW_KEY       { ITEM_ROOM(room_11, 0), ... }
   DEFB $00,$4A,$48        ; item_GREEN_KEY        { ITEM_ROOM(room_0_OUTDOORS, 0), ... }
-  DEFB $3F,$1C,$32        ; item_RED_CROSS_PARCEL { ITEM_ROOM(room_NONE, 0),       ... }
-  DEFB $12,$24,$3A        ; item_RADIO            { ITEM_ROOM(room_18, 0),         ... }
-  DEFB $3F,$1E,$22        ; item_PURSE            { ITEM_ROOM(room_NONE, 0),       ... }
-  DEFB $3F,$34,$1C        ; item_COMPASS          { ITEM_ROOM(room_NONE, 0),       ... }
+  DEFB $3F,$1C,$32        ; item_RED_CROSS_PARCEL { ITEM_ROOM(room_NONE, 0), ... }
+  DEFB $12,$24,$3A        ; item_RADIO            { ITEM_ROOM(room_18, 0), ... }
+  DEFB $3F,$1E,$22        ; item_PURSE            { ITEM_ROOM(room_NONE, 0), ... }
+  DEFB $3F,$34,$1C        ; item_COMPASS          { ITEM_ROOM(room_NONE, 0), ... }
 
 ; Data for the four classes of characters. (<- spawn_character)
 character_meta_data_commandant:
@@ -15076,20 +15149,16 @@ mni_next:
   DJNZ mni_loop           ; ...loop
   RET                     ; Return
 
-; Iterates over all item_structs looking for nearby items.
+; Find the next item to draw that is furthest behind (x,y).
 ;
-; Returns the furthest/highest/nearest item?
-;
-; Iterates over all items. Uses multiply_by_8.
-;
-; Used by the routine at locate_vischar_or_itemstruct.
+; Used by the routine at get_next_drawable.
 ;
 ; I:A' A value to leave in A' when nothing is found (e.g. 255)
 ; I:BC' X position
 ; I:DE' Y position
 ; O:A' Index of the greatest item with the item_FOUND flag set, if found
 ; O:IY Pointer to an itemstruct, if found
-get_greatest_itemstruct:
+get_next_drawable_itemstruct:
   LD BC,$1007             ; Set B for 16 iterations (item__LIMIT) and set C for a seven byte stride simultaneously
   LD HL,$76C9             ; Point HL at the first item_struct's room member
 ; Start loop
@@ -15100,6 +15169,7 @@ ggi_loop:
   JR Z,ggi_next           ; If not, jump to the next iteration
   PUSH HL                 ; Preserve the item_struct pointer
   PUSH BC                 ; Preserve the item counter and stride
+; Select an item if it's behind the point (x,y).
   INC HL                  ; Advance HL to item_struct.pos.x
   LD A,(HL)               ; Fetch item_struct.pos.x
   CALL multiply_by_8      ; Multiply it by 8 returning the result in BC
@@ -15125,7 +15195,7 @@ ggi_loop:
   PUSH HL                 ; Preserve the item_struct pointer
   EXX                     ; Flip to banked regs - so we can store new X,Y positions
   POP HL                  ; Restore the item_struct pointer
-; Get (x,y) for the next iteration.
+; Calculate (x,y) for the next iteration.
   LD A,(HL)               ; Fetch item_struct.pos.y
   CALL multiply_by_8      ; Multiply it by 8 returning the result in BC
   LD E,C                  ; DE = BC
@@ -16651,7 +16721,9 @@ pms16_left_bitmap_jumptable_3:
   SLA E                   ; Do the same again
   RL D                    ;
   RL C                    ;
-; Plot, using foreground mask. See pms24_right_plot_0 for a discussion of this masking operation.
+; Plot, using foreground mask.
+;
+; See pms24_right_plot_0 for a discussion of this masking operation.
 pms16_left_bitmap_jumptable_end:
   LD HL,($81A2)           ; Load screen buffer pointer
   EXX                     ; Swap to masks bank
@@ -18056,7 +18128,7 @@ vischar_initial:
 
 ; Plot all static graphics and menu text.
 ;
-; Used by the routine at main. Plot all static graphics.
+; Used by the routine at main.
 plot_statics_and_menu_text:
   LD HL,statics_flagpole  ; Point HL at static_graphic_defs
   LD B,$12                ; Set B for 18 iterations
@@ -18696,7 +18768,10 @@ menu_screen_5:
 ;
 ; Used by the routine at menu_screen.
 ;
-; I:A  Semitone index (never larger than 42 in this game). O:BC Frequency. O:DE Frequency. O:L  Zero.
+; I:A Semitone index (never larger than 42 in this game).
+; O:BC Frequency.
+; O:DE Frequency.
+; O:L Zero.
 frequency_for_semitone:
   ADD A,A                 ; Double A for index
   LD HL,semitone_to_frequency ; Point HL at the semitone to frequency table
@@ -18817,7 +18892,9 @@ music_channel0_data:
   DEFB $00,$00,$00,$00,$00,$00,$00,$00
 ; End of song marker
   DEFB $FF
-; Low music channel notes (semitones). Start of The Great Escape theme.
+; Low music channel notes (semitones).
+;
+; Start of The Great Escape theme.
 music_channel1_data:
   DEFB $0A,$00,$0C,$00,$00,$0E,$0F,$00
   DEFB $13,$00,$0A,$00,$13,$00,$0F,$00
@@ -18905,7 +18982,11 @@ music_channel1_data:
   DEFB $11,$00,$08,$00,$11,$00,$0D,$00
 ; End of song marker
   DEFB $FF
-; The frequency to use to produce the given semitone. Covers full octaves from C2 to B6 and C7 only. Used by frequency_for_semitone
+; The frequency to use to produce the given semitone.
+;
+; Covers full octaves from C2 to B6 and C7 only.
+;
+; Used by frequency_for_semitone
 semitone_to_frequency:
   DEFW $FEFE              ; delay
   DEFW $0000              ; unused

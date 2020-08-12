@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="A4FD.html">A4FD</a></span></td>
+<td class="prev">
+Prev: <a href="A4FD.html">A4FD</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#a50b">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A51C.html">A51C</a></span></td>
+<td class="next">
+Next: <a href="A51C.html">A51C</a>
+</td>
 </tr>
 </table>
 <div class="description">A50B: Reset the screen.</div>
@@ -30,74 +33,60 @@
 Used by the routines at <a href="9DE5.html">keyscan_break</a> and <a href="A51C.html">escaped</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">screen_reset</td>
+<td class="asm-label">screen_reset</td>
 <td class="address-2"><span id="a50b"></span>A50B</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="6A27.html">wipe_visible_tiles</a></td>
-<td class="comment-11" rowspan="1">Wipe the visible tiles array</td>
+<td class="comment-1" rowspan="1">Wipe the visible tiles array</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a50e"></span>A50E</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="6B42.html">plot_interior_tiles</a></td>
-<td class="comment-11" rowspan="1">Expand tile buffer into screen buffer</td>
+<td class="comment-1" rowspan="1">Expand tile buffer into screen buffer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a511"></span>A511</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="ABA0.html">zoombox</a></td>
-<td class="comment-11" rowspan="1">Zoombox the scene onto the screen</td>
+<td class="comment-1" rowspan="1">Zoombox the scene onto the screen</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a514"></span>A514</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="EED3.html">plot_game_window</a></td>
-<td class="comment-11" rowspan="1">Plot the game screen</td>
+<td class="comment-1" rowspan="1">Plot the game screen</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a517"></span>A517</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$07</td>
-<td class="comment-11" rowspan="1">Set <span class="register">A</span> to attribute_WHITE_OVER_BLACK</td>
+<td class="comment-1" rowspan="1">Set <span class="register">A</span> to attribute_WHITE_OVER_BLACK</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a519"></span>A519</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP <a href="A15F.html">set_game_window_attributes</a></td>
-<td class="comment-11" rowspan="1">Set game window attributes (exit via)</td>
+<td class="comment-1" rowspan="1">Set game window attributes (exit via)</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="A4FD.html">A4FD</a></span></td>
+<td class="prev">
+Prev: <a href="A4FD.html">A4FD</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#a50b">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A51C.html">A51C</a></span></td>
+<td class="next">
+Next: <a href="A51C.html">A51C</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

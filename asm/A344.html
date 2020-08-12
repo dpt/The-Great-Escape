@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="A33F.html">A33F</a></span></td>
+<td class="prev">
+Prev: <a href="A33F.html">A33F</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#a344">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A351.html">A351</a></span></td>
+<td class="next">
+Next: <a href="A351.html">A351</a>
+</td>
 </tr>
 </table>
 <div class="description">A344: Set the hero's route</div>
@@ -30,7 +33,7 @@
 Used by the routine at <a href="C7C6.html">character_event</a>.
 </div>
 </div>
-<table class="input-1">
+<table class="input">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
@@ -43,82 +46,68 @@ Used by the routine at <a href="C7C6.html">character_event</a>.
 <td class="register-desc">Route step.</td>
 </tr>
 </table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">set_hero_route_force</td>
+<td class="asm-label">set_hero_route_force</td>
 <td class="address-2"><span id="a344"></span>A344</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$8001</td>
-<td class="comment-11" rowspan="2">Clear vischar_FLAGS_TARGET_IS_DOOR flag</td>
+<td class="comment-1" rowspan="2">Clear vischar_FLAGS_TARGET_IS_DOOR flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a347"></span>A347</td>
-<td class="bytes-0"></td>
 <td class="instruction">RES 6,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a349"></span>A349</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="4">Assign route</td>
+<td class="comment-1" rowspan="4">Assign route</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a34a"></span>A34A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),B</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a34b"></span>A34B</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a34c"></span>A34C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a34d"></span>A34D</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A3BB.html">set_route</a></td>
-<td class="comment-11" rowspan="1">Set the route</td>
+<td class="comment-1" rowspan="1">Set the route</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a350"></span>A350</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="A33F.html">A33F</a></span></td>
+<td class="prev">
+Prev: <a href="A33F.html">A33F</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#a344">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A351.html">A351</a></span></td>
+<td class="next">
+Next: <a href="A351.html">A351</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

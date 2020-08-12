@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="F076.html">F076</a></span></td>
+<td class="prev">
+Prev: <a href="F076.html">F076</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#f163">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="F1E0.html">F1E0</a></span></td>
+<td class="next">
+Next: <a href="F1E0.html">F1E0</a>
+</td>
 </tr>
 </table>
 <div class="description">F163: The game starts here.</div>
@@ -30,26 +33,13 @@
 Used by the routine at <a href="F068.html">jump_to_main</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">main</td>
+<td class="asm-label">main</td>
 <td class="address-2"><span id="f163"></span>F163</td>
-<td class="bytes-0"></td>
 <td class="instruction">DI</td>
-<td class="comment-11" rowspan="1">Disable interrupts</td>
+<td class="comment-1" rowspan="1">Disable interrupts</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -62,11 +52,10 @@ Q: Why is the stack pointer set to $FFFE here when squash_stack_goto_main sets i
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f164"></span>F164</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD SP,$FFFE</td>
-<td class="comment-11" rowspan="1">Point the stack pointer at the end of RAM</td>
+<td class="comment-1" rowspan="1">Point the stack pointer at the end of RAM</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -79,11 +68,10 @@ Clear the screen.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f167"></span>F167</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="F257.html">wipe_full_screen_and_attributes</a></td>
-<td class="comment-11" rowspan="1">Clear the full screen and attributes and set the screen border to black</td>
+<td class="comment-1" rowspan="1">Clear the full screen and attributes and set the screen border to black</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -96,18 +84,16 @@ Set the morale flag to green.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f16a"></span>F16A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$44</td>
-<td class="comment-11" rowspan="1">Set <span class="register">A</span> to attribute_BRIGHT_GREEN_OVER_BLACK</td>
+<td class="comment-1" rowspan="1">Set <span class="register">A</span> to attribute_BRIGHT_GREEN_OVER_BLACK</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f16c"></span>F16C</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A071.html">set_morale_flag_screen_attributes</a></td>
-<td class="comment-11" rowspan="1">Set the screen attributes of the morale flag</td>
+<td class="comment-1" rowspan="1">Set the screen attributes of the morale flag</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -123,32 +109,28 @@ Bug: This passes in index $44 to <a href="F408.html">set_menu_item_attributes</a
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f16f"></span>F16F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,$46</td>
-<td class="comment-11" rowspan="1">Set <span class="register">E</span> to attribute_BRIGHT_YELLOW_OVER_BLACK</td>
+<td class="comment-1" rowspan="1">Set <span class="register">E</span> to attribute_BRIGHT_YELLOW_OVER_BLACK</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f171"></span>F171</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="F408.html">set_menu_item_attributes</a></td>
-<td class="comment-11" rowspan="1">Set the screen attributes of the specified menu item</td>
+<td class="comment-1" rowspan="1">Set the screen attributes of the specified menu item</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f174"></span>F174</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="F1E0.html">plot_statics_and_menu_text</a></td>
-<td class="comment-11" rowspan="1">Plot all static graphics and menu text</td>
+<td class="comment-1" rowspan="1">Plot all static graphics and menu text</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f177"></span>F177</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A10B.html">plot_score</a></td>
-<td class="comment-11" rowspan="1">Draw the current score to screen</td>
+<td class="comment-1" rowspan="1">Draw the current score to screen</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -164,11 +146,10 @@ We'll be in here for some time until the user selects their input method. When w
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f17a"></span>F17A</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="F4B7.html">menu_screen</a></td>
-<td class="comment-11" rowspan="1">Runs the menu screen</td>
+<td class="comment-1" rowspan="1">Runs the menu screen</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -181,11 +162,10 @@ Construct a table of 256 bit-reversed bytes at $7F00.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f17d"></span>F17D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$7F00</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at $7F00</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at $7F00</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -198,18 +178,16 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">main_0</td>
+<td class="asm-label">main_0</td>
 <td class="address-2"><span id="f180"></span>F180</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="1">Shuffle</td>
+<td class="comment-1" rowspan="1">Shuffle</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f181"></span>F181</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,$00</td>
-<td class="comment-11" rowspan="1">Zero <span class="register">C</span> (DPT: Could have used XOR C)</td>
+<td class="comment-1" rowspan="1">Zero <span class="register">C</span> (DPT: Could have used XOR C)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -222,11 +200,10 @@ Reverse a byte
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f183"></span>F183</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$08</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for eight iterations</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for eight iterations</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -239,53 +216,45 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">main_1</td>
+<td class="asm-label">main_1</td>
 <td class="address-2"><span id="f185"></span>F185</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
-<td class="comment-11" rowspan="1">Shift out lowest bit from <span class="register">A</span> into carry</td>
+<td class="comment-1" rowspan="1">Shift out lowest bit from <span class="register">A</span> into carry</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f186"></span>F186</td>
-<td class="bytes-0"></td>
 <td class="instruction">RL C</td>
-<td class="comment-11" rowspan="1">Shift carry into <span class="register">C</span></td>
+<td class="comment-1" rowspan="1">Shift carry into <span class="register">C</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f188"></span>F188</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="F163.html#f185">main_1</a></td>
-<td class="comment-11" rowspan="1">...loop until the byte is completed</td>
+<td class="comment-1" rowspan="1">...loop until the byte is completed</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f18a"></span>F18A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-11" rowspan="2">Store the reversed byte</td>
+<td class="comment-1" rowspan="2">Store the reversed byte</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f18b"></span>F18B</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f18c"></span>F18C</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="F163.html#f180">main_0</a></td>
-<td class="comment-11" rowspan="1">...loop until <span class="register">L</span> becomes zero</td>
+<td class="comment-1" rowspan="1">...loop until <span class="register">L</span> becomes zero</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f18f"></span>F18F</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC H</td>
-<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to $8000</td>
+<td class="comment-1" rowspan="1">Advance <span class="register">HL</span> to $8000</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -298,18 +267,16 @@ Initialise visible characters (<span class="register">HL</span> is $8000).
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f190"></span>F190</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$F1C9</td>
-<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at vischar_initial</td>
+<td class="comment-1" rowspan="1">Point <span class="register">DE</span> at vischar_initial</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f193"></span>F193</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$08</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for eight iterations</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for eight iterations</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -322,95 +289,77 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">main_2</td>
+<td class="asm-label">main_2</td>
 <td class="address-2"><span id="f195"></span>F195</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">Preserve loop counter</td>
+<td class="comment-1" rowspan="1">Preserve loop counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f196"></span>F196</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1">Preserve vischar_initial</td>
+<td class="comment-1" rowspan="1">Preserve vischar_initial</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f197"></span>F197</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Preserve vischar pointer</td>
+<td class="comment-1" rowspan="1">Preserve vischar pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f198"></span>F198</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0017</td>
-<td class="comment-11" rowspan="3">Populate the vischar slot with vischar_initial's data</td>
+<td class="comment-1" rowspan="3">Populate the vischar slot with vischar_initial's data</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f19b"></span>F19B</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f19c"></span>F19C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDIR</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f19e"></span>F19E</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore vischar pointer</td>
+<td class="comment-1" rowspan="1">Restore vischar pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f19f"></span>F19F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$20</td>
-<td class="comment-11" rowspan="3">Advance <span class="register">HL</span> to the next vischar (assumes no overflow)</td>
+<td class="comment-1" rowspan="3">Advance <span class="register">HL</span> to the next vischar (assumes no overflow)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1a1"></span>F1A1</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1a2"></span>F1A2</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1a3"></span>F1A3</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">Restore vischar_initial</td>
+<td class="comment-1" rowspan="1">Restore vischar_initial</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1a4"></span>F1A4</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="2">...loop until the vischars are populated</td>
+<td class="comment-1" rowspan="2">...loop until the vischars are populated</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1a5"></span>F1A5</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="F163.html#f195">main_2</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -423,11 +372,10 @@ Write $FF $FF at $8020 and every 32 bytes after. (DPT: Possibly easier to do the
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1a7"></span>F1A7</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$07</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for seven iterations</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for seven iterations</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -440,25 +388,22 @@ Iterate over non-player visible characters.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1a9"></span>F1A9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$8020</td>
-<td class="comment-11" rowspan="1">Start at the second visible character</td>
+<td class="comment-1" rowspan="1">Start at the second visible character</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1ac"></span>F1AC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$001F</td>
-<td class="comment-11" rowspan="1">Prepare the vischar stride, minus a byte</td>
+<td class="comment-1" rowspan="1">Prepare the vischar stride, minus a byte</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1af"></span>F1AF</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="1">Prepare the index / flags initialiser</td>
+<td class="comment-1" rowspan="1">Prepare the index / flags initialiser</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -471,39 +416,34 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">main_3</td>
+<td class="asm-label">main_3</td>
 <td class="address-2"><span id="f1b1"></span>F1B1</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="1">Set the vischar's character index to $FF</td>
+<td class="comment-1" rowspan="1">Set the vischar's character index to $FF</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1b2"></span>F1B2</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to the flags field</td>
+<td class="comment-1" rowspan="1">Advance <span class="register">HL</span> to the flags field</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1b3"></span>F1B3</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="1">Set the vischar's flags to $FF</td>
+<td class="comment-1" rowspan="1">Set the vischar's flags to $FF</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1b4"></span>F1B4</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-11" rowspan="1">Advance the vischar pointer</td>
+<td class="comment-1" rowspan="1">Advance the vischar pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1b5"></span>F1B5</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="F163.html#f1b1">main_3</a></td>
-<td class="comment-11" rowspan="1">...loop until the vischar flags are set</td>
+<td class="comment-1" rowspan="1">...loop until the vischar flags are set</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -519,11 +459,10 @@ This wipes everything up until the start of tiles ($8218).
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1b7"></span>F1B7</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0118</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> to $118</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> to $118</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -536,60 +475,48 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">main_4</td>
+<td class="asm-label">main_4</td>
 <td class="address-2"><span id="f1ba"></span>F1BA</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment-11" rowspan="2">Zero and advance</td>
+<td class="comment-1" rowspan="2">Zero and advance</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1bc"></span>F1BC</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1bd"></span>F1BD</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC BC</td>
-<td class="comment-11" rowspan="4">...loop until cleared</td>
+<td class="comment-1" rowspan="4">...loop until cleared</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1be"></span>F1BE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,C</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1bf"></span>F1BF</td>
-<td class="bytes-0"></td>
 <td class="instruction">OR B</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1c0"></span>F1C0</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="F163.html#f1ba">main_4</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1c3"></span>F1C3</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B75A.html">reset_game</a></td>
-<td class="comment-11" rowspan="1">Reset the game</td>
+<td class="comment-1" rowspan="1">Reset the game</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1c6"></span>F1C6</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP <a href="9D78.html">main_loop_setup</a></td>
-<td class="comment-11" rowspan="1">Jump to main_loop_setup</td>
+<td class="comment-1" rowspan="1">Jump to main_loop_setup</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -602,101 +529,93 @@ Initial state of a visible character.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">vischar_initial</td>
+<td class="asm-label">vischar_initial</td>
 <td class="address-1"><span id="f1c9"></span>F1C9</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $00</td>
-<td class="comment-11" rowspan="1">character</td>
+<td class="comment-1" rowspan="1">character</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1ca"></span>F1CA</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $00</td>
-<td class="comment-11" rowspan="1">flags</td>
+<td class="comment-1" rowspan="1">flags</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1cb"></span>F1CB</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFW $012C</td>
-<td class="comment-11" rowspan="1">route</td>
+<td class="comment-1" rowspan="1">route</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1cd"></span>F1CD</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $2E,$2E,$18</td>
-<td class="comment-11" rowspan="1">target</td>
+<td class="comment-1" rowspan="1">target</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1d0"></span>F1D0</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $00</td>
-<td class="comment-11" rowspan="1">counter_and_flags</td>
+<td class="comment-1" rowspan="1">counter_and_flags</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1d1"></span>F1D1</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFW <a href="CDF2.html">animations</a></td>
-<td class="comment-11" rowspan="1">animbase</td>
+<td class="comment-1" rowspan="1">animbase</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1d3"></span>F1D3</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFW <a href="CF06.html#cf76">anim_wait_tl</a></td>
-<td class="comment-11" rowspan="1">anim</td>
+<td class="comment-1" rowspan="1">anim</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1d5"></span>F1D5</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $00</td>
-<td class="comment-11" rowspan="1">animindex</td>
+<td class="comment-1" rowspan="1">animindex</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1d6"></span>F1D6</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $00</td>
-<td class="comment-11" rowspan="1">input</td>
+<td class="comment-1" rowspan="1">input</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1d7"></span>F1D7</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $00</td>
-<td class="comment-11" rowspan="1">direction</td>
+<td class="comment-1" rowspan="1">direction</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1d8"></span>F1D8</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFW $0000,$0000,$0018</td>
-<td class="comment-11" rowspan="1">mi.pos</td>
+<td class="comment-1" rowspan="1">mi.pos</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1de"></span>F1DE</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFW <a href="CE22.html#ce2e">sprite_prisoner</a></td>
-<td class="comment-11" rowspan="1">mi.sprite</td>
+<td class="comment-1" rowspan="1">mi.sprite</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="F076.html">F076</a></span></td>
+<td class="prev">
+Prev: <a href="F076.html">F076</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#f163">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="F1E0.html">F1E0</a></span></td>
+<td class="next">
+Next: <a href="F1E0.html">F1E0</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

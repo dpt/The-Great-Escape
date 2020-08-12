@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="B3A8.html">B3A8</a></span></td>
+<td class="prev">
+Prev: <a href="B3A8.html">B3A8</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#b3c4">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="B3E1.html">B3E1</a></span></td>
+<td class="next">
+Next: <a href="B3E1.html">B3E1</a>
+</td>
 </tr>
 </table>
 <div class="description">B3C4: Use poison.</div>
@@ -26,132 +29,108 @@
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
-
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">action_poison</td>
+<td class="asm-label">action_poison</td>
 <td class="address-2"><span id="b3c4"></span>B3C4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,($8215)</td>
-<td class="comment-11" rowspan="1">Load both held items</td>
+<td class="comment-1" rowspan="1">Load both held items</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3c7"></span>B3C7</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$07</td>
-<td class="comment-11" rowspan="1">Prepare item_FOOD</td>
+<td class="comment-1" rowspan="1">Prepare item_FOOD</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3c9"></span>B3C9</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP L</td>
-<td class="comment-11" rowspan="1">Is the first item item_FOOD?</td>
+<td class="comment-1" rowspan="1">Is the first item item_FOOD?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3ca"></span>B3CA</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="B3C4.html#b3ce">have_food</a></td>
-<td class="comment-11" rowspan="1">Jump to have_food if so</td>
+<td class="comment-1" rowspan="1">Jump to have_food if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3cc"></span>B3CC</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP H</td>
-<td class="comment-11" rowspan="1">Is the second item item_FOOD?</td>
+<td class="comment-1" rowspan="1">Is the second item item_FOOD?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3cd"></span>B3CD</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET NZ</td>
-<td class="comment-11" rowspan="1">Return if not</td>
+<td class="comment-1" rowspan="1">Return if not</td>
 </tr>
 <tr>
-<td class="asm-label-1">have_food</td>
+<td class="asm-label">have_food</td>
 <td class="address-2"><span id="b3ce"></span>B3CE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$76F9</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at item_structs[item_FOOD].item</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at item_structs[item_FOOD].item</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3d1"></span>B3D1</td>
-<td class="bytes-0"></td>
 <td class="instruction">BIT 5,(HL)</td>
-<td class="comment-11" rowspan="1">Is bit 5 set? (itemstruct_ITEM_FLAG_POISONED)</td>
+<td class="comment-1" rowspan="1">Is bit 5 set? (itemstruct_ITEM_FLAG_POISONED)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3d3"></span>B3D3</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET NZ</td>
-<td class="comment-11" rowspan="1">Return if so - the food is already poisoned</td>
+<td class="comment-1" rowspan="1">Return if so - the food is already poisoned</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3d4"></span>B3D4</td>
-<td class="bytes-0"></td>
 <td class="instruction">SET 5,(HL)</td>
-<td class="comment-11" rowspan="1">Set bit 5</td>
+<td class="comment-1" rowspan="1">Set bit 5</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3d6"></span>B3D6</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$43</td>
-<td class="comment-11" rowspan="2">Set the screen attribute for the food item to bright-purple over black</td>
+<td class="comment-1" rowspan="2">Set the screen attribute for the food item to bright-purple over black</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3d8"></span>B3D8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($DD70),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3db"></span>B3DB</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="7C33.html">draw_all_items</a></td>
-<td class="comment-11" rowspan="1">Draw both held items</td>
+<td class="comment-1" rowspan="1">Draw both held items</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3de"></span>B3DE</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP <a href="A0E9.html">increase_morale_by_10_score_by_50</a></td>
-<td class="comment-11" rowspan="1">Increase morale by 10, score by 50 and exit via</td>
+<td class="comment-1" rowspan="1">Increase morale by 10, score by 50 and exit via</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="B3A8.html">B3A8</a></span></td>
+<td class="prev">
+Prev: <a href="B3A8.html">B3A8</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#b3c4">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="B3E1.html">B3E1</a></span></td>
+<td class="next">
+Next: <a href="B3E1.html">B3E1</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

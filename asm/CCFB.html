@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="CCCD.html">CCCD</a></span></td>
+<td class="prev">
+Prev: <a href="CCCD.html">CCCD</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#ccfb">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="CD31.html">CD31</a></span></td>
+<td class="next">
+Next: <a href="CD31.html">CD31</a>
+</td>
 </tr>
 </table>
 <div class="description">CCFB: Is an item discoverable indoors?</div>
@@ -30,10 +33,10 @@
 A discoverable item is one which has been moved away from its default room, and one that isn't the red cross parcel.
 </div>
 <div class="paragraph">
-Used by the routines at <a href="C6A0.html">move_characters</a> and <a href="CCCD.html">is_item_discoverable</a>.
+Used by the routines at <a href="C6A0.html">move_a_character</a> and <a href="CCCD.html">is_item_discoverable</a>.
 </div>
 </div>
-<table class="input-1">
+<table class="input">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
@@ -42,7 +45,7 @@ Used by the routines at <a href="C6A0.html">move_characters</a> and <a href="CCC
 <td class="register-desc">Room index to check against</td>
 </tr>
 </table>
-<table class="output-1">
+<table class="output">
 <tr class="asm-output-header">
 <th colspan="2">Output</th>
 </tr>
@@ -58,25 +61,22 @@ Used by the routines at <a href="C6A0.html">move_characters</a> and <a href="CCC
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">is_item_discoverable_interior</td>
+<td class="asm-label">is_item_discoverable_interior</td>
 <td class="address-2"><span id="ccfb"></span>CCFB</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">Save the room index in <span class="register">C</span></td>
+<td class="comment-1" rowspan="1">Save the room index in <span class="register">C</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccfc"></span>CCFC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$76C9</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the first item_struct's room member</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the first item_struct's room member</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccff"></span>CCFF</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$10</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for 16 iterations (item__LIMIT)</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for 16 iterations (item__LIMIT)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -89,18 +89,16 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">iidi_loop</td>
+<td class="asm-label">iidi_loop</td>
 <td class="address-2"><span id="cd01"></span>CD01</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Load the room index and flags</td>
+<td class="comment-1" rowspan="1">Load the room index and flags</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd02"></span>CD02</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $3F</td>
-<td class="comment-11" rowspan="1">Extract the room index</td>
+<td class="comment-1" rowspan="1">Extract the room index</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -113,25 +111,22 @@ Is the item in the specified room?
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd04"></span>CD04</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP C</td>
-<td class="comment-11" rowspan="1">Same room?</td>
+<td class="comment-1" rowspan="1">Same room?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd05"></span>CD05</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="CCFB.html#cd1b">iidi_next</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd07"></span>CD07</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Preserve the item_struct pointer</td>
+<td class="comment-1" rowspan="1">Preserve the item_struct pointer</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -147,158 +142,129 @@ Bug: room_and_flags doesn't get its flags masked off in the following sequence. 
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd08"></span>CD08</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
-<td class="comment-11" rowspan="2">Fetch item_and_flags</td>
+<td class="comment-1" rowspan="2">Fetch item_and_flags</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd09"></span>CD09</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd0a"></span>CD0A</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $0F</td>
-<td class="comment-11" rowspan="1">Mask off the item</td>
+<td class="comment-1" rowspan="1">Mask off the item</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd0c"></span>CD0C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
-<td class="comment-11" rowspan="3">Multiply by three - the array stride</td>
+<td class="comment-1" rowspan="3">Multiply by three - the array stride</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd0d"></span>CD0D</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd0e"></span>CD0E</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd0f"></span>CD0F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
-<td class="comment-11" rowspan="2">Widen to 16-bit</td>
+<td class="comment-1" rowspan="2">Widen to 16-bit</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd10"></span>CD10</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD D,$00</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd12"></span>CD12</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$CD6A</td>
-<td class="comment-11" rowspan="2">Add to default_item_locations</td>
+<td class="comment-1" rowspan="2">Add to default_item_locations</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd15"></span>CD15</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd16"></span>CD16</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Fetch the default item room_and_flags</td>
+<td class="comment-1" rowspan="1">Fetch the default item room_and_flags</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd17"></span>CD17</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP C</td>
-<td class="comment-11" rowspan="1">Same room? (bug: not masked)</td>
+<td class="comment-1" rowspan="1">Same room? (bug: not masked)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd18"></span>CD18</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="CCFB.html#cd22">iidi_not_default_room</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd1a"></span>CD1A</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore the item_struct pointer</td>
+<td class="comment-1" rowspan="1">Restore the item_struct pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1">iidi_next</td>
+<td class="asm-label">iidi_next</td>
 <td class="address-2"><span id="cd1b"></span>CD1B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$0007</td>
-<td class="comment-11" rowspan="2">Step <span class="register">HL</span> to the next item_struct</td>
+<td class="comment-1" rowspan="2">Step <span class="register">HL</span> to the next item_struct</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd1e"></span>CD1E</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd1f"></span>CD1F</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="CCFB.html#cd01">iidi_loop</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd21"></span>CD21</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return with NZ set (not found)</td>
+<td class="comment-1" rowspan="1">Return with NZ set (not found)</td>
 </tr>
 <tr>
-<td class="asm-label-1">iidi_not_default_room</td>
+<td class="asm-label">iidi_not_default_room</td>
 <td class="address-2"><span id="cd22"></span>CD22</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore the item_struct pointer</td>
+<td class="comment-1" rowspan="1">Restore the item_struct pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd23"></span>CD23</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
-<td class="comment-11" rowspan="2">Fetch item_and_flags</td>
+<td class="comment-1" rowspan="2">Fetch item_and_flags</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd24"></span>CD24</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd25"></span>CD25</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $0F</td>
-<td class="comment-11" rowspan="1">Mask off the item</td>
+<td class="comment-1" rowspan="1">Mask off the item</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -311,66 +277,62 @@ Ignore the red cross parcel.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd27"></span>CD27</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $0C</td>
-<td class="comment-11" rowspan="1">Is this item the red cross parcel? (item_RED_CROSS_PARCEL)</td>
+<td class="comment-1" rowspan="1">Is this item the red cross parcel? (item_RED_CROSS_PARCEL)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd29"></span>CD29</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="CCFB.html#cd2e">iidi_found</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd2b"></span>CD2B</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">Otherwise advance <span class="register">HL</span> to room_and_flags</td>
+<td class="comment-1" rowspan="1">Otherwise advance <span class="register">HL</span> to room_and_flags</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd2c"></span>CD2C</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="CCFB.html#cd1b">iidi_next</a></td>
-<td class="comment-11" rowspan="1">Jump to the next iteration</td>
+<td class="comment-1" rowspan="1">Jump to the next iteration</td>
 </tr>
 <tr>
-<td class="asm-label-1">iidi_found</td>
+<td class="asm-label">iidi_found</td>
 <td class="address-2"><span id="cd2e"></span>CD2E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">Return the item's index in <span class="register">C</span></td>
+<td class="comment-1" rowspan="1">Return the item's index in <span class="register">C</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd2f"></span>CD2F</td>
-<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="2">Return with Z set (found)</td>
+<td class="comment-1" rowspan="2">Return with Z set (found)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cd30"></span>CD30</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="CCCD.html">CCCD</a></span></td>
+<td class="prev">
+Prev: <a href="CCCD.html">CCCD</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#ccfb">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="CD31.html">CD31</a></span></td>
+<td class="next">
+Next: <a href="CD31.html">CD31</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

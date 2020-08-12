@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="EDD3.html">EDD3</a></span></td>
+<td class="prev">
+Prev: <a href="EDD3.html">EDD3</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#eed3">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="EF9A.html">EF9A</a></span></td>
+<td class="next">
+Next: <a href="EF9A.html">EF9A</a>
+</td>
 </tr>
 </table>
 <div class="description">EED3: Plot the game screen.</div>
@@ -42,103 +45,76 @@ Uses the Z80 SP stack trick.
 Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html">screen_reset</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_game_window</td>
+<td class="asm-label">plot_game_window</td>
 <td class="address-2"><span id="eed3"></span>EED3</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($EDD1),SP</td>
-<td class="comment-11" rowspan="1">Preserve the stack pointer</td>
+<td class="comment-1" rowspan="1">Preserve the stack pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eed7"></span>EED7</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($A7C8)</td>
-<td class="comment-11" rowspan="1">Read upper byte of game_window_offset</td>
+<td class="comment-1" rowspan="1">Read upper byte of game_window_offset</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eeda"></span>EEDA</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Is it nonzero?</td>
+<td class="comment-1" rowspan="1">Is it nonzero?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eedb"></span>EEDB</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="EED3.html#ef27">pgw_unaligned</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
-<td class="asm-label-1">pgw_aligned</td>
+<td class="asm-label">pgw_aligned</td>
 <td class="address-1"><span id="eede"></span>EEDE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$F291</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the screen buffer's start address + 1</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the screen buffer's start address + 1</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eee1"></span>EEE1</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($A7C7)</td>
-<td class="comment-11" rowspan="1">Read lower byte of game_window_offset</td>
+<td class="comment-1" rowspan="1">Read lower byte of game_window_offset</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eee4"></span>EEE4</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-11" rowspan="4">Combine</td>
+<td class="comment-1" rowspan="4">Combine</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eee5"></span>EEE5</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="EED3.html#eee8">plot_game_window_0</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eee7"></span>EEE7</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC H</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_game_window_0</td>
+<td class="asm-label">plot_game_window_0</td>
 <td class="address-2"><span id="eee8"></span>EEE8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eee9"></span>EEE9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD SP,$EDD3</td>
-<td class="comment-11" rowspan="1">Point <span class="register">SP</span> at game_window_start_addresses</td>
+<td class="comment-1" rowspan="1">Point <span class="register">SP</span> at game_window_start_addresses</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eeec"></span>EEEC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$80</td>
-<td class="comment-11" rowspan="1">There are 128 rows</td>
+<td class="comment-1" rowspan="1">There are 128 rows</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -151,284 +127,217 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_game_window_1</td>
+<td class="asm-label">plot_game_window_1</td>
 <td class="address-2"><span id="eeee"></span>EEEE</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">Pop a target address off the stack</td>
+<td class="comment-1" rowspan="1">Pop a target address off the stack</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eeef"></span>EEEF</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="23">Copy 23 bytes</td>
+<td class="comment-1" rowspan="23">Copy 23 bytes</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eef1"></span>EEF1</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eef3"></span>EEF3</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eef5"></span>EEF5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eef7"></span>EEF7</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eef9"></span>EEF9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eefb"></span>EEFB</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eefd"></span>EEFD</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eeff"></span>EEFF</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef01"></span>EF01</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef03"></span>EF03</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef05"></span>EF05</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef07"></span>EF07</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef09"></span>EF09</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef0b"></span>EF0B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef0d"></span>EF0D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef0f"></span>EF0F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef11"></span>EF11</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef13"></span>EF13</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef15"></span>EF15</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef17"></span>EF17</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef19"></span>EF19</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef1b"></span>EF1B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef1d"></span>EF1D</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">Skip the 24th input byte</td>
+<td class="comment-1" rowspan="1">Skip the 24th input byte</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef1e"></span>EF1E</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC A</td>
-<td class="comment-11" rowspan="2">...loop</td>
+<td class="comment-1" rowspan="2">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef1f"></span>EF1F</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="EED3.html#eeee">plot_game_window_1</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef22"></span>EF22</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD SP,($EDD1)</td>
-<td class="comment-11" rowspan="1">Restore the stack pointer</td>
+<td class="comment-1" rowspan="1">Restore the stack pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef26"></span>EF26</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="asm-label-1">pgw_unaligned</td>
+<td class="asm-label">pgw_unaligned</td>
 <td class="address-2"><span id="ef27"></span>EF27</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$F290</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the screen buffer's start address</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the screen buffer's start address</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef2a"></span>EF2A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($A7C7)</td>
-<td class="comment-11" rowspan="1">Read lower byte of game_window_offset</td>
+<td class="comment-1" rowspan="1">Read lower byte of game_window_offset</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef2d"></span>EF2D</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-11" rowspan="4">Combine</td>
+<td class="comment-1" rowspan="4">Combine</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef2e"></span>EF2E</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="EED3.html#ef31">plot_game_window_2</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef30"></span>EF30</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC H</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_game_window_2</td>
+<td class="asm-label">plot_game_window_2</td>
 <td class="address-2"><span id="ef31"></span>EF31</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef32"></span>EF32</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">Fetch a first source byte</td>
+<td class="comment-1" rowspan="2">Fetch a first source byte</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef33"></span>EF33</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef34"></span>EF34</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD SP,$EDD3</td>
-<td class="comment-11" rowspan="1">Point <span class="register">SP</span> at game_window_start_addresses</td>
+<td class="comment-1" rowspan="1">Point <span class="register">SP</span> at game_window_start_addresses</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef37"></span>EF37</td>
-<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1">Bank</td>
+<td class="comment-1" rowspan="1">Bank</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef38"></span>EF38</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$80</td>
-<td class="comment-11" rowspan="1">There are 128 rows</td>
+<td class="comment-1" rowspan="1">There are 128 rows</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -441,25 +350,22 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_game_window_3</td>
+<td class="asm-label">plot_game_window_3</td>
 <td class="address-2"><span id="ef3a"></span>EF3A</td>
-<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1">Unbank</td>
+<td class="comment-1" rowspan="1">Unbank</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef3b"></span>EF3B</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">Pop a target address off the stack</td>
+<td class="comment-1" rowspan="1">Pop a target address off the stack</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef3c"></span>EF3C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$04</td>
-<td class="comment-11" rowspan="1">4 iterations of 5, plus 3 at the end = 23</td>
+<td class="comment-1" rowspan="1">4 iterations of 5, plus 3 at the end = 23</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -472,11 +378,10 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_game_window_4</td>
+<td class="asm-label">plot_game_window_4</td>
 <td class="address-2"><span id="ef3e"></span>EF3E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="1">Fetch a second source byte (so we can restore it later)</td>
+<td class="comment-1" rowspan="1">Fetch a second source byte (so we can restore it later)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -489,563 +394,432 @@ RRD does a 12-bit rotate: nibble_out = (HL) &amp; $0F; (HL) = ((HL) &gt;&gt; 4) 
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef3f"></span>EF3F</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRD</td>
-<td class="comment-11" rowspan="1">Shift (<span class="register">HL</span>) down and rotate <span class="register">A'</span>s bottom nibble into the top of (<span class="register">HL</span>)</td>
+<td class="comment-1" rowspan="1">Shift (<span class="register">HL</span>) down and rotate <span class="register">A'</span>s bottom nibble into the top of (<span class="register">HL</span>)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef41"></span>EF41</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">Bank</td>
+<td class="comment-1" rowspan="1">Bank</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef42"></span>EF42</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Load the rotated and merged value</td>
+<td class="comment-1" rowspan="1">Load the rotated and merged value</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef43"></span>EF43</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">Store it to the screen</td>
+<td class="comment-1" rowspan="1">Store it to the screen</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef44"></span>EF44</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-11" rowspan="1">Restore the corrupted byte</td>
+<td class="comment-1" rowspan="1">Restore the corrupted byte</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef45"></span>EF45</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">Unbank</td>
+<td class="comment-1" rowspan="1">Unbank</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef46"></span>EF46</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">Advance</td>
+<td class="comment-1" rowspan="1">Advance</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef47"></span>EF47</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC E</td>
-<td class="comment-11" rowspan="1">Advance</td>
+<td class="comment-1" rowspan="1">Advance</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef48"></span>EF48</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="9">Repeat</td>
+<td class="comment-1" rowspan="9">Repeat</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef49"></span>EF49</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRD</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef4b"></span>EF4B</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef4c"></span>EF4C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef4d"></span>EF4D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef4e"></span>EF4E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef4f"></span>EF4F</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef50"></span>EF50</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef51"></span>EF51</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef52"></span>EF52</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="9">Repeat</td>
+<td class="comment-1" rowspan="9">Repeat</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef53"></span>EF53</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRD</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef55"></span>EF55</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef56"></span>EF56</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef57"></span>EF57</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef58"></span>EF58</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef59"></span>EF59</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef5a"></span>EF5A</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef5b"></span>EF5B</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef5c"></span>EF5C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="9">Repeat</td>
+<td class="comment-1" rowspan="9">Repeat</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef5d"></span>EF5D</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRD</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef5f"></span>EF5F</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef60"></span>EF60</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef61"></span>EF61</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef62"></span>EF62</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef63"></span>EF63</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef64"></span>EF64</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef65"></span>EF65</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef66"></span>EF66</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="9">Repeat</td>
+<td class="comment-1" rowspan="9">Repeat</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef67"></span>EF67</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRD</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef69"></span>EF69</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef6a"></span>EF6A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef6b"></span>EF6B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef6c"></span>EF6C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef6d"></span>EF6D</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef6e"></span>EF6E</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef6f"></span>EF6F</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef70"></span>EF70</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="EED3.html#ef3e">plot_game_window_4</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef72"></span>EF72</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="9">Repeat</td>
+<td class="comment-1" rowspan="9">Repeat</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef73"></span>EF73</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRD</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef75"></span>EF75</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef76"></span>EF76</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef77"></span>EF77</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef78"></span>EF78</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef79"></span>EF79</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef7a"></span>EF7A</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef7b"></span>EF7B</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef7c"></span>EF7C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="9">Repeat</td>
+<td class="comment-1" rowspan="9">Repeat</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef7d"></span>EF7D</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRD</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef7f"></span>EF7F</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef80"></span>EF80</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef81"></span>EF81</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef82"></span>EF82</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef83"></span>EF83</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef84"></span>EF84</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef85"></span>EF85</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef86"></span>EF86</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="9">Repeat</td>
+<td class="comment-1" rowspan="9">Repeat</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef87"></span>EF87</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRD</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef89"></span>EF89</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef8a"></span>EF8A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef8b"></span>EF8B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef8c"></span>EF8C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef8d"></span>EF8D</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef8e"></span>EF8E</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef8f"></span>EF8F</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef90"></span>EF90</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">Preload the next scanline's first input byte</td>
+<td class="comment-1" rowspan="2">Preload the next scanline's first input byte</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef91"></span>EF91</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef92"></span>EF92</td>
-<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1">Unbank</td>
+<td class="comment-1" rowspan="1">Unbank</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef93"></span>EF93</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="EED3.html#ef3a">plot_game_window_3</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef95"></span>EF95</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD SP,($EDD1)</td>
-<td class="comment-11" rowspan="1">Restore the stack pointer</td>
+<td class="comment-1" rowspan="1">Restore the stack pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ef99"></span>EF99</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="EDD3.html">EDD3</a></span></td>
+<td class="prev">
+Prev: <a href="EDD3.html">EDD3</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#eed3">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="EF9A.html">EF9A</a></span></td>
+<td class="next">
+Next: <a href="EF9A.html">EF9A</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

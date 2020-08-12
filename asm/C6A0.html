@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="C651.html">C651</a></span></td>
+<td class="prev">
+Prev: <a href="C651.html">C651</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#c6a0">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="C79A.html">C79A</a></span></td>
+<td class="next">
+Next: <a href="C79A.html">C79A</a>
+</td>
 </tr>
 </table>
 <div class="description">C6A0: Move one (off-screen) character around at a time.</div>
@@ -30,33 +33,18 @@
 Used by the routine at <a href="9D7B.html">main_loop</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">move_characters</td>
+<td class="asm-label">move_a_character</td>
 <td class="address-2"><span id="c6a0"></span>C6A0</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="2">Set the 'character index is valid' flag</td>
+<td class="comment-1" rowspan="2">Set the 'character index is valid' flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6a2"></span>C6A2</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($A13E),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -69,84 +57,71 @@ Move to the next character, wrapping around after character 26.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6a5"></span>C6A5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($8217)</td>
-<td class="comment-11" rowspan="2">Load and increment the current character index</td>
+<td class="comment-1" rowspan="2">Load and increment the current character index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6a8"></span>C6A8</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6a9"></span>C6A9</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $1A</td>
-<td class="comment-11" rowspan="3">If the character index became character_26_STOVE_1 then wrap around to character_0_COMMANDANT</td>
+<td class="comment-1" rowspan="3">If the character index became character_26_STOVE_1 then wrap around to character_0_COMMANDANT</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6ab"></span>C6AB</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="C6A0.html#c6ae">mc_didnt_wrap</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6ad"></span>C6AD</td>
-<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_didnt_wrap</td>
+<td class="asm-label">mc_didnt_wrap</td>
 <td class="address-2"><span id="c6ae"></span>C6AE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($8217),A</td>
-<td class="comment-11" rowspan="1">Store the character index</td>
+<td class="comment-1" rowspan="1">Store the character index</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
 <span id="c6b1"></span>
 <div class="comments">
 <div class="paragraph">
-Get its chararacter struct, or exit if the character isn't on-screen.
+Get its chararacter struct and exit if the character is on-screen.
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6b1"></span>C6B1</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="C7B9.html">get_character_struct</a></td>
-<td class="comment-11" rowspan="1">Get a pointer to the character struct for character index <span class="register">A</span>, in <span class="register">HL</span></td>
+<td class="comment-1" rowspan="1">Get a pointer to the character struct for character index <span class="register">A</span>, in <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6b4"></span>C6B4</td>
-<td class="bytes-0"></td>
 <td class="instruction">BIT 6,(HL)</td>
-<td class="comment-11" rowspan="1">Is the character on-screen? characterstruct_FLAG_ON_SCREEN</td>
+<td class="comment-1" rowspan="1">Is the character on-screen? characterstruct_FLAG_ON_SCREEN</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6b6"></span>C6B6</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET NZ</td>
-<td class="comment-11" rowspan="1">It's not - return</td>
+<td class="comment-1" rowspan="1">It is - return</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6b7"></span>C6B7</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Preserve the character struct pointer</td>
+<td class="comment-1" rowspan="1">Preserve the character struct pointer</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -159,32 +134,27 @@ Are any items to be found in the same room as the character?
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6b8"></span>C6B8</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="2">Advance <span class="register">HL</span> to charstr.room and fetch it</td>
+<td class="comment-1" rowspan="2">Advance <span class="register">HL</span> to charstr.room and fetch it</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6b9"></span>C6B9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6ba"></span>C6BA</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Are we outdoors?</td>
+<td class="comment-1" rowspan="1">Are we outdoors?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6bb"></span>C6BB</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="C6A0.html#c6c5">mc_no_item</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -197,74 +167,61 @@ Note: This discovers just one item at a time.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6bd"></span>C6BD</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="CCFB.html">is_item_discoverable_interior</a></td>
-<td class="comment-11" rowspan="1">Is the item discoverable indoors?</td>
+<td class="comment-1" rowspan="1">Is the item discoverable indoors?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6c0"></span>C6C0</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="C6A0.html#c6c5">mc_no_item</a></td>
-<td class="comment-11" rowspan="1">Jump if not found</td>
+<td class="comment-1" rowspan="1">Jump if not found</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6c2"></span>C6C2</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="CD31.html">item_discovered</a></td>
-<td class="comment-11" rowspan="1">Otherwise cause item <span class="register">C</span> to be discovered</td>
+<td class="comment-1" rowspan="1">Otherwise cause item <span class="register">C</span> to be discovered</td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_no_item</td>
+<td class="asm-label">mc_no_item</td>
 <td class="address-2"><span id="c6c5"></span>C6C5</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore the character struct pointer</td>
+<td class="comment-1" rowspan="1">Restore the character struct pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6c6"></span>C6C6</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="2">Advance <span class="register">HL</span> to charstr.pos</td>
+<td class="comment-1" rowspan="2">Advance <span class="register">HL</span> to charstr.pos</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6c7"></span>C6C7</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6c8"></span>C6C8</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Preserve the charstr.pos pointer</td>
+<td class="comment-1" rowspan="1">Preserve the charstr.pos pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6c9"></span>C6C9</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="3">Advance <span class="register">HL</span> to charstr.route</td>
+<td class="comment-1" rowspan="3">Advance <span class="register">HL</span> to charstr.route</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6ca"></span>C6CA</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6cb"></span>C6CB</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -277,60 +234,52 @@ If the character is standing still, return now.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6cc"></span>C6CC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Fetch charstr.route.index</td>
+<td class="comment-1" rowspan="1">Fetch charstr.route.index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6cd"></span>C6CD</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Is it routeindex_0_HALT?</td>
+<td class="comment-1" rowspan="1">Is it routeindex_0_HALT?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6ce"></span>C6CE</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="C6A0.html#c6d2">mc_not_halted</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_halted</td>
+<td class="asm-label">mc_halted</td>
 <td class="address-1"><span id="c6d0"></span>C6D0</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore the charstr.pos pointer</td>
+<td class="comment-1" rowspan="1">Restore the charstr.pos pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6d1"></span>C6D1</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_not_halted</td>
+<td class="asm-label">mc_not_halted</td>
 <td class="address-2"><span id="c6d2"></span>C6D2</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="C651.html">get_target</a></td>
-<td class="comment-11" rowspan="1">Get our next target: a location, a door or 'route ends'. The result is returned in <span class="register">A</span>, target pointer returned in <span class="register">HL</span></td>
+<td class="comment-1" rowspan="1">Get our next target: a location, a door or 'route ends'. The result is returned in <span class="register">A</span>, target pointer returned in <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6d5"></span>C6D5</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="1">Did <a href="C651.html">get_target</a> return get_target_ROUTE_ENDS? ($FF)</td>
+<td class="comment-1" rowspan="1">Did <a href="C651.html">get_target</a> return get_target_ROUTE_ENDS? ($FF)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6d7"></span>C6D7</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="C6A0.html#c6ff">mc_door</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -343,25 +292,22 @@ When the route ends, reverse the route.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6da"></span>C6DA</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($8217)</td>
-<td class="comment-11" rowspan="1">Fetch the current character index</td>
+<td class="comment-1" rowspan="1">Fetch the current character index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6dd"></span>C6DD</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Is it the commandant? (character_0_COMMANDANT)</td>
+<td class="comment-1" rowspan="1">Is it the commandant? (character_0_COMMANDANT)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6de"></span>C6DE</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="C6A0.html#c6f2">mc_commandant</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -374,18 +320,16 @@ Not the commandant.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6e0"></span>C6E0</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $0C</td>
-<td class="comment-11" rowspan="1">Is it character_12_GUARD_12 or higher?</td>
+<td class="comment-1" rowspan="1">Is it character_12_GUARD_12 or higher?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6e2"></span>C6E2</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C6A0.html#c6f9">mc_trigger_event</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -398,32 +342,25 @@ Characters 1..11.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_reverse_route</td>
+<td class="asm-label">mc_reverse_route</td>
 <td class="address-2"><span id="c6e4"></span>C6E4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="4">Toggle charstr.route direction flag routeindexflag_REVERSED ($80)</td>
+<td class="comment-1" rowspan="4">Toggle charstr.route direction flag routeindexflag_REVERSED ($80)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6e5"></span>C6E5</td>
-<td class="bytes-0"></td>
 <td class="instruction">XOR $80</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6e7"></span>C6E7</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6e8"></span>C6E8</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -436,53 +373,42 @@ Pattern: [-2]+1
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6e9"></span>C6E9</td>
-<td class="bytes-0"></td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment-11" rowspan="5">If the route is reversed then step backwards, otherwise step forwards</td>
+<td class="comment-1" rowspan="5">If the route is reversed then step backwards, otherwise step forwards</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6eb"></span>C6EB</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="C6A0.html#c6ef">mc_route_fwd</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6ed"></span>C6ED</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC (HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6ee"></span>C6EE</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC (HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_route_fwd</td>
+<td class="asm-label">mc_route_fwd</td>
 <td class="address-2"><span id="c6ef"></span>C6EF</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC (HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6f0"></span>C6F0</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore the charstr.pos pointer</td>
+<td class="comment-1" rowspan="1">Restore the charstr.pos pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6f1"></span>C6F1</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -495,32 +421,26 @@ Commandant only.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_commandant</td>
+<td class="asm-label">mc_commandant</td>
 <td class="address-2"><span id="c6f2"></span>C6F2</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">Read the charstr.route index</td>
+<td class="comment-1" rowspan="2">Read the charstr.route index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6f3"></span>C6F3</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $7F</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6f5"></span>C6F5</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $24</td>
-<td class="comment-11" rowspan="2">Jump if it's not routeindex_36_GO_TO_SOLITARY</td>
+<td class="comment-1" rowspan="2">Jump if it's not routeindex_36_GO_TO_SOLITARY</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6f7"></span>C6F7</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="C6A0.html#c6e4">mc_reverse_route</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -533,18 +453,16 @@ We arrive here if the character index is character_12_GUARD_12, or higher, or if
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_trigger_event</td>
+<td class="asm-label">mc_trigger_event</td>
 <td class="address-2"><span id="c6f9"></span>C6F9</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">Restore the charstr.pos pointer</td>
+<td class="comment-1" rowspan="1">Restore the charstr.pos pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6fa"></span>C6FA</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP <a href="C7C6.html">character_event</a></td>
-<td class="comment-11" rowspan="1">Exit via character_event</td>
+<td class="comment-1" rowspan="1">Exit via character_event</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -557,25 +475,22 @@ Two unused bytes.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c6fd"></span>C6FD</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $18,$6F</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_door</td>
+<td class="asm-label">mc_door</td>
 <td class="address-2"><span id="c6ff"></span>C6FF</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $80</td>
-<td class="comment-11" rowspan="1">Did <a href="C651.html">get_target</a> return get_target_DOOR? ($80)</td>
+<td class="comment-1" rowspan="1">Did <a href="C651.html">get_target</a> return get_target_DOOR? ($80)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c701"></span>C701</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="C6A0.html#c76e">mc_regular_move</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -588,53 +503,44 @@ Handle the target-is-a-door case.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c704"></span>C704</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">Restore the charstr.pos pointer (PUSH at <a href="C6A0.html#c6c8">C6C8</a>)</td>
+<td class="comment-1" rowspan="1">Restore the charstr.pos pointer (PUSH at <a href="C6A0.html#c6c8">C6C8</a>)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c705"></span>C705</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC DE</td>
-<td class="comment-11" rowspan="3">Get room index</td>
+<td class="comment-1" rowspan="3">Get room index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c706"></span>C706</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c707"></span>C707</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c708"></span>C708</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Preserve the door.pos pointer</td>
+<td class="comment-1" rowspan="1">Preserve the door.pos pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c709"></span>C709</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Are we outdoors?</td>
+<td class="comment-1" rowspan="1">Are we outdoors?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c70a"></span>C70A</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="C6A0.html#c71f">mc_door_choose_maxdist</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -647,11 +553,10 @@ Outdoors
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c70d"></span>C70D</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1">Preserve the charstr.pos pointer</td>
+<td class="comment-1" rowspan="1">Preserve the charstr.pos pointer</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -664,18 +569,16 @@ Divide the door.pos location at <span class="register">HL</span> by two and stor
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c70e"></span>C70E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$81A4</td>
-<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at saved_pos_x</td>
+<td class="comment-1" rowspan="1">Point <span class="register">DE</span> at saved_pos_x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c711"></span>C711</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$02</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for two iterations</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for two iterations</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -688,67 +591,53 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_door_copypos_loop</td>
+<td class="asm-label">mc_door_copypos_loop</td>
 <td class="address-2"><span id="c713"></span>C713</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="6">Copy X,Y of door.pos, each axis divided by two</td>
+<td class="comment-1" rowspan="6">Copy X,Y of door.pos, each axis divided by two</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c714"></span>C714</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c715"></span>C715</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c716"></span>C716</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c717"></span>C717</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c718"></span>C718</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c719"></span>C719</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="C6A0.html#c713">mc_door_copypos_loop</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c71b"></span>C71B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$81A4</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at saved_pos_x</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at saved_pos_x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c71e"></span>C71E</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">Restore the charstr.room pointer</td>
+<td class="comment-1" rowspan="1">Restore the charstr.room pointer</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -761,123 +650,104 @@ Decide on a maximum movement distance for move_towards to use.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_door_choose_maxdist</td>
+<td class="asm-label">mc_door_choose_maxdist</td>
 <td class="address-2"><span id="c71f"></span>C71F</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC DE</td>
-<td class="comment-11" rowspan="1">Rewind <span class="register">DE</span> to point at charstr.room</td>
+<td class="comment-1" rowspan="1">Rewind <span class="register">DE</span> to point at charstr.room</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c720"></span>C720</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Fetch it</td>
+<td class="comment-1" rowspan="1">Fetch it</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c721"></span>C721</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Advance <span class="register">DE</span> back</td>
+<td class="comment-1" rowspan="1">Advance <span class="register">DE</span> back</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c722"></span>C722</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Was charstr.room room_0_OUTDOORS?</td>
+<td class="comment-1" rowspan="1">Was charstr.room room_0_OUTDOORS?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c723"></span>C723</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$02</td>
-<td class="comment-11" rowspan="1">Set the maximum distance to two irrespectively</td>
+<td class="comment-1" rowspan="1">Set the maximum distance to two irrespectively</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c725"></span>C725</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="C6A0.html#c729">mc_door_maxdist_chosen</a></td>
-<td class="comment-11" rowspan="1">Jump if it was</td>
+<td class="comment-1" rowspan="1">Jump if it was</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c727"></span>C727</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$06</td>
-<td class="comment-11" rowspan="1">Otherwise set the maximum distance to six</td>
+<td class="comment-1" rowspan="1">Otherwise set the maximum distance to six</td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_door_maxdist_chosen</td>
+<td class="asm-label">mc_door_maxdist_chosen</td>
 <td class="address-2"><span id="c729"></span>C729</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">Move maximum to <span class="register">A'</span></td>
+<td class="comment-1" rowspan="1">Move maximum to <span class="register">A'</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c72a"></span>C72A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$00</td>
-<td class="comment-11" rowspan="1">Initialise the "arrived" counter to zero</td>
+<td class="comment-1" rowspan="1">Initialise the "arrived" counter to zero</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c72c"></span>C72C</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="C79A.html">move_towards</a></td>
-<td class="comment-11" rowspan="1">Move charstr.pos.x (pointed to by <span class="register">DE</span>) towards tinypos.x (<span class="register">HL</span>), with a maximum delta of <span class="register">A'</span>. <span class="register">B</span> is incremented if no movement was required</td>
+<td class="comment-1" rowspan="1">Move charstr.pos.x (pointed to by <span class="register">DE</span>) towards tinypos.x (<span class="register">HL</span>), with a maximum delta of <span class="register">A'</span>. <span class="register">B</span> is incremented if no movement was required</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c72f"></span>C72F</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="2">Advance to Y axis</td>
+<td class="comment-1" rowspan="2">Advance to Y axis</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c730"></span>C730</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c731"></span>C731</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="C79A.html">move_towards</a></td>
-<td class="comment-11" rowspan="1">Move again, but on Y axis</td>
+<td class="comment-1" rowspan="1">Move again, but on Y axis</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c734"></span>C734</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore the door.pos pointer</td>
+<td class="comment-1" rowspan="1">Restore the door.pos pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c735"></span>C735</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,B</td>
-<td class="comment-11" rowspan="2">Did we move?</td>
+<td class="comment-1" rowspan="2">Did we move?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c736"></span>C736</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $02</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c738"></span>C738</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET NZ</td>
-<td class="comment-11" rowspan="1">Return if so</td>
+<td class="comment-1" rowspan="1">Return if so</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -893,60 +763,49 @@ Our current target is a door, so change to the door's target room.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_door_reached</td>
+<td class="asm-label">mc_door_reached</td>
 <td class="address-1"><span id="c739"></span>C739</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC DE</td>
-<td class="comment-11" rowspan="2">Rewind <span class="register">DE</span> to charstr.room</td>
+<td class="comment-1" rowspan="2">Rewind <span class="register">DE</span> to charstr.room</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c73a"></span>C73A</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c73b"></span>C73B</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
-<td class="comment-11" rowspan="1">Rewind <span class="register">HL</span> to door.room_and_direction</td>
+<td class="comment-1" rowspan="1">Rewind <span class="register">HL</span> to door.room_and_direction</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c73c"></span>C73C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Fetch door.room_and_direction</td>
+<td class="comment-1" rowspan="1">Fetch door.room_and_direction</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c73d"></span>C73D</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $FC</td>
-<td class="comment-11" rowspan="3">Isolate the room number</td>
+<td class="comment-1" rowspan="3">Isolate the room number</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c73f"></span>C73F</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c740"></span>C740</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c741"></span>C741</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">Assign to charstr.room (i.e. change room)</td>
+<td class="comment-1" rowspan="1">Assign to charstr.room (i.e. change room)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -959,123 +818,109 @@ Determine the destination door.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c742"></span>C742</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">Isolate the direction (door_FLAGS_MASK_DIRECTION)</td>
+<td class="comment-1" rowspan="2">Isolate the direction (door_FLAGS_MASK_DIRECTION)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c743"></span>C743</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $03</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c745"></span>C745</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $02</td>
-<td class="comment-11" rowspan="1">Is the door facing top left or top right?</td>
+<td class="comment-1" rowspan="1">Is the door facing top left or top right?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c747"></span>C747</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C6A0.html#c750">mc_door_prev</a></td>
-<td class="comment-11" rowspan="1">Jump if neither</td>
+<td class="comment-1" rowspan="1">Jump if neither</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c749"></span>C749</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="5">Otherwise calculate the address of the next door half</td>
+<td class="comment-1" rowspan="5">Otherwise calculate the address of the next door half</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c74a"></span>C74A</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c74b"></span>C74B</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c74c"></span>C74C</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c74d"></span>C74D</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c74e"></span>C74E</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="C6A0.html#c753">mc_door_copy_pos</a></td>
-<td class="comment-11" rowspan="1">(else)</td>
+<td class="comment-1" rowspan="1">(else)</td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_door_prev</td>
+<td class="asm-label">mc_door_prev</td>
 <td class="address-2"><span id="c750"></span>C750</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
-<td class="comment-11" rowspan="3">Calculate the address of the previous door half</td>
+<td class="comment-1" rowspan="3">Calculate the address of the previous door half</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c751"></span>C751</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c752"></span>C752</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_door_copy_pos</td>
+<td class="routine-comment" colspan="5">
+<span id="c753"></span>
+<div class="comments">
+<div class="paragraph">
+Copy the door's tinypos position into the charstr.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">mc_door_copy_pos</td>
 <td class="address-2"><span id="c753"></span>C753</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Fetch charstr.room</td>
+<td class="comment-1" rowspan="1">Fetch charstr.room</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c754"></span>C754</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Advance to charstr.pos</td>
+<td class="comment-1" rowspan="1">Advance to charstr.pos</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c755"></span>C755</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Is it room_0_OUTDOORS?</td>
+<td class="comment-1" rowspan="1">Is it room_0_OUTDOORS?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c756"></span>C756</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="C6A0.html#c761">mc_door_outdoors</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1088,39 +933,34 @@ Indoors. Copy the door's tinypos into the charstr's tinypos.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c758"></span>C758</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">Copy X</td>
+<td class="comment-1" rowspan="1">Copy X</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c75a"></span>C75A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">Copy Y</td>
+<td class="comment-1" rowspan="1">Copy Y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c75c"></span>C75C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">Copy height</td>
+<td class="comment-1" rowspan="1">Copy height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c75e"></span>C75E</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC DE</td>
-<td class="comment-11" rowspan="1">Rewind <span class="register">DE</span> to charstr.pos.height</td>
+<td class="comment-1" rowspan="1">Rewind <span class="register">DE</span> to charstr.pos.height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c75f"></span>C75F</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="C6A0.html#c78b">mc_regular_reached</a></td>
-<td class="comment-11" rowspan="1">(else)</td>
+<td class="comment-1" rowspan="1">(else)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1133,11 +973,10 @@ Outdoors. Copy the door's tinypos into the charstr's tinypos, dividing by two.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_door_outdoors</td>
+<td class="asm-label">mc_door_outdoors</td>
 <td class="address-2"><span id="c761"></span>C761</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$03</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for three iterations</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for three iterations</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1150,67 +989,53 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_door_outdoors_loop</td>
+<td class="asm-label">mc_door_outdoors_loop</td>
 <td class="address-2"><span id="c763"></span>C763</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="6">Copy X,Y of door.pos, each axis divided by two</td>
+<td class="comment-1" rowspan="6">Copy X,Y of door.pos, each axis divided by two</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c764"></span>C764</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c765"></span>C765</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c766"></span>C766</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c767"></span>C767</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c768"></span>C768</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c769"></span>C769</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="C6A0.html#c763">mc_door_outdoors_loop</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c76b"></span>C76B</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC DE</td>
-<td class="comment-11" rowspan="1">Rewind <span class="register">DE</span> to charstr.pos.height</td>
+<td class="comment-1" rowspan="1">Rewind <span class="register">DE</span> to charstr.pos.height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c76c"></span>C76C</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="C6A0.html#c78b">mc_regular_reached</a></td>
-<td class="comment-11" rowspan="1">(else)</td>
+<td class="comment-1" rowspan="1">(else)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1223,11 +1048,10 @@ Normal move case.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_regular_move</td>
+<td class="asm-label">mc_regular_move</td>
 <td class="address-2"><span id="c76e"></span>C76E</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">Restore the charstr.pos pointer</td>
+<td class="comment-1" rowspan="1">Restore the charstr.pos pointer</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1240,130 +1064,110 @@ Establish a maximum for passing into move_towards.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_regular_choose_maxdist</td>
+<td class="asm-label">mc_regular_choose_maxdist</td>
 <td class="address-1"><span id="c76f"></span>C76F</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC DE</td>
-<td class="comment-11" rowspan="1">Rewind <span class="register">DE</span> to point at charstr.room</td>
+<td class="comment-1" rowspan="1">Rewind <span class="register">DE</span> to point at charstr.room</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c770"></span>C770</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Fetch it</td>
+<td class="comment-1" rowspan="1">Fetch it</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c771"></span>C771</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Advance <span class="register">DE</span> back</td>
+<td class="comment-1" rowspan="1">Advance <span class="register">DE</span> back</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c772"></span>C772</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Are we outdoors?</td>
+<td class="comment-1" rowspan="1">Are we outdoors?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c773"></span>C773</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$02</td>
-<td class="comment-11" rowspan="1">Set maximum to two irrespectively</td>
+<td class="comment-1" rowspan="1">Set maximum to two irrespectively</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c775"></span>C775</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="C6A0.html#c779">mc_regular_maxdist_chosen</a></td>
-<td class="comment-11" rowspan="1">Jump if we are</td>
+<td class="comment-1" rowspan="1">Jump if we are</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c777"></span>C777</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$06</td>
-<td class="comment-11" rowspan="1">Otherwise set maximum to six</td>
+<td class="comment-1" rowspan="1">Otherwise set maximum to six</td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_regular_maxdist_chosen</td>
+<td class="asm-label">mc_regular_maxdist_chosen</td>
 <td class="address-2"><span id="c779"></span>C779</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">Move maximum to <span class="register">A'</span></td>
+<td class="comment-1" rowspan="1">Move maximum to <span class="register">A'</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c77a"></span>C77A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$00</td>
-<td class="comment-11" rowspan="1">Initialise the "arrived" counter to zero</td>
+<td class="comment-1" rowspan="1">Initialise the "arrived" counter to zero</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c77c"></span>C77C</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="C79A.html">move_towards</a></td>
-<td class="comment-11" rowspan="1">Move charstr.pos.x (pointed to by <span class="register">DE</span>) towards tinypos.x (<span class="register">HL</span>), with a maximum delta of <span class="register">A'</span>. <span class="register">B</span> is incremented if no movement was required</td>
+<td class="comment-1" rowspan="1">Move charstr.pos.x (pointed to by <span class="register">DE</span>) towards tinypos.x (<span class="register">HL</span>), with a maximum delta of <span class="register">A'</span>. <span class="register">B</span> is incremented if no movement was required</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c77f"></span>C77F</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="2">Advance to Y axis</td>
+<td class="comment-1" rowspan="2">Advance to Y axis</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c780"></span>C780</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c781"></span>C781</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="C79A.html">move_towards</a></td>
-<td class="comment-11" rowspan="1">Move again, but on Y axis</td>
+<td class="comment-1" rowspan="1">Move again, but on Y axis</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c784"></span>C784</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Advance <span class="register">DE</span> to charstr.pos.height (possibly redundant)</td>
+<td class="comment-1" rowspan="1">Advance <span class="register">DE</span> to charstr.pos.height (possibly redundant)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c785"></span>C785</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,B</td>
-<td class="comment-11" rowspan="2">Did we move?</td>
+<td class="comment-1" rowspan="2">Did we move?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c786"></span>C786</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $02</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c788"></span>C788</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="C6A0.html#c78b">mc_regular_reached</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c78a"></span>C78A</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Otherwise return</td>
+<td class="comment-1" rowspan="1">Otherwise return</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1376,101 +1180,91 @@ If we reach here the character has arrived at their destination.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_regular_reached</td>
+<td class="asm-label">mc_regular_reached</td>
 <td class="address-2"><span id="c78b"></span>C78B</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Advance <span class="register">DE</span> to charstr.route</td>
+<td class="comment-1" rowspan="1">Advance <span class="register">DE</span> to charstr.route</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c78c"></span>C78C</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">Swap charstr into <span class="register">HL</span></td>
+<td class="comment-1" rowspan="1">Swap charstr into <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c78d"></span>C78D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Read charstr.route.index</td>
+<td class="comment-1" rowspan="1">Read charstr.route.index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c78e"></span>C78E</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="1">Is the route index routeindex_255_WANDER? ($FF)</td>
+<td class="comment-1" rowspan="1">Is the route index routeindex_255_WANDER? ($FF)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c790"></span>C790</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET Z</td>
-<td class="comment-11" rowspan="1">Return if so</td>
+<td class="comment-1" rowspan="1">Return if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c791"></span>C791</td>
-<td class="bytes-0"></td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment-11" rowspan="3">If the route is reversed then step backwards, otherwise step forwards</td>
+<td class="comment-1" rowspan="3">If the route is reversed then step backwards, otherwise step forwards</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c793"></span>C793</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c794"></span>C794</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="C6A0.html#c798">mc_route_down</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_route_up</td>
+<td class="asm-label">mc_route_up</td>
 <td class="address-1"><span id="c796"></span>C796</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC (HL)</td>
-<td class="comment-11" rowspan="1">Increment route.step</td>
+<td class="comment-1" rowspan="1">Increment route.step</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c797"></span>C797</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="asm-label-1">mc_route_down</td>
+<td class="asm-label">mc_route_down</td>
 <td class="address-2"><span id="c798"></span>C798</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC (HL)</td>
-<td class="comment-11" rowspan="1">Decrement route.step</td>
+<td class="comment-1" rowspan="1">Decrement route.step</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c799"></span>C799</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="C651.html">C651</a></span></td>
+<td class="prev">
+Prev: <a href="C651.html">C651</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#c6a0">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="C79A.html">C79A</a></span></td>
+<td class="next">
+Next: <a href="C79A.html">C79A</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

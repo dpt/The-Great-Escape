@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="F163.html">F163</a></span></td>
+<td class="prev">
+Prev: <a href="F163.html">F163</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#f1e0">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="F206.html">F206</a></span></td>
+<td class="next">
+Next: <a href="F206.html">F206</a>
+</td>
 </tr>
 </table>
 <div class="description">F1E0: Plot all static graphics and menu text.</div>
@@ -27,36 +30,22 @@
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="F163.html">main</a>. Plot all static graphics.
+Used by the routine at <a href="F163.html">main</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_statics_and_menu_text</td>
+<td class="asm-label">plot_statics_and_menu_text</td>
 <td class="address-2"><span id="f1e0"></span>F1E0</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$F076</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at static_graphic_defs</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at static_graphic_defs</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1e3"></span>F1E3</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$12</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for 18 iterations</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for 18 iterations</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -69,88 +58,73 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_statics_and_menu_text_0</td>
+<td class="asm-label">plot_statics_and_menu_text_0</td>
 <td class="address-2"><span id="f1e5"></span>F1E5</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">Preserve the loop counter</td>
+<td class="comment-1" rowspan="1">Preserve the loop counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1e6"></span>F1E6</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment-11" rowspan="4">Read the target screen address</td>
+<td class="comment-1" rowspan="4">Read the target screen address</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1e7"></span>F1E7</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1e8"></span>F1E8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD D,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1e9"></span>F1E9</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1ea"></span>F1EA</td>
-<td class="bytes-0"></td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment-11" rowspan="1">Is the statictiles_VERTICAL flag set?</td>
+<td class="comment-1" rowspan="1">Is the statictiles_VERTICAL flag set?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1ec"></span>F1EC</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="F1E0.html#f1f3">plot_statics_and_menu_text_1</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1ee"></span>F1EE</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="F209.html">plot_static_tiles_vertical</a></td>
-<td class="comment-11" rowspan="1">Plot static tiles vertically</td>
+<td class="comment-1" rowspan="1">Plot static tiles vertically</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1f1"></span>F1F1</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="F1E0.html#f1f6">plot_statics_and_menu_text_2</a></td>
-<td class="comment-11" rowspan="1">(else)</td>
+<td class="comment-1" rowspan="1">(else)</td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_statics_and_menu_text_1</td>
+<td class="asm-label">plot_statics_and_menu_text_1</td>
 <td class="address-2"><span id="f1f3"></span>F1F3</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="F206.html">plot_static_tiles_horizontal</a></td>
-<td class="comment-11" rowspan="1">Plot static tiles horizontally</td>
+<td class="comment-1" rowspan="1">Plot static tiles horizontally</td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_statics_and_menu_text_2</td>
+<td class="asm-label">plot_statics_and_menu_text_2</td>
 <td class="address-2"><span id="f1f6"></span>F1F6</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">Restore the loop counter</td>
+<td class="comment-1" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1f7"></span>F1F7</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="F1E0.html#f1e5">plot_statics_and_menu_text_0</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -163,18 +137,16 @@ Plot menu text.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1f9"></span>F1F9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$08</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for 8 iterations</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for 8 iterations</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1fb"></span>F1FB</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$F446</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at key_choice_screenlocstrings</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at key_choice_screenlocstrings</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -187,52 +159,51 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_statics_and_menu_text_3</td>
+<td class="asm-label">plot_statics_and_menu_text_3</td>
 <td class="address-2"><span id="f1fe"></span>F1FE</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">Preserve the loop counter</td>
+<td class="comment-1" rowspan="1">Preserve the loop counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f1ff"></span>F1FF</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
-<td class="comment-11" rowspan="1">Plot a single glyph (indirectly)</td>
+<td class="comment-1" rowspan="1">Plot a single glyph (indirectly)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f202"></span>F202</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">Restore the loop counter</td>
+<td class="comment-1" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f203"></span>F203</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="F1E0.html#f1fe">plot_statics_and_menu_text_3</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f205"></span>F205</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="F163.html">F163</a></span></td>
+<td class="prev">
+Prev: <a href="F163.html">F163</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#f1e0">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="F206.html">F206</a></span></td>
+<td class="next">
+Next: <a href="F206.html">F206</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

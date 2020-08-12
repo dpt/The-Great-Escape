@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="7AC9.html">7AC9</a></span></td>
+<td class="prev">
+Prev: <a href="7AC9.html">7AC9</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#7b36">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="7B8B.html">7B8B</a></span></td>
+<td class="next">
+Next: <a href="7B8B.html">7B8B</a>
+</td>
 </tr>
 </table>
 <div class="description">7B36: Pick up an item.</div>
@@ -30,75 +33,52 @@
 Used by the routine at <a href="7AC9.html">process_player_input_fire</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">pick_up_item</td>
+<td class="asm-label">pick_up_item</td>
 <td class="address-2"><span id="7b36"></span>7B36</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,($8215)</td>
-<td class="comment-11" rowspan="1">Load both held items into <span class="register">HL</span></td>
+<td class="comment-1" rowspan="1">Load both held items into <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b39"></span>7B39</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="1">Set <span class="register">A</span> to item_NONE ($FF)</td>
+<td class="comment-1" rowspan="1">Set <span class="register">A</span> to item_NONE ($FF)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b3b"></span>7B3B</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP L</td>
-<td class="comment-11" rowspan="4">If neither item slot is empty then return - we don't have the space to pick another item up</td>
+<td class="comment-1" rowspan="4">If neither item slot is empty then return - we don't have the space to pick another item up</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b3c"></span>7B3C</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="7B36.html#7b40">pick_up_have_empty_slot</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b3e"></span>7B3E</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP H</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b3f"></span>7B3F</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET NZ</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">pick_up_have_empty_slot</td>
+<td class="asm-label">pick_up_have_empty_slot</td>
 <td class="address-2"><span id="7b40"></span>7B40</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="7C82.html">find_nearby_item</a></td>
-<td class="comment-11" rowspan="1">Find nearby items. <span class="register">HL</span> points to an item in item_structs if found</td>
+<td class="comment-1" rowspan="1">Find nearby items. <span class="register">HL</span> points to an item in item_structs if found</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b43"></span>7B43</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET NZ</td>
-<td class="comment-11" rowspan="1">Return if no items were found</td>
+<td class="comment-1" rowspan="1">Return if no items were found</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -111,151 +91,126 @@ Locate an empty item slot.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b44"></span>7B44</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$8215</td>
-<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the held items array</td>
+<td class="comment-1" rowspan="1">Point <span class="register">DE</span> at the held items array</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b47"></span>7B47</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Load an item</td>
+<td class="comment-1" rowspan="1">Load an item</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b48"></span>7B48</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="3">Step over the item if it's item_NONE</td>
+<td class="comment-1" rowspan="3">Step over the item if it's item_NONE</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b4a"></span>7B4A</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="7B36.html#7b4d">pick_up_item_0</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b4c"></span>7B4C</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">pick_up_item_0</td>
+<td class="asm-label">pick_up_item_0</td>
 <td class="address-2"><span id="7b4d"></span>7B4D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="3">Fetch the item_struct item's first byte and mask off the item. Note: The mask used here is $1F, not $0F as seen elsewhere in the code. Unsure why</td>
+<td class="comment-1" rowspan="3">Fetch the item_struct item's first byte and mask off the item. Note: The mask used here is $1F, not $0F as seen elsewhere in the code. Unsure why</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b4e"></span>7B4E</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $1F</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b50"></span>7B50</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b51"></span>7B51</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Save the item_struct item pointer</td>
+<td class="comment-1" rowspan="1">Save the item_struct item pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b52"></span>7B52</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="1">Fetch the global current room index</td>
+<td class="comment-1" rowspan="1">Fetch the global current room index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b55"></span>7B55</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $00</td>
-<td class="comment-11" rowspan="1">Are we outdoors?</td>
+<td class="comment-1" rowspan="1">Are we outdoors?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b57"></span>7B57</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="7B36.html#7b5f">pick_up_indoors</a></td>
-<td class="comment-11" rowspan="1">No - jump to indoor handling</td>
+<td class="comment-1" rowspan="1">No - jump to indoor handling</td>
 </tr>
 <tr>
-<td class="asm-label-1">pick_up_outdoors</td>
+<td class="asm-label">pick_up_outdoors</td>
 <td class="address-1"><span id="7b5a"></span>7B5A</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A8A2.html">plot_all_tiles</a></td>
-<td class="comment-11" rowspan="1">Plot all tiles</td>
+<td class="comment-1" rowspan="1">Plot all tiles</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b5d"></span>7B5D</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="7B36.html#7b6b">pick_up_item_1</a></td>
-<td class="comment-11" rowspan="1">Jump over indoor handling</td>
+<td class="comment-1" rowspan="1">Jump over indoor handling</td>
 </tr>
 <tr>
-<td class="asm-label-1">pick_up_indoors</td>
+<td class="asm-label">pick_up_indoors</td>
 <td class="address-2"><span id="7b5f"></span>7B5F</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="6A35.html">setup_room</a></td>
-<td class="comment-11" rowspan="1">Expand out the room definition for room_index</td>
+<td class="comment-1" rowspan="1">Expand out the room definition for room_index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b62"></span>7B62</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="6B42.html">plot_interior_tiles</a></td>
-<td class="comment-11" rowspan="1">Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer</td>
+<td class="comment-1" rowspan="1">Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b65"></span>7B65</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="AB6B.html">choose_game_window_attributes</a></td>
-<td class="comment-11" rowspan="1">Choose game window attributes</td>
+<td class="comment-1" rowspan="1">Choose game window attributes</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b68"></span>7B68</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A15F.html">set_game_window_attributes</a></td>
-<td class="comment-11" rowspan="1">Set game window attributes</td>
+<td class="comment-1" rowspan="1">Set game window attributes</td>
 </tr>
 <tr>
-<td class="asm-label-1">pick_up_item_1</td>
+<td class="asm-label">pick_up_item_1</td>
 <td class="address-2"><span id="7b6b"></span>7B6B</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Retrieve the item_struct item pointer</td>
+<td class="comment-1" rowspan="1">Retrieve the item_struct item pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b6c"></span>7B6C</td>
-<td class="bytes-0"></td>
 <td class="instruction">BIT 7,(HL)</td>
-<td class="comment-11" rowspan="1">Is the itemstruct_ITEM_FLAG_HELD flag set? ($80)</td>
+<td class="comment-1" rowspan="1">Is the itemstruct_ITEM_FLAG_HELD flag set? ($80)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b6e"></span>7B6E</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="7B36.html#7b77">pick_up_item_2</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -268,32 +223,28 @@ Have picked up an item not previously held - increase the score.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">pick_up_novel_item</td>
+<td class="asm-label">pick_up_novel_item</td>
 <td class="address-1"><span id="7b70"></span>7B70</td>
-<td class="bytes-0"></td>
 <td class="instruction">SET 7,(HL)</td>
-<td class="comment-11" rowspan="1">Set the itemstruct_ITEM_FLAG_HELD flag so we only award these points on the first pick-up</td>
+<td class="comment-1" rowspan="1">Set the itemstruct_ITEM_FLAG_HELD flag so we only award these points on the first pick-up</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b72"></span>7B72</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Save the item_struct item pointer again</td>
+<td class="comment-1" rowspan="1">Save the item_struct item pointer again</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b73"></span>7B73</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A0F2.html">increase_morale_by_5_score_by_5</a></td>
-<td class="comment-11" rowspan="1">Increase morale by 5, score by 5</td>
+<td class="comment-1" rowspan="1">Increase morale by 5, score by 5</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b76"></span>7B76</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Retrieve again</td>
+<td class="comment-1" rowspan="1">Retrieve again</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -306,115 +257,98 @@ Make the item disappear.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">pick_up_item_2</td>
+<td class="asm-label">pick_up_item_2</td>
 <td class="address-2"><span id="7b77"></span>7B77</td>
-<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">Zero <span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Zero <span class="register">A</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b78"></span>7B78</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="2">Zero itemstruct-&gt;room_and_flags</td>
+<td class="comment-1" rowspan="2">Zero itemstruct-&gt;room_and_flags</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b79"></span>7B79</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b7a"></span>7B7A</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="4">Advance <span class="register">HL</span> to itemstruct-&gt;iso_pos</td>
+<td class="comment-1" rowspan="4">Advance <span class="register">HL</span> to itemstruct-&gt;iso_pos</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b7b"></span>7B7B</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b7c"></span>7B7C</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b7d"></span>7B7D</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b7e"></span>7B7E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="3">Zero itemstruct-&gt;iso_pos.screen_x and screen_y</td>
+<td class="comment-1" rowspan="3">Zero itemstruct-&gt;iso_pos.screen_x and screen_y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b7f"></span>7B7F</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b80"></span>7B80</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b81"></span>7B81</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="7C33.html">draw_all_items</a></td>
-<td class="comment-11" rowspan="1">Draw both held items</td>
+<td class="comment-1" rowspan="1">Draw both held items</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b84"></span>7B84</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$3030</td>
-<td class="comment-11" rowspan="2">Play the "pick up item" sound</td>
+<td class="comment-1" rowspan="2">Play the "pick up item" sound</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b87"></span>7B87</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A11D.html">play_speaker</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7b8a"></span>7B8A</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="7AC9.html">7AC9</a></span></td>
+<td class="prev">
+Prev: <a href="7AC9.html">7AC9</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#7b36">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="7B8B.html">7B8B</a></span></td>
+<td class="next">
+Next: <a href="7B8B.html">7B8B</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

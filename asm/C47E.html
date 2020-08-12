@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="C41C.html">C41C</a></span></td>
+<td class="prev">
+Prev: <a href="C41C.html">C41C</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#c47e">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="C4E0.html">C4E0</a></span></td>
+<td class="next">
+Next: <a href="C4E0.html">C4E0</a>
+</td>
 </tr>
 </table>
 <div class="description">C47E: Remove any off-screen non-player characters.</div>
@@ -33,26 +36,13 @@ This is the opposite of <a href="C41C.html">spawn_characters</a>.
 Used by the routine at <a href="9D7B.html">main_loop</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">purge_invisible_characters</td>
+<td class="asm-label">purge_invisible_characters</td>
 <td class="address-2"><span id="c47e"></span>C47E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,($81BB)</td>
-<td class="comment-11" rowspan="1">Read the current map position into <span class="register">HL</span></td>
+<td class="comment-1" rowspan="1">Read the current map position into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -68,74 +58,64 @@ Calculate clamped lower bound.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c481"></span>C481</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="1">Get map_position.x</td>
+<td class="comment-1" rowspan="1">Get map_position.x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c482"></span>C482</td>
-<td class="bytes-0"></td>
 <td class="instruction">SUB $09</td>
-<td class="comment-11" rowspan="1">Subtract 9</td>
+<td class="comment-1" rowspan="1">Subtract 9</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c484"></span>C484</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C47E.html#c487">purge_invisible_characters_0</a></td>
-<td class="comment-11" rowspan="1">Jump if it was &gt;= 9</td>
+<td class="comment-1" rowspan="1">Jump if it was &gt;= 9</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c486"></span>C486</td>
-<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">Otherwise zero it</td>
+<td class="comment-1" rowspan="1">Otherwise zero it</td>
 </tr>
 <tr>
-<td class="asm-label-1">purge_invisible_characters_0</td>
+<td class="asm-label">purge_invisible_characters_0</td>
 <td class="address-2"><span id="c487"></span>C487</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
-<td class="comment-11" rowspan="1"><span class="register">E</span> is the result: minx</td>
+<td class="comment-1" rowspan="1"><span class="register">E</span> is the result: minx</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c488"></span>C488</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,H</td>
-<td class="comment-11" rowspan="1">Get map_position.y</td>
+<td class="comment-1" rowspan="1">Get map_position.y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c489"></span>C489</td>
-<td class="bytes-0"></td>
 <td class="instruction">SUB $09</td>
-<td class="comment-11" rowspan="1">Subtract 9</td>
+<td class="comment-1" rowspan="1">Subtract 9</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c48b"></span>C48B</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C47E.html#c48e">purge_invisible_characters_1</a></td>
-<td class="comment-11" rowspan="1">Jump if it was &gt;= 9</td>
+<td class="comment-1" rowspan="1">Jump if it was &gt;= 9</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c48d"></span>C48D</td>
-<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">Otherwise zero it</td>
+<td class="comment-1" rowspan="1">Otherwise zero it</td>
 </tr>
 <tr>
-<td class="asm-label-1">purge_invisible_characters_1</td>
+<td class="asm-label">purge_invisible_characters_1</td>
 <td class="address-2"><span id="c48e"></span>C48E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD D,A</td>
-<td class="comment-11" rowspan="1"><span class="register">D</span> is the result: miny</td>
+<td class="comment-1" rowspan="1"><span class="register">D</span> is the result: miny</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -148,18 +128,16 @@ Iterate over non-player characters.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c48f"></span>C48F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$07</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for seven iterations</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for seven iterations</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c491"></span>C491</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$8020</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the second visible character</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the second visible character</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -175,32 +153,28 @@ Ignore inactive characters.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">pic_loop</td>
+<td class="asm-label">pic_loop</td>
 <td class="address-2"><span id="c494"></span>C494</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Fetch the vischar's character index</td>
+<td class="comment-1" rowspan="1">Fetch the vischar's character index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c495"></span>C495</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="1">Is it character_NONE?</td>
+<td class="comment-1" rowspan="1">Is it character_NONE?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c497"></span>C497</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="C47E.html#c4d9">pic_next</a></td>
-<td class="comment-11" rowspan="1">Jump to the next vischar if so</td>
+<td class="comment-1" rowspan="1">Jump to the next vischar if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c49a"></span>C49A</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Preserve the vischar pointer</td>
+<td class="comment-1" rowspan="1">Preserve the vischar pointer</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -213,46 +187,38 @@ Reset this character if it's not in the current room.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c49b"></span>C49B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$1C</td>
-<td class="comment-11" rowspan="3">Point <span class="register">HL</span> at vischar.room</td>
+<td class="comment-1" rowspan="3">Point <span class="register">HL</span> at vischar.room</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c49d"></span>C49D</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c49e"></span>C49E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c49f"></span>C49F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="1">Get the global current room index</td>
+<td class="comment-1" rowspan="1">Get the global current room index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4a2"></span>C4A2</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="1">Is the vischar in the current room?</td>
+<td class="comment-1" rowspan="1">Is the vischar in the current room?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4a3"></span>C4A3</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="C47E.html#c4cf">pic_reset</a></td>
-<td class="comment-11" rowspan="1">Jump to reset if not</td>
+<td class="comment-1" rowspan="1">Jump to reset if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -265,67 +231,55 @@ Handle Y part
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4a5"></span>C4A5</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
-<td class="comment-11" rowspan="4">Load vischar.iso_pos.y into (<span class="register">C</span>,<span class="register">A</span>)</td>
+<td class="comment-1" rowspan="4">Load vischar.iso_pos.y into (<span class="register">C</span>,<span class="register">A</span>)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4a6"></span>C4A6</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4a7"></span>C4A7</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4a8"></span>C4A8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4a9"></span>C4A9</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="E550.html">divide_by_8_with_rounding</a></td>
-<td class="comment-11" rowspan="1">Divide (<span class="register">C</span>,<span class="register">A</span>) by 8 with rounding. Result is in <span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Divide (<span class="register">C</span>,<span class="register">A</span>) by 8 with rounding. Result is in <span class="register">A</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4ac"></span>C4AC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">Copy result <span class="register">C</span></td>
+<td class="comment-1" rowspan="1">Copy result <span class="register">C</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4ad"></span>C4AD</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,D</td>
-<td class="comment-11" rowspan="1">Copy miny to <span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Copy miny to <span class="register">A</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4ae"></span>C4AE</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP C</td>
-<td class="comment-11" rowspan="1">Is miny &gt;= result?</td>
+<td class="comment-1" rowspan="1">Is miny &gt;= result?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4af"></span>C4AF</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C47E.html#c4cf">pic_reset</a></td>
-<td class="comment-11" rowspan="1">Jump to reset if so (out of bounds)</td>
+<td class="comment-1" rowspan="1">Jump to reset if so (out of bounds)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -338,39 +292,33 @@ DPT: 16 is used for screen height here, but 24 is used for width below - so that
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4b1"></span>C4B1</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,$22</td>
-<td class="comment-11" rowspan="1">Add 16 + 2 * 9 (16 =&gt; screen height, 9 =&gt; buffer zone size)</td>
+<td class="comment-1" rowspan="1">Add 16 + 2 * 9 (16 =&gt; screen height, 9 =&gt; buffer zone size)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4b3"></span>C4B3</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C47E.html#c4b7">purge_invisible_characters_2</a></td>
-<td class="comment-11" rowspan="2">Clamp to a maximum of 255</td>
+<td class="comment-1" rowspan="2">Clamp to a maximum of 255</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4b5"></span>C4B5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">purge_invisible_characters_2</td>
+<td class="asm-label">purge_invisible_characters_2</td>
 <td class="address-2"><span id="c4b7"></span>C4B7</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP C</td>
-<td class="comment-11" rowspan="1">Is result &gt; (miny + buffer size, clamped to 255)?</td>
+<td class="comment-1" rowspan="1">Is result &gt; (miny + buffer size, clamped to 255)?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4b8"></span>C4B8</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="C47E.html#c4cf">pic_reset</a></td>
-<td class="comment-11" rowspan="1">Jump to reset if so (out of bounds)</td>
+<td class="comment-1" rowspan="1">Jump to reset if so (out of bounds)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -383,206 +331,177 @@ Handle X part
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4ba"></span>C4BA</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
-<td class="comment-11" rowspan="4">Load vischar.iso_pos.x into (<span class="register">C</span>,<span class="register">A</span>)</td>
+<td class="comment-1" rowspan="4">Load vischar.iso_pos.x into (<span class="register">C</span>,<span class="register">A</span>)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4bb"></span>C4BB</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4bc"></span>C4BC</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4bd"></span>C4BD</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4be"></span>C4BE</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="E555.html">divide_by_8</a></td>
-<td class="comment-11" rowspan="1">Divide (<span class="register">C</span>,<span class="register">A</span>) by 8 (with no rounding). Result is in <span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Divide (<span class="register">C</span>,<span class="register">A</span>) by 8 (with no rounding). Result is in <span class="register">A</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4c1"></span>C4C1</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">Copy result <span class="register">C</span></td>
+<td class="comment-1" rowspan="1">Copy result <span class="register">C</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4c2"></span>C4C2</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,E</td>
-<td class="comment-11" rowspan="1">Copy minx to <span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Copy minx to <span class="register">A</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4c3"></span>C4C3</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP C</td>
-<td class="comment-11" rowspan="1">Is minx &gt;= result?</td>
+<td class="comment-1" rowspan="1">Is minx &gt;= result?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4c4"></span>C4C4</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C47E.html#c4cf">pic_reset</a></td>
-<td class="comment-11" rowspan="1">Jump to reset if so (out of bounds)</td>
+<td class="comment-1" rowspan="1">Jump to reset if so (out of bounds)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4c6"></span>C4C6</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,$2A</td>
-<td class="comment-11" rowspan="1">Add 24 + 2 * 9 (24 =&gt; screen width, 9 =&gt; buffer zone size)</td>
+<td class="comment-1" rowspan="1">Add 24 + 2 * 9 (24 =&gt; screen width, 9 =&gt; buffer zone size)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4c8"></span>C4C8</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C47E.html#c4cc">purge_invisible_characters_3</a></td>
-<td class="comment-11" rowspan="2">Clamp to a maximum of 255</td>
+<td class="comment-1" rowspan="2">Clamp to a maximum of 255</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4ca"></span>C4CA</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">purge_invisible_characters_3</td>
+<td class="asm-label">purge_invisible_characters_3</td>
 <td class="address-2"><span id="c4cc"></span>C4CC</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP C</td>
-<td class="comment-11" rowspan="1">Is result &gt; (minx + buffer size, clamped to 255)?</td>
+<td class="comment-1" rowspan="1">Is result &gt; (minx + buffer size, clamped to 255)?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4cd"></span>C4CD</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="C47E.html#c4d8">pic_pop_next</a></td>
-<td class="comment-11" rowspan="1">Jump to reset if so (out of bounds)</td>
+<td class="comment-1" rowspan="1">Jump to reset if so (out of bounds)</td>
 </tr>
 <tr>
-<td class="asm-label-1">pic_reset</td>
+<td class="asm-label">pic_reset</td>
 <td class="address-2"><span id="c4cf"></span>C4CF</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore the vischar pointer (reset_visible_character arg)</td>
+<td class="comment-1" rowspan="1">Restore the vischar pointer (reset_visible_character arg)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4d0"></span>C4D0</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Preserve the vischar pointer over the call</td>
+<td class="comment-1" rowspan="1">Preserve the vischar pointer over the call</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4d1"></span>C4D1</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1">Preserve minx/miny</td>
+<td class="comment-1" rowspan="1">Preserve minx/miny</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4d2"></span>C4D2</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">Preserve the loop counter</td>
+<td class="comment-1" rowspan="1">Preserve the loop counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4d3"></span>C4D3</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="C5D3.html">reset_visible_character</a></td>
-<td class="comment-11" rowspan="1">Reset the visible character</td>
+<td class="comment-1" rowspan="1">Reset the visible character</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4d6"></span>C4D6</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">Restore the loop counter</td>
+<td class="comment-1" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4d7"></span>C4D7</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">Restore minx/miny</td>
+<td class="comment-1" rowspan="1">Restore minx/miny</td>
 </tr>
 <tr>
-<td class="asm-label-1">pic_pop_next</td>
+<td class="asm-label">pic_pop_next</td>
 <td class="address-2"><span id="c4d8"></span>C4D8</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore the vischar pointer</td>
+<td class="comment-1" rowspan="1">Restore the vischar pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1">pic_next</td>
+<td class="asm-label">pic_next</td>
 <td class="address-2"><span id="c4d9"></span>C4D9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$20</td>
-<td class="comment-11" rowspan="3">Advance to the next vischar</td>
+<td class="comment-1" rowspan="3">Advance to the next vischar</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4db"></span>C4DB</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4dc"></span>C4DC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4dd"></span>C4DD</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="C47E.html#c494">pic_loop</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="c4df"></span>C4DF</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="C41C.html">C41C</a></span></td>
+<td class="prev">
+Prev: <a href="C41C.html">C41C</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#c47e">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="C4E0.html">C4E0</a></span></td>
+<td class="next">
+Next: <a href="C4E0.html">C4E0</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

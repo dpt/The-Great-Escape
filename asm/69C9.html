@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="6939.html">6939</a></span></td>
+<td class="prev">
+Prev: <a href="6939.html">6939</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#69c9">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="69DC.html">69DC</a></span></td>
+<td class="next">
+Next: <a href="69DC.html">69DC</a>
+</td>
 </tr>
 </table>
 <div class="description">69C9: Reset all seven non-player visible characters.</div>
@@ -30,33 +33,19 @@
 Used by the routine at <a href="6939.html">setup_movable_items</a> only. (!could merge into the above)
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">reset_nonplayer_visible_characters</td>
+<td class="asm-label">reset_nonplayer_visible_characters</td>
 <td class="address-2"><span id="69c9"></span>69C9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$8020</td>
-<td class="comment-11" rowspan="1">Start at the second visible character</td>
+<td class="comment-1" rowspan="1">Start at the second visible character</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="69cc"></span>69CC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0720</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for seven iterations and set <span class="register">C</span> for a 32 byte stride simultaneously</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for seven iterations and set <span class="register">C</span> for a 32 byte stride simultaneously</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -69,87 +58,75 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">reset_nonplayer_visible_characters_0</td>
+<td class="asm-label">reset_nonplayer_visible_characters_0</td>
 <td class="address-2"><span id="69cf"></span>69CF</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="5">Reset the visible character at <span class="register">HL</span></td>
+<td class="comment-1" rowspan="5">Reset the visible character at <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="69d0"></span>69D0</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="69d1"></span>69D1</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="C5D3.html">reset_visible_character</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="69d4"></span>69D4</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="69d5"></span>69D5</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="69d6"></span>69D6</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="3">Step <span class="register">HL</span> to the next visible character</td>
+<td class="comment-1" rowspan="3">Step <span class="register">HL</span> to the next visible character</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="69d7"></span>69D7</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,C</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="69d8"></span>69D8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="69d9"></span>69D9</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="69C9.html#69cf">reset_nonplayer_visible_characters_0</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="69db"></span>69DB</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="6939.html">6939</a></span></td>
+<td class="prev">
+Prev: <a href="6939.html">6939</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#69c9">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="69DC.html">69DC</a></span></td>
+<td class="next">
+Next: <a href="69DC.html">69DC</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

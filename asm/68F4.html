@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="68A2.html">68A2</a></span></td>
+<td class="prev">
+Prev: <a href="68A2.html">68A2</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#68f4">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="691A.html">691A</a></span></td>
+<td class="next">
+Next: <a href="691A.html">691A</a>
+</td>
 </tr>
 </table>
 <div class="description">68F4: The hero enters a room.</div>
@@ -30,114 +33,84 @@
 Used by the routines at <a href="68A2.html">transition</a>, <a href="9D78.html">main_loop_setup</a>, <a href="9DE5.html">keyscan_break</a> and <a href="B75A.html">reset_game</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">enter_room</td>
+<td class="asm-label">enter_room</td>
 <td class="address-2"><span id="68f4"></span>68F4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$0000</td>
-<td class="comment-11" rowspan="2">Reset the game_window_offset X and Y coordinates to zero</td>
+<td class="comment-1" rowspan="2">Reset the game_window_offset X and Y coordinates to zero</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68f7"></span>68F7</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($A7C7),HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68fa"></span>68FA</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="6A35.html">setup_room</a></td>
-<td class="comment-11" rowspan="1">Setup the room</td>
+<td class="comment-1" rowspan="1">Setup the room</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68fd"></span>68FD</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="6B42.html">plot_interior_tiles</a></td>
-<td class="comment-11" rowspan="1">Expand tile buffer into screen buffer</td>
+<td class="comment-1" rowspan="1">Expand tile buffer into screen buffer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6900"></span>6900</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$EA74</td>
-<td class="comment-11" rowspan="2">Set the map_position to (116,234)</td>
+<td class="comment-1" rowspan="2">Set the map_position to (116,234)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6903"></span>6903</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($81BB),HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6906"></span>6906</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="6920.html">set_hero_sprite_for_room</a></td>
-<td class="comment-11" rowspan="1">Set appropriate sprite for the room (standing or crawl)</td>
+<td class="comment-1" rowspan="1">Set appropriate sprite for the room (standing or crawl)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6909"></span>6909</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$8000</td>
-<td class="comment-11" rowspan="2">Reset the hero's screen position</td>
+<td class="comment-1" rowspan="2">Reset the hero's screen position</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="690c"></span>690C</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B71B.html">calc_vischar_iso_pos_from_vischar</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="690f"></span>690F</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="6939.html">setup_movable_items</a></td>
-<td class="comment-11" rowspan="1">Setup movable items</td>
+<td class="comment-1" rowspan="1">Setup movable items</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6912"></span>6912</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="ABA0.html">zoombox</a></td>
-<td class="comment-11" rowspan="1">Zoombox the scene onto the screen</td>
+<td class="comment-1" rowspan="1">Zoombox the scene onto the screen</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6915"></span>6915</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$01</td>
-<td class="comment-11" rowspan="2">Increment score by one</td>
+<td class="comment-1" rowspan="2">Increment score by one</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="6917"></span>6917</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A0F9.html">increase_score</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-
 <div class="comments">
 <div class="paragraph">
 FALL THROUGH into squash_stack_goto_main.
@@ -148,15 +121,19 @@ FALL THROUGH into squash_stack_goto_main.
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="68A2.html">68A2</a></span></td>
+<td class="prev">
+Prev: <a href="68A2.html">68A2</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#68f4">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="691A.html">691A</a></span></td>
+<td class="next">
+Next: <a href="691A.html">691A</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

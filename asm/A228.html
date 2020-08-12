@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="A219.html">A219</a></span></td>
+<td class="prev">
+Prev: <a href="A219.html">A219</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#a228">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A263.html">A263</a></span></td>
+<td class="next">
+Next: <a href="A263.html">A263</a>
+</td>
 </tr>
 </table>
 <div class="description">A228: Event: New red cross parcel.</div>
@@ -26,20 +29,7 @@
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
-
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
@@ -53,32 +43,28 @@ Don't deliver a new red cross parcel while the previous one still exists.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">event_new_red_cross_parcel</td>
+<td class="asm-label">event_new_red_cross_parcel</td>
 <td class="address-2"><span id="a228"></span>A228</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($771D)</td>
-<td class="comment-11" rowspan="1">Fetch the red cross parcel's room (and flags)</td>
+<td class="comment-1" rowspan="1">Fetch the red cross parcel's room (and flags)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a22b"></span>A22B</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $3F</td>
-<td class="comment-11" rowspan="1">Mask off the room part</td>
+<td class="comment-1" rowspan="1">Mask off the room part</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a22d"></span>A22D</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $3F</td>
-<td class="comment-11" rowspan="1">Is it $3F? (i.e. room_NONE ($FF) masked)</td>
+<td class="comment-1" rowspan="1">Is it $3F? (i.e. room_NONE ($FF) masked)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a22f"></span>A22F</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET NZ</td>
-<td class="comment-11" rowspan="1">Return if not</td>
+<td class="comment-1" rowspan="1">Return if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -91,18 +77,16 @@ Select the contents of the next parcel; choosing the first item from the list wh
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a230"></span>A230</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$A25F</td>
-<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the red cross parcel contents list</td>
+<td class="comment-1" rowspan="1">Point <span class="register">DE</span> at the red cross parcel contents list</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a233"></span>A233</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$04</td>
-<td class="comment-11" rowspan="1">There are four entries in the list</td>
+<td class="comment-1" rowspan="1">There are four entries in the list</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -115,130 +99,105 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">event_new_red_cross_parcel_0</td>
+<td class="asm-label">event_new_red_cross_parcel_0</td>
 <td class="address-2"><span id="a235"></span>A235</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Fetch item number</td>
+<td class="comment-1" rowspan="1">Fetch item number</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a236"></span>A236</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="7C26.html">item_to_itemstruct</a></td>
-<td class="comment-11" rowspan="1">Turn it into an itemstruct</td>
+<td class="comment-1" rowspan="1">Turn it into an itemstruct</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a239"></span>A239</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="3">Get its room and mask it</td>
+<td class="comment-1" rowspan="3">Get its room and mask it</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a23a"></span>A23A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a23b"></span>A23B</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $3F</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a23d"></span>A23D</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $3F</td>
-<td class="comment-11" rowspan="1">Is it $3F? (i.e. room_NONE ($FF) masked)</td>
+<td class="comment-1" rowspan="1">Is it $3F? (i.e. room_NONE ($FF) masked)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a23f"></span>A23F</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="A228.html#a245">parcel_found</a></td>
-<td class="comment-11" rowspan="1">Jump to parcel_found if so</td>
+<td class="comment-1" rowspan="1">Jump to parcel_found if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a241"></span>A241</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a242"></span>A242</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="A228.html#a235">event_new_red_cross_parcel_0</a></td>
-<td class="comment-11" rowspan="1">...loop while (...)</td>
+<td class="comment-1" rowspan="1">...loop while (...)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a244"></span>A244</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return - a parcel could not be spawned</td>
+<td class="comment-1" rowspan="1">Return - a parcel could not be spawned</td>
 </tr>
 <tr>
-<td class="asm-label-1">parcel_found</td>
+<td class="asm-label">parcel_found</td>
 <td class="address-2"><span id="a245"></span>A245</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="2">Set red_cross_parcel_current_contents to the item number</td>
+<td class="comment-1" rowspan="2">Set red_cross_parcel_current_contents to the item number</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a246"></span>A246</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($A263),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a249"></span>A249</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$771D</td>
-<td class="comment-11" rowspan="4">Copy the red cross parcel reset data over the red cross parcel itemstruct</td>
+<td class="comment-1" rowspan="4">Copy the red cross parcel reset data over the red cross parcel itemstruct</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a24c"></span>A24C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$A259</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a24f"></span>A24F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0006</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a252"></span>A252</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDIR</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a254"></span>A254</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$09</td>
-<td class="comment-11" rowspan="2">Queue the message "RED CROSS PARCEL" and exit via</td>
+<td class="comment-1" rowspan="2">Queue the message "RED CROSS PARCEL" and exit via</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a256"></span>A256</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP <a href="7D15.html">queue_message</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -251,25 +210,22 @@ Red cross parcel reset data.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">red_cross_parcel_reset_data</td>
+<td class="asm-label">red_cross_parcel_reset_data</td>
 <td class="address-1"><span id="a259"></span>A259</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $14</td>
-<td class="comment-11" rowspan="1">Room: room_20_REDCROSS</td>
+<td class="comment-1" rowspan="1">Room: room_20_REDCROSS</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a25a"></span>A25A</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $2C,$2C,$0C</td>
-<td class="comment-11" rowspan="1">TinyPos: (44, 44, 12)</td>
+<td class="comment-1" rowspan="1">TinyPos: (44, 44, 12)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a25d"></span>A25D</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $80,$F4</td>
-<td class="comment-11" rowspan="1">Coord: (128, 244)</td>
+<td class="comment-1" rowspan="1">Coord: (128, 244)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -282,45 +238,45 @@ Red cross parcel contents list.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">red_cross_parcel_contents_list</td>
+<td class="asm-label">red_cross_parcel_contents_list</td>
 <td class="address-1"><span id="a25f"></span>A25F</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $0E</td>
-<td class="comment-11" rowspan="1">item_PURSE</td>
+<td class="comment-1" rowspan="1">item_PURSE</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a260"></span>A260</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $00</td>
-<td class="comment-11" rowspan="1">item_WIRESNIPS</td>
+<td class="comment-1" rowspan="1">item_WIRESNIPS</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a261"></span>A261</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $05</td>
-<td class="comment-11" rowspan="1">item_BRIBE</td>
+<td class="comment-1" rowspan="1">item_BRIBE</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a262"></span>A262</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $0F</td>
-<td class="comment-11" rowspan="1">item_COMPASS</td>
+<td class="comment-1" rowspan="1">item_COMPASS</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="A219.html">A219</a></span></td>
+<td class="prev">
+Prev: <a href="A219.html">A219</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#a228">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A263.html">A263</a></span></td>
+<td class="next">
+Next: <a href="A263.html">A263</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

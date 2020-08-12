@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="F408.html">F408</a></span></td>
+<td class="prev">
+Prev: <a href="F408.html">F408</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#f41c">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="F43D.html">F43D</a></span></td>
+<td class="next">
+Next: <a href="F43D.html">F43D</a>
+</td>
 </tr>
 </table>
 <div class="description">F41C: Scan for keys that select an input device.</div>
@@ -30,13 +33,7 @@
 Used by the routine at <a href="F271.html">check_menu_keys</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-1">
+<table class="output">
 <tr class="asm-output-header">
 <th colspan="2">Output</th>
 </tr>
@@ -48,46 +45,40 @@ Used by the routine at <a href="F271.html">check_menu_keys</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">menu_keyscan</td>
+<td class="asm-label">menu_keyscan</td>
 <td class="address-2"><span id="f41c"></span>F41C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$F7FE</td>
-<td class="comment-11" rowspan="1">Set <span class="register">BC</span> to port_KEYBOARD_12345</td>
+<td class="comment-1" rowspan="1">Set <span class="register">BC</span> to port_KEYBOARD_12345</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f41f"></span>F41F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,$00</td>
-<td class="comment-11" rowspan="1">Initialise a counter</td>
+<td class="comment-1" rowspan="1">Initialise a counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f421"></span>F421</td>
-<td class="bytes-0"></td>
 <td class="instruction">IN A,(C)</td>
-<td class="comment-11" rowspan="1">Read the port</td>
+<td class="comment-1" rowspan="1">Read the port</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f423"></span>F423</td>
-<td class="bytes-0"></td>
 <td class="instruction">CPL</td>
-<td class="comment-11" rowspan="1">Invert the bits to turn active low into active high</td>
+<td class="comment-1" rowspan="1">Invert the bits to turn active low into active high</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f424"></span>F424</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $0F</td>
-<td class="comment-11" rowspan="1">Mask off bits for 1,2,3,4</td>
+<td class="comment-1" rowspan="1">Mask off bits for 1,2,3,4</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f426"></span>F426</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="F41C.html#f432">mk_check_for_0</a></td>
-<td class="comment-11" rowspan="1">If none were pressed then check for zero</td>
+<td class="comment-1" rowspan="1">If none were pressed then check for zero</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -100,11 +91,10 @@ Which key was pressed?
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f428"></span>F428</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$04</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for 4 iterations</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for 4 iterations</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -117,108 +107,96 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">mk_loop</td>
+<td class="asm-label">mk_loop</td>
 <td class="address-2"><span id="f42a"></span>F42A</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
-<td class="comment-11" rowspan="1">Shift out a bit</td>
+<td class="comment-1" rowspan="1">Shift out a bit</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f42b"></span>F42B</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC E</td>
-<td class="comment-11" rowspan="1">Increment the counter</td>
+<td class="comment-1" rowspan="1">Increment the counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f42c"></span>F42C</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="F41C.html#f430">mk_found</a></td>
-<td class="comment-11" rowspan="1">Did a bit carry out? Jump if so</td>
+<td class="comment-1" rowspan="1">Did a bit carry out? Jump if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f42e"></span>F42E</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="F41C.html#f42a">mk_loop</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1">mk_found</td>
+<td class="asm-label">mk_found</td>
 <td class="address-2"><span id="f430"></span>F430</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,E</td>
-<td class="comment-11" rowspan="2">Return 1..4</td>
+<td class="comment-1" rowspan="2">Return 1..4</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f431"></span>F431</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">mk_check_for_0</td>
+<td class="asm-label">mk_check_for_0</td>
 <td class="address-2"><span id="f432"></span>F432</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$EF</td>
-<td class="comment-11" rowspan="1">Set <span class="register">BC</span> to port_KEYBOARD_09876</td>
+<td class="comment-1" rowspan="1">Set <span class="register">BC</span> to port_KEYBOARD_09876</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f434"></span>F434</td>
-<td class="bytes-0"></td>
 <td class="instruction">IN A,(C)</td>
-<td class="comment-11" rowspan="1">Read the port</td>
+<td class="comment-1" rowspan="1">Read the port</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f436"></span>F436</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $01</td>
-<td class="comment-11" rowspan="1">Was 0 pressed? (note active low)</td>
+<td class="comment-1" rowspan="1">Was 0 pressed? (note active low)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f438"></span>F438</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,E</td>
-<td class="comment-11" rowspan="2">Return 0 if so</td>
+<td class="comment-1" rowspan="2">Return 0 if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f439"></span>F439</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET Z</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f43a"></span>F43A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="2">Otherwise return $FF</td>
+<td class="comment-1" rowspan="2">Otherwise return $FF</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f43c"></span>F43C</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="F408.html">F408</a></span></td>
+<td class="prev">
+Prev: <a href="F408.html">F408</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#f41c">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="F43D.html">F43D</a></span></td>
+<td class="next">
+Next: <a href="F43D.html">F43D</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

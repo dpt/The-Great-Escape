@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="CA81.html">CA81</a></span></td>
+<td class="prev">
+Prev: <a href="CA81.html">CA81</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#cb23">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="CB2D.html">CB2D</a></span></td>
+<td class="next">
+Next: <a href="CB2D.html">CB2D</a>
+</td>
 </tr>
 </table>
 <div class="description">CB23: Calls get_target then puts coords in vischar.target and set flags.</div>
@@ -30,7 +33,7 @@
 Used by the routines at <a href="A3BB.html">set_route</a>, <a href="B107.html">accept_bribe</a>, <a href="C918.html">character_behaviour</a>, <a href="CA81.html">target_reached</a> and <a href="CB2D.html">route_ended</a>.
 </div>
 </div>
-<table class="input-1">
+<table class="input">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
@@ -39,52 +42,40 @@ Used by the routines at <a href="A3BB.html">set_route</a>, <a href="B107.html">a
 <td class="register-desc">Pointer to route</td>
 </tr>
 </table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">get_target_assign_pos</td>
+<td class="asm-label">get_target_assign_pos</td>
 <td class="address-2"><span id="cb23"></span>CB23</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Preserve the route pointer</td>
+<td class="comment-1" rowspan="1">Preserve the route pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cb24"></span>CB24</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="C651.html">get_target</a></td>
-<td class="comment-11" rowspan="1">Get our next target - a location, a door or 'route ends'. The result is returned in <span class="register">A</span>, target pointer returned in <span class="register">HL</span></td>
+<td class="comment-1" rowspan="1">Get our next target - a location, a door or 'route ends'. The result is returned in <span class="register">A</span>, target pointer returned in <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cb27"></span>CB27</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="1">Did <a href="C651.html">get_target</a> return get_target_ROUTE_ENDS? ($FF)</td>
+<td class="comment-1" rowspan="1">Did <a href="C651.html">get_target</a> return get_target_ROUTE_ENDS? ($FF)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cb29"></span>CB29</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="CB61.html">handle_target</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cb2c"></span>CB2C</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore the route pointer</td>
+<td class="comment-1" rowspan="1">Restore the route pointer</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-
 <div class="comments">
 <div class="paragraph">
 FALL THROUGH into route_ended.
@@ -95,15 +86,19 @@ FALL THROUGH into route_ended.
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="CA81.html">CA81</a></span></td>
+<td class="prev">
+Prev: <a href="CA81.html">CA81</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#cb23">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="CB2D.html">CB2D</a></span></td>
+<td class="next">
+Next: <a href="CB2D.html">CB2D</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

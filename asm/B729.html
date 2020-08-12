@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="B71B.html">B71B</a></span></td>
+<td class="prev">
+Prev: <a href="B71B.html">B71B</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#b729">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="B75A.html">B75A</a></span></td>
+<td class="next">
+Next: <a href="B75A.html">B75A</a>
+</td>
 </tr>
 </table>
 <div class="description">B729: Calculate screen position for the specified vischar from saved_pos.</div>
@@ -33,7 +36,7 @@ Used by the routine at <a href="B5CE.html">animate</a>.
 Similar to drop_item_tail_interior.
 </div>
 </div>
-<table class="input-1">
+<table class="input">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
@@ -41,12 +44,6 @@ Similar to drop_item_tail_interior.
 <td class="register">HL</td>
 <td class="register-desc">Pointer to visible character.</td>
 </tr>
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
 </table>
 </td>
 </tr>
@@ -61,116 +58,93 @@ Set vischar.iso_pos.x to ($200 - saved_pos_x + saved_pos_y) * 2
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">calc_vischar_iso_pos_from_state</td>
+<td class="asm-label">calc_vischar_iso_pos_from_state</td>
 <td class="address-2"><span id="b729"></span>B729</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">Preserve vischar pointer</td>
+<td class="comment-1" rowspan="1">Preserve vischar pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b72a"></span>B72A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$18</td>
-<td class="comment-11" rowspan="3">Point <span class="register">DE</span> at vischar.iso_pos.x (note shortcut - no rollover into high byte)</td>
+<td class="comment-1" rowspan="3">Point <span class="register">DE</span> at vischar.iso_pos.x (note shortcut - no rollover into high byte)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b72c"></span>B72C</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b72d"></span>B72D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b72e"></span>B72E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,($81A6)</td>
-<td class="comment-11" rowspan="3">HL = saved_pos_y + $200</td>
+<td class="comment-1" rowspan="3">HL = saved_pos_y + $200</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b731"></span>B731</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0200</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b734"></span>B734</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b735"></span>B735</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,($81A4)</td>
-<td class="comment-11" rowspan="1">Fetch saved_pos_x</td>
+<td class="comment-1" rowspan="1">Fetch saved_pos_x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b739"></span>B739</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Clear the carry flag</td>
+<td class="comment-1" rowspan="1">Clear the carry flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b73a"></span>B73A</td>
-<td class="bytes-0"></td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="1">HL -= saved_pos_x</td>
+<td class="comment-1" rowspan="1">HL -= saved_pos_x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b73c"></span>B73C</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-11" rowspan="1">Double the result</td>
+<td class="comment-1" rowspan="1">Double the result</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b73d"></span>B73D</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">Restore vischar pointer</td>
+<td class="comment-1" rowspan="1">Restore vischar pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b73e"></span>B73E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),E</td>
-<td class="comment-11" rowspan="4">Store result in vischar.iso_pos.x</td>
+<td class="comment-1" rowspan="4">Store result in vischar.iso_pos.x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b73f"></span>B73F</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b740"></span>B740</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),D</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b741"></span>B741</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -183,108 +157,97 @@ Set vischar.iso_pos_y = $800 - saved_pos_x - saved_pos_y - saved_height
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b742"></span>B742</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">Preserve vischar pointer</td>
+<td class="comment-1" rowspan="1">Preserve vischar pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b743"></span>B743</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$0800</td>
-<td class="comment-11" rowspan="1">HL = $800</td>
+<td class="comment-1" rowspan="1">HL = $800</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b746"></span>B746</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Clear the carry flag</td>
+<td class="comment-1" rowspan="1">Clear the carry flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b747"></span>B747</td>
-<td class="bytes-0"></td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="1">HL -= saved_pos_x</td>
+<td class="comment-1" rowspan="1">HL -= saved_pos_x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b749"></span>B749</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,($81A8)</td>
-<td class="comment-11" rowspan="1">Fetch saved_height</td>
+<td class="comment-1" rowspan="1">Fetch saved_height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b74d"></span>B74D</td>
-<td class="bytes-0"></td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="1">HL -= saved_height</td>
+<td class="comment-1" rowspan="1">HL -= saved_height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b74f"></span>B74F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,($81A6)</td>
-<td class="comment-11" rowspan="1">Fetch saved_pos_y</td>
+<td class="comment-1" rowspan="1">Fetch saved_pos_y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b753"></span>B753</td>
-<td class="bytes-0"></td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="1">HL -= saved_pos_y</td>
+<td class="comment-1" rowspan="1">HL -= saved_pos_y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b755"></span>B755</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">Restore vischar pointer</td>
+<td class="comment-1" rowspan="1">Restore vischar pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b756"></span>B756</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),E</td>
-<td class="comment-11" rowspan="3">Store result in vischar.iso_pos.y</td>
+<td class="comment-1" rowspan="3">Store result in vischar.iso_pos.y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b757"></span>B757</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b758"></span>B758</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),D</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b759"></span>B759</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="B71B.html">B71B</a></span></td>
+<td class="prev">
+Prev: <a href="B71B.html">B71B</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#b729">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="B75A.html">B75A</a></span></td>
+<td class="next">
+Next: <a href="B75A.html">B75A</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

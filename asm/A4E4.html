@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="A4D8.html">A4D8</a></span></td>
+<td class="prev">
+Prev: <a href="A4D8.html">A4D8</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#a4e4">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A4FD.html">A4FD</a></span></td>
+<td class="next">
+Next: <a href="A4FD.html">A4FD</a>
+</td>
 </tr>
 </table>
 <div class="description">A4E4: Common end of above two routines.</div>
@@ -33,7 +36,7 @@ Sets routes for prisoners and guards.
 Used by the routines at <a href="A4D3.html">charevnt_breakfast_state</a> and <a href="A4D8.html">charevnt_breakfast_vischar</a>.
 </div>
 </div>
-<table class="input-1">
+<table class="input">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
@@ -46,124 +49,105 @@ Used by the routines at <a href="A4D3.html">charevnt_breakfast_state</a> and <a 
 <td class="register-desc">Pointer to route.</td>
 </tr>
 </table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">charevnt_breakfast_common</td>
+<td class="asm-label">charevnt_breakfast_common</td>
 <td class="address-2"><span id="a4e4"></span>A4E4</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="2">Set the route's step to zero</td>
+<td class="comment-1" rowspan="2">Set the route's step to zero</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a4e5"></span>A4E5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a4e7"></span>A4E7</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $13</td>
-<td class="comment-11" rowspan="1">Is the character index less than or equal to character_19_GUARD_DOG_4?</td>
+<td class="comment-1" rowspan="1">Is the character index less than or equal to character_19_GUARD_DOG_4?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a4e9"></span>A4E9</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="A4E4.html#a4f3">charevnt_breakfast_common_0</a></td>
-<td class="comment-11" rowspan="2">Jump to hostile handling if so</td>
+<td class="comment-1" rowspan="2">Jump to hostile handling if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a4ec"></span>A4EC</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP C,<a href="A4E4.html#a4f3">charevnt_breakfast_common_0</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a4ef"></span>A4EF</td>
-<td class="bytes-0"></td>
 <td class="instruction">SUB $02</td>
-<td class="comment-11" rowspan="1">Map prisoner 1..6 to route 18..23 (routes to sitting)</td>
+<td class="comment-1" rowspan="1">Map prisoner 1..6 to route 18..23 (routes to sitting)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a4f1"></span>A4F1</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="A4E4.html#a4fa">charevnt_breakfast_common_1</a></td>
-<td class="comment-11" rowspan="1">Jump to store</td>
+<td class="comment-1" rowspan="1">Jump to store</td>
 </tr>
 <tr>
-<td class="asm-label-1">charevnt_breakfast_common_0</td>
+<td class="asm-label">charevnt_breakfast_common_0</td>
 <td class="address-2"><span id="a4f3"></span>A4F3</td>
-<td class="bytes-0"></td>
 <td class="instruction">BIT 0,A</td>
-<td class="comment-11" rowspan="1">Is the character index odd?</td>
+<td class="comment-1" rowspan="1">Is the character index odd?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a4f5"></span>A4F5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$18</td>
-<td class="comment-11" rowspan="1">Route index is 24 if even</td>
+<td class="comment-1" rowspan="1">Route index is 24 if even</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a4f7"></span>A4F7</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="A4E4.html#a4fa">charevnt_breakfast_common_1</a></td>
-<td class="comment-11" rowspan="1">Jump to store if even</td>
+<td class="comment-1" rowspan="1">Jump to store if even</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a4f9"></span>A4F9</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC A</td>
-<td class="comment-11" rowspan="1">Route index is 25 if odd</td>
+<td class="comment-1" rowspan="1">Route index is 25 if odd</td>
 </tr>
 <tr>
-<td class="asm-label-1">charevnt_breakfast_common_1</td>
+<td class="asm-label">charevnt_breakfast_common_1</td>
 <td class="address-2"><span id="a4fa"></span>A4FA</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
-<td class="comment-11" rowspan="2">Store route index</td>
+<td class="comment-1" rowspan="2">Store route index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a4fb"></span>A4FB</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a4fc"></span>A4FC</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="A4D8.html">A4D8</a></span></td>
+<td class="prev">
+Prev: <a href="A4D8.html">A4D8</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#a4e4">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A4FD.html">A4FD</a></span></td>
+<td class="next">
+Next: <a href="A4FD.html">A4FD</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

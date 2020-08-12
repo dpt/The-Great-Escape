@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="68A1.html">68A1</a></span></td>
+<td class="prev">
+Prev: <a href="68A1.html">68A1</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#68a2">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="68F4.html">68F4</a></span></td>
+<td class="next">
+Next: <a href="68F4.html">68F4</a>
+</td>
 </tr>
 </table>
 <div class="description">68A2: The current visible character is made to change room.</div>
@@ -30,7 +33,7 @@
 Used by the routines at <a href="B1F5.html">door_handling</a>, <a href="B32D.html">door_handling_interior</a>, <a href="CA81.html">target_reached</a>, <a href="CB98.html">solitary</a> and <a href="EFCB.html">action_papers</a>.
 </div>
 </div>
-<table class="input-1">
+<table class="input">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
@@ -43,83 +46,65 @@ Used by the routines at <a href="B1F5.html">door_handling</a>, <a href="B32D.htm
 <td class="register-desc">Pointer to current visible character.</td>
 </tr>
 </table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">transition</td>
+<td class="asm-label">transition</td>
 <td class="address-2"><span id="68a2"></span>68A2</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">Save position into <span class="register">DE</span></td>
+<td class="comment-1" rowspan="1">Save position into <span class="register">DE</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68a3"></span>68A3</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH IY</td>
-<td class="comment-11" rowspan="2">Copy the current visible character pointer into <span class="register">HL</span></td>
+<td class="comment-1" rowspan="2">Copy the current visible character pointer into <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68a5"></span>68A5</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68a6"></span>68A6</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="1">Extract the visible character's offset</td>
+<td class="comment-1" rowspan="1">Extract the visible character's offset</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68a7"></span>68A7</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1">Save it for later</td>
+<td class="comment-1" rowspan="1">Save it for later</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68a8"></span>68A8</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,$0F</td>
-<td class="comment-11" rowspan="2">Point <span class="register">HL</span> at the visible character's position</td>
+<td class="comment-1" rowspan="2">Point <span class="register">HL</span> at the visible character's position</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68aa"></span>68AA</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68ab"></span>68AB</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$1C)</td>
-<td class="comment-11" rowspan="1">Fetch the visible character's current room index</td>
+<td class="comment-1" rowspan="1">Fetch the visible character's current room index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68ae"></span>68AE</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Are we outdoors?</td>
+<td class="comment-1" rowspan="1">Are we outdoors?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68af"></span>68AF</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="68A2.html#68c3">transition_1</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -135,88 +120,72 @@ Set position on X, Y axis and height by multiplying by 4.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68b2"></span>68B2</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$03</td>
-<td class="comment-11" rowspan="1">Iterate thrice: X, Y and height fields</td>
+<td class="comment-1" rowspan="1">Iterate thrice: X, Y and height fields</td>
 </tr>
 <tr>
-<td class="asm-label-1">transition_0</td>
+<td class="asm-label">transition_0</td>
 <td class="address-2"><span id="68b4"></span>68B4</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">Save <span class="register">BC</span> - <a href="B295.html">multiply_by_4</a>'s output register</td>
+<td class="comment-1" rowspan="1">Save <span class="register">BC</span> - <a href="B295.html">multiply_by_4</a>'s output register</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68b5"></span>68B5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Fetch a position byte</td>
+<td class="comment-1" rowspan="1">Fetch a position byte</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68b6"></span>68B6</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B295.html">multiply_by_4</a></td>
-<td class="comment-11" rowspan="1">Multiply it by 4, widening it to a word in <span class="register">BC</span></td>
+<td class="comment-1" rowspan="1">Multiply it by 4, widening it to a word in <span class="register">BC</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68b9"></span>68B9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),C</td>
-<td class="comment-11" rowspan="5">Store it to visible character's position and increment pointers</td>
+<td class="comment-1" rowspan="5">Store it to visible character's position and increment pointers</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68ba"></span>68BA</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68bb"></span>68BB</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),B</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68bc"></span>68BC</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68bd"></span>68BD</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68be"></span>68BE</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">Restore</td>
+<td class="comment-1" rowspan="1">Restore</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68bf"></span>68BF</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="68A2.html#68b4">transition_0</a></td>
-<td class="comment-11" rowspan="1">Loop</td>
+<td class="comment-1" rowspan="1">Loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68c1"></span>68C1</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="68A2.html#68ce">transition_3</a></td>
-<td class="comment-11" rowspan="1">!Jump over indoors case (ELSE part)</td>
+<td class="comment-1" rowspan="1">!Jump over indoors case (ELSE part)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -232,88 +201,71 @@ Set position on X, Y axis and height by copying.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">transition_1</td>
+<td class="asm-label">transition_1</td>
 <td class="address-2"><span id="68c3"></span>68C3</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$03</td>
-<td class="comment-11" rowspan="1">Iterate thrice: X, Y and height fields</td>
+<td class="comment-1" rowspan="1">Iterate thrice: X, Y and height fields</td>
 </tr>
 <tr>
-<td class="asm-label-1">transition_2</td>
+<td class="asm-label">transition_2</td>
 <td class="address-2"><span id="68c5"></span>68C5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="6">Widen position bytes to words, store and increment pointers</td>
+<td class="comment-1" rowspan="6">Widen position bytes to words, store and increment pointers</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68c6"></span>68C6</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68c7"></span>68C7</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68c8"></span>68C8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$00</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68ca"></span>68CA</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68cb"></span>68CB</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68cc"></span>68CC</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="68A2.html#68c5">transition_2</a></td>
-<td class="comment-11" rowspan="1">Loop</td>
+<td class="comment-1" rowspan="1">Loop</td>
 </tr>
 <tr>
-<td class="asm-label-1">transition_3</td>
+<td class="asm-label">transition_3</td>
 <td class="address-2"><span id="68ce"></span>68CE</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1">Retrieve vischar index/offset stacked at $68A7</td>
+<td class="comment-1" rowspan="1">Retrieve vischar index/offset stacked at $68A7</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68cf"></span>68CF</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68d0"></span>68D0</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Is it the hero?</td>
+<td class="comment-1" rowspan="1">Is it the hero?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68d1"></span>68D1</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="68A2.html#68d7">transition_4</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -329,11 +281,10 @@ This is an unusual construct. Why did the author not use JP NZ,$C5D3 above and f
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68d4"></span>68D4</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP <a href="C5D3.html">reset_visible_character</a></td>
-<td class="comment-11" rowspan="1">If not, exit via <a href="C5D3.html">reset_visible_character</a> resetting the visible character</td>
+<td class="comment-1" rowspan="1">If not, exit via <a href="C5D3.html">reset_visible_character</a> resetting the visible character</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -349,46 +300,40 @@ Hero only.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">transition_4</td>
+<td class="asm-label">transition_4</td>
 <td class="address-2"><span id="68d7"></span>68D7</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the visible character's flags field (always $8001)</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the visible character's flags field (always $8001)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68d8"></span>68D8</td>
-<td class="bytes-0"></td>
 <td class="instruction">RES 7,(HL)</td>
-<td class="comment-11" rowspan="1">Clear vischar_FLAGS_NO_COLLIDE in flags</td>
+<td class="comment-1" rowspan="1">Clear vischar_FLAGS_NO_COLLIDE in flags</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68da"></span>68DA</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($801C)</td>
-<td class="comment-11" rowspan="1">Get the visible character's room index</td>
+<td class="comment-1" rowspan="1">Get the visible character's room index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68dd"></span>68DD</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($68A0),A</td>
-<td class="comment-11" rowspan="1">Set the global current room index</td>
+<td class="comment-1" rowspan="1">Set the global current room index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68e0"></span>68E0</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Are we outdoors?</td>
+<td class="comment-1" rowspan="1">Are we outdoors?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68e1"></span>68E1</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="68F4.html">enter_room</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -401,87 +346,77 @@ We're outdoors.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68e4"></span>68E4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$0C</td>
-<td class="comment-11" rowspan="3">Point <span class="register">HL</span> at the visible character's input field (always $800D)</td>
+<td class="comment-1" rowspan="3">Point <span class="register">HL</span> at the visible character's input field (always $800D)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68e6"></span>68E6</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68e7"></span>68E7</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68e8"></span>68E8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$80</td>
-<td class="comment-11" rowspan="1">Set input to input_KICK</td>
+<td class="comment-1" rowspan="1">Set input to input_KICK</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68ea"></span>68EA</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the visible character's direction field (always $800E)</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the visible character's direction field (always $800E)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68eb"></span>68EB</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="3">Fetch the direction field and clear the non-direction bits, resetting the crawl flag</td>
+<td class="comment-1" rowspan="3">Fetch the direction field and clear the non-direction bits, resetting the crawl flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68ec"></span>68EC</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $03</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68ee"></span>68EE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68ef"></span>68EF</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B2FC.html">reset_outdoors</a></td>
-<td class="comment-11" rowspan="1">Reset the hero's position, redraw the scene then zoombox it onto the screen</td>
+<td class="comment-1" rowspan="1">Reset the hero's position, redraw the scene then zoombox it onto the screen</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="68f2"></span>68F2</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="691A.html">squash_stack_goto_main</a></td>
-<td class="comment-11" rowspan="1">Restart from main loop</td>
+<td class="comment-1" rowspan="1">Restart from main loop</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="68A1.html">68A1</a></span></td>
+<td class="prev">
+Prev: <a href="68A1.html">68A1</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#68a2">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="68F4.html">68F4</a></span></td>
+<td class="next">
+Next: <a href="68F4.html">68F4</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

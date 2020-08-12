@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="B83B.html">B83B</a></span></td>
+<td class="prev">
+Prev: <a href="B83B.html">B83B</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#b866">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="B89C.html">B89C</a></span></td>
+<td class="next">
+Next: <a href="B89C.html">B89C</a>
+</td>
 </tr>
 </table>
 <div class="description">B866: Plot vischars and items in order.</div>
@@ -30,18 +33,6 @@
 Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href="9D7B.html">main_loop</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
@@ -58,109 +49,94 @@ This can return a vischar OR an itemstruct, but not both.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_sprites</td>
+<td class="asm-label">plot_sprites</td>
 <td class="address-2"><span id="b866"></span>B866</td>
-<td class="bytes-0"></td>
-<td class="instruction">CALL <a href="B89C.html">locate_vischar_or_itemstruct</a></td>
-<td class="comment-11" rowspan="1">Locates a vischar or item to plot</td>
+<td class="instruction">CALL <a href="B89C.html">get_next_drawable</a></td>
+<td class="comment-1" rowspan="1">Finds the next vischar or item to draw</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b869"></span>B869</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET NZ</td>
-<td class="comment-11" rowspan="1">Return if nothing remains</td>
+<td class="comment-1" rowspan="1">Return if nothing remains</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b86a"></span>B86A</td>
-<td class="bytes-0"></td>
 <td class="instruction">BIT 6,A</td>
-<td class="comment-11" rowspan="1">Was an item returned?</td>
+<td class="comment-1" rowspan="1">Was an item returned?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b86c"></span>B86C</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="B866.html#b88f">plot_item</a></td>
-<td class="comment-11" rowspan="1">Jump to item handling if so</td>
+<td class="comment-1" rowspan="1">Jump to item handling if so</td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_vischar</td>
+<td class="asm-label">plot_vischar</td>
 <td class="address-1"><span id="b86e"></span>B86E</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="E420.html">setup_vischar_plotting</a></td>
-<td class="comment-11" rowspan="1">Set up vischar plotting</td>
+<td class="comment-1" rowspan="1">Set up vischar plotting</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b871"></span>B871</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="B866.html#b866">plot_sprites</a></td>
-<td class="comment-11" rowspan="1">If not visible (Z clear) ...loop</td>
+<td class="comment-1" rowspan="1">If not visible (Z clear) ...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b873"></span>B873</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B916.html">render_mask_buffer</a></td>
-<td class="comment-11" rowspan="1">Render the mask buffer</td>
+<td class="comment-1" rowspan="1">Render the mask buffer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b876"></span>B876</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($81BD)</td>
-<td class="comment-11" rowspan="1">Fetch the searchlight state</td>
+<td class="comment-1" rowspan="1">Fetch the searchlight state</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b879"></span>B879</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="1">Is it searchlight_STATE_SEARCHING? ($FF)</td>
+<td class="comment-1" rowspan="1">Is it searchlight_STATE_SEARCHING? ($FF)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b87b"></span>B87B</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL NZ,<a href="B83B.html">searchlight_mask_test</a></td>
-<td class="comment-11" rowspan="1">If not: check the mask buffer to see if the hero is hiding behind something</td>
+<td class="comment-1" rowspan="1">If not: check the mask buffer to see if the hero is hiding behind something</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b87e"></span>B87E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$1E)</td>
-<td class="comment-11" rowspan="1">How wide is the vischar? (3 =&gt; 16 wide, 4 =&gt; 24 wide)</td>
+<td class="comment-1" rowspan="1">How wide is the vischar? (3 =&gt; 16 wide, 4 =&gt; 24 wide)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b881"></span>B881</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $03</td>
-<td class="comment-11" rowspan="1">16 wide?</td>
+<td class="comment-1" rowspan="1">16 wide?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b883"></span>B883</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="B866.html#b88a">plot_16_wide</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_24_wide</td>
+<td class="asm-label">plot_24_wide</td>
 <td class="address-1"><span id="b885"></span>B885</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="E102.html">plot_masked_sprite_24px</a></td>
-<td class="comment-11" rowspan="1">Call the sprite plotter for 24-pixel-wide sprites</td>
+<td class="comment-1" rowspan="1">Call the sprite plotter for 24-pixel-wide sprites</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b888"></span>B888</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="B866.html#b866">plot_sprites</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -173,66 +149,63 @@ It's odd to test for Z here since it's always set.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_16_wide</td>
+<td class="asm-label">plot_16_wide</td>
 <td class="address-2"><span id="b88a"></span>B88A</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL Z,<a href="E2A2.html">plot_masked_sprite_16px</a></td>
-<td class="comment-11" rowspan="1">Call (if Z set) the sprite plotter for 16-pixel-wide sprites</td>
+<td class="comment-1" rowspan="1">Call (if Z set) the sprite plotter for 16-pixel-wide sprites</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b88d"></span>B88D</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="B866.html#b866">plot_sprites</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_item</td>
+<td class="asm-label">plot_item</td>
 <td class="address-2"><span id="b88f"></span>B88F</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="DC41.html">setup_item_plotting</a></td>
-<td class="comment-11" rowspan="1">Set up item plotting</td>
+<td class="comment-1" rowspan="1">Set up item plotting</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b892"></span>B892</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="B866.html#b866">plot_sprites</a></td>
-<td class="comment-11" rowspan="1">If not visible (Z clear) ...loop</td>
+<td class="comment-1" rowspan="1">If not visible (Z clear) ...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b894"></span>B894</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B916.html">render_mask_buffer</a></td>
-<td class="comment-11" rowspan="1">Render the mask buffer</td>
+<td class="comment-1" rowspan="1">Render the mask buffer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b897"></span>B897</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="E29F.html">plot_masked_sprite_16px_x_is_zero</a></td>
-<td class="comment-11" rowspan="1">Call the sprite plotter for 16-pixel-wide sprites</td>
+<td class="comment-1" rowspan="1">Call the sprite plotter for 16-pixel-wide sprites</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b89a"></span>B89A</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="B866.html#b866">plot_sprites</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="B83B.html">B83B</a></span></td>
+<td class="prev">
+Prev: <a href="B83B.html">B83B</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#b866">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="B89C.html">B89C</a></span></td>
+<td class="next">
+Next: <a href="B89C.html">B89C</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="FAE0.html">FAE0</a></span></td>
+<td class="prev">
+Prev: <a href="FAE0.html">FAE0</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#fde1">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="FDF3.html">FDF3</a></span></td>
+<td class="next">
+Next: <a href="FDF3.html">FDF3</a>
+</td>
 </tr>
 </table>
 <div class="description">FDE1: Loaded.</div>
@@ -30,81 +33,63 @@
 This is the very first entry point used to shunt the game image down into its proper position.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">loaded</td>
+<td class="asm-label">loaded</td>
 <td class="address-2"><span id="fde1"></span>FDE1</td>
-<td class="bytes-0"></td>
 <td class="instruction">DI</td>
-<td class="comment-11" rowspan="1">Disable interrupts</td>
+<td class="comment-1" rowspan="1">Disable interrupts</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fde2"></span>FDE2</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD SP,$FFFF</td>
-<td class="comment-11" rowspan="1">Point <span class="register">SP</span> at the topmost byte of RAM</td>
+<td class="comment-1" rowspan="1">Point <span class="register">SP</span> at the topmost byte of RAM</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fde5"></span>FDE5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$9FE0</td>
-<td class="comment-11" rowspan="4">Relocate the $9FE0 bytes at $5E00 down to $5B00</td>
+<td class="comment-1" rowspan="4">Relocate the $9FE0 bytes at $5E00 down to $5B00</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fde8"></span>FDE8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$5E00</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fdeb"></span>FDEB</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$5B00</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fdee"></span>FDEE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDIR</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fdf0"></span>FDF0</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP <a href="F068.html">jump_to_main</a></td>
-<td class="comment-11" rowspan="1">Exit via jump_to_main</td>
+<td class="comment-1" rowspan="1">Exit via jump_to_main</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="FAE0.html">FAE0</a></span></td>
+<td class="prev">
+Prev: <a href="FAE0.html">FAE0</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#fde1">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="FDF3.html">FDF3</a></span></td>
+<td class="next">
+Next: <a href="FDF3.html">FDF3</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

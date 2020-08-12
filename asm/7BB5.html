@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="7B8B.html">7B8B</a></span></td>
+<td class="prev">
+Prev: <a href="7B8B.html">7B8B</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#7bb5">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="7BD0.html">7BD0</a></span></td>
+<td class="next">
+Next: <a href="7BD0.html">7BD0</a>
+</td>
 </tr>
 </table>
 <div class="description">7BB5: Drop item, tail part.</div>
@@ -30,7 +33,7 @@
 Used by the routine at <a href="B387.html">action_red_cross_parcel</a>.
 </div>
 </div>
-<table class="input-1">
+<table class="input">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
@@ -39,55 +42,43 @@ Used by the routine at <a href="B387.html">action_red_cross_parcel</a>.
 <td class="register-desc">Item index.</td>
 </tr>
 </table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">drop_item_tail</td>
+<td class="asm-label">drop_item_tail</td>
 <td class="address-2"><span id="7bb5"></span>7BB5</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="7C26.html">item_to_itemstruct</a></td>
-<td class="comment-11" rowspan="1">Convert the item index in <span class="register">A</span> into an itemstruct pointer in <span class="register">HL</span></td>
+<td class="comment-1" rowspan="1">Convert the item index in <span class="register">A</span> into an itemstruct pointer in <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7bb8"></span>7BB8</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to point to the room index</td>
+<td class="comment-1" rowspan="1">Advance <span class="register">HL</span> to point to the room index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7bb9"></span>7BB9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="1">Get the global current room index</td>
+<td class="comment-1" rowspan="1">Get the global current room index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7bbc"></span>7BBC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="1">Set the object's room index</td>
+<td class="comment-1" rowspan="1">Set the object's room index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7bbd"></span>7BBD</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Is it outdoors? (room index is zero)</td>
+<td class="comment-1" rowspan="1">Is it outdoors? (room index is zero)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7bbe"></span>7BBE</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="7BE4.html">drop_item_interior</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -100,85 +91,71 @@ Outdoors.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7bc0"></span>7BC0</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at itemstruct.pos</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at itemstruct.pos</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7bc1"></span>7BC1</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Save for below</td>
+<td class="comment-1" rowspan="1">Save for below</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7bc2"></span>7BC2</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="2">Bug: HL is incremented by two here but then is immediately overwritten by the LD HL at $7BC5.</td>
+<td class="comment-1" rowspan="2">Bug: HL is incremented by two here but then is immediately overwritten by the LD HL at $7BC5.</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7bc3"></span>7BC3</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7bc4"></span>7BC4</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">Restore itemstruct.pos pointer into <span class="register">DE</span></td>
+<td class="comment-1" rowspan="1">Restore itemstruct.pos pointer into <span class="register">DE</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7bc5"></span>7BC5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$800F</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the hero's map position</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the hero's map position</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7bc8"></span>7BC8</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="E542.html">pos_to_tinypos</a></td>
-<td class="comment-11" rowspan="1">Scale down hero's map position (<span class="register">HL</span>) and assign the result to itemstruct's tinypos (<span class="register">DE</span>). <span class="register">DE</span> is updated to point after tinypos on return</td>
+<td class="comment-1" rowspan="1">Scale down hero's map position (<span class="register">HL</span>) and assign the result to itemstruct's tinypos (<span class="register">DE</span>). <span class="register">DE</span> is updated to point after tinypos on return</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7bcb"></span>7BCB</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC DE</td>
-<td class="comment-11" rowspan="1">Point at height field</td>
+<td class="comment-1" rowspan="1">Point at height field</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7bcc"></span>7BCC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$00</td>
-<td class="comment-11" rowspan="2">Set height to zero</td>
+<td class="comment-1" rowspan="2">Set height to zero</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7bce"></span>7BCE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7bcf"></span>7BCF</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">Move itemstruct pointer into <span class="register">HL</span></td>
+<td class="comment-1" rowspan="1">Move itemstruct pointer into <span class="register">HL</span></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-
 <div class="comments">
 <div class="paragraph">
 FALL THROUGH into calc_exterior_item_iso_pos.
@@ -189,15 +166,19 @@ FALL THROUGH into calc_exterior_item_iso_pos.
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="7B8B.html">7B8B</a></span></td>
+<td class="prev">
+Prev: <a href="7B8B.html">7B8B</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#7bb5">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="7BD0.html">7BD0</a></span></td>
+<td class="next">
+Next: <a href="7BD0.html">7BD0</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

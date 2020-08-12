@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="9E98.html">9E98</a></span></td>
+<td class="prev">
+Prev: <a href="9E98.html">9E98</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#9eb2">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="9EE4.html">9EE4</a></span></td>
+<td class="next">
+Next: <a href="9EE4.html">9EE4</a>
+</td>
 </tr>
 </table>
 <div class="description">9EB2: Locks the player out until the wire is snipped.</div>
@@ -30,131 +33,96 @@
 Used by the routine at <a href="9E07.html">process_player_input</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">cutting_wire</td>
+<td class="asm-label">cutting_wire</td>
 <td class="address-2"><span id="9eb2"></span>9EB2</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$A12F</td>
-<td class="comment-11" rowspan="3">How much longer do we have to wait until the wire cutting is complete?</td>
+<td class="comment-1" rowspan="3">How much longer do we have to wait until the wire cutting is complete?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9eb5"></span>9EB5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($A145)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9eb8"></span>9EB8</td>
-<td class="bytes-0"></td>
 <td class="instruction">SUB (HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9eb9"></span>9EB9</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="9EB2.html#9ed0">cutting_wire_complete</a></td>
-<td class="comment-11" rowspan="1">Jump if the countdown reached zero</td>
+<td class="comment-1" rowspan="1">Jump if the countdown reached zero</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ebb"></span>9EBB</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $04</td>
-<td class="comment-11" rowspan="2">Return if greater than 3</td>
+<td class="comment-1" rowspan="2">Return if greater than 3</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ebd"></span>9EBD</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET NC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ebe"></span>9EBE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($800E)</td>
-<td class="comment-11" rowspan="1">Read current direction</td>
+<td class="comment-1" rowspan="1">Read current direction</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ec1"></span>9EC1</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$9EE0</td>
-<td class="comment-11" rowspan="1">Point at cutting_wire_new_inputs</td>
+<td class="comment-1" rowspan="1">Point at cutting_wire_new_inputs</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ec4"></span>9EC4</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $03</td>
-<td class="comment-11" rowspan="1">Mask off direction part</td>
+<td class="comment-1" rowspan="1">Mask off direction part</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ec6"></span>9EC6</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-11" rowspan="5">Look that up in cutting_wire_new_inputs</td>
+<td class="comment-1" rowspan="5">Look that up in cutting_wire_new_inputs</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ec7"></span>9EC7</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ec8"></span>9EC8</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="9EB2.html#9ecb">cutting_wire_0</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9eca"></span>9ECA</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC H</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">cutting_wire_0</td>
+<td class="asm-label">cutting_wire_0</td>
 <td class="address-2"><span id="9ecb"></span>9ECB</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ecc"></span>9ECC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($800D),A</td>
-<td class="comment-11" rowspan="1">Save new input</td>
+<td class="comment-1" rowspan="1">Save new input</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ecf"></span>9ECF</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -167,11 +135,10 @@ Countdown reached zero: Snip the wire.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">cutting_wire_complete</td>
+<td class="asm-label">cutting_wire_complete</td>
 <td class="address-2"><span id="9ed0"></span>9ED0</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$800E</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at hero's direction field</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at hero's direction field</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -184,53 +151,44 @@ Bug: An LD A,(HL) instruction is missing here. <span class="register">A</span> i
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ed3"></span>9ED3</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $03</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ed5"></span>9ED5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),A</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ed6"></span>9ED6</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC L</td>
-<td class="comment-11" rowspan="2">Set vischar.input to input_KICK</td>
+<td class="comment-1" rowspan="2">Set vischar.input to input_KICK</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ed7"></span>9ED7</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$80</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ed9"></span>9ED9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$18</td>
-<td class="comment-11" rowspan="2">Set vischar height to 24</td>
+<td class="comment-1" rowspan="2">Set vischar height to 24</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9edb"></span>9EDB</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($8013),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ede"></span>9EDE</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="9E98.html#9eaa">clear_lockpick_wirecut_flags_and_return</a></td>
-<td class="comment-11" rowspan="1">Jump to clear_lockpick_wirecut_flags_and_return</td>
+<td class="comment-1" rowspan="1">Jump to clear_lockpick_wirecut_flags_and_return</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -243,45 +201,45 @@ New inputs table.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">cutting_wire_new_inputs</td>
+<td class="asm-label">cutting_wire_new_inputs</td>
 <td class="address-1"><span id="9ee0"></span>9EE0</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $84</td>
-<td class="comment-11" rowspan="1">input_UP   + input_LEFT  + input_KICK</td>
+<td class="comment-1" rowspan="1">input_UP   + input_LEFT  + input_KICK</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ee1"></span>9EE1</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $87</td>
-<td class="comment-11" rowspan="1">input_UP   + input_RIGHT + input_KICK</td>
+<td class="comment-1" rowspan="1">input_UP   + input_RIGHT + input_KICK</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ee2"></span>9EE2</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $88</td>
-<td class="comment-11" rowspan="1">input_DOWN + input_RIGHT + input_KICK</td>
+<td class="comment-1" rowspan="1">input_DOWN + input_RIGHT + input_KICK</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ee3"></span>9EE3</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $85</td>
-<td class="comment-11" rowspan="1">input_DOWN + input_LEFT  + input_KICK</td>
+<td class="comment-1" rowspan="1">input_DOWN + input_LEFT  + input_KICK</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="9E98.html">9E98</a></span></td>
+<td class="prev">
+Prev: <a href="9E98.html">9E98</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#9eb2">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="9EE4.html">9EE4</a></span></td>
+<td class="next">
+Next: <a href="9EE4.html">9EE4</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

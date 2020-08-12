@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="A1C3.html">A1C3</a></span></td>
+<td class="prev">
+Prev: <a href="A1C3.html">A1C3</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#a1d3">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A1E7.html">A1E7</a></span></td>
+<td class="next">
+Next: <a href="A1E7.html">A1E7</a>
+</td>
 </tr>
 </table>
 <div class="description">A1D3: Event: Another day dawns.</div>
@@ -26,56 +29,36 @@
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
-
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">event_another_day_dawns</td>
+<td class="asm-label">event_another_day_dawns</td>
 <td class="address-2"><span id="a1d3"></span>A1D3</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$13</td>
-<td class="comment-11" rowspan="2">Queue the message "ANOTHER DAY DAWNS"</td>
+<td class="comment-1" rowspan="2">Queue the message "ANOTHER DAY DAWNS"</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a1d5"></span>A1D5</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="7D15.html">queue_message</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a1d8"></span>A1D8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$19</td>
-<td class="comment-11" rowspan="2">Decrease morale by 25</td>
+<td class="comment-1" rowspan="2">Decrease morale by 25</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a1da"></span>A1DA</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A0E0.html">decrease_morale</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a1dd"></span>A1DD</td>
-<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">Clear the night time flag</td>
+<td class="comment-1" rowspan="1">Clear the night time flag</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -88,38 +71,39 @@ This entry point is used by the routine at <a href="A1C3.html">event_night_time<
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">set_attrs</td>
+<td class="asm-label">set_attrs</td>
 <td class="address-2"><span id="a1de"></span>A1DE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($A146),A</td>
-<td class="comment-11" rowspan="1">Set the night-time flag to <span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Set the night-time flag to <span class="register">A</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a1e1"></span>A1E1</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="AB6B.html">choose_game_window_attributes</a></td>
-<td class="comment-11" rowspan="1">Choose game window attributes</td>
+<td class="comment-1" rowspan="1">Choose game window attributes</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a1e4"></span>A1E4</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP <a href="A15F.html">set_game_window_attributes</a></td>
-<td class="comment-11" rowspan="1">Exit via set_game_window_attributes</td>
+<td class="comment-1" rowspan="1">Exit via set_game_window_attributes</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="A1C3.html">A1C3</a></span></td>
+<td class="prev">
+Prev: <a href="A1C3.html">A1C3</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#a1d3">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A1E7.html">A1E7</a></span></td>
+<td class="next">
+Next: <a href="A1E7.html">A1E7</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

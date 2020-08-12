@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="BACD.html">BACD</a></span></td>
+<td class="prev">
+Prev: <a href="BACD.html">BACD</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#badc">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="BAF7.html">BAF7</a></span></td>
+<td class="next">
+Next: <a href="BAF7.html">BAF7</a>
+</td>
 </tr>
 </table>
 <div class="description">BADC: AND a tile in the mask buffer against the specified mask tile.</div>
@@ -30,7 +33,7 @@
 Used by the routine at <a href="B916.html">render_mask_buffer</a>.
 </div>
 </div>
-<table class="input-1">
+<table class="input">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
@@ -43,27 +46,19 @@ Used by the routine at <a href="B916.html">render_mask_buffer</a>.
 <td class="register-desc">Pointer to a tile in the mask buffer.</td>
 </tr>
 </table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">mask_against_tile</td>
+<td class="asm-label">mask_against_tile</td>
 <td class="address-2"><span id="badc"></span>BADC</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Save tile pointer</td>
+<td class="comment-1" rowspan="1">Save tile pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="badd"></span>BADD</td>
-<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1">Switch register banks during the routine</td>
+<td class="comment-1" rowspan="1">Switch register banks during the routine</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -76,67 +71,54 @@ Point <span class="register">HL</span> at mask_tiles[<span class="register">A</s
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="bade"></span>BADE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="2">Move the mask tile index into <span class="register">HL</span></td>
+<td class="comment-1" rowspan="2">Move the mask tile index into <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="badf"></span>BADF</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD H,$00</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="bae1"></span>BAE1</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-11" rowspan="3">Multiply it by 8</td>
+<td class="comment-1" rowspan="3">Multiply it by 8</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="bae2"></span>BAE2</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="bae3"></span>BAE3</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="bae4"></span>BAE4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$8218</td>
-<td class="comment-11" rowspan="2">Add base of mask_tiles array</td>
+<td class="comment-1" rowspan="2">Add base of mask_tiles array</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="bae7"></span>BAE7</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="bae8"></span>BAE8</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">Retrieve tile pointer</td>
+<td class="comment-1" rowspan="1">Retrieve tile pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="bae9"></span>BAE9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$08</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for 8 iterations</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for 8 iterations</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -149,94 +131,84 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">mat_loop</td>
+<td class="asm-label">mat_loop</td>
 <td class="address-2"><span id="baeb"></span>BAEB</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Fetch a byte of mask buffer</td>
+<td class="comment-1" rowspan="1">Fetch a byte of mask buffer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="baec"></span>BAEC</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND (HL)</td>
-<td class="comment-11" rowspan="1">Mask it against a byte of mask tile</td>
+<td class="comment-1" rowspan="1">Mask it against a byte of mask tile</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="baed"></span>BAED</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">Overwrite the input byte with result</td>
+<td class="comment-1" rowspan="1">Overwrite the input byte with result</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="baee"></span>BAEE</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">Advance the mask tile pointer by a row</td>
+<td class="comment-1" rowspan="1">Advance the mask tile pointer by a row</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="baef"></span>BAEF</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC E</td>
-<td class="comment-11" rowspan="4">Advance the mask buffer pointer by a row</td>
+<td class="comment-1" rowspan="4">Advance the mask buffer pointer by a row</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="baf0"></span>BAF0</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="baf1"></span>BAF1</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="baf2"></span>BAF2</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="baf3"></span>BAF3</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="BADC.html#baeb">mat_loop</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="baf5"></span>BAF5</td>
-<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1">Switch register banks back</td>
+<td class="comment-1" rowspan="1">Switch register banks back</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="baf6"></span>BAF6</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="BACD.html">BACD</a></span></td>
+<td class="prev">
+Prev: <a href="BACD.html">BACD</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#badc">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="BAF7.html">BAF7</a></span></td>
+<td class="next">
+Next: <a href="BAF7.html">BAF7</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

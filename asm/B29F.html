@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="B295.html">B295</a></span></td>
+<td class="prev">
+Prev: <a href="B295.html">B295</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#b29f">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="B2FC.html">B2FC</a></span></td>
+<td class="next">
+Next: <a href="B2FC.html">B2FC</a>
+</td>
 </tr>
 </table>
 <div class="description">B29F: Check the character is inside of bounds, when indoors.</div>
@@ -30,7 +33,7 @@
 Used by the routine at <a href="B14C.html">bounds_check</a>.
 </div>
 </div>
-<table class="input-1">
+<table class="input">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
@@ -39,7 +42,7 @@ Used by the routine at <a href="B14C.html">bounds_check</a>.
 <td class="register-desc">Pointer to visible character.</td>
 </tr>
 </table>
-<table class="output-1">
+<table class="output">
 <tr class="asm-output-header">
 <th colspan="2">Output</th>
 </tr>
@@ -51,11 +54,10 @@ Used by the routine at <a href="B14C.html">bounds_check</a>.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">interior_bounds_check</td>
+<td class="asm-label">interior_bounds_check</td>
 <td class="address-2"><span id="b29f"></span>B29F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($81BE)</td>
-<td class="comment-11" rowspan="1">Fetch index into room dimensions (roomdef_bounds_index)</td>
+<td class="comment-1" rowspan="1">Fetch index into room dimensions (roomdef_bounds_index)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -68,53 +70,42 @@ Point <span class="register">BC</span> at roomdef_dimensions[roomdef_bounds_inde
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2a2"></span>B2A2</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="2">Multiply index by the size of a bounds (4)</td>
+<td class="comment-1" rowspan="2">Multiply index by the size of a bounds (4)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2a3"></span>B2A3</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2a4"></span>B2A4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$6B85</td>
-<td class="comment-11" rowspan="1">Point <span class="register">BC</span> at roomdef_dimensions[0]</td>
+<td class="comment-1" rowspan="1">Point <span class="register">BC</span> at roomdef_dimensions[0]</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2a7"></span>B2A7</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,C</td>
-<td class="comment-11" rowspan="4">Combine <span class="register">BC</span> with the scaled index</td>
+<td class="comment-1" rowspan="4">Combine <span class="register">BC</span> with the scaled index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2a8"></span>B2A8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2a9"></span>B2A9</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="B29F.html#b2ac">interior_bounds_check_0</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2ab"></span>B2AB</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC B</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -130,81 +121,68 @@ Note that the room dimensions are given in an unusual order: x1, x0, y1, y0.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">interior_bounds_check_0</td>
+<td class="asm-label">interior_bounds_check_0</td>
 <td class="address-2"><span id="b2ac"></span>B2AC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$81A4</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at saved_pos</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at saved_pos</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2af"></span>B2AF</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(BC)</td>
-<td class="comment-11" rowspan="1">Fetch bounds.x1</td>
+<td class="comment-1" rowspan="1">Fetch bounds.x1</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2b0"></span>B2B0</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="1">Compare bounds.x1 with saved_pos_x</td>
+<td class="comment-1" rowspan="1">Compare bounds.x1 with saved_pos_x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2b1"></span>B2B1</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="B29F.html#b2e7">stop</a></td>
-<td class="comment-11" rowspan="1">If bounds.x1 &lt; saved_pos_x jump to 'stop'</td>
+<td class="comment-1" rowspan="1">If bounds.x1 &lt; saved_pos_x jump to 'stop'</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2b3"></span>B2B3</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
-<td class="comment-11" rowspan="2">Fetch bounds.x0</td>
+<td class="comment-1" rowspan="2">Fetch bounds.x0</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2b4"></span>B2B4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(BC)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2b5"></span>B2B5</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,$04</td>
-<td class="comment-11" rowspan="1">Add 4</td>
+<td class="comment-1" rowspan="1">Add 4</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2b7"></span>B2B7</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="1">Compare (bounds.x0 + 4) with saved_pos_x</td>
+<td class="comment-1" rowspan="1">Compare (bounds.x0 + 4) with saved_pos_x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2b8"></span>B2B8</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="B29F.html#b2e7">stop</a></td>
-<td class="comment-11" rowspan="1">If (bounds.x0 + 4) &gt;= saved_pos_x jump to 'stop'</td>
+<td class="comment-1" rowspan="1">If (bounds.x0 + 4) &gt;= saved_pos_x jump to 'stop'</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2ba"></span>B2BA</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="2">Advance <span class="register">HL</span> to saved_pos_y</td>
+<td class="comment-1" rowspan="2">Advance <span class="register">HL</span> to saved_pos_y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2bb"></span>B2BB</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -217,11 +195,10 @@ Bug: The next instruction is stray code. <span class="register">DE</span> is inc
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2bc"></span>B2BC</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">(bug)</td>
+<td class="comment-1" rowspan="1">(bug)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -234,67 +211,58 @@ Check Y axis
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2bd"></span>B2BD</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
-<td class="comment-11" rowspan="1">Point <span class="register">BC</span> at bounds.y1</td>
+<td class="comment-1" rowspan="1">Point <span class="register">BC</span> at bounds.y1</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2be"></span>B2BE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(BC)</td>
-<td class="comment-11" rowspan="1">Fetch bounds.y1</td>
+<td class="comment-1" rowspan="1">Fetch bounds.y1</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2bf"></span>B2BF</td>
-<td class="bytes-0"></td>
 <td class="instruction">SUB $04</td>
-<td class="comment-11" rowspan="1">Subtract 4</td>
+<td class="comment-1" rowspan="1">Subtract 4</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2c1"></span>B2C1</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="1">Compare (bounds.y1 - 4) with saved_pos_y</td>
+<td class="comment-1" rowspan="1">Compare (bounds.y1 - 4) with saved_pos_y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2c2"></span>B2C2</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="B29F.html#b2e7">stop</a></td>
-<td class="comment-11" rowspan="1">If (bounds.y1 - 4) &lt; saved_pos_y jump to 'stop'</td>
+<td class="comment-1" rowspan="1">If (bounds.y1 - 4) &lt; saved_pos_y jump to 'stop'</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2c4"></span>B2C4</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC BC</td>
-<td class="comment-11" rowspan="1">Point <span class="register">BC</span> at bounds.y0</td>
+<td class="comment-1" rowspan="1">Point <span class="register">BC</span> at bounds.y0</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2c5"></span>B2C5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(BC)</td>
-<td class="comment-11" rowspan="1">Fetch bounds.y0</td>
+<td class="comment-1" rowspan="1">Fetch bounds.y0</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2c6"></span>B2C6</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="1">Compare bounds.y0 with saved_pos_y</td>
+<td class="comment-1" rowspan="1">Compare bounds.y0 with saved_pos_y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2c7"></span>B2C7</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="B29F.html#b2e7">stop</a></td>
-<td class="comment-11" rowspan="1">If bounds.y0 &gt;= saved_pos_y jump to 'stop'</td>
+<td class="comment-1" rowspan="1">If bounds.y0 &gt;= saved_pos_y jump to 'stop'</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -307,46 +275,40 @@ Bomb out if there are no bounds to consider.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2c9"></span>B2C9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$81BF</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at roomdef_object_bounds_count</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at roomdef_object_bounds_count</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2cc"></span>B2CC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment-11" rowspan="1">Fetch the count of object bounds</td>
+<td class="comment-1" rowspan="1">Fetch the count of object bounds</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2cd"></span>B2CD</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,B</td>
-<td class="comment-11" rowspan="1">Move it to <span class="register">A</span> so we can test it</td>
+<td class="comment-1" rowspan="1">Move it to <span class="register">A</span> so we can test it</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2ce"></span>B2CE</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Is the count zero?</td>
+<td class="comment-1" rowspan="1">Is the count zero?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2cf"></span>B2CF</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET Z</td>
-<td class="comment-11" rowspan="1">Return with Z set if so</td>
+<td class="comment-1" rowspan="1">Return with Z set if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2d0"></span>B2D0</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">Step over to roomdef_object_bounds</td>
+<td class="comment-1" rowspan="1">Step over to roomdef_object_bounds</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -359,32 +321,28 @@ Start loop (outer)
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">interior_bounds_check_1</td>
+<td class="asm-label">interior_bounds_check_1</td>
 <td class="address-2"><span id="b2d1"></span>B2D1</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">Preserve the loop counter</td>
+<td class="comment-1" rowspan="1">Preserve the loop counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2d2"></span>B2D2</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Preserve the bounds pointer</td>
+<td class="comment-1" rowspan="1">Preserve the bounds pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2d3"></span>B2D3</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$81A4</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at saved_pos</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at saved_pos</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2d6"></span>B2D6</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$02</td>
-<td class="comment-11" rowspan="1">2 iterations - once per axis</td>
+<td class="comment-1" rowspan="1">2 iterations - once per axis</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -397,74 +355,63 @@ Start loop (inner)
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">interior_bounds_check_2</td>
+<td class="asm-label">interior_bounds_check_2</td>
 <td class="address-2"><span id="b2d8"></span>B2D8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Fetch saved_pos_x, or saved_pos_y on the second pass</td>
+<td class="comment-1" rowspan="1">Fetch saved_pos_x, or saved_pos_y on the second pass</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2d9"></span>B2D9</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="1">Is it less than the lower bound?</td>
+<td class="comment-1" rowspan="1">Is it less than the lower bound?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2da"></span>B2DA</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="B29F.html#b2f2">next</a></td>
-<td class="comment-11" rowspan="1">Jump to the next iteration if so</td>
+<td class="comment-1" rowspan="1">Jump to the next iteration if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2dc"></span>B2DC</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">Step to the upper bound</td>
+<td class="comment-1" rowspan="1">Step to the upper bound</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2dd"></span>B2DD</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="1">Is it greater or equal to the upper bound?</td>
+<td class="comment-1" rowspan="1">Is it greater or equal to the upper bound?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2de"></span>B2DE</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="B29F.html#b2f2">next</a></td>
-<td class="comment-11" rowspan="1">Jump to the next iteration if so</td>
+<td class="comment-1" rowspan="1">Jump to the next iteration if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2e0"></span>B2E0</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="2">Step to the next saved_pos axis</td>
+<td class="comment-1" rowspan="2">Step to the next saved_pos axis</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2e1"></span>B2E1</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2e2"></span>B2E2</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">Step to the next bound axis</td>
+<td class="comment-1" rowspan="1">Step to the next bound axis</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2e3"></span>B2E3</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="B29F.html#b2d8">interior_bounds_check_2</a></td>
-<td class="comment-11" rowspan="1">...loop (inner)</td>
+<td class="comment-1" rowspan="1">...loop (inner)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -477,18 +424,16 @@ Found.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2e5"></span>B2E5</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore the bounds pointer</td>
+<td class="comment-1" rowspan="1">Restore the bounds pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2e6"></span>B2E6</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">Restore the loop counter</td>
+<td class="comment-1" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -501,39 +446,34 @@ Toggle movement direction preference.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">stop</td>
+<td class="asm-label">stop</td>
 <td class="address-2"><span id="b2e7"></span>B2E7</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$07)</td>
-<td class="comment-11" rowspan="1">Fetch IY-&gt;counter_and_flags</td>
+<td class="comment-1" rowspan="1">Fetch IY-&gt;counter_and_flags</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2ea"></span>B2EA</td>
-<td class="bytes-0"></td>
 <td class="instruction">XOR $20</td>
-<td class="comment-11" rowspan="1">Toggle vischar_BYTE7_Y_DOMINANT</td>
+<td class="comment-1" rowspan="1">Toggle vischar_BYTE7_Y_DOMINANT</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2ec"></span>B2EC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (IY+$07),A</td>
-<td class="comment-11" rowspan="1">Store IY-&gt;counter_and_flags</td>
+<td class="comment-1" rowspan="1">Store IY-&gt;counter_and_flags</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2ef"></span>B2EF</td>
-<td class="bytes-0"></td>
 <td class="instruction">OR $01</td>
-<td class="comment-11" rowspan="1">Clear Z flag</td>
+<td class="comment-1" rowspan="1">Clear Z flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2f1"></span>B2F1</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return with Z clear</td>
+<td class="comment-1" rowspan="1">Return with Z clear</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -546,39 +486,33 @@ Next iteration.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">next</td>
+<td class="asm-label">next</td>
 <td class="address-2"><span id="b2f2"></span>B2F2</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore the bounds pointer</td>
+<td class="comment-1" rowspan="1">Restore the bounds pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2f3"></span>B2F3</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$0004</td>
-<td class="comment-11" rowspan="2">Advance to next bound</td>
+<td class="comment-1" rowspan="2">Advance to next bound</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2f6"></span>B2F6</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2f7"></span>B2F7</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">Restore the loop counter</td>
+<td class="comment-1" rowspan="1">Restore the loop counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2f8"></span>B2F8</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="B29F.html#b2d1">interior_bounds_check_1</a></td>
-<td class="comment-11" rowspan="1">...loop (outer)</td>
+<td class="comment-1" rowspan="1">...loop (outer)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -591,31 +525,33 @@ Not found.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2fa"></span>B2FA</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND B</td>
-<td class="comment-11" rowspan="1"><span class="register">B</span> is zero, AND it with itself to set Z flag</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span> is zero, AND it with itself to set Z flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b2fb"></span>B2FB</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return with Z set</td>
+<td class="comment-1" rowspan="1">Return with Z set</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="B295.html">B295</a></span></td>
+<td class="prev">
+Prev: <a href="B295.html">B295</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#b29f">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="B2FC.html">B2FC</a></span></td>
+<td class="next">
+Next: <a href="B2FC.html">B2FC</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

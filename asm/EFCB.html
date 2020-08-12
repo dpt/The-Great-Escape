@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="EF9A.html">EF9A</a></span></td>
+<td class="prev">
+Prev: <a href="EF9A.html">EF9A</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#efcb">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="EFFC.html">EFFC</a></span></td>
+<td class="next">
+Next: <a href="EFFC.html">EFFC</a>
+</td>
 </tr>
 </table>
 <div class="description">EFCB: Use papers.</div>
@@ -30,18 +33,6 @@
 Is the hero within the main gate bounds?
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
@@ -55,25 +46,22 @@ Range checking that X is in ($69..$6D) and Y is in ($49..$4B).
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">action_papers</td>
+<td class="asm-label">action_papers</td>
 <td class="address-2"><span id="efcb"></span>EFCB</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$696D</td>
-<td class="comment-11" rowspan="1">Load <span class="register">DE</span> with the X coordinates of the main gate ($69..$6D)</td>
+<td class="comment-1" rowspan="1">Load <span class="register">DE</span> with the X coordinates of the main gate ($69..$6D)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efce"></span>EFCE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$81B8</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at global map position (hero)</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at global map position (hero)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efd1"></span>EFD1</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$02</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for two iterations</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for two iterations</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -86,60 +74,49 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">ap_coord_check_loop</td>
+<td class="asm-label">ap_coord_check_loop</td>
 <td class="address-2"><span id="efd3"></span>EFD3</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Fetch the next coord</td>
+<td class="comment-1" rowspan="1">Fetch the next coord</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efd4"></span>EFD4</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP D</td>
-<td class="comment-11" rowspan="4">Return if the hero's out of bounds</td>
+<td class="comment-1" rowspan="4">Return if the hero's out of bounds</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efd5"></span>EFD5</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET C</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efd6"></span>EFD6</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efd7"></span>EFD7</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET NC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efd8"></span>EFD8</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">On the second iteration advance to hero_map_position_y ($49..$4B)</td>
+<td class="comment-1" rowspan="1">On the second iteration advance to hero_map_position_y ($49..$4B)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efd9"></span>EFD9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$494B</td>
-<td class="comment-11" rowspan="1">On the second iteration load <span class="register">DE</span> with the Y coordinates of the main gate</td>
+<td class="comment-1" rowspan="1">On the second iteration load <span class="register">DE</span> with the Y coordinates of the main gate</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efdc"></span>EFDC</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="EFCB.html#efd3">ap_coord_check_loop</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -155,32 +132,27 @@ Using the papers at the main gate when not in uniform causes the hero to be sent
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efde"></span>EFDE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$CEA6</td>
-<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the guard sprite set</td>
+<td class="comment-1" rowspan="1">Point <span class="register">DE</span> at the guard sprite set</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efe1"></span>EFE1</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($8015)</td>
-<td class="comment-11" rowspan="1">Load hero's vischar.mi.sprite</td>
+<td class="comment-1" rowspan="1">Load hero's vischar.mi.sprite</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efe4"></span>EFE4</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP E</td>
-<td class="comment-11" rowspan="2">Jump to solitary if not using the guard sprite set</td>
+<td class="comment-1" rowspan="2">Jump to solitary if not using the guard sprite set</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efe5"></span>EFE5</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="CB98.html">solitary</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -193,25 +165,21 @@ The hero was wearing the uniform so is transported outside of the gate.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efe8"></span>EFE8</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A0E9.html">increase_morale_by_10_score_by_50</a></td>
-<td class="comment-11" rowspan="1">Increase morale by 10, score by 50</td>
+<td class="comment-1" rowspan="1">Increase morale by 10, score by 50</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efeb"></span>EFEB</td>
-<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="2">Set hero's vischar.room to room_0_OUTDOORS</td>
+<td class="comment-1" rowspan="2">Set hero's vischar.room to room_0_OUTDOORS</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efec"></span>EFEC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($801C),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -224,25 +192,22 @@ Transition to outside the main gate.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efef"></span>EFEF</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$EFF9</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at outside_main_gate location</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at outside_main_gate location</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eff2"></span>EFF2</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD IY,$8000</td>
-<td class="comment-11" rowspan="1">Point <span class="register">IY</span> at the hero's vischar</td>
+<td class="comment-1" rowspan="1">Point <span class="register">IY</span> at the hero's vischar</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="eff6"></span>EFF6</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP <a href="68A2.html">transition</a></td>
-<td class="comment-11" rowspan="1">Jump to transition -- never returns</td>
+<td class="comment-1" rowspan="1">Jump to transition -- never returns</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -255,24 +220,27 @@ The position outside of the main gate to which the hero is transported.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">outside_main_gate</td>
+<td class="asm-label">outside_main_gate</td>
 <td class="address-1"><span id="eff9"></span>EFF9</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEFB $D6,$8A,$06</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="EF9A.html">EF9A</a></span></td>
+<td class="prev">
+Prev: <a href="EF9A.html">EF9A</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#efcb">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="EFFC.html">EFFC</a></span></td>
+<td class="next">
+Next: <a href="EFFC.html">EFFC</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

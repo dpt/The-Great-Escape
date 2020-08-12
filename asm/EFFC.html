@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="EFCB.html">EFCB</a></span></td>
+<td class="prev">
+Prev: <a href="EFCB.html">EFCB</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#effc">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="F014.html">F014</a></span></td>
+<td class="next">
+Next: <a href="F014.html">F014</a>
+</td>
 </tr>
 </table>
 <div class="description">EFFC: Wait for the user to press 'Y' or 'N'.</div>
@@ -30,13 +33,7 @@
 Used by the routines at <a href="9DE5.html">keyscan_break</a> and <a href="F350.html">choose_keys</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-1">
+<table class="output">
 <tr class="asm-output-header">
 <th colspan="2">Output</th>
 </tr>
@@ -48,18 +45,15 @@ Used by the routines at <a href="9DE5.html">keyscan_break</a> and <a href="F350.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">user_confirm</td>
+<td class="asm-label">user_confirm</td>
 <td class="address-2"><span id="effc"></span>EFFC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$F014</td>
-<td class="comment-11" rowspan="2">Print "CONFIRM. Y OR N"</td>
+<td class="comment-1" rowspan="2">Print "CONFIRM. Y OR N"</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="efff"></span>EFFF</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A5BF.html">screenlocstring_plot</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -72,87 +66,81 @@ Start loop (infinite)
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">user_confirm_0</td>
+<td class="asm-label">user_confirm_0</td>
 <td class="address-2"><span id="f002"></span>F002</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$DFFE</td>
-<td class="comment-11" rowspan="1">Set <span class="register">BC</span> to port_KEYBOARD_POIUY</td>
+<td class="comment-1" rowspan="1">Set <span class="register">BC</span> to port_KEYBOARD_POIUY</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f005"></span>F005</td>
-<td class="bytes-0"></td>
 <td class="instruction">IN A,(C)</td>
-<td class="comment-11" rowspan="1">Read the port</td>
+<td class="comment-1" rowspan="1">Read the port</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f007"></span>F007</td>
-<td class="bytes-0"></td>
 <td class="instruction">BIT 4,A</td>
-<td class="comment-11" rowspan="1">Was bit 4 clear? (active low meaning 'Y' is pressed)</td>
+<td class="comment-1" rowspan="1">Was bit 4 clear? (active low meaning 'Y' is pressed)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f009"></span>F009</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET Z</td>
-<td class="comment-11" rowspan="1">Return with Z set if so</td>
+<td class="comment-1" rowspan="1">Return with Z set if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f00a"></span>F00A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$7F</td>
-<td class="comment-11" rowspan="1">Set <span class="register">BC</span> to port_KEYBOARD_SPACESYMSHFTMNB</td>
+<td class="comment-1" rowspan="1">Set <span class="register">BC</span> to port_KEYBOARD_SPACESYMSHFTMNB</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f00c"></span>F00C</td>
-<td class="bytes-0"></td>
 <td class="instruction">IN A,(C)</td>
-<td class="comment-11" rowspan="1">Read the port</td>
+<td class="comment-1" rowspan="1">Read the port</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f00e"></span>F00E</td>
-<td class="bytes-0"></td>
 <td class="instruction">CPL</td>
-<td class="comment-11" rowspan="1">Invert the bits to turn active low into active high</td>
+<td class="comment-1" rowspan="1">Invert the bits to turn active low into active high</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f00f"></span>F00F</td>
-<td class="bytes-0"></td>
 <td class="instruction">BIT 3,A</td>
-<td class="comment-11" rowspan="1">Was bit 3 set? (active high meaning 'N' is pressed)</td>
+<td class="comment-1" rowspan="1">Was bit 3 set? (active high meaning 'N' is pressed)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f011"></span>F011</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET NZ</td>
-<td class="comment-11" rowspan="1">Return with Z clear if so</td>
+<td class="comment-1" rowspan="1">Return with Z clear if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f012"></span>F012</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="EFFC.html#f002">user_confirm_0</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="EFCB.html">EFCB</a></span></td>
+<td class="prev">
+Prev: <a href="EFCB.html">EFCB</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#effc">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="F014.html">F014</a></span></td>
+<td class="next">
+Next: <a href="F014.html">F014</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

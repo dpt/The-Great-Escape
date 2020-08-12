@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="CB2D.html">CB2D</a></span></td>
+<td class="prev">
+Prev: <a href="CB2D.html">CB2D</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#cb61">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="CB75.html">CB75</a></span></td>
+<td class="next">
+Next: <a href="CB75.html">CB75</a>
+</td>
 </tr>
 </table>
 <div class="description">CB61: "Didn't hit end of list" case. -- not really a routine in its own right</div>
@@ -30,102 +33,81 @@
 Used by the routine at <a href="CB23.html">get_target_assign_pos</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">handle_target</td>
+<td class="asm-label">handle_target</td>
 <td class="address-2"><span id="cb61"></span>CB61</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $80</td>
-<td class="comment-11" rowspan="1">Was the result of get_target get_target_DOOR? ($80)</td>
+<td class="comment-1" rowspan="1">Was the result of get_target get_target_DOOR? ($80)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cb63"></span>CB63</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="CB61.html#cb6a">handle_target_0</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cb66"></span>CB66</td>
-<td class="bytes-0"></td>
 <td class="instruction">SET 6,(IY+$01)</td>
-<td class="comment-11" rowspan="1">Set vischar.flags flag vischar_FLAGS_TARGET_IS_DOOR</td>
+<td class="comment-1" rowspan="1">Set vischar.flags flag vischar_FLAGS_TARGET_IS_DOOR</td>
 </tr>
 <tr>
-<td class="asm-label-1">handle_target_0</td>
+<td class="asm-label">handle_target_0</td>
 <td class="address-2"><span id="cb6a"></span>CB6A</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">Restore the route pointer</td>
+<td class="comment-1" rowspan="1">Restore the route pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cb6b"></span>CB6B</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC E</td>
-<td class="comment-11" rowspan="4">Copy <span class="register">HL</span> (ptr to doorpos or location) to vischar-&gt;target</td>
+<td class="comment-1" rowspan="4">Copy <span class="register">HL</span> (ptr to doorpos or location) to vischar-&gt;target</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cb6c"></span>CB6C</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cb6d"></span>CB6D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0002</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cb70"></span>CB70</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDIR</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cb72"></span>CB72</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$80</td>
-<td class="comment-11" rowspan="1">(This return value is never used)</td>
+<td class="comment-1" rowspan="1">(This return value is never used)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cb74"></span>CB74</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="CB2D.html">CB2D</a></span></td>
+<td class="prev">
+Prev: <a href="CB2D.html">CB2D</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#cb61">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="CB75.html">CB75</a></span></td>
+<td class="next">
+Next: <a href="CB75.html">CB75</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

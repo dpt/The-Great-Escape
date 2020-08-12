@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="A7C9.html">A7C9</a></span></td>
+<td class="prev">
+Prev: <a href="A7C9.html">A7C9</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#a80a">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A819.html">A819</a></span></td>
+<td class="next">
+Next: <a href="A819.html">A819</a>
+</td>
 </tr>
 </table>
 <div class="description">A80A: Plot the complete bottommost row of tiles.</div>
@@ -30,74 +33,59 @@
 Used by the routines at <a href="AA26.html">shunt_map_up_right</a> and <a href="AA4B.html">shunt_map_up</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_bottommost_tiles</td>
+<td class="asm-label">plot_bottommost_tiles</td>
 <td class="address-2"><span id="a80a"></span>A80A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$F278</td>
-<td class="comment-11" rowspan="2">Point <span class="register">DE'</span> at the start of tile_buf's final row (= tile_buf + 24 * 16)</td>
+<td class="comment-1" rowspan="2">Point <span class="register">DE'</span> at the start of tile_buf's final row (= tile_buf + 24 * 16)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a80d"></span>A80D</td>
-<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a80e"></span>A80E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$FF74</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the start of map_buf's final row (= map_buf + 7 * 4)</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the start of map_buf's final row (= map_buf + 7 * 4)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a811"></span>A811</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($81BC)</td>
-<td class="comment-11" rowspan="1">Get the map's Y coordinate</td>
+<td class="comment-1" rowspan="1">Get the map's Y coordinate</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a814"></span>A814</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$FE90</td>
-<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the start of window_buf's final row (= window_buf + 24 * 16 * 8)</td>
+<td class="comment-1" rowspan="1">Point <span class="register">DE</span> at the start of window_buf's final row (= window_buf + 24 * 16 * 8)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a817"></span>A817</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="A826.html">plot_horizontal_tiles_common</a></td>
-<td class="comment-11" rowspan="1">Jump to plot_horizontal_tiles_common</td>
+<td class="comment-1" rowspan="1">Jump to plot_horizontal_tiles_common</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="A7C9.html">A7C9</a></span></td>
+<td class="prev">
+Prev: <a href="A7C9.html">A7C9</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#a80a">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A819.html">A819</a></span></td>
+<td class="next">
+Next: <a href="A819.html">A819</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,12 +15,16 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="A3F3.html">A3F3</a></span></td>
+<td class="prev">
+Prev: <a href="A3F3.html">A3F3</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#a3f8">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A404.html">A404</a></span></td>
+<td class="next">
+Next: <a href="A404.html">A404</a>
+</td>
 </tr>
 </table>
-<div class="description">A3F8: Character goes to bed: used when entered_move_characters is zero.</div>
+<div class="description">A3F8: Character goes to bed: used when entered_move_a_character is zero.</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -30,7 +33,7 @@
 Used by the routine at <a href="C7C6.html">character_event</a>.
 </div>
 </div>
-<table class="input-1">
+<table class="input">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
@@ -39,61 +42,52 @@ Used by the routine at <a href="C7C6.html">character_event</a>.
 <td class="register-desc">Pointer to location.</td>
 </tr>
 </table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">character_bed_vischar</td>
+<td class="asm-label">character_bed_vischar</td>
 <td class="address-2"><span id="a3f8"></span>A3F8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$00)</td>
-<td class="comment-11" rowspan="1">Read the current vischar's character index</td>
+<td class="comment-1" rowspan="1">Read the current vischar's character index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a3fb"></span>A3FB</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="2">If it's not the commandant (0) then goto character_bed_common</td>
+<td class="comment-1" rowspan="2">If it's not the commandant (0) then goto character_bed_common</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a3fc"></span>A3FC</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="A404.html">character_bed_common</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a3fe"></span>A3FE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$2C00</td>
-<td class="comment-11" rowspan="2">Otherwise set the commandant's route to ($2C,$00) and exit via</td>
+<td class="comment-1" rowspan="2">Otherwise set the commandant's route to ($2C,$00) and exit via</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a401"></span>A401</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP <a href="A33F.html">set_hero_route</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="A3F3.html">A3F3</a></span></td>
+<td class="prev">
+Prev: <a href="A3F3.html">A3F3</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#a3f8">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A404.html">A404</a></span></td>
+<td class="next">
+Next: <a href="A404.html">A404</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="F257.html">F257</a></span></td>
+<td class="prev">
+Prev: <a href="F257.html">F257</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#f271">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="F2AD.html">F2AD</a></span></td>
+<td class="next">
+Next: <a href="F2AD.html">F2AD</a>
+</td>
 </tr>
 </table>
 <div class="description">F271: Menu screen key handling.</div>
@@ -36,61 +39,43 @@ Scan for a keypress. It will either start the game, select an input device or do
 If the game is started then copy the required input routine to $F075. If the chosen input device is the keyboard, then exit via choose_keys.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">check_menu_keys</td>
+<td class="asm-label">check_menu_keys</td>
 <td class="address-2"><span id="f271"></span>F271</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="F41C.html">menu_keyscan</a></td>
-<td class="comment-11" rowspan="1">Scan for keys that select an input device. Result is in <span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Scan for keys that select an input device. Result is in <span class="register">A</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f274"></span>F274</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="1">Nothing selected?</td>
+<td class="comment-1" rowspan="1">Nothing selected?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f276"></span>F276</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET Z</td>
-<td class="comment-11" rowspan="1">Return if so</td>
+<td class="comment-1" rowspan="1">Return if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f277"></span>F277</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Start game (zero) pressed?</td>
+<td class="comment-1" rowspan="1">Start game (zero) pressed?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f278"></span>F278</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="F271.html#f28e">cmk_cpy_rout</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f27a"></span>F27A</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC A</td>
-<td class="comment-11" rowspan="1">Turn 1..4 into 0..3</td>
+<td class="comment-1" rowspan="1">Turn 1..4 into 0..3</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -103,39 +88,34 @@ Clear old selection.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f27b"></span>F27B</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH AF</td>
-<td class="comment-11" rowspan="1">Preserve index</td>
+<td class="comment-1" rowspan="1">Preserve index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f27c"></span>F27C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($F445)</td>
-<td class="comment-11" rowspan="1">Load previously chosen input device index</td>
+<td class="comment-1" rowspan="1">Load previously chosen input device index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f27f"></span>F27F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,$07</td>
-<td class="comment-11" rowspan="1">Set <span class="register">E</span> to attribute_WHITE_OVER_BLACK</td>
+<td class="comment-1" rowspan="1">Set <span class="register">E</span> to attribute_WHITE_OVER_BLACK</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f281"></span>F281</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="F408.html">set_menu_item_attributes</a></td>
-<td class="comment-11" rowspan="1">Set the screen attributes of the specified menu item</td>
+<td class="comment-1" rowspan="1">Set the screen attributes of the specified menu item</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f284"></span>F284</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP AF</td>
-<td class="comment-11" rowspan="1">Restore index</td>
+<td class="comment-1" rowspan="1">Restore index</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -148,32 +128,28 @@ Highlight new selection.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f285"></span>F285</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($F445),A</td>
-<td class="comment-11" rowspan="1">Set chosen input device index</td>
+<td class="comment-1" rowspan="1">Set chosen input device index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f288"></span>F288</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,$46</td>
-<td class="comment-11" rowspan="1">Set <span class="register">E</span> to attribute_BRIGHT_YELLOW_OVER_BLACK</td>
+<td class="comment-1" rowspan="1">Set <span class="register">E</span> to attribute_BRIGHT_YELLOW_OVER_BLACK</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f28a"></span>F28A</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="F408.html">set_menu_item_attributes</a></td>
-<td class="comment-11" rowspan="1">Set the screen attributes of the specified menu item</td>
+<td class="comment-1" rowspan="1">Set the screen attributes of the specified menu item</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f28d"></span>F28D</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -189,18 +165,16 @@ Copy the input routine to $F075, choose keys if keyboard was chosen, then return
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">cmk_cpy_rout</td>
+<td class="asm-label">cmk_cpy_rout</td>
 <td class="address-2"><span id="f28e"></span>F28E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($F445)</td>
-<td class="comment-11" rowspan="1">Load chosen input device index</td>
+<td class="comment-1" rowspan="1">Load chosen input device index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f291"></span>F291</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="1">Double it</td>
+<td class="comment-1" rowspan="1">Double it</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -213,136 +187,118 @@ This is tricky. <span class="register">A'</span> is left with the low byte of th
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f292"></span>F292</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="2">Widen to <span class="register">BC</span></td>
+<td class="comment-1" rowspan="2">Widen to <span class="register">BC</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f293"></span>F293</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$00</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f295"></span>F295</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">Preserve index</td>
+<td class="comment-1" rowspan="1">Preserve index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f296"></span>F296</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$F43D</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the list of available input routines</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the list of available input routines</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f299"></span>F299</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-11" rowspan="1">Combine</td>
+<td class="comment-1" rowspan="1">Combine</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f29a"></span>F29A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="4">Fetch input routine address into <span class="register">HL</span></td>
+<td class="comment-1" rowspan="4">Fetch input routine address into <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f29b"></span>F29B</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f29c"></span>F29C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD H,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f29d"></span>F29D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f29e"></span>F29E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$F075</td>
-<td class="comment-11" rowspan="1">Set the destination address</td>
+<td class="comment-1" rowspan="1">Set the destination address</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f2a1"></span>F2A1</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$004A</td>
-<td class="comment-11" rowspan="1">Worst-case length of an input routine</td>
+<td class="comment-1" rowspan="1">Worst-case length of an input routine</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f2a4"></span>F2A4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDIR</td>
-<td class="comment-11" rowspan="1">Copy</td>
+<td class="comment-1" rowspan="1">Copy</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f2a6"></span>F2A6</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">Restore index</td>
+<td class="comment-1" rowspan="1">Restore index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f2a7"></span>F2A7</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Was the keyboard chosen?</td>
+<td class="comment-1" rowspan="1">Was the keyboard chosen?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f2a8"></span>F2A8</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL Z,<a href="F350.html">choose_keys</a></td>
-<td class="comment-11" rowspan="1">Call choose keys if so</td>
+<td class="comment-1" rowspan="1">Call choose keys if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f2ab"></span>F2AB</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="2">Discard the previous return address and resume at <a href="F163.html#f17d">F17D</a></td>
+<td class="comment-1" rowspan="2">Discard the previous return address and resume at <a href="F163.html#f17d">F17D</a></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="f2ac"></span>F2AC</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="F257.html">F257</a></span></td>
+<td class="prev">
+Prev: <a href="F257.html">F257</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#f271">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="F2AD.html">F2AD</a></span></td>
+<td class="next">
+Next: <a href="F2AD.html">F2AD</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

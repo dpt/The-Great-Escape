@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="7D30.html">7D30</a></span></td>
+<td class="prev">
+Prev: <a href="7D30.html">7D30</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#7d48">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="7D87.html">7D87</a></span></td>
+<td class="next">
+Next: <a href="7D87.html">7D87</a>
+</td>
 </tr>
 </table>
 <div class="description">7D48: Incrementally wipe and display queued game messages.</div>
@@ -30,18 +33,6 @@
 Used by the routine at <a href="9D7B.html">main_loop</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
@@ -55,46 +46,37 @@ Proceed only if message display delay is zero.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">message_display</td>
+<td class="asm-label">message_display</td>
 <td class="address-2"><span id="7d48"></span>7D48</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($7D0F)</td>
-<td class="comment-11" rowspan="3">If message display delay is positive...</td>
+<td class="comment-1" rowspan="3">If message display delay is positive...</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d4b"></span>7D4B</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d4c"></span>7D4C</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="7D48.html#7d54">message_display_0</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d4f"></span>7D4F</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC A</td>
-<td class="comment-11" rowspan="2">Decrement it - we'll get called again until it hits zero</td>
+<td class="comment-1" rowspan="2">Decrement it - we'll get called again until it hits zero</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d50"></span>7D50</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($7D0F),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d53"></span>7D53</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -107,32 +89,26 @@ Otherwise message_display_delay reached zero.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">message_display_0</td>
+<td class="asm-label">message_display_0</td>
 <td class="address-2"><span id="7d54"></span>7D54</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($7D10)</td>
-<td class="comment-11" rowspan="3">If message display index == message_NEXT (128) exit via (jump to) next_message</td>
+<td class="comment-1" rowspan="3">If message display index == message_NEXT (128) exit via (jump to) next_message</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d57"></span>7D57</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $80</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d59"></span>7D59</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="7D99.html">next_message</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d5b"></span>7D5B</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="7D87.html">wipe_message</a></td>
-<td class="comment-11" rowspan="1">Otherwise if message display index &gt; message_NEXT exit via (jump to) wipe_message</td>
+<td class="comment-1" rowspan="1">Otherwise if message display index &gt; message_NEXT exit via (jump to) wipe_message</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -145,88 +121,69 @@ Display a character
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d5d"></span>7D5D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,($7D13)</td>
-<td class="comment-11" rowspan="1">Otherwise... point <span class="register">HL</span> to the current message character</td>
+<td class="comment-1" rowspan="1">Otherwise... point <span class="register">HL</span> to the current message character</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d60"></span>7D60</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$50E0</td>
-<td class="comment-11" rowspan="3">Point <span class="register">DE</span> at the message text screen address plus the display index</td>
+<td class="comment-1" rowspan="3">Point <span class="register">DE</span> at the message text screen address plus the display index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d63"></span>7D63</td>
-<td class="bytes-0"></td>
 <td class="instruction">OR E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d64"></span>7D64</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d65"></span>7D65</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="7D2F.html">plot_glyph</a></td>
-<td class="comment-11" rowspan="1">Plot the glyph</td>
+<td class="comment-1" rowspan="1">Plot the glyph</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d68"></span>7D68</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,E</td>
-<td class="comment-11" rowspan="3">Save the incremented message display index</td>
+<td class="comment-1" rowspan="3">Save the incremented message display index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d69"></span>7D69</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $1F</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d6b"></span>7D6B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($7D10),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d6e"></span>7D6E</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="4">Check for end of string ($FF)</td>
+<td class="comment-1" rowspan="4">Check for end of string ($FF)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d6f"></span>7D6F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d70"></span>7D70</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d72"></span>7D72</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="7D48.html#7d83">not_end_of_string</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -239,73 +196,66 @@ Leave the message for 31 turns, then wipe it.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d75"></span>7D75</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$1F</td>
-<td class="comment-11" rowspan="2">Set message display delay to 31</td>
+<td class="comment-1" rowspan="2">Set message display delay to 31</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d77"></span>7D77</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($7D0F),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d7a"></span>7D7A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($7D10)</td>
-<td class="comment-11" rowspan="3">Set the message_NEXT flag in the message display index</td>
+<td class="comment-1" rowspan="3">Set the message_NEXT flag in the message display index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d7d"></span>7D7D</td>
-<td class="bytes-0"></td>
 <td class="instruction">OR $80</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d7f"></span>7D7F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($7D10),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d82"></span>7D82</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="asm-label-1">not_end_of_string</td>
+<td class="asm-label">not_end_of_string</td>
 <td class="address-2"><span id="7d83"></span>7D83</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($7D13),HL</td>
-<td class="comment-11" rowspan="1">If it wasn't the end of the string set current message character to <span class="register">HL</span></td>
+<td class="comment-1" rowspan="1">If it wasn't the end of the string set current message character to <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d86"></span>7D86</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="7D30.html">7D30</a></span></td>
+<td class="prev">
+Prev: <a href="7D30.html">7D30</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#7d48">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="7D87.html">7D87</a></span></td>
+<td class="next">
+Next: <a href="7D87.html">7D87</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

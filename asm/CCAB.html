@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="CC37.html">CC37</a></span></td>
+<td class="prev">
+Prev: <a href="CC37.html">CC37</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#ccab">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="CCCD.html">CCCD</a></span></td>
+<td class="next">
+Next: <a href="CCCD.html">CCCD</a>
+</td>
 </tr>
 </table>
 <div class="description">CCAB: Hostiles pursue prisoners.</div>
@@ -36,40 +39,25 @@ For all visible, hostile characters, at height &lt; 32, set the bribed/pursue fl
 Research: If I nop this out then guards don't spot the items I drop. Iterate non-player characters.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">hostiles_pursue</td>
+<td class="asm-label">hostiles_pursue</td>
 <td class="address-2"><span id="ccab"></span>CCAB</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$8020</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the second vischar</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the second vischar</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccae"></span>CCAE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$0020</td>
-<td class="comment-11" rowspan="1">Prepare the vischar stride</td>
+<td class="comment-1" rowspan="1">Prepare the vischar stride</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccb1"></span>CCB1</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$07</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for seven iterations</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for seven iterations</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -82,18 +70,16 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">hp_loop</td>
+<td class="asm-label">hp_loop</td>
 <td class="address-2"><span id="ccb3"></span>CCB3</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Preserve the vischar pointer</td>
+<td class="comment-1" rowspan="1">Preserve the vischar pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccb4"></span>CCB4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Fetch vischar.character</td>
+<td class="comment-1" rowspan="1">Fetch vischar.character</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -106,18 +92,16 @@ Include hostiles only.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccb5"></span>CCB5</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $14</td>
-<td class="comment-11" rowspan="1">Is it character_20_PRISONER_1 or above?</td>
+<td class="comment-1" rowspan="1">Is it character_20_PRISONER_1 or above?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccb7"></span>CCB7</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="CCAB.html#ccc8">hp_next</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -130,115 +114,101 @@ Exclude the guards placed high up in towers and over the gate.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccb9"></span>CCB9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$13</td>
-<td class="comment-11" rowspan="3">Point <span class="register">HL</span> at vischar.mi.pos.height</td>
+<td class="comment-1" rowspan="3">Point <span class="register">HL</span> at vischar.mi.pos.height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccbb"></span>CCBB</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccbc"></span>CCBC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccbd"></span>CCBD</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Fetch vischar.mi.pos.height</td>
+<td class="comment-1" rowspan="1">Fetch vischar.mi.pos.height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccbe"></span>CCBE</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $20</td>
-<td class="comment-11" rowspan="1">Is it 32 or above?</td>
+<td class="comment-1" rowspan="1">Is it 32 or above?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccc0"></span>CCC0</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="CCAB.html#ccc8">hp_next</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccc2"></span>CCC2</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,L</td>
-<td class="comment-11" rowspan="3">Point <span class="register">HL</span> at vischar.flags</td>
+<td class="comment-1" rowspan="3">Point <span class="register">HL</span> at vischar.flags</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccc3"></span>CCC3</td>
-<td class="bytes-0"></td>
 <td class="instruction">SUB $12</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccc5"></span>CCC5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccc6"></span>CCC6</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),$01</td>
-<td class="comment-11" rowspan="1">Set vischar.flags to vischar_PURSUIT_PURSUE</td>
+<td class="comment-1" rowspan="1">Set vischar.flags to vischar_PURSUIT_PURSUE</td>
 </tr>
 <tr>
-<td class="asm-label-1">hp_next</td>
+<td class="asm-label">hp_next</td>
 <td class="address-2"><span id="ccc8"></span>CCC8</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore the vischar pointer</td>
+<td class="comment-1" rowspan="1">Restore the vischar pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccc9"></span>CCC9</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-11" rowspan="1">Advance the vischar pointer</td>
+<td class="comment-1" rowspan="1">Advance the vischar pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="ccca"></span>CCCA</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="CCAB.html#ccb3">hp_loop</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="cccc"></span>CCCC</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="CC37.html">CC37</a></span></td>
+<td class="prev">
+Prev: <a href="CC37.html">CC37</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#ccab">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="CCCD.html">CCCD</a></span></td>
+<td class="next">
+Next: <a href="CCCD.html">CCCD</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

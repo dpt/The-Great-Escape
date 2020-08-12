@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="7D48.html">7D48</a></span></td>
+<td class="prev">
+Prev: <a href="7D48.html">7D48</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#7d87">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="7D99.html">7D99</a></span></td>
+<td class="next">
+Next: <a href="7D99.html">7D99</a>
+</td>
 </tr>
 </table>
 <div class="description">7D87: Incrementally wipe away any on-screen game message.</div>
@@ -30,61 +33,39 @@
 Used by the routine at <a href="7D48.html">message_display</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">wipe_message</td>
+<td class="asm-label">wipe_message</td>
 <td class="address-2"><span id="7d87"></span>7D87</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($7D10)</td>
-<td class="comment-11" rowspan="3">Decrement the message display index</td>
+<td class="comment-1" rowspan="3">Decrement the message display index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d8a"></span>7D8A</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d8b"></span>7D8B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($7D10),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d8e"></span>7D8E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$50E0</td>
-<td class="comment-11" rowspan="3">Point <span class="register">DE</span> at the message text screen address plus the display index</td>
+<td class="comment-1" rowspan="3">Point <span class="register">DE</span> at the message text screen address plus the display index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d91"></span>7D91</td>
-<td class="bytes-0"></td>
 <td class="instruction">OR E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d92"></span>7D92</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -97,38 +78,39 @@ Overplot the previous character with a single space.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d93"></span>7D93</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$23</td>
-<td class="comment-11" rowspan="1">Glyph index of space</td>
+<td class="comment-1" rowspan="1">Glyph index of space</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d95"></span>7D95</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="7D30.html">plot_single_glyph</a></td>
-<td class="comment-11" rowspan="1">Plot the single space glyph</td>
+<td class="comment-1" rowspan="1">Plot the single space glyph</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="7d98"></span>7D98</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="7D48.html">7D48</a></span></td>
+<td class="prev">
+Prev: <a href="7D48.html">7D48</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#7d87">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="7D99.html">7D99</a></span></td>
+<td class="next">
+Next: <a href="7D99.html">7D99</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

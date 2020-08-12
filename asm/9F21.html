@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="9F15.html">9F15</a></span></td>
+<td class="prev">
+Prev: <a href="9F15.html">9F15</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#9f21">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A007.html">A007</a></span></td>
+<td class="next">
+Next: <a href="A007.html">A007</a>
+</td>
 </tr>
 </table>
 <div class="description">9F21: Check the hero's map position, check for escape and colour the flag accordingly.</div>
@@ -33,61 +36,43 @@ This also sets the main (hero's) map position in <a href="81B8.html">hero_map_po
 Used by the routine at <a href="9D7B.html">main_loop</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">in_permitted_area</td>
+<td class="asm-label">in_permitted_area</td>
 <td class="address-2"><span id="9f21"></span>9F21</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$800F</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the hero's vischar position</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the hero's vischar position</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f24"></span>9F24</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$81B8</td>
-<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the hero's map position</td>
+<td class="comment-1" rowspan="1">Point <span class="register">DE</span> at the hero's map position</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f27"></span>9F27</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="1">Get the global current room index</td>
+<td class="comment-1" rowspan="1">Get the global current room index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f2a"></span>9F2A</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Is it indoors?</td>
+<td class="comment-1" rowspan="1">Is it indoors?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f2b"></span>9F2B</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="9F21.html#9f49">ipa_indoors</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
-<td class="asm-label-1">ipa_outdoors</td>
+<td class="asm-label">ipa_outdoors</td>
 <td class="address-1"><span id="9f2e"></span>9F2E</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="E542.html">pos_to_tinypos</a></td>
-<td class="comment-11" rowspan="1">Scale down the vischar position and assign the result to the hero's map position</td>
+<td class="comment-1" rowspan="1">Scale down the vischar position and assign the result to the hero's map position</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -100,102 +85,78 @@ Check for the hero escaping across the edge of the map (obviously this only can 
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f31"></span>9F31</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,($8018)</td>
-<td class="comment-11" rowspan="4">If the hero's isometric x position is 217 * 8 or higher... jump to "hero has escaped"</td>
+<td class="comment-1" rowspan="4">If the hero's isometric x position is 217 * 8 or higher... jump to "hero has escaped"</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f34"></span>9F34</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$06C8</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f37"></span>9F37</td>
-<td class="bytes-0"></td>
 <td class="instruction">SBC HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f39"></span>9F39</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NC,<a href="A51C.html">escaped</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f3c"></span>9F3C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,($801A)</td>
-<td class="comment-11" rowspan="4">If the hero's isometric y position is 137 * 8 or higher... jump to "hero has escaped"</td>
+<td class="comment-1" rowspan="4">If the hero's isometric y position is 137 * 8 or higher... jump to "hero has escaped"</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f3f"></span>9F3F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$0448</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f42"></span>9F42</td>
-<td class="bytes-0"></td>
 <td class="instruction">SBC HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f44"></span>9F44</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NC,<a href="A51C.html">escaped</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f47"></span>9F47</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="9F21.html#9f51">ipa_picking_or_cutting</a></td>
-<td class="comment-11" rowspan="1">Otherwise jump over the indoors handling</td>
+<td class="comment-1" rowspan="1">Otherwise jump over the indoors handling</td>
 </tr>
 <tr>
-<td class="asm-label-1">ipa_indoors</td>
+<td class="asm-label">ipa_indoors</td>
 <td class="address-2"><span id="9f49"></span>9F49</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="5">Copy position across</td>
+<td class="comment-1" rowspan="5">Copy position across</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f4b"></span>9F4B</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f4c"></span>9F4C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f4e"></span>9F4E</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f4f"></span>9F4F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -208,25 +169,22 @@ Set the flag red if picking a lock, or cutting wire.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">ipa_picking_or_cutting</td>
+<td class="asm-label">ipa_picking_or_cutting</td>
 <td class="address-2"><span id="9f51"></span>9F51</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($8001)</td>
-<td class="comment-11" rowspan="1">Read hero's vischar flags</td>
+<td class="comment-1" rowspan="1">Read hero's vischar flags</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f54"></span>9F54</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $03</td>
-<td class="comment-11" rowspan="1">AND the flags with (vischar_FLAGS_PICKING_LOCK OR vischar_FLAGS_CUTTING_WIRE)</td>
+<td class="comment-1" rowspan="1">AND the flags with (vischar_FLAGS_PICKING_LOCK OR vischar_FLAGS_CUTTING_WIRE)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f56"></span>9F56</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="9F21.html#9ff8">ipa_set_flag_red</a></td>
-<td class="comment-11" rowspan="1">If either of those flags is set then set the morale flag red</td>
+<td class="comment-1" rowspan="1">If either of those flags is set then set the morale flag red</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -239,25 +197,22 @@ Is it night time?
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f59"></span>9F59</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($A13D)</td>
-<td class="comment-11" rowspan="1">Read the game clock</td>
+<td class="comment-1" rowspan="1">Read the game clock</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f5c"></span>9F5C</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $64</td>
-<td class="comment-11" rowspan="1">If it's 100 or higher then it's night time</td>
+<td class="comment-1" rowspan="1">If it's 100 or higher then it's night time</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f5e"></span>9F5E</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR C,<a href="9F21.html#9f6b">ipa_day</a></td>
-<td class="comment-11" rowspan="1">Jump if it's not night time</td>
+<td class="comment-1" rowspan="1">Jump if it's not night time</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -270,32 +225,28 @@ At night, home room is the only safe place.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">ipa_night</td>
+<td class="asm-label">ipa_night</td>
 <td class="address-1"><span id="9f60"></span>9F60</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="1">What room are we in?</td>
+<td class="comment-1" rowspan="1">What room are we in?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f63"></span>9F63</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $02</td>
-<td class="comment-11" rowspan="1">Is it the home room? (room_2_HUT2LEFT)</td>
+<td class="comment-1" rowspan="1">Is it the home room? (room_2_HUT2LEFT)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f65"></span>9F65</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="9F21.html#9fde">ipa_set_flag_green</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f68"></span>9F68</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP <a href="9F21.html#9ff8">ipa_set_flag_red</a></td>
-<td class="comment-11" rowspan="1">Otherwise set the flag red</td>
+<td class="comment-1" rowspan="1">Otherwise set the flag red</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -308,25 +259,21 @@ If in solitary then bypass all checks.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">ipa_day</td>
+<td class="asm-label">ipa_day</td>
 <td class="address-2"><span id="9f6b"></span>9F6B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($A13A)</td>
-<td class="comment-11" rowspan="2">Are we in solitary?</td>
+<td class="comment-1" rowspan="2">Are we in solitary?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f6e"></span>9F6E</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f6f"></span>9F6F</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="9F21.html#9fde">ipa_set_flag_green</a></td>
-<td class="comment-11" rowspan="1">Jump if we are</td>
+<td class="comment-1" rowspan="1">Jump if we are</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -339,67 +286,57 @@ Not in solitary: turn the route into an area number then check that area is a pe
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f72"></span>9F72</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$8002</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the hero's vischar route</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the hero's vischar route</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f75"></span>9F75</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Load the route index</td>
+<td class="comment-1" rowspan="1">Load the route index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f76"></span>9F76</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="2">Load the route step</td>
+<td class="comment-1" rowspan="2">Load the route step</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f77"></span>9F77</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f78"></span>9F78</td>
-<td class="bytes-0"></td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment-11" rowspan="1">Is the route index's route_REVERSED flag set? ($80)</td>
+<td class="comment-1" rowspan="1">Is the route index's route_REVERSED flag set? ($80)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f7a"></span>9F7A</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="9F21.html#9f7d">ipa_check_wander</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f7c"></span>9F7C</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC C</td>
-<td class="comment-11" rowspan="1">Otherwise increment the route step</td>
+<td class="comment-1" rowspan="1">Otherwise increment the route step</td>
 </tr>
 <tr>
-<td class="asm-label-1">ipa_check_wander</td>
+<td class="asm-label">ipa_check_wander</td>
 <td class="address-2"><span id="9f7d"></span>9F7D</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="1">Is the route index routeindex_255_WANDER? ($FF)</td>
+<td class="comment-1" rowspan="1">Is the route index routeindex_255_WANDER? ($FF)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f7f"></span>9F7F</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="9F21.html#9f93">ipa_en_route</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -412,67 +349,54 @@ Hero is wandering.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f81"></span>9F81</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="2">Load the route step again and clear its bottom three bits</td>
+<td class="comment-1" rowspan="2">Load the route step again and clear its bottom three bits</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f82"></span>9F82</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $F8</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f84"></span>9F84</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $08</td>
-<td class="comment-11" rowspan="4">If step is 8 then set <span class="register">A</span> to 1 (hut area) otherwise set <span class="register">A</span> to 2 (exercise yard area)</td>
+<td class="comment-1" rowspan="4">If step is 8 then set <span class="register">A</span> to 1 (hut area) otherwise set <span class="register">A</span> to 2 (exercise yard area)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f86"></span>9F86</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$01</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f88"></span>9F88</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="9F21.html#9f8c">ipa_bounds_check</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f8a"></span>9F8A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$02</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">ipa_bounds_check</td>
+<td class="asm-label">ipa_bounds_check</td>
 <td class="address-2"><span id="9f8c"></span>9F8C</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A007.html">in_permitted_area_end_bit</a></td>
-<td class="comment-11" rowspan="1">Check that the hero is in the specified room or camp bounds</td>
+<td class="comment-1" rowspan="1">Check that the hero is in the specified room or camp bounds</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f8f"></span>9F8F</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="9F21.html#9fde">ipa_set_flag_green</a></td>
-<td class="comment-11" rowspan="1">Jump if within the permitted area (Z set)</td>
+<td class="comment-1" rowspan="1">Jump if within the permitted area (Z set)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f91"></span>9F91</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="9F21.html#9ff8">ipa_set_flag_red</a></td>
-<td class="comment-11" rowspan="1">Otherwise goto set_flag_red</td>
+<td class="comment-1" rowspan="1">Otherwise goto set_flag_red</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -488,25 +412,22 @@ Check regular routes against route_to_permitted.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">ipa_en_route</td>
+<td class="asm-label">ipa_en_route</td>
 <td class="address-2"><span id="9f93"></span>9F93</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $7F</td>
-<td class="comment-11" rowspan="1">Mask off the route_REVERSED flag</td>
+<td class="comment-1" rowspan="1">Mask off the route_REVERSED flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f95"></span>9F95</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$9EE4</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at route_to_permitted table</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at route_to_permitted table</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f98"></span>9F98</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$07</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for seven iterations</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for seven iterations</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -519,46 +440,38 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">ipa_route_check_loop</td>
+<td class="asm-label">ipa_route_check_loop</td>
 <td class="address-2"><span id="9f9a"></span>9F9A</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="2">Does the first byte of the entry match the route index?</td>
+<td class="comment-1" rowspan="2">Does the first byte of the entry match the route index?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f9b"></span>9F9B</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f9c"></span>9F9C</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="9F21.html#9fa4">ipa_route_check_found</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f9e"></span>9F9E</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="2">Otherwise move to the next entry</td>
+<td class="comment-1" rowspan="2">Otherwise move to the next entry</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9f9f"></span>9F9F</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fa0"></span>9FA0</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="9F21.html#9f9a">ipa_route_check_loop</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -571,11 +484,10 @@ If the route is not found in route_to_permitted assume a green flag
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fa2"></span>9FA2</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="9F21.html#9fde">ipa_set_flag_green</a></td>
-<td class="comment-11" rowspan="1">Jump if route index wasn't found in the table</td>
+<td class="comment-1" rowspan="1">Jump if route index wasn't found in the table</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -588,116 +500,94 @@ Route index was found in route_to_permitted.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">ipa_route_check_found</td>
+<td class="asm-label">ipa_route_check_found</td>
 <td class="address-2"><span id="9fa4"></span>9FA4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment-11" rowspan="3">Load <span class="register">DE</span> with the sub-table's address</td>
+<td class="comment-1" rowspan="3">Load <span class="register">DE</span> with the sub-table's address</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fa5"></span>9FA5</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fa6"></span>9FA6</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD D,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fa7"></span>9FA7</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="2">Move it into <span class="register">HL</span></td>
+<td class="comment-1" rowspan="2">Move it into <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fa8"></span>9FA8</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fa9"></span>9FA9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$00</td>
-<td class="comment-11" rowspan="1">Zero <span class="register">B</span> so we can use <span class="register">BC</span> in the next instruction</td>
+<td class="comment-1" rowspan="1">Zero <span class="register">B</span> so we can use <span class="register">BC</span> in the next instruction</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fab"></span>9FAB</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-11" rowspan="2">Fetch byte at <span class="register">HL</span> + <span class="register">BC</span></td>
+<td class="comment-1" rowspan="2">Fetch byte at <span class="register">HL</span> + <span class="register">BC</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fac"></span>9FAC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fad"></span>9FAD</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1">Save the sub-table's address</td>
+<td class="comment-1" rowspan="1">Save the sub-table's address</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fae"></span>9FAE</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A007.html">in_permitted_area_end_bit</a></td>
-<td class="comment-11" rowspan="1">Check that the hero is in the specified room or camp bounds</td>
+<td class="comment-1" rowspan="1">Check that the hero is in the specified room or camp bounds</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fb1"></span>9FB1</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore the sub-table address</td>
+<td class="comment-1" rowspan="1">Restore the sub-table address</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fb2"></span>9FB2</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="9F21.html#9fde">ipa_set_flag_green</a></td>
-<td class="comment-11" rowspan="1">Jump if within the permitted area (Z set)</td>
+<td class="comment-1" rowspan="1">Jump if within the permitted area (Z set)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fb4"></span>9FB4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($8002)</td>
-<td class="comment-11" rowspan="1">Load the hero's vischar route index</td>
+<td class="comment-1" rowspan="1">Load the hero's vischar route index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fb7"></span>9FB7</td>
-<td class="bytes-0"></td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment-11" rowspan="3">If the route index's route_REVERSED flag is set ($80) move the sub-table pointer forward by a byte</td>
+<td class="comment-1" rowspan="3">If the route index's route_REVERSED flag is set ($80) move the sub-table pointer forward by a byte</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fb9"></span>9FB9</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="9F21.html#9fbc">ipa_check_route_places</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fbb"></span>9FBB</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -710,11 +600,10 @@ Search through the list testing against the places permitted for the route we're
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">ipa_check_route_places</td>
+<td class="asm-label">ipa_check_route_places</td>
 <td class="address-2"><span id="9fbc"></span>9FBC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0000</td>
-<td class="comment-11" rowspan="1">Initialise index</td>
+<td class="comment-1" rowspan="1">Initialise index</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -727,137 +616,115 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">ipa_check_route_places_loop</td>
+<td class="asm-label">ipa_check_route_places_loop</td>
 <td class="address-2"><span id="9fbf"></span>9FBF</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">Save index</td>
+<td class="comment-1" rowspan="1">Save index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fc0"></span>9FC0</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Save sub-table address</td>
+<td class="comment-1" rowspan="1">Save sub-table address</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fc1"></span>9FC1</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-11" rowspan="2">Fetch byte at <span class="register">HL</span> + <span class="register">BC</span></td>
+<td class="comment-1" rowspan="2">Fetch byte at <span class="register">HL</span> + <span class="register">BC</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fc2"></span>9FC2</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fc3"></span>9FC3</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="1">Did we hit the end of the list?</td>
+<td class="comment-1" rowspan="1">Did we hit the end of the list?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fc5"></span>9FC5</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="9F21.html#9fda">ipa_pop_and_set_flag_red</a></td>
-<td class="comment-11" rowspan="1">Jump if we did</td>
+<td class="comment-1" rowspan="1">Jump if we did</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fc7"></span>9FC7</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A007.html">in_permitted_area_end_bit</a></td>
-<td class="comment-11" rowspan="1">Check that the hero is in the specified room or camp bounds</td>
+<td class="comment-1" rowspan="1">Check that the hero is in the specified room or camp bounds</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fca"></span>9FCA</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore the sub-table address</td>
+<td class="comment-1" rowspan="1">Restore the sub-table address</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fcb"></span>9FCB</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">Restore the index</td>
+<td class="comment-1" rowspan="1">Restore the index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fcc"></span>9FCC</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="9F21.html#9fd1">ipa_set_route_then_set_flag_green</a></td>
-<td class="comment-11" rowspan="1">If within the area (Z set) break out of the loop</td>
+<td class="comment-1" rowspan="1">If within the area (Z set) break out of the loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fce"></span>9FCE</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC C</td>
-<td class="comment-11" rowspan="1">Increment counter</td>
+<td class="comment-1" rowspan="1">Increment counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fcf"></span>9FCF</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="9F21.html#9fbf">ipa_check_route_places_loop</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1">ipa_set_route_then_set_flag_green</td>
+<td class="asm-label">ipa_set_route_then_set_flag_green</td>
 <td class="address-2"><span id="9fd1"></span>9FD1</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($8002)</td>
-<td class="comment-11" rowspan="2">Fetch the hero's route index</td>
+<td class="comment-1" rowspan="2">Fetch the hero's route index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fd4"></span>9FD4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fd5"></span>9FD5</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A33F.html">set_hero_route</a></td>
-<td class="comment-11" rowspan="1">Set the hero's route (to <span class="register">A</span>,<span class="register">C</span>) unless in solitary</td>
+<td class="comment-1" rowspan="1">Set the hero's route (to <span class="register">A</span>,<span class="register">C</span>) unless in solitary</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fd8"></span>9FD8</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="9F21.html#9fde">ipa_set_flag_green</a></td>
-<td class="comment-11" rowspan="1">Jump to "set flag green"</td>
+<td class="comment-1" rowspan="1">Jump to "set flag green"</td>
 </tr>
 <tr>
-<td class="asm-label-1">ipa_pop_and_set_flag_red</td>
+<td class="asm-label">ipa_pop_and_set_flag_red</td>
 <td class="address-2"><span id="9fda"></span>9FDA</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="2">Restore the stack pointer position - don't care about order</td>
+<td class="comment-1" rowspan="2">Restore the stack pointer position - don't care about order</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fdb"></span>9FDB</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fdc"></span>9FDC</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="9F21.html#9ff8">ipa_set_flag_red</a></td>
-<td class="comment-11" rowspan="1">Jump to "set flag red"</td>
+<td class="comment-1" rowspan="1">Jump to "set flag red"</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -870,95 +737,81 @@ Green flag code path.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">ipa_set_flag_green</td>
+<td class="asm-label">ipa_set_flag_green</td>
 <td class="address-2"><span id="9fde"></span>9FDE</td>
-<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">Clear the red flag</td>
+<td class="comment-1" rowspan="1">Clear the red flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fdf"></span>9FDF</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,$44</td>
-<td class="comment-11" rowspan="1">Load <span class="register">C</span> with attribute_BRIGHT_GREEN_OVER_BLACK</td>
+<td class="comment-1" rowspan="1">Load <span class="register">C</span> with attribute_BRIGHT_GREEN_OVER_BLACK</td>
 </tr>
 <tr>
-<td class="asm-label-1">ipa_flag_select</td>
+<td class="asm-label">ipa_flag_select</td>
 <td class="address-2"><span id="9fe1"></span>9FE1</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($A138),A</td>
-<td class="comment-11" rowspan="1">Assign red_flag</td>
+<td class="comment-1" rowspan="1">Assign red_flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fe4"></span>9FE4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="1">Shuffle wanted attribute value into <span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Shuffle wanted attribute value into <span class="register">A</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fe5"></span>9FE5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$5842</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the first attribute byte of the morale flag</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the first attribute byte of the morale flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fe8"></span>9FE8</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="1">Is the flag already the correct colour?</td>
+<td class="comment-1" rowspan="1">Is the flag already the correct colour?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fe9"></span>9FE9</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET Z</td>
-<td class="comment-11" rowspan="1">Return if so</td>
+<td class="comment-1" rowspan="1">Return if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fea"></span>9FEA</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $44</td>
-<td class="comment-11" rowspan="1">Are we in the green flag case?</td>
+<td class="comment-1" rowspan="1">Are we in the green flag case?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fec"></span>9FEC</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="A071.html">set_morale_flag_screen_attributes</a></td>
-<td class="comment-11" rowspan="1">Exit via set_morale_flag_screen_attributes if not</td>
+<td class="comment-1" rowspan="1">Exit via set_morale_flag_screen_attributes if not</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fef"></span>9FEF</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="2">Silence the bell</td>
+<td class="comment-1" rowspan="2">Silence the bell</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ff1"></span>9FF1</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($A130),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ff4"></span>9FF4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="1">Shuffle wanted attribute value into <span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Shuffle wanted attribute value into <span class="register">A</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ff5"></span>9FF5</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP <a href="A071.html">set_morale_flag_screen_attributes</a></td>
-<td class="comment-11" rowspan="1">Exit via set_morale_flag_screen_attributes</td>
+<td class="comment-1" rowspan="1">Exit via set_morale_flag_screen_attributes</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -971,73 +824,68 @@ Red flag code path.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">ipa_set_flag_red</td>
+<td class="asm-label">ipa_set_flag_red</td>
 <td class="address-2"><span id="9ff8"></span>9FF8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,$42</td>
-<td class="comment-11" rowspan="1">Load <span class="register">C</span> with attribute_BRIGHT_RED_OVER_BLACK</td>
+<td class="comment-1" rowspan="1">Load <span class="register">C</span> with attribute_BRIGHT_RED_OVER_BLACK</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ffa"></span>9FFA</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($5842)</td>
-<td class="comment-11" rowspan="1">Fetch the first attribute byte of the morale flag</td>
+<td class="comment-1" rowspan="1">Fetch the first attribute byte of the morale flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ffd"></span>9FFD</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP C</td>
-<td class="comment-11" rowspan="1">Is the flag already the correct colour?</td>
+<td class="comment-1" rowspan="1">Is the flag already the correct colour?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9ffe"></span>9FFE</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET Z</td>
-<td class="comment-11" rowspan="1">Return if so</td>
+<td class="comment-1" rowspan="1">Return if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="9fff"></span>9FFF</td>
-<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="2">Set the vischar's input to 0</td>
+<td class="comment-1" rowspan="2">Set the vischar's input to 0</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a000"></span>A000</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($800D),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a003"></span>A003</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-11" rowspan="1">Set the red flag flag</td>
+<td class="comment-1" rowspan="1">Set the red flag flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a005"></span>A005</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="9F21.html#9fe1">ipa_flag_select</a></td>
-<td class="comment-11" rowspan="1">Jump to flag_select</td>
+<td class="comment-1" rowspan="1">Jump to flag_select</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="9F15.html">9F15</a></span></td>
+<td class="prev">
+Prev: <a href="9F15.html">9F15</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#9f21">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A007.html">A007</a></span></td>
+<td class="next">
+Next: <a href="A007.html">A007</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

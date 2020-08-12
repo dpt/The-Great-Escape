@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="FE7E.html">FE7E</a></span></td>
+<td class="prev">
+Prev: <a href="FE7E.html">FE7E</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#fea3">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="FECD.html">FECD</a></span></td>
+<td class="next">
+Next: <a href="FECD.html">FECD</a>
+</td>
 </tr>
 </table>
 <div class="description">FEA3: Fuller joystick input routine.</div>
@@ -30,7 +33,7 @@
 Reading port $7F yields F---RLDU active low.
 </div>
 </div>
-<table class="input-1">
+<table class="input">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
@@ -38,12 +41,6 @@ Reading port $7F yields F---RLDU active low.
 <td class="register">This</td>
 <td class="register-desc">is unused by the game.</td>
 </tr>
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
 </table>
 </td>
 </tr>
@@ -58,25 +55,22 @@ O:A Input value (as per enum input).
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">inputroutine_fuller</td>
+<td class="asm-label">inputroutine_fuller</td>
 <td class="address-2"><span id="fea3"></span>FEA3</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$007F</td>
-<td class="comment-11" rowspan="1">Load <span class="register">BC</span> with port number $7F</td>
+<td class="comment-1" rowspan="1">Load <span class="register">BC</span> with port number $7F</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fea6"></span>FEA6</td>
-<td class="bytes-0"></td>
 <td class="instruction">IN A,(C)</td>
-<td class="comment-11" rowspan="1">Read that port. We'll receive FxxxRLDU</td>
+<td class="comment-1" rowspan="1">Read that port. We'll receive FxxxRLDU</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fea8"></span>FEA8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0000</td>
-<td class="comment-11" rowspan="1">Clear our variables</td>
+<td class="comment-1" rowspan="1">Clear our variables</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -89,25 +83,22 @@ DPT: This is odd. It's testing an unspecified bit to see whether to complement t
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="feab"></span>FEAB</td>
-<td class="bytes-0"></td>
 <td class="instruction">BIT 4,A</td>
-<td class="comment-11" rowspan="1">Test bit 4</td>
+<td class="comment-1" rowspan="1">Test bit 4</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fead"></span>FEAD</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="FEA3.html#feb0">inputroutine_fuller_0</a></td>
-<td class="comment-11" rowspan="1">Jump forward if clear</td>
+<td class="comment-1" rowspan="1">Jump forward if clear</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="feaf"></span>FEAF</td>
-<td class="bytes-0"></td>
 <td class="instruction">CPL</td>
-<td class="comment-11" rowspan="1">Complement the value</td>
+<td class="comment-1" rowspan="1">Complement the value</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -120,25 +111,22 @@ Up
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">inputroutine_fuller_0</td>
+<td class="asm-label">inputroutine_fuller_0</td>
 <td class="address-2"><span id="feb0"></span>FEB0</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
-<td class="comment-11" rowspan="1">Rotate 'U' out: UFxxxRLD</td>
+<td class="comment-1" rowspan="1">Rotate 'U' out: UFxxxRLD</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="feb1"></span>FEB1</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="FEA3.html#feb5">inputroutine_fuller_1</a></td>
-<td class="comment-11" rowspan="1">If carry was set then up was pressed, otherwise skip</td>
+<td class="comment-1" rowspan="1">If carry was set then up was pressed, otherwise skip</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="feb3"></span>FEB3</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,$01</td>
-<td class="comment-11" rowspan="1">up_down = input_UP</td>
+<td class="comment-1" rowspan="1">up_down = input_UP</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -151,25 +139,22 @@ Down
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">inputroutine_fuller_1</td>
+<td class="asm-label">inputroutine_fuller_1</td>
 <td class="address-2"><span id="feb5"></span>FEB5</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
-<td class="comment-11" rowspan="1">Rotate 'D' out: DUFxxxRL</td>
+<td class="comment-1" rowspan="1">Rotate 'D' out: DUFxxxRL</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="feb6"></span>FEB6</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="FEA3.html#feba">inputroutine_fuller_2</a></td>
-<td class="comment-11" rowspan="1">If carry was set then down was pressed, otherwise skip</td>
+<td class="comment-1" rowspan="1">If carry was set then down was pressed, otherwise skip</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="feb8"></span>FEB8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,$02</td>
-<td class="comment-11" rowspan="1">up_down = input_DOWN</td>
+<td class="comment-1" rowspan="1">up_down = input_DOWN</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -182,25 +167,22 @@ Left
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">inputroutine_fuller_2</td>
+<td class="asm-label">inputroutine_fuller_2</td>
 <td class="address-2"><span id="feba"></span>FEBA</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
-<td class="comment-11" rowspan="1">Rotate 'L' out: LDUFxxxR</td>
+<td class="comment-1" rowspan="1">Rotate 'L' out: LDUFxxxR</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="febb"></span>FEBB</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="FEA3.html#febf">inputroutine_fuller_3</a></td>
-<td class="comment-11" rowspan="1">If carry was set then down was pressed, otherwise skip</td>
+<td class="comment-1" rowspan="1">If carry was set then down was pressed, otherwise skip</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="febd"></span>FEBD</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$03</td>
-<td class="comment-11" rowspan="1">left_right = input_LEFT</td>
+<td class="comment-1" rowspan="1">left_right = input_LEFT</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -213,25 +195,22 @@ Right
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">inputroutine_fuller_3</td>
+<td class="asm-label">inputroutine_fuller_3</td>
 <td class="address-2"><span id="febf"></span>FEBF</td>
-<td class="bytes-0"></td>
 <td class="instruction">RRA</td>
-<td class="comment-11" rowspan="1">Rotate 'R' out: RLDUFxxx</td>
+<td class="comment-1" rowspan="1">Rotate 'R' out: RLDUFxxx</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fec0"></span>FEC0</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="FEA3.html#fec4">inputroutine_fuller_4</a></td>
-<td class="comment-11" rowspan="1">If carry was set then right was pressed, otherwise skip</td>
+<td class="comment-1" rowspan="1">If carry was set then right was pressed, otherwise skip</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fec2"></span>FEC2</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$06</td>
-<td class="comment-11" rowspan="1">left_right = input_RIGHT</td>
+<td class="comment-1" rowspan="1">left_right = input_RIGHT</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -244,59 +223,56 @@ Fire
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">inputroutine_fuller_4</td>
+<td class="asm-label">inputroutine_fuller_4</td>
 <td class="address-2"><span id="fec4"></span>FEC4</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $08</td>
-<td class="comment-11" rowspan="1">Test fire bit (and set A to zero if not set)</td>
+<td class="comment-1" rowspan="1">Test fire bit (and set A to zero if not set)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fec6"></span>FEC6</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="FEA3.html#feca">inputroutine_fuller_5</a></td>
-<td class="comment-11" rowspan="1">If bit was set then fire was pressed, otherwise skip</td>
+<td class="comment-1" rowspan="1">If bit was set then fire was pressed, otherwise skip</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fec8"></span>FEC8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$09</td>
-<td class="comment-11" rowspan="1">fire = input_FIRE</td>
+<td class="comment-1" rowspan="1">fire = input_FIRE</td>
 </tr>
 <tr>
-<td class="asm-label-1">inputroutine_fuller_5</td>
+<td class="asm-label">inputroutine_fuller_5</td>
 <td class="address-2"><span id="feca"></span>FECA</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,B</td>
-<td class="comment-11" rowspan="2">Combine the fire, up_down and left_right values</td>
+<td class="comment-1" rowspan="2">Combine the fire, up_down and left_right values</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fecb"></span>FECB</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,C</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="fecc"></span>FECC</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="FE7E.html">FE7E</a></span></td>
+<td class="prev">
+Prev: <a href="FE7E.html">FE7E</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#fea3">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="FECD.html">FECD</a></span></td>
+<td class="next">
+Next: <a href="FECD.html">FECD</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

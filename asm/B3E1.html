@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="B3C4.html">B3C4</a></span></td>
+<td class="prev">
+Prev: <a href="B3C4.html">B3C4</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#b3e1">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="B3F6.html">B3F6</a></span></td>
+<td class="next">
+Next: <a href="B3F6.html">B3F6</a>
+</td>
 </tr>
 </table>
 <div class="description">B3E1: Use guard's uniform.</div>
@@ -26,35 +29,20 @@
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
-
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">action_uniform</td>
+<td class="asm-label">action_uniform</td>
 <td class="address-2"><span id="b3e1"></span>B3E1</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$8015</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the hero's vischar sprite set pointer</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the hero's vischar sprite set pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3e4"></span>B3E4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$CEA6</td>
-<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at the guard sprite set</td>
+<td class="comment-1" rowspan="1">Point <span class="register">DE</span> at the guard sprite set</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -67,25 +55,20 @@ Bail out if the hero's already in the uniform
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3e7"></span>B3E7</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="3">Cheap equality test</td>
+<td class="comment-1" rowspan="3">Cheap equality test</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3e8"></span>B3E8</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3e9"></span>B3E9</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET Z</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -98,25 +81,20 @@ Can't don the uniform when in a tunnel
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3ea"></span>B3EA</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="3">If the global current room index is room_29_SECOND_TUNNEL_START or above... we're in the tunnels, so bail out</td>
+<td class="comment-1" rowspan="3">If the global current room index is room_29_SECOND_TUNNEL_START or above... we're in the tunnels, so bail out</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3ed"></span>B3ED</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $1D</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3ef"></span>B3EF</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET NC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -129,45 +107,43 @@ Otherwise the uniform can be worn
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3f0"></span>B3F0</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),E</td>
-<td class="comment-11" rowspan="3">Set the hero's sprite set to sprite_guard</td>
+<td class="comment-1" rowspan="3">Set the hero's sprite set to sprite_guard</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3f1"></span>B3F1</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3f2"></span>B3F2</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (HL),D</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b3f3"></span>B3F3</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP <a href="A0E9.html">increase_morale_by_10_score_by_50</a></td>
-<td class="comment-11" rowspan="1">Increase morale by 10, score by 50 and exit via</td>
+<td class="comment-1" rowspan="1">Increase morale by 10, score by 50 and exit via</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="B3C4.html">B3C4</a></span></td>
+<td class="prev">
+Prev: <a href="B3C4.html">B3C4</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#b3e1">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="B3F6.html">B3F6</a></span></td>
+<td class="next">
+Next: <a href="B3F6.html">B3F6</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="B53E.html">B53E</a></span></td>
+<td class="prev">
+Prev: <a href="B53E.html">B53E</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#b5ce">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="B71B.html">B71B</a></span></td>
+<td class="next">
+Next: <a href="B71B.html">B71B</a>
+</td>
 </tr>
 </table>
 <div class="description">B5CE: Animate all visible characters.</div>
@@ -30,33 +33,19 @@
 Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href="9D7B.html">main_loop</a>.
 </div>
 </div>
-<table class="input-0">
-<tr class="asm-input-header">
-<th colspan="2">Input</th>
-</tr>
-
-</table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">animate</td>
+<td class="asm-label">animate</td>
 <td class="address-2"><span id="b5ce"></span>B5CE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$08</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for eight iterations</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for eight iterations</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5d0"></span>B5D0</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD IY,$8000</td>
-<td class="comment-11" rowspan="1">Point <span class="register">IY</span> at the first vischar</td>
+<td class="comment-1" rowspan="1">Point <span class="register">IY</span> at the first vischar</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -69,95 +58,81 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">animate_loop</td>
+<td class="asm-label">animate_loop</td>
 <td class="address-2"><span id="b5d4"></span>B5D4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$01)</td>
-<td class="comment-11" rowspan="1">Read the vischar's flags byte</td>
+<td class="comment-1" rowspan="1">Read the vischar's flags byte</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5d7"></span>B5D7</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="1">Is it vischar_FLAGS_EMPTY_SLOT? ($FF)</td>
+<td class="comment-1" rowspan="1">Is it vischar_FLAGS_EMPTY_SLOT? ($FF)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5d9"></span>B5D9</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="B5CE.html#b6b4">animate_next</a></td>
-<td class="comment-11" rowspan="1">Jump to the next iteration if so</td>
+<td class="comment-1" rowspan="1">Jump to the next iteration if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5dc"></span>B5DC</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">Preserve the loop counter</td>
+<td class="comment-1" rowspan="1">Preserve the loop counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5dd"></span>B5DD</td>
-<td class="bytes-0"></td>
 <td class="instruction">SET 7,(IY+$01)</td>
-<td class="comment-11" rowspan="1">Set flags byte to vischar_FLAGS_NO_COLLIDE ($80)</td>
+<td class="comment-1" rowspan="1">Set flags byte to vischar_FLAGS_NO_COLLIDE ($80)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5e1"></span>B5E1</td>
-<td class="bytes-0"></td>
 <td class="instruction">BIT 7,(IY+$0D)</td>
-<td class="comment-11" rowspan="1">Does the vischar's input field have flag input_KICK set? ($80)</td>
+<td class="comment-1" rowspan="1">Does the vischar's input field have flag input_KICK set? ($80)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5e5"></span>B5E5</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="B5CE.html#b6be">animate_kicked</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5e8"></span>B5E8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD H,(IY+$0B)</td>
-<td class="comment-11" rowspan="2">Fetch vischar animation pointer into <span class="register">HL</span></td>
+<td class="comment-1" rowspan="2">Fetch vischar animation pointer into <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5eb"></span>B5EB</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,(IY+$0A)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5ee"></span>B5EE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$0C)</td>
-<td class="comment-11" rowspan="1">Fetch vischar animation index</td>
+<td class="comment-1" rowspan="1">Fetch vischar animation index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5f1"></span>B5F1</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Is vischar_ANIMINDEX_REVERSE set? ($80)</td>
+<td class="comment-1" rowspan="1">Is vischar_ANIMINDEX_REVERSE set? ($80)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5f2"></span>B5F2</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP P,<a href="B5CE.html#b64f">animate_3</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5f5"></span>B5F5</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $7F</td>
-<td class="comment-11" rowspan="1">Otherwise mask off vischar_ANIMINDEX_REVERSE to get our frame number</td>
+<td class="comment-1" rowspan="1">Otherwise mask off vischar_ANIMINDEX_REVERSE to get our frame number</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -170,88 +145,70 @@ Bug: This ought to check for $7F, not zero.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5f7"></span>B5F7</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="B5CE.html#b6c2">animate_init</a></td>
-<td class="comment-11" rowspan="1">Jump to initialisation if the result is zero</td>
+<td class="comment-1" rowspan="1">Jump to initialisation if the result is zero</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5fa"></span>B5FA</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC A</td>
-<td class="comment-11" rowspan="7">Calculate the animation frame pointer = (animation pointer) + (frame number + 1) * 4 - 1</td>
+<td class="comment-1" rowspan="7">Calculate the animation frame pointer = (animation pointer) + (frame number + 1) * 4 - 1</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5fb"></span>B5FB</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5fc"></span>B5FC</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5fd"></span>B5FD</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b5fe"></span>B5FE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$00</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b600"></span>B600</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b601"></span>B601</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b602"></span>B602</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Fetch anim's sprite index</td>
+<td class="comment-1" rowspan="1">Fetch anim's sprite index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b603"></span>B603</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">Bank sprite index</td>
+<td class="comment-1" rowspan="1">Bank sprite index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b604"></span>B604</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">...</td>
+<td class="comment-1" rowspan="1">...</td>
 </tr>
 <tr>
-<td class="asm-label-1">animate_backwards</td>
+<td class="asm-label">animate_backwards</td>
 <td class="address-2"><span id="b605"></span>B605</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">Swap frame pointers</td>
+<td class="comment-1" rowspan="1">Swap frame pointers</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -267,74 +224,59 @@ saved_pos_x = vischar.mi.pos.x - frame-&gt;dx
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b606"></span>B606</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,(IY+$0F)</td>
-<td class="comment-11" rowspan="2">Fetch vischar.mi.pos.x into <span class="register">HL</span></td>
+<td class="comment-1" rowspan="2">Fetch vischar.mi.pos.x into <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b609"></span>B609</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD H,(IY+$10)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b60c"></span>B60C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Load animation frame's delta X</td>
+<td class="comment-1" rowspan="1">Load animation frame's delta X</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b60d"></span>B60D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="5">Sign extend into <span class="register">BC</span></td>
+<td class="comment-1" rowspan="5">Sign extend into <span class="register">BC</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b60e"></span>B60E</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $80</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b610"></span>B610</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="B5CE.html#b614">animate_0</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b612"></span>B612</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">animate_0</td>
+<td class="asm-label">animate_0</td>
 <td class="address-2"><span id="b614"></span>B614</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b615"></span>B615</td>
-<td class="bytes-0"></td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="1">Subtract the delta</td>
+<td class="comment-1" rowspan="1">Subtract the delta</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b617"></span>B617</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($81A4),HL</td>
-<td class="comment-11" rowspan="1">Save it in saved_pos_x</td>
+<td class="comment-1" rowspan="1">Save it in saved_pos_x</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -347,81 +289,65 @@ saved_pos_y = vischar.mi.pos.y - frame-&gt;dy
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b61a"></span>B61A</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Advance to animation frame's delta Y</td>
+<td class="comment-1" rowspan="1">Advance to animation frame's delta Y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b61b"></span>B61B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,(IY+$11)</td>
-<td class="comment-11" rowspan="2">Fetch vischar.mi.pos.y into <span class="register">HL</span></td>
+<td class="comment-1" rowspan="2">Fetch vischar.mi.pos.y into <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b61e"></span>B61E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD H,(IY+$12)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b621"></span>B621</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Load animation frame's delta Y</td>
+<td class="comment-1" rowspan="1">Load animation frame's delta Y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b622"></span>B622</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="5">Sign extend into <span class="register">BC</span></td>
+<td class="comment-1" rowspan="5">Sign extend into <span class="register">BC</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b623"></span>B623</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $80</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b625"></span>B625</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="B5CE.html#b629">animate_1</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b627"></span>B627</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">animate_1</td>
+<td class="asm-label">animate_1</td>
 <td class="address-2"><span id="b629"></span>B629</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b62a"></span>B62A</td>
-<td class="bytes-0"></td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="1">Subtract the delta</td>
+<td class="comment-1" rowspan="1">Subtract the delta</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b62c"></span>B62C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($81A6),HL</td>
-<td class="comment-11" rowspan="1">Save it in saved_pos_y</td>
+<td class="comment-1" rowspan="1">Save it in saved_pos_y</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -434,109 +360,89 @@ saved_height = vischar.mi.pos.height - frame-&gt;dh
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b62f"></span>B62F</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Advance to animation frame's delta height</td>
+<td class="comment-1" rowspan="1">Advance to animation frame's delta height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b630"></span>B630</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,(IY+$13)</td>
-<td class="comment-11" rowspan="2">Fetch vischar.mi.pos.height into <span class="register">HL</span></td>
+<td class="comment-1" rowspan="2">Fetch vischar.mi.pos.height into <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b633"></span>B633</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD H,(IY+$14)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b636"></span>B636</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Load animation frame's delta height</td>
+<td class="comment-1" rowspan="1">Load animation frame's delta height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b637"></span>B637</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="5">Sign extend into <span class="register">BC</span></td>
+<td class="comment-1" rowspan="5">Sign extend into <span class="register">BC</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b638"></span>B638</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $80</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b63a"></span>B63A</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="B5CE.html#b63e">animate_2</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b63c"></span>B63C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">animate_2</td>
+<td class="asm-label">animate_2</td>
 <td class="address-2"><span id="b63e"></span>B63E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b63f"></span>B63F</td>
-<td class="bytes-0"></td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-11" rowspan="1">Subtract the delta</td>
+<td class="comment-1" rowspan="1">Subtract the delta</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b641"></span>B641</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($81A8),HL</td>
-<td class="comment-11" rowspan="1">Save it in saved_height</td>
+<td class="comment-1" rowspan="1">Save it in saved_height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b644"></span>B644</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="AF8F.html">touch</a></td>
-<td class="comment-11" rowspan="1">Test for characters meeting obstacles like doors and map bounds</td>
+<td class="comment-1" rowspan="1">Test for characters meeting obstacles like doors and map bounds</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b647"></span>B647</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="B5CE.html#b6a8">animate_pop_next</a></td>
-<td class="comment-11" rowspan="1">If outside bounds (collided with something), jump to animate_pop_next to halt any animation</td>
+<td class="comment-1" rowspan="1">If outside bounds (collided with something), jump to animate_pop_next to halt any animation</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b64a"></span>B64A</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC (IY+$0C)</td>
-<td class="comment-11" rowspan="1">Decrement animation index (DPT: Was there a bug around here?)</td>
+<td class="comment-1" rowspan="1">Decrement animation index (DPT: Was there a bug around here?)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b64d"></span>B64D</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="B5CE.html#b6a2">animate_7</a></td>
-<td class="comment-11" rowspan="1">(else)</td>
+<td class="comment-1" rowspan="1">(else)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -549,67 +455,53 @@ Have we reached the end of the animation?
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">animate_3</td>
+<td class="asm-label">animate_3</td>
 <td class="address-2"><span id="b64f"></span>B64F</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP (HL)</td>
-<td class="comment-11" rowspan="1">Is the animation index equal to the number of frames in the animation?</td>
+<td class="comment-1" rowspan="1">Is the animation index equal to the number of frames in the animation?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b650"></span>B650</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP Z,<a href="B5CE.html#b6c2">animate_init</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b653"></span>B653</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC A</td>
-<td class="comment-11" rowspan="6">Calculate the animation frame pointer = (animation pointer) + (frame number + 1) * 4</td>
+<td class="comment-1" rowspan="6">Calculate the animation frame pointer = (animation pointer) + (frame number + 1) * 4</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b654"></span>B654</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b655"></span>B655</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b656"></span>B656</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b657"></span>B657</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$00</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b659"></span>B659</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">animate_forwards</td>
+<td class="asm-label">animate_forwards</td>
 <td class="address-2"><span id="b65a"></span>B65A</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">Swap frame pointers</td>
+<td class="comment-1" rowspan="1">Swap frame pointers</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -625,74 +517,59 @@ saved_pos_x = vischar.mi.pos.x - frame-&gt;dx
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b65b"></span>B65B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Load animation frame's delta X</td>
+<td class="comment-1" rowspan="1">Load animation frame's delta X</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b65c"></span>B65C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="5">Sign extend into <span class="register">HL</span></td>
+<td class="comment-1" rowspan="5">Sign extend into <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b65d"></span>B65D</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $80</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b65f"></span>B65F</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="B5CE.html#b663">animate_4</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b661"></span>B661</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">animate_4</td>
+<td class="asm-label">animate_4</td>
 <td class="address-2"><span id="b663"></span>B663</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD H,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b664"></span>B664</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(IY+$0F)</td>
-<td class="comment-11" rowspan="2">Fetch vischar.mi.pos.x into <span class="register">BC</span></td>
+<td class="comment-1" rowspan="2">Fetch vischar.mi.pos.x into <span class="register">BC</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b667"></span>B667</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,(IY+$10)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b66a"></span>B66A</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-11" rowspan="1">Add the delta</td>
+<td class="comment-1" rowspan="1">Add the delta</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b66b"></span>B66B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($81A4),HL</td>
-<td class="comment-11" rowspan="1">Save it in saved_pos_x</td>
+<td class="comment-1" rowspan="1">Save it in saved_pos_x</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -705,81 +582,65 @@ saved_pos_y = vischar.mi.pos.y - frame-&gt;dy
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b66e"></span>B66E</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Advance to animation frame's delta Y</td>
+<td class="comment-1" rowspan="1">Advance to animation frame's delta Y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b66f"></span>B66F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Load animation frame's delta Y</td>
+<td class="comment-1" rowspan="1">Load animation frame's delta Y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b670"></span>B670</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="5">Sign extend into <span class="register">HL</span></td>
+<td class="comment-1" rowspan="5">Sign extend into <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b671"></span>B671</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $80</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b673"></span>B673</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="B5CE.html#b677">animate_5</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b675"></span>B675</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">animate_5</td>
+<td class="asm-label">animate_5</td>
 <td class="address-2"><span id="b677"></span>B677</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD H,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b678"></span>B678</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(IY+$11)</td>
-<td class="comment-11" rowspan="2">Fetch vischar.mi.pos.y into <span class="register">BC</span></td>
+<td class="comment-1" rowspan="2">Fetch vischar.mi.pos.y into <span class="register">BC</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b67b"></span>B67B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,(IY+$12)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b67e"></span>B67E</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-11" rowspan="1">Add the delta</td>
+<td class="comment-1" rowspan="1">Add the delta</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b67f"></span>B67F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($81A6),HL</td>
-<td class="comment-11" rowspan="1">Save it in saved_pos_y</td>
+<td class="comment-1" rowspan="1">Save it in saved_pos_y</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -792,459 +653,373 @@ saved_height = vischar.mi.pos.height - frame-&gt;dh
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b682"></span>B682</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Advance to animation frame's delta height</td>
+<td class="comment-1" rowspan="1">Advance to animation frame's delta height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b683"></span>B683</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Load animation frame's delta height</td>
+<td class="comment-1" rowspan="1">Load animation frame's delta height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b684"></span>B684</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="5">Sign extend into <span class="register">HL</span></td>
+<td class="comment-1" rowspan="5">Sign extend into <span class="register">HL</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b685"></span>B685</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $80</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b687"></span>B687</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="B5CE.html#b68b">animate_6</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b689"></span>B689</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">animate_6</td>
+<td class="asm-label">animate_6</td>
 <td class="address-2"><span id="b68b"></span>B68B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD H,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b68c"></span>B68C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(IY+$13)</td>
-<td class="comment-11" rowspan="2">Fetch vischar.mi.pos.height into <span class="register">BC</span></td>
+<td class="comment-1" rowspan="2">Fetch vischar.mi.pos.height into <span class="register">BC</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b68f"></span>B68F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,(IY+$14)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b692"></span>B692</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-11" rowspan="1">Add the delta</td>
+<td class="comment-1" rowspan="1">Add the delta</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b693"></span>B693</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($81A8),HL</td>
-<td class="comment-11" rowspan="1">Save it in saved_height</td>
+<td class="comment-1" rowspan="1">Save it in saved_height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b696"></span>B696</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Advance to animation frame's sprite index</td>
+<td class="comment-1" rowspan="1">Advance to animation frame's sprite index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b697"></span>B697</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Load animation frame's sprite index</td>
+<td class="comment-1" rowspan="1">Load animation frame's sprite index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b698"></span>B698</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">Bank <span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Bank <span class="register">A</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b699"></span>B699</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="AF8F.html">touch</a></td>
-<td class="comment-11" rowspan="1">Test for characters meeting obstacles like doors and map bounds</td>
+<td class="comment-1" rowspan="1">Test for characters meeting obstacles like doors and map bounds</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b69c"></span>B69C</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="B5CE.html#b6a8">animate_pop_next</a></td>
-<td class="comment-11" rowspan="1">If outside bounds (collided with something), goto animate_pop_next to halt any animation</td>
+<td class="comment-1" rowspan="1">If outside bounds (collided with something), goto animate_pop_next to halt any animation</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b69f"></span>B69F</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC (IY+$0C)</td>
-<td class="comment-11" rowspan="1">Increment animation index</td>
+<td class="comment-1" rowspan="1">Increment animation index</td>
 </tr>
 <tr>
-<td class="asm-label-1">animate_7</td>
+<td class="asm-label">animate_7</td>
 <td class="address-2"><span id="b6a2"></span>B6A2</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH IY</td>
-<td class="comment-11" rowspan="2"><span class="register">HL</span> = <span class="register">IY</span></td>
+<td class="comment-1" rowspan="2"><span class="register">HL</span> = <span class="register">IY</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6a4"></span>B6A4</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6a5"></span>B6A5</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="B729.html">calc_vischar_iso_pos_from_state</a></td>
-<td class="comment-11" rowspan="1">Calculate screen position for vischar from saved_pos</td>
+<td class="comment-1" rowspan="1">Calculate screen position for vischar from saved_pos</td>
 </tr>
 <tr>
-<td class="asm-label-1">animate_pop_next</td>
+<td class="asm-label">animate_pop_next</td>
 <td class="address-2"><span id="b6a8"></span>B6A8</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1"></td>
+<td class="comment-1" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6a9"></span>B6A9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$01)</td>
-<td class="comment-11" rowspan="1">Read the vischar's flags byte</td>
+<td class="comment-1" rowspan="1">Read the vischar's flags byte</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6ac"></span>B6AC</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $FF</td>
-<td class="comment-11" rowspan="1">Is it vischar_FLAGS_EMPTY_SLOT? ($FF)</td>
+<td class="comment-1" rowspan="1">Is it vischar_FLAGS_EMPTY_SLOT? ($FF)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6ae"></span>B6AE</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="B5CE.html#b6b4">animate_next</a></td>
-<td class="comment-11" rowspan="1">Jump forward if so</td>
+<td class="comment-1" rowspan="1">Jump forward if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6b0"></span>B6B0</td>
-<td class="bytes-0"></td>
 <td class="instruction">RES 7,(IY+$01)</td>
-<td class="comment-11" rowspan="1">Otherwise clear the vischar_FLAGS_NO_COLLIDE flag ($80)</td>
+<td class="comment-1" rowspan="1">Otherwise clear the vischar_FLAGS_NO_COLLIDE flag ($80)</td>
 </tr>
 <tr>
-<td class="asm-label-1">animate_next</td>
+<td class="asm-label">animate_next</td>
 <td class="address-2"><span id="b6b4"></span>B6B4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$0020</td>
-<td class="comment-11" rowspan="1">Set <span class="register">DE</span> to the vischar stride (32)</td>
+<td class="comment-1" rowspan="1">Set <span class="register">DE</span> to the vischar stride (32)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6b7"></span>B6B7</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD IY,DE</td>
-<td class="comment-11" rowspan="1">Advance <span class="register">IY</span> to the next vischar</td>
+<td class="comment-1" rowspan="1">Advance <span class="register">IY</span> to the next vischar</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6b9"></span>B6B9</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC B</td>
-<td class="comment-11" rowspan="2">...loop</td>
+<td class="comment-1" rowspan="2">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6ba"></span>B6BA</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="B5CE.html#b5d4">animate_loop</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6bd"></span>B6BD</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 <tr>
-<td class="asm-label-1">animate_kicked</td>
+<td class="asm-label">animate_kicked</td>
 <td class="address-2"><span id="b6be"></span>B6BE</td>
-<td class="bytes-0"></td>
 <td class="instruction">RES 7,(IY+$0D)</td>
-<td class="comment-11" rowspan="1">Clear the input_KICK flag</td>
+<td class="comment-1" rowspan="1">Clear the input_KICK flag</td>
 </tr>
 <tr>
-<td class="asm-label-1">animate_init</td>
+<td class="asm-label">animate_init</td>
 <td class="address-2"><span id="b6c2"></span>B6C2</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$0E)</td>
-<td class="comment-11" rowspan="1">Fetch vischar direction field</td>
+<td class="comment-1" rowspan="1">Fetch vischar direction field</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6c5"></span>B6C5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD D,A</td>
-<td class="comment-11" rowspan="5">Multiply it by 9</td>
+<td class="comment-1" rowspan="5">Multiply it by 9</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6c6"></span>B6C6</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6c7"></span>B6C7</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6c8"></span>B6C8</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6c9"></span>B6C9</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,D</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6ca"></span>B6CA</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,(IY+$0D)</td>
-<td class="comment-11" rowspan="1">Add vischar input field to it</td>
+<td class="comment-1" rowspan="1">Add vischar input field to it</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6cd"></span>B6CD</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
-<td class="comment-11" rowspan="2">Shuffle it into <span class="register">DE</span></td>
+<td class="comment-1" rowspan="2">Shuffle it into <span class="register">DE</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6ce"></span>B6CE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD D,$00</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6d0"></span>B6D0</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$CDAA</td>
-<td class="comment-11" rowspan="2">Add it to the animindices base address</td>
+<td class="comment-1" rowspan="2">Add it to the animindices base address</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6d3"></span>B6D3</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6d4"></span>B6D4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Fetch the index pointed to</td>
+<td class="comment-1" rowspan="1">Fetch the index pointed to</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6d5"></span>B6D5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">Stash in <span class="register">C</span> for later</td>
+<td class="comment-1" rowspan="1">Stash in <span class="register">C</span> for later</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6d6"></span>B6D6</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,(IY+$08)</td>
-<td class="comment-11" rowspan="2">Fetch vischar.animbase (animbase is always &amp;animations[0])</td>
+<td class="comment-1" rowspan="2">Fetch vischar.animbase (animbase is always &amp;animations[0])</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6d9"></span>B6D9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD H,(IY+$09)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6dc"></span>B6DC</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="1">Double <span class="register">A</span> (and in doing so discard the top bit!)</td>
+<td class="comment-1" rowspan="1">Double <span class="register">A</span> (and in doing so discard the top bit!)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6dd"></span>B6DD</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
-<td class="comment-11" rowspan="1">Set <span class="register">DE</span> to <span class="register">A</span> (we know <span class="register">D</span> is zero from above)</td>
+<td class="comment-1" rowspan="1">Set <span class="register">DE</span> to <span class="register">A</span> (we know <span class="register">D</span> is zero from above)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6de"></span>B6DE</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-11" rowspan="1">Point at the <span class="register">A'</span>th frame pointer</td>
+<td class="comment-1" rowspan="1">Point at the <span class="register">A'</span>th frame pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6df"></span>B6DF</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment-11" rowspan="5">Load the frame pointer into <span class="register">DE</span> and set vischar anim field to it</td>
+<td class="comment-1" rowspan="5">Load the frame pointer into <span class="register">DE</span> and set vischar anim field to it</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6e0"></span>B6E0</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6e1"></span>B6E1</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (IY+$0A),E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6e4"></span>B6E4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD D,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6e5"></span>B6E5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (IY+$0B),D</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6e8"></span>B6E8</td>
-<td class="bytes-0"></td>
 <td class="instruction">BIT 7,C</td>
-<td class="comment-11" rowspan="1">Was the reverse bit set on the index?</td>
+<td class="comment-1" rowspan="1">Was the reverse bit set on the index?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6ea"></span>B6EA</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="B5CE.html#b6fc">animate_8</a></td>
-<td class="comment-11" rowspan="1">Jump forward if so</td>
+<td class="comment-1" rowspan="1">Jump forward if so</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6ec"></span>B6EC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (IY+$0C),$00</td>
-<td class="comment-11" rowspan="1">Zero the vischar animindex field</td>
+<td class="comment-1" rowspan="1">Zero the vischar animindex field</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6f0"></span>B6F0</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="2">Skip nframes and from fields. Advance <span class="register">DE</span> to animB-&gt;to</td>
+<td class="comment-1" rowspan="2">Skip nframes and from fields. Advance <span class="register">DE</span> to animB-&gt;to</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6f1"></span>B6F1</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6f2"></span>B6F2</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="2">Set the vischar direction field to animB-&gt;to</td>
+<td class="comment-1" rowspan="2">Set the vischar direction field to animB-&gt;to</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6f3"></span>B6F3</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (IY+$0E),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6f6"></span>B6F6</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="2">Advance to animB-&gt;frames</td>
+<td class="comment-1" rowspan="2">Advance to animB-&gt;frames</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6f7"></span>B6F7</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6f8"></span>B6F8</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">Swap frame pointers</td>
+<td class="comment-1" rowspan="1">Swap frame pointers</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6f9"></span>B6F9</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP <a href="B5CE.html#b65a">animate_forwards</a></td>
-<td class="comment-11" rowspan="1">Jump</td>
+<td class="comment-1" rowspan="1">Jump</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1257,18 +1032,16 @@ else
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">animate_8</td>
+<td class="asm-label">animate_8</td>
 <td class="address-2"><span id="b6fc"></span>B6FC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="1">Fetch nframes</td>
+<td class="comment-1" rowspan="1">Fetch nframes</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6fd"></span>B6FD</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">Stash in <span class="register">C</span> for later</td>
+<td class="comment-1" rowspan="1">Stash in <span class="register">C</span> for later</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1281,39 +1054,32 @@ Bug: C port uses (nframes - 1) here to fix something... (add detail)
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b6fe"></span>B6FE</td>
-<td class="bytes-0"></td>
 <td class="instruction">OR $80</td>
-<td class="comment-11" rowspan="2">Set the vischar animindex field to (nframes | vischar_ANIMINDEX_REVERSE)</td>
+<td class="comment-1" rowspan="2">Set the vischar animindex field to (nframes | vischar_ANIMINDEX_REVERSE)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b700"></span>B700</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (IY+$0C),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b703"></span>B703</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Advance to 'from'</td>
+<td class="comment-1" rowspan="1">Advance to 'from'</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b704"></span>B704</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(DE)</td>
-<td class="comment-11" rowspan="2">Set the vischar direction field to 'from'</td>
+<td class="comment-1" rowspan="2">Set the vischar direction field to 'from'</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b705"></span>B705</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (IY+$0E),A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1326,129 +1092,109 @@ Bug: C port uses final frame here, not first... (add detail)
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b708"></span>B708</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="3">Advance to animB-&gt;frame[0]</td>
+<td class="comment-1" rowspan="3">Advance to animB-&gt;frame[0]</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b709"></span>B709</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b70a"></span>B70A</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b70b"></span>B70B</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1">Stack animB</td>
+<td class="comment-1" rowspan="1">Stack animB</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b70c"></span>B70C</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">Swap frame pointers</td>
+<td class="comment-1" rowspan="1">Swap frame pointers</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b70d"></span>B70D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="7">Point <span class="register">HL</span> at anim[nframes - 1].spriteindex</td>
+<td class="comment-1" rowspan="7">Point <span class="register">HL</span> at anim[nframes - 1].spriteindex</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b70e"></span>B70E</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b70f"></span>B70F</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b710"></span>B710</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b711"></span>B711</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$00</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b713"></span>B713</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b714"></span>B714</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,BC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b715"></span>B715</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Fetch the new sprite index</td>
+<td class="comment-1" rowspan="1">Fetch the new sprite index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b716"></span>B716</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">Swap the sprite indices</td>
+<td class="comment-1" rowspan="1">Swap the sprite indices</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b717"></span>B717</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Pop and swap?</td>
+<td class="comment-1" rowspan="1">Pop and swap?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="b718"></span>B718</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP <a href="B5CE.html#b605">animate_backwards</a></td>
-<td class="comment-11" rowspan="1">Jump</td>
+<td class="comment-1" rowspan="1">Jump</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="B53E.html">B53E</a></span></td>
+<td class="prev">
+Prev: <a href="B53E.html">B53E</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#b5ce">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="B71B.html">B71B</a></span></td>
+<td class="next">
+Next: <a href="B71B.html">B71B</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="A8F4.html">A8F4</a></span></td>
+<td class="prev">
+Prev: <a href="A8F4.html">A8F4</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#a9a0">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A9AD.html">A9AD</a></span></td>
+<td class="next">
+Next: <a href="A9AD.html">A9AD</a>
+</td>
 </tr>
 </table>
 <div class="description">A9A0: Call plot_tile then advance the screen buffer pointer in <span class="register">DE'</span> by a row.</div>
@@ -30,7 +33,7 @@
 Used by the routine at <a href="A8F4.html">plot_vertical_tiles_common</a>.
 </div>
 </div>
-<table class="input-1">
+<table class="input">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
@@ -47,89 +50,74 @@ Used by the routine at <a href="A8F4.html">plot_vertical_tiles_common</a>.
 <td class="register-desc">Pointer into the 7x5 supertile indices buffer ("map_buf")</td>
 </tr>
 </table>
-<table class="output-0">
-<tr class="asm-output-header">
-<th colspan="2">Output</th>
-</tr>
-
-</table>
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_tile_then_advance</td>
+<td class="asm-label">plot_tile_then_advance</td>
 <td class="address-2"><span id="a9a0"></span>A9A0</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="A9AD.html">plot_tile</a></td>
-<td class="comment-11" rowspan="1">Plot the tile in <span class="register">A</span> to the screen buffer at <span class="register">DE'</span> using supertile pointer <span class="register">HL'</span></td>
+<td class="comment-1" rowspan="1">Plot the tile in <span class="register">A</span> to the screen buffer at <span class="register">DE'</span> using supertile pointer <span class="register">HL'</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a9a3"></span>A9A3</td>
-<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1">Bank</td>
+<td class="comment-1" rowspan="1">Bank</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a9a4"></span>A9A4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,E</td>
-<td class="comment-11" rowspan="5">Advance the screen buffer pointer <span class="register">DE'</span> to the next row (add 24 * 8 - 1)</td>
+<td class="comment-1" rowspan="5">Advance the screen buffer pointer <span class="register">DE'</span> to the next row (add 24 * 8 - 1)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a9a5"></span>A9A5</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,$BF</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a9a7"></span>A9A7</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a9a8"></span>A9A8</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="A9A0.html#a9ab">plot_tile_then_advance_0</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a9aa"></span>A9AA</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC D</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">plot_tile_then_advance_0</td>
+<td class="asm-label">plot_tile_then_advance_0</td>
 <td class="address-2"><span id="a9ab"></span>A9AB</td>
-<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1">Unbank</td>
+<td class="comment-1" rowspan="1">Unbank</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="a9ac"></span>A9AC</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="A8F4.html">A8F4</a></span></td>
+<td class="prev">
+Prev: <a href="A8F4.html">A8F4</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#a9a0">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="A9AD.html">A9AD</a></span></td>
+<td class="next">
+Next: <a href="A9AD.html">A9AD</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>

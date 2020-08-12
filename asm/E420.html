@@ -5,7 +5,6 @@
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../skoolkit.css" />
 <link rel="stylesheet" type="text/css" href="../TheGreatEscape.css" />
-
 </head>
 <body class="Asm-c">
 <table class="header">
@@ -16,9 +15,13 @@
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="E40F.html">E40F</a></span></td>
+<td class="prev">
+Prev: <a href="E40F.html">E40F</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#e420">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="E542.html">E542</a></span></td>
+<td class="next">
+Next: <a href="E542.html">E542</a>
+</td>
 </tr>
 </table>
 <div class="description">E420: Set up vischar plotting.</div>
@@ -33,7 +36,7 @@ Used by the routine at <a href="B866.html">plot_sprites</a>.
 Counterpart of, and very similar to, the routine at <a href="DC41.html">setup_item_plotting</a>.
 </div>
 </div>
-<table class="input-1">
+<table class="input">
 <tr class="asm-input-header">
 <th colspan="2">Input</th>
 </tr>
@@ -46,7 +49,7 @@ Counterpart of, and very similar to, the routine at <a href="DC41.html">setup_it
 <td class="register-desc">Pointer to visible character</td>
 </tr>
 </table>
-<table class="output-1">
+<table class="output">
 <tr class="asm-output-header">
 <th colspan="2">Output</th>
 </tr>
@@ -58,53 +61,44 @@ Counterpart of, and very similar to, the routine at <a href="DC41.html">setup_it
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">setup_vischar_plotting</td>
+<td class="asm-label">setup_vischar_plotting</td>
 <td class="address-2"><span id="e420"></span>E420</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$0F</td>
-<td class="comment-11" rowspan="3">Advance <span class="register">HL</span> to vischar.mi.pos</td>
+<td class="comment-1" rowspan="3">Advance <span class="register">HL</span> to vischar.mi.pos</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e422"></span>E422</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e423"></span>E423</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e424"></span>E424</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$81B2</td>
-<td class="comment-11" rowspan="1">Point <span class="register">DE</span> at tinypos_stash</td>
+<td class="comment-1" rowspan="1">Point <span class="register">DE</span> at tinypos_stash</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e427"></span>E427</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($68A0)</td>
-<td class="comment-11" rowspan="1">Fetch the global current room index</td>
+<td class="comment-1" rowspan="1">Fetch the global current room index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e42a"></span>E42A</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Are we outdoors?</td>
+<td class="comment-1" rowspan="1">Are we outdoors?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e42b"></span>E42B</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="E420.html#e438">svp_outdoors</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -120,53 +114,41 @@ Copy vischar.mi.pos.* to tinypos_stash with narrowing.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e42d"></span>E42D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="6">Copy vischar.mi.pos to tinypos_stash (narrowing each element to a byte wide)</td>
+<td class="comment-1" rowspan="6">Copy vischar.mi.pos to tinypos_stash (narrowing each element to a byte wide)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e42f"></span>E42F</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e430"></span>E430</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e432"></span>E432</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e433"></span>E433</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e435"></span>E435</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e436"></span>E436</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="E420.html#e44e">svp_tinypos_set</a></td>
-<td class="comment-11" rowspan="1">(else)</td>
+<td class="comment-1" rowspan="1">(else)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -182,179 +164,147 @@ Copy vischar.mi.pos.* to tinypos_stash with scaling.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">svp_outdoors</td>
+<td class="asm-label">svp_outdoors</td>
 <td class="address-2"><span id="e438"></span>E438</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="3">Fetch vischar.mi.pos.x</td>
+<td class="comment-1" rowspan="3">Fetch vischar.mi.pos.x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e439"></span>E439</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e43a"></span>E43A</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e43b"></span>E43B</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="E550.html">divide_by_8_with_rounding</a></td>
-<td class="comment-11" rowspan="1">Divide (<span class="register">C</span>,<span class="register">A</span>) by 8 with rounding. Result is in <span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Divide (<span class="register">C</span>,<span class="register">A</span>) by 8 with rounding. Result is in <span class="register">A</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e43e"></span>E43E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">Store the result as tinypos_stash.x</td>
+<td class="comment-1" rowspan="1">Store the result as tinypos_stash.x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e43f"></span>E43F</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to vischar.mi.pos.y</td>
+<td class="comment-1" rowspan="1">Advance <span class="register">HL</span> to vischar.mi.pos.y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e440"></span>E440</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Advance <span class="register">DE</span> to tinypos_stash.y</td>
+<td class="comment-1" rowspan="1">Advance <span class="register">DE</span> to tinypos_stash.y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e441"></span>E441</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$02</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for two iterations</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for two iterations</td>
 </tr>
 <tr>
-<td class="asm-label-1">svp_pos_loop</td>
+<td class="asm-label">svp_pos_loop</td>
 <td class="address-2"><span id="e443"></span>E443</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="3">Fetch vischar.mi.pos.y or .height</td>
+<td class="comment-1" rowspan="3">Fetch vischar.mi.pos.y or .height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e444"></span>E444</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e445"></span>E445</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e446"></span>E446</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="E555.html">divide_by_8</a></td>
-<td class="comment-11" rowspan="1">Divide (<span class="register">C</span>,<span class="register">A</span>) by 8 (with no rounding). Result is in <span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Divide (<span class="register">C</span>,<span class="register">A</span>) by 8 (with no rounding). Result is in <span class="register">A</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e449"></span>E449</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">Store the result as tinypos_stash.y or .height</td>
+<td class="comment-1" rowspan="1">Store the result as tinypos_stash.y or .height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e44a"></span>E44A</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">Advance to the next vischar.mi.pos field</td>
+<td class="comment-1" rowspan="1">Advance to the next vischar.mi.pos field</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e44b"></span>E44B</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Advance to the next tinypos_stash field (then finally to iso_pos - used later)</td>
+<td class="comment-1" rowspan="1">Advance to the next tinypos_stash field (then finally to iso_pos - used later)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e44c"></span>E44C</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="E420.html#e443">svp_pos_loop</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1">svp_tinypos_set</td>
+<td class="asm-label">svp_tinypos_set</td>
 <td class="address-2"><span id="e44e"></span>E44E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-11" rowspan="4">Load vischar.mi.sprite (a pointer to a spritedef_t) and stack it</td>
+<td class="comment-1" rowspan="4">Load vischar.mi.sprite (a pointer to a spritedef_t) and stack it</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e44f"></span>E44F</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e450"></span>E450</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e451"></span>E451</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e452"></span>E452</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to vischar.mi.sprite_index</td>
+<td class="comment-1" rowspan="1">Advance <span class="register">HL</span> to vischar.mi.sprite_index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e453"></span>E453</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="1">Load it</td>
+<td class="comment-1" rowspan="1">Load it</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e454"></span>E454</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($81B7),A</td>
-<td class="comment-11" rowspan="1">Save global sprite_index and left/right flip flag</td>
+<td class="comment-1" rowspan="1">Save global sprite_index and left/right flip flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e457"></span>E457</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">Bank it too</td>
+<td class="comment-1" rowspan="1">Bank it too</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e458"></span>E458</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to vischar.iso_pos</td>
+<td class="comment-1" rowspan="1">Advance <span class="register">HL</span> to vischar.iso_pos</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -367,214 +317,173 @@ Scale down iso_pos.*
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e459"></span>E459</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$02</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for two iterations</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for two iterations</td>
 </tr>
 <tr>
-<td class="asm-label-1">svp_isopos_loop</td>
+<td class="asm-label">svp_isopos_loop</td>
 <td class="address-2"><span id="e45b"></span>E45B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-11" rowspan="3">Fetch vischar.iso_pos.x/y</td>
+<td class="comment-1" rowspan="3">Fetch vischar.iso_pos.x/y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e45c"></span>E45C</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e45d"></span>E45D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e45e"></span>E45E</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="E555.html">divide_by_8</a></td>
-<td class="comment-11" rowspan="1">Divide (<span class="register">C</span>,<span class="register">A</span>) by 8 (with no rounding). Result is in <span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Divide (<span class="register">C</span>,<span class="register">A</span>) by 8 (with no rounding). Result is in <span class="register">A</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e461"></span>E461</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">Write the result to state.iso_pos.*</td>
+<td class="comment-1" rowspan="1">Write the result to state.iso_pos.*</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e462"></span>E462</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="1">Advance <span class="register">HL</span> to the next vischar.iso_pos element</td>
+<td class="comment-1" rowspan="1">Advance <span class="register">HL</span> to the next vischar.iso_pos element</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e463"></span>E463</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC DE</td>
-<td class="comment-11" rowspan="1">Advance <span class="register">DE</span> to the next state.iso_pos element</td>
+<td class="comment-1" rowspan="1">Advance <span class="register">DE</span> to the next state.iso_pos element</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e464"></span>E464</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="E420.html#e45b">svp_isopos_loop</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e466"></span>E466</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">Unbank sprite index</td>
+<td class="comment-1" rowspan="1">Unbank sprite index</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e467"></span>E467</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">Restore sprite pointer</td>
+<td class="comment-1" rowspan="1">Restore sprite pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e468"></span>E468</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-11" rowspan="4">Multiply <span class="register">A</span> by six (width of a spritedef_t)</td>
+<td class="comment-1" rowspan="4">Multiply <span class="register">A</span> by six (width of a spritedef_t)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e469"></span>E469</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e46a"></span>E46A</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e46b"></span>E46B</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,C</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e46c"></span>E46C</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,E</td>
-<td class="comment-11" rowspan="4">Add onto sprite base pointer</td>
+<td class="comment-1" rowspan="4">Add onto sprite base pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e46d"></span>E46D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e46e"></span>E46E</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="E420.html#e471">svp_sprptr_ready</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e470"></span>E470</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC D</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">svp_sprptr_ready</td>
+<td class="asm-label">svp_sprptr_ready</td>
 <td class="address-2"><span id="e471"></span>E471</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-11" rowspan="2">Skip over vischar.room and unused bytes</td>
+<td class="comment-1" rowspan="2">Skip over vischar.room and unused bytes</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e472"></span>E472</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e473"></span>E473</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">Put sprite pointer into <span class="register">DE</span></td>
+<td class="comment-1" rowspan="1">Put sprite pointer into <span class="register">DE</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e474"></span>E474</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">Copy spritedef width in bytes to vischar</td>
+<td class="comment-1" rowspan="1">Copy spritedef width in bytes to vischar</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e476"></span>E476</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDI</td>
-<td class="comment-11" rowspan="1">Copy spritedef height in rows to vischar</td>
+<td class="comment-1" rowspan="1">Copy spritedef height in rows to vischar</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e478"></span>E478</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$81AC</td>
-<td class="comment-11" rowspan="3">Copy spritedef bitmap and mask pointers to global bitmap_pointer and mask_pointer</td>
+<td class="comment-1" rowspan="3">Copy spritedef bitmap and mask pointers to global bitmap_pointer and mask_pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e47b"></span>E47B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD BC,$0004</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e47e"></span>E47E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LDIR</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e480"></span>E480</td>
-<td class="bytes-0"></td>
 <td class="instruction">CALL <a href="BAF7.html">vischar_visible</a></td>
-<td class="comment-11" rowspan="1">Clip the vischar's dimensions to the game window</td>
+<td class="comment-1" rowspan="1">Clip the vischar's dimensions to the game window</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e483"></span>E483</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Is it visible?</td>
+<td class="comment-1" rowspan="1">Is it visible?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e484"></span>E484</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET NZ</td>
-<td class="comment-11" rowspan="1">Return if not [RET NZ would do]</td>
+<td class="comment-1" rowspan="1">Return if not [RET NZ would do]</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -587,18 +496,16 @@ The vischar is visible.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e485"></span>E485</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-11" rowspan="1">Preserve the lefthand skip and clipped width</td>
+<td class="comment-1" rowspan="1">Preserve the lefthand skip and clipped width</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e486"></span>E486</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-11" rowspan="1">Preserve the top skip and clipped height</td>
+<td class="comment-1" rowspan="1">Preserve the top skip and clipped height</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -611,144 +518,122 @@ Self modify the sprite plotter routines.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e487"></span>E487</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$1E)</td>
-<td class="comment-11" rowspan="1">Fetch vischar.width_bytes to check its width</td>
+<td class="comment-1" rowspan="1">Fetch vischar.width_bytes to check its width</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e48a"></span>E48A</td>
-<td class="bytes-0"></td>
 <td class="instruction">CP $03</td>
-<td class="comment-11" rowspan="1">Is it 3? (3 =&gt; 16 pixels wide, 4 =&gt; 24 pixels wide)</td>
+<td class="comment-1" rowspan="1">Is it 3? (3 =&gt; 16 pixels wide, 4 =&gt; 24 pixels wide)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e48c"></span>E48C</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="E420.html#e49c">svp_24_wide</a></td>
-<td class="comment-11" rowspan="1">Jump if 24 wide</td>
+<td class="comment-1" rowspan="1">Jump if 24 wide</td>
 </tr>
 <tr>
-<td class="asm-label-1">svp_16_wide</td>
+<td class="asm-label">svp_16_wide</td>
 <td class="address-1"><span id="e48e"></span>E48E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,E</td>
-<td class="comment-11" rowspan="1">Copy the clipped height into <span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Copy the clipped height into <span class="register">A</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e48f"></span>E48F</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($E2C2),A</td>
-<td class="comment-11" rowspan="1">Write clipped height to the instruction at <a href="E2A2.html#e2c1">pms16_right_height_iters</a> in plot_masked_sprite_16px (shift right case)</td>
+<td class="comment-1" rowspan="1">Write clipped height to the instruction at <a href="E2A2.html#e2c1">pms16_right_height_iters</a> in plot_masked_sprite_16px (shift right case)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e492"></span>E492</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($E363),A</td>
-<td class="comment-11" rowspan="1">Write clipped height to the instruction at <a href="E2A2.html#e362">pms16_left_height_iters</a> in plot_masked_sprite_16px (shift left case)</td>
+<td class="comment-1" rowspan="1">Write clipped height to the instruction at <a href="E2A2.html#e362">pms16_left_height_iters</a> in plot_masked_sprite_16px (shift left case)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e495"></span>E495</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$03</td>
-<td class="comment-11" rowspan="1">Set for three enables</td>
+<td class="comment-1" rowspan="1">Set for three enables</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e497"></span>E497</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$E0E0</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at masked_sprite_plotter_16_enables</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at masked_sprite_plotter_16_enables</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e49a"></span>E49A</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="E420.html#e4a8">svp_do_enables</a></td>
-<td class="comment-11" rowspan="1">(else)</td>
+<td class="comment-1" rowspan="1">(else)</td>
 </tr>
 <tr>
-<td class="asm-label-1">svp_24_wide</td>
+<td class="asm-label">svp_24_wide</td>
 <td class="address-2"><span id="e49c"></span>E49C</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,E</td>
-<td class="comment-11" rowspan="1">Copy the clipped height into <span class="register">A</span></td>
+<td class="comment-1" rowspan="1">Copy the clipped height into <span class="register">A</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e49d"></span>E49D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($E121),A</td>
-<td class="comment-11" rowspan="1">Write clipped height to the instruction at <a href="E102.html#e120">pms24_right_height_iters</a> in plot_masked_sprite_24px (shift right case)</td>
+<td class="comment-1" rowspan="1">Write clipped height to the instruction at <a href="E102.html#e120">pms24_right_height_iters</a> in plot_masked_sprite_24px (shift right case)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4a0"></span>E4A0</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($E1E2),A</td>
-<td class="comment-11" rowspan="1">Write clipped height to the instruction at <a href="E102.html#e1e1">pms24_left_height_iters</a> in plot_masked_sprite_24px (shift left case)</td>
+<td class="comment-1" rowspan="1">Write clipped height to the instruction at <a href="E102.html#e1e1">pms24_left_height_iters</a> in plot_masked_sprite_24px (shift left case)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4a3"></span>E4A3</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$04</td>
-<td class="comment-11" rowspan="1">Set for four enables</td>
+<td class="comment-1" rowspan="1">Set for four enables</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4a5"></span>E4A5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$E0EC</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at masked_sprite_plotter_24_enables</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at masked_sprite_plotter_24_enables</td>
 </tr>
 <tr>
-<td class="asm-label-1">svp_do_enables</td>
+<td class="asm-label">svp_do_enables</td>
 <td class="address-2"><span id="e4a8"></span>E4A8</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-11" rowspan="1">Preserve enables pointer</td>
+<td class="comment-1" rowspan="1">Preserve enables pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4a9"></span>E4A9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($E4C0),A</td>
-<td class="comment-11" rowspan="2">Write enable count to the instruction at <a href="E420.html#e4bf">svp_enables_iters</a> (self modify) and keep a copy</td>
+<td class="comment-1" rowspan="2">Write enable count to the instruction at <a href="E420.html#e4bf">svp_enables_iters</a> (self modify) and keep a copy</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4ac"></span>E4AC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4ad"></span>E4AD</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,B</td>
-<td class="comment-11" rowspan="2">Is the lefthand skip zero?</td>
+<td class="comment-1" rowspan="2">Is the lefthand skip zero?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4ae"></span>E4AE</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4af"></span>E4AF</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="E420.html#e4b7">svp_enable_is_zero</a></td>
-<td class="comment-11" rowspan="1">Jump if not</td>
+<td class="comment-1" rowspan="1">Jump if not</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -761,88 +646,73 @@ There's no left hand skip - enable instructions.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">svp_enable_is_one</td>
+<td class="asm-label">svp_enable_is_one</td>
 <td class="address-1"><span id="e4b1"></span>E4B1</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,$77</td>
-<td class="comment-11" rowspan="2">Load <span class="register">A'</span> with the opcode of 'LD (HL),A'</td>
+<td class="comment-1" rowspan="2">Load <span class="register">A'</span> with the opcode of 'LD (HL),A'</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4b3"></span>E4B3</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4b4"></span>E4B4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,C</td>
-<td class="comment-11" rowspan="1">Set a counter to clipped_width. We'll write out this many bytes before clipping</td>
+<td class="comment-1" rowspan="1">Set a counter to clipped_width. We'll write out this many bytes before clipping</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4b5"></span>E4B5</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR <a href="E420.html#e4bb">svp_enable_cont</a></td>
-<td class="comment-11" rowspan="1">(else)</td>
+<td class="comment-1" rowspan="1">(else)</td>
 </tr>
 <tr>
-<td class="asm-label-1">svp_enable_is_zero</td>
+<td class="asm-label">svp_enable_is_zero</td>
 <td class="address-2"><span id="e4b7"></span>E4B7</td>
-<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="2">Load <span class="register">A'</span> with the opcode of 'NOP'</td>
+<td class="comment-1" rowspan="2">Load <span class="register">A'</span> with the opcode of 'NOP'</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4b8"></span>E4B8</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4b9"></span>E4B9</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,E</td>
-<td class="comment-11" rowspan="2">Set a counter to (enable_count - clipped_width). We'll clip until this many bytes have been written</td>
+<td class="comment-1" rowspan="2">Set a counter to (enable_count - clipped_width). We'll clip until this many bytes have been written</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4ba"></span>E4BA</td>
-<td class="bytes-0"></td>
 <td class="instruction">SUB C</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">svp_enable_cont</td>
+<td class="asm-label">svp_enable_cont</td>
 <td class="address-2"><span id="e4bb"></span>E4BB</td>
-<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1">Bank</td>
+<td class="comment-1" rowspan="1">Bank</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4bc"></span>E4BC</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP HL</td>
-<td class="comment-11" rowspan="1">Restore enables pointer</td>
+<td class="comment-1" rowspan="1">Restore enables pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4bd"></span>E4BD</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD C,A</td>
-<td class="comment-11" rowspan="1">Move counter to <span class="register">C</span></td>
+<td class="comment-1" rowspan="1">Move counter to <span class="register">C</span></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4be"></span>E4BE</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX AF,AF'</td>
-<td class="comment-11" rowspan="1">Unbank the opcode we'll write</td>
+<td class="comment-1" rowspan="1">Unbank the opcode we'll write</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -855,11 +725,10 @@ Set the addresses in the jump table to NOP or LD (HL),A.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">svp_enables_iters</td>
+<td class="asm-label">svp_enables_iters</td>
 <td class="address-1"><span id="e4bf"></span>E4BF</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD B,$03</td>
-<td class="comment-11" rowspan="1">Set <span class="register">B</span> for 3 iterations (self modified by $E4A9)</td>
+<td class="comment-1" rowspan="1">Set <span class="register">B</span> for 3 iterations (self modified by $E4A9)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -872,102 +741,84 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">svp_enables_loop</td>
+<td class="asm-label">svp_enables_loop</td>
 <td class="address-2"><span id="e4c1"></span>E4C1</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment-11" rowspan="3">Fetch an address</td>
+<td class="comment-1" rowspan="3">Fetch an address</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4c2"></span>E4C2</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4c3"></span>E4C3</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD D,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4c4"></span>E4C4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">Write a new opcode</td>
+<td class="comment-1" rowspan="1">Write a new opcode</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4c5"></span>E4C5</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">Advance</td>
+<td class="comment-1" rowspan="1">Advance</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4c6"></span>E4C6</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,(HL)</td>
-<td class="comment-11" rowspan="3">Fetch an address</td>
+<td class="comment-1" rowspan="3">Fetch an address</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4c7"></span>E4C7</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4c8"></span>E4C8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD D,(HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4c9"></span>E4C9</td>
-<td class="bytes-0"></td>
 <td class="instruction">INC HL</td>
-<td class="comment-11" rowspan="1">Advance</td>
+<td class="comment-1" rowspan="1">Advance</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4ca"></span>E4CA</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD (DE),A</td>
-<td class="comment-11" rowspan="1">Write a new opcode</td>
+<td class="comment-1" rowspan="1">Write a new opcode</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4cb"></span>E4CB</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC C</td>
-<td class="comment-11" rowspan="1">Count down the counter</td>
+<td class="comment-1" rowspan="1">Count down the counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4cc"></span>E4CC</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="E420.html#e4d0">setup_vischar_plotting_0</a></td>
-<td class="comment-11" rowspan="1">Jump if nonzero</td>
+<td class="comment-1" rowspan="1">Jump if nonzero</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4ce"></span>E4CE</td>
-<td class="bytes-0"></td>
 <td class="instruction">XOR $77</td>
-<td class="comment-11" rowspan="1">Swap between LD (HL),A and NOP</td>
+<td class="comment-1" rowspan="1">Swap between LD (HL),A and NOP</td>
 </tr>
 <tr>
-<td class="asm-label-1">setup_vischar_plotting_0</td>
+<td class="asm-label">setup_vischar_plotting_0</td>
 <td class="address-2"><span id="e4d0"></span>E4D0</td>
-<td class="bytes-0"></td>
 <td class="instruction">DJNZ <a href="E420.html#e4c1">svp_enables_loop</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -983,382 +834,298 @@ The full calculation can be avoided if we know there are rows to skip since in t
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4d2"></span>E4D2</td>
-<td class="bytes-0"></td>
 <td class="instruction">EXX</td>
-<td class="comment-11" rowspan="1">Bank</td>
+<td class="comment-1" rowspan="1">Bank</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4d3"></span>E4D3</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,D</td>
-<td class="comment-11" rowspan="2">Is top skip zero?</td>
+<td class="comment-1" rowspan="2">Is top skip zero?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4d4"></span>E4D4</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4d5"></span>E4D5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$0000</td>
-<td class="comment-11" rowspan="1">Initialise our Y value to zero</td>
+<td class="comment-1" rowspan="1">Initialise our Y value to zero</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4d8"></span>E4D8</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NZ,<a href="E420.html#e4f5">svp_y_skip_set</a></td>
-<td class="comment-11" rowspan="1">Jump if top skip isn't zero</td>
+<td class="comment-1" rowspan="1">Jump if top skip isn't zero</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4da"></span>E4DA</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($81BC)</td>
-<td class="comment-11" rowspan="6">Compute Y = map_position_y * 8 (pixels per column)</td>
+<td class="comment-1" rowspan="6">Compute Y = map_position_y * 8 (pixels per column)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4dd"></span>E4DD</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4de"></span>E4DE</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD H,$00</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4e0"></span>E4E0</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4e1"></span>E4E1</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4e2"></span>E4E2</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4e3"></span>E4E3</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">Bank the temporary Y</td>
+<td class="comment-1" rowspan="1">Bank the temporary Y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4e4"></span>E4E4</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,(IY+$1A)</td>
-<td class="comment-11" rowspan="2">Fetch vischar.iso_pos.y</td>
+<td class="comment-1" rowspan="2">Fetch vischar.iso_pos.y</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4e7"></span>E4E7</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD H,(IY+$1B)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4ea"></span>E4EA</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-11" rowspan="1">Clear carry flag</td>
+<td class="comment-1" rowspan="1">Clear carry flag</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4eb"></span>E4EB</td>
-<td class="bytes-0"></td>
 <td class="instruction">SBC HL,DE</td>
-<td class="comment-11" rowspan="1">Compute Y = (vischar.iso_pos.y - Y)</td>
+<td class="comment-1" rowspan="1">Compute Y = (vischar.iso_pos.y - Y)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4ed"></span>E4ED</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-11" rowspan="7">Multiply Y by 24 (columns)</td>
+<td class="comment-1" rowspan="7">Multiply Y by 24 (columns)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4ee"></span>E4EE</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4ef"></span>E4EF</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4f0"></span>E4F0</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4f1"></span>E4F1</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD D,H</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4f2"></span>E4F2</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4f3"></span>E4F3</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4f4"></span>E4F4</td>
-<td class="bytes-0"></td>
 <td class="instruction">EX DE,HL</td>
-<td class="comment-11" rowspan="1">Move Y into <span class="register">DE</span></td>
+<td class="comment-1" rowspan="1">Move Y into <span class="register">DE</span></td>
 </tr>
 <tr>
-<td class="asm-label-1">svp_y_skip_set</td>
+<td class="asm-label">svp_y_skip_set</td>
 <td class="address-2"><span id="e4f5"></span>E4F5</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,($81B5)</td>
-<td class="comment-11" rowspan="3">Compute x = iso_pos_x - map_position_x</td>
+<td class="comment-1" rowspan="3">Compute x = iso_pos_x - map_position_x</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4f8"></span>E4F8</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$81BB</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4fb"></span>E4FB</td>
-<td class="bytes-0"></td>
 <td class="instruction">SUB (HL)</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4fc"></span>E4FC</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-11" rowspan="4">Copy x to <span class="register">HL</span> and sign extend it</td>
+<td class="comment-1" rowspan="4">Copy x to <span class="register">HL</span> and sign extend it</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4fd"></span>E4FD</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD H,$00</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e4ff"></span>E4FF</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR NC,<a href="E420.html#e503">svp_x_skip_set</a></td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e501"></span>E501</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD H,$FF</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1">svp_x_skip_set</td>
+<td class="asm-label">svp_x_skip_set</td>
 <td class="address-2"><span id="e503"></span>E503</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-11" rowspan="1">Combine the x and y values</td>
+<td class="comment-1" rowspan="1">Combine the x and y values</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e504"></span>E504</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD DE,$F290</td>
-<td class="comment-11" rowspan="2">Add the screen buffer start address</td>
+<td class="comment-1" rowspan="2">Add the screen buffer start address</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e507"></span>E507</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e508"></span>E508</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($81A2),HL</td>
-<td class="comment-11" rowspan="1">Save the finalised screen buffer pointer</td>
+<td class="comment-1" rowspan="1">Save the finalised screen buffer pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e50b"></span>E50B</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,$8100</td>
-<td class="comment-11" rowspan="1">Point <span class="register">HL</span> at the mask_buffer</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the mask_buffer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e50e"></span>E50E</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="2">Retrieve the top skip and clipped height</td>
+<td class="comment-1" rowspan="2">Retrieve the top skip and clipped height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e50f"></span>E50F</td>
-<td class="bytes-0"></td>
 <td class="instruction">PUSH DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e510"></span>E510</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,D</td>
-<td class="comment-11" rowspan="5">mask buffer pointer += top_skip * 4</td>
+<td class="comment-1" rowspan="5">mask buffer pointer += top_skip * 4</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e511"></span>E511</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e512"></span>E512</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e513"></span>E513</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e514"></span>E514</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e515"></span>E515</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,(IY+$1A)</td>
-<td class="comment-11" rowspan="6">mask buffer pointer += (vischar.iso_pos.y &amp; 7) * 4</td>
+<td class="comment-1" rowspan="6">mask buffer pointer += (vischar.iso_pos.y &amp; 7) * 4</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e518"></span>E518</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND $07</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e51a"></span>E51A</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e51b"></span>E51B</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e51c"></span>E51C</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,L</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e51d"></span>E51D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD L,A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e51e"></span>E51E</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($81B0),HL</td>
-<td class="comment-11" rowspan="1">Set foreground_mask_pointer</td>
+<td class="comment-1" rowspan="1">Set foreground_mask_pointer</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e521"></span>E521</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP DE</td>
-<td class="comment-11" rowspan="1">Retrieve the top skip and clipped height</td>
+<td class="comment-1" rowspan="1">Retrieve the top skip and clipped height</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e522"></span>E522</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD A,D</td>
-<td class="comment-11" rowspan="2">Is top skip zero?</td>
+<td class="comment-1" rowspan="2">Is top skip zero?</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e523"></span>E523</td>
-<td class="bytes-0"></td>
 <td class="instruction">AND A</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e524"></span>E524</td>
-<td class="bytes-0"></td>
 <td class="instruction">JR Z,<a href="E420.html#e531">setup_vischar_plotting_1</a></td>
-<td class="comment-11" rowspan="1">Jump if so</td>
+<td class="comment-1" rowspan="1">Jump if so</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1371,32 +1138,27 @@ Generic multiply loop.
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e526"></span>E526</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD D,A</td>
-<td class="comment-11" rowspan="1">Copy top_skip to loop counter</td>
+<td class="comment-1" rowspan="1">Copy top_skip to loop counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e527"></span>E527</td>
-<td class="bytes-0"></td>
 <td class="instruction">XOR A</td>
-<td class="comment-11" rowspan="1">Zero the accumulator</td>
+<td class="comment-1" rowspan="1">Zero the accumulator</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e528"></span>E528</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,(IY+$1E)</td>
-<td class="comment-11" rowspan="2">Set multiplier to (vischar.width_bytes - 1)</td>
+<td class="comment-1" rowspan="2">Set multiplier to (vischar.width_bytes - 1)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e52b"></span>E52B</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC E</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1409,25 +1171,22 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">svp_mult_loop</td>
+<td class="asm-label">svp_mult_loop</td>
 <td class="address-2"><span id="e52c"></span>E52C</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD A,E</td>
-<td class="comment-11" rowspan="1">Accumulate</td>
+<td class="comment-1" rowspan="1">Accumulate</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e52d"></span>E52D</td>
-<td class="bytes-0"></td>
 <td class="instruction">DEC D</td>
-<td class="comment-11" rowspan="1">Decrement counter</td>
+<td class="comment-1" rowspan="1">Decrement counter</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e52e"></span>E52E</td>
-<td class="bytes-0"></td>
 <td class="instruction">JP NZ,<a href="E420.html#e52c">svp_mult_loop</a></td>
-<td class="comment-11" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">...loop</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1440,53 +1199,42 @@ Start loop
 </td>
 </tr>
 <tr>
-<td class="asm-label-1">setup_vischar_plotting_1</td>
+<td class="asm-label">setup_vischar_plotting_1</td>
 <td class="address-2"><span id="e531"></span>E531</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD E,A</td>
-<td class="comment-11" rowspan="1">Set <span class="register">DE</span> to skip (result)</td>
+<td class="comment-1" rowspan="1">Set <span class="register">DE</span> to skip (result)</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e532"></span>E532</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,($81AC)</td>
-<td class="comment-11" rowspan="3">Advance bitmap_pointer by 'skip'</td>
+<td class="comment-1" rowspan="3">Advance bitmap_pointer by 'skip'</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e535"></span>E535</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e536"></span>E536</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($81AC),HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e539"></span>E539</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD HL,($81AE)</td>
-<td class="comment-11" rowspan="3">Advance mask_pointer by 'skip'</td>
+<td class="comment-1" rowspan="3">Advance mask_pointer by 'skip'</td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e53c"></span>E53C</td>
-<td class="bytes-0"></td>
 <td class="instruction">ADD HL,DE</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e53d"></span>E53D</td>
-<td class="bytes-0"></td>
 <td class="instruction">LD ($81AE),HL</td>
-<td class="comment-01" rowspan="1"></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1499,11 +1247,10 @@ It's unclear as to why this value is preserved since it's not used by the caller
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e540"></span>E540</td>
-<td class="bytes-0"></td>
 <td class="instruction">POP BC</td>
-<td class="comment-11" rowspan="1">Restore the lefthand skip and clipped width</td>
+<td class="comment-1" rowspan="1">Restore the lefthand skip and clipped width</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1516,24 +1263,27 @@ The Z flag remains set from <a href="E420.html#e52e">E52E</a> signalling "is vis
 </td>
 </tr>
 <tr>
-<td class="asm-label-1"></td>
+<td class="asm-label"></td>
 <td class="address-1"><span id="e541"></span>E541</td>
-<td class="bytes-0"></td>
 <td class="instruction">RET</td>
-<td class="comment-11" rowspan="1">Return</td>
+<td class="comment-1" rowspan="1">Return</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
-<td class="prev"><span class="prev-1">Prev: <a href="E40F.html">E40F</a></span></td>
+<td class="prev">
+Prev: <a href="E40F.html">E40F</a>
+</td>
 <td class="up">Up: <a href="../maps/all.html#e420">Map</a></td>
-<td class="next"><span class="next-1">Next: <a href="E542.html">E542</a></span></td>
+<td class="next">
+Next: <a href="E542.html">E542</a>
+</td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20190629</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2019 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 7.2.</div>
+<div class="release">The complete The Great Escape disassembly 20200812</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2020 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.2.</div>
 </footer>
 </body>
 </html>
