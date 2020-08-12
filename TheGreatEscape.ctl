@@ -8,7 +8,7 @@
 > $4000 ; https://github.com/dpt/The-Great-Escape
 > $4000 ;
 > $4000 ; Copyright 1986 Ocean Software Ltd. (The Great Escape)
-> $4000 ; Copyright 2012-2019 David Thomas <dave@davespace.co.uk> (this disassembly)
+> $4000 ; Copyright 2012-2020 David Thomas <dave@davespace.co.uk> (this disassembly)
 > $4000 ;
 > $4000 @ofix+begin
 > $4000 ; This disassembly contains ofix changes (operand fixes):
