@@ -11,7 +11,7 @@ _The Great Escape_ is a 1986 isometric 3D prison break game for the 48K ZX Spect
 The Disassembly
 ---------------
 
-[Read the disassembly here](http://dpt.github.com/The-Great-Escape/).
+[Read the current version of the disassembly here](http://dpt.github.com/The-Great-Escape/). It's not only an assembly listing: it has decoded game graphics, characters, items, animations and various other details about the game's workings.
 
 Note that the disassembly may lag behind the head of the source tree: it might not feature the very latest changes until I push an updated build.
 
@@ -25,7 +25,7 @@ Goals
 
 My first goal is to build a fully documented disassembly of the game. SkoolKit lets us build both an annotated assembly listing suitable for rebuilding an exact image of the original game and a detailed cross-referenced disassembly in HTML format.
 
-The second is to transform the annotated assembly into C source code which behaves exactly like the original game. The work-in-progress reimplementation project lives in [this repository](https://github.com/dpt/The-Great-Escape-in-C) and the two goals proceed in tandem.
+The second is to transform the annotated assembly into C source code which behaves exactly like the original game. The work-in-progress reimplementation project lives in [this repository](https://github.com/dpt/The-Great-Escape-in-C) and the two projects proceed in tandem.
 
 SkoolKit
 --------
@@ -116,12 +116,11 @@ Current State of the Project
 
 The reverse engineering of the game is now complete, but work will continue to improve the accuracy and readability of the disassembly.
 
-Presentation
-------------
+Presentations & Write-ups
+-------------------------
 
-Here's the [slides from a presentation](http://slides.com/dpt/the-great-escape) I delivered to my colleagues about the project in January 2016. There's a [more recently updated version too](https://slides.com/dpt/the-great-escape-42cbed).
+Here's the [slides from a presentation](http://slides.com/dpt/the-great-escape) I delivered to my colleagues about the project in January 2016.
 
-Write-up
---------
+There's a [more recently updated version too](https://slides.com/dpt/the-great-escape-42cbed) which were written for a 2020 presentation about the project to the ABug user group: http://abug.org.uk/index.php/2020/07/04/the-great-escape-risc-os-conversion-david-thomas/
 
-In 2019 I did a big write-up about the project: http://www.davespace.co.uk/the.great.escape/
+In 2019 I did a big write-up about the project on my website: http://www.davespace.co.uk/the.great.escape/
