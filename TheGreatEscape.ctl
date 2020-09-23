@@ -42,8 +42,8 @@
 > $4000 ;   and has been invented for the purposes of the disassembly. I have seen none
 > $4000 ;   of the original source, nor know anything of how it was built.
 > $4000 ;
-> $4000 ;   When I contacted the author he informed me that the original source is
-> $4000 ;   probably now lost forever. :-(
+> $4000 ;   When I contacted the designer and author, John Heap, he informed me that
+> $4000 ;   the original source is probably now lost forever. :-(
 > $4000 ;
 > $4000 ; * The md5sum of the original tape image this disassembly was taken from is
 > $4000 ;   a6e5d50ab065accb017ecc957a954b53 and was sourced from
@@ -99,18 +99,19 @@
 > $4000 ;
 > $4000 ;
 > $4000 ; //////////////////////////////////////////////////////////////////////////////
-> $4000 ; COMMENTARY
+> $4000 ; COMMENTARY TERMS
 > $4000 ; //////////////////////////////////////////////////////////////////////////////
 > $4000 ;
-> $4000 ; "Exit via" - indicates that the code jumped to does not return. It itself
-> $4000 ; will RET to the caller.
+> $4000 ; "CHECK". This indicates something that is still to be proven or verified.
 > $4000 ;
+> $4000 ; "Exit via". This indicates that, instead of a RET, the instruction will jump
+> $4000 ; into another routine which itself will perform the RET.
 > $4000 ;
 > $4000 ; //////////////////////////////////////////////////////////////////////////////
 > $4000 ; ZX SPECTRUM BASIC DEFINITIONS
 > $4000 ; //////////////////////////////////////////////////////////////////////////////
 > $4000 ;
-> $4000 ; These are here for information only and are not used by any of the
+> $4000 ; These are here for information only and are not used by any of the assembly
 > $4000 ; directives.
 > $4000 ;
 > $4000 ; attribute_BLUE_OVER_BLACK                     = 1,
@@ -139,10 +140,10 @@
 > $4000 ;
 > $4000 ;
 > $4000 ; //////////////////////////////////////////////////////////////////////////////
-> $4000 ; ENUMERATIONS
+> $4000 ; CONSTANTS
 > $4000 ; //////////////////////////////////////////////////////////////////////////////
 > $4000 ;
-> $4000 ; These are here for information only and are not used by any of the
+> $4000 ; These are here for information only and are not used by any of the assembly
 > $4000 ; directives.
 > $4000 ;
 > $4000 ; character_0_COMMANDANT                        = 0,
@@ -300,14 +301,14 @@
 > $4000 ; interiorobject_TUNNEL_ENTRANCE                = 18,
 > $4000 ; interiorobject_PRISONER_SAT_END_TABLE         = 19,
 > $4000 ; interiorobject_COLLAPSED_TUNNEL_SW_NE         = 20,
-> $4000 ; interiorobject_UNUSED_21                      = 21,   ; object unused by game, draws as interiorobject_ROOM_OUTLINE_22x12_A
+> $4000 ; interiorobject_UNUSED_21                      = 21,   ; unused by game, draws as interiorobject_ROOM_OUTLINE_22x12_A
 > $4000 ; interiorobject_CHAIR_FACING_SE                = 22,
 > $4000 ; interiorobject_OCCUPIED_BED                   = 23,
 > $4000 ; interiorobject_ORNATE_WARDROBE_FACING_SW      = 24,
 > $4000 ; interiorobject_CHAIR_FACING_SW                = 25,
 > $4000 ; interiorobject_CUPBOARD_FACING_SE             = 26,
 > $4000 ; interiorobject_ROOM_OUTLINE_18x10_A           = 27,
-> $4000 ; interiorobject_UNUSED_28                      = 28,   ; object unused by game, draws as interiorobject_TABLE
+> $4000 ; interiorobject_UNUSED_28                      = 28,   ; unused by game, draws as interiorobject_TABLE
 > $4000 ; interiorobject_TABLE                          = 29,
 > $4000 ; interiorobject_STOVE_PIPE                     = 30,
 > $4000 ; interiorobject_PAPERS_ON_FLOOR                = 31,
@@ -318,7 +319,7 @@
 > $4000 ; interiorobject_TINY_DOOR_FRAME_NE             = 36,   ; tunnel entrance
 > $4000 ; interiorobject_NOTICEBOARD_FACING_SE          = 37,
 > $4000 ; interiorobject_DOOR_FRAME_NW                  = 38,
-> $4000 ; interiorobject_UNUSED_39                      = 39,   ; object unused by game, draws as interiorobject_END_DOOR_FRAME_NW_SE
+> $4000 ; interiorobject_UNUSED_39                      = 39,   ; unused by game, draws as interiorobject_END_DOOR_FRAME_NW_SE
 > $4000 ; interiorobject_DOOR_FRAME_NE                  = 40,
 > $4000 ; interiorobject_ROOM_OUTLINE_15x8              = 41,
 > $4000 ; interiorobject_CUPBOARD_FACING_SW             = 42,
@@ -360,6 +361,9 @@
 > $4000 ; These are here for information only and are not used by any of the
 > $4000 ; directives.
 > $4000 ;
+> $4000 ; INPUT
+> $4000 ; -----
+> $4000 ;
 > $4000 ; input_NONE                                    = 0,
 > $4000 ; input_UP                                      = 1,
 > $4000 ; input_DOWN                                    = 2,
@@ -371,47 +375,139 @@
 > $4000 ; input_LEFT_FIRE                               = input_LEFT  + input_FIRE,
 > $4000 ; input_RIGHT_FIRE                              = input_RIGHT + input_FIRE,
 > $4000 ;
-> $4000 ; ; $8000, $8020, $8040, ...
-> $4000 ; vischar_CHARACTER_MASK                        = $1F,          ; character index mask. this is used in a couple of places but it's not consistently applied. i've not spotted anything else sharing the this field.
+> $4000 ; VISCHAR
+> $4000 ; -------
 > $4000 ;
-> $4000 ; ; $8001, $8021, $8041, ...
+> $4000 ; vischar byte 0 'character' ::
+> $4000 ;
+> $4000 ; Character index mask. This is used in a couple of places but it's not
+> $4000 ; consistently applied. I've not spotted anything else sharing the this field.
+> $4000 ; vischar_CHARACTER_MASK                        = $1F,
+> $4000 ;
+> $4000 ; vischar byte 1 'flags' ::
+> $4000 ;
+> $4000 ; Indicates that this vischar is unused.
 > $4000 ; vischar_FLAGS_EMPTY_SLOT                      = $FF,
+> $4000 ;
+> $4000 ; Bits 0..5 form a mask to isolate all of the modes.
+> $4000 ; Note: $0F would be sufficient.
 > $4000 ; vischar_FLAGS_MASK                            = $3F,
-> $4000 ; vischar_FLAGS_PICKING_LOCK                    = 1 << 0,       ; hero only
-> $4000 ; vischar_FLAGS_CUTTING_WIRE                    = 1 << 1,       ; hero only
 > $4000 ;
-> $4000 ; Four pursuit modes:
-> $4000 ; vischar_PURSUIT_PURSUE                        = 1 << 0,       ; non-hero only. this flag is set when a visible friendly was nearby when a bribe was used. it's also set by hostiles_pursue
-> $4000 ; vischar_PURSUIT_HASSLE                        = 2 << 0,       ; this flag is set in guards_follow_suspicious_character when a hostile is following the hero
-> $4000 ; vischar_PURSUIT_DOG_FOOD                      = 3 << 0,       ; set when food is in the vicinity of a dog
-> $4000 ; vischar_PURSUIT_SAW_BRIBE                     = 4 << 0,       ; this flag is set when a visible hostile was nearby when a bribe was used. perhaps it distracts the guards?
+> $4000 ; The bottom nibble of flags contains either two flags for the hero, or a
+> $4000 ; pursuit mode field for NPCs.
 > $4000 ;
-> $4000 ; vischar_FLAGS_TARGET_IS_DOOR                  = 1 << 6,       ; affects scaling
-> $4000 ; vischar.FLAGS.NO.COLLIDE                      = 1 << 7,       ; don't do collision() for this vischar
+> $4000 ; Bit 0 is set when the hero is picking a lock. (Hero only)
+> $4000 ; vischar_FLAGS_PICKING_LOCK                    = 1,
 > $4000 ;
-> $4000 ; ; $8002, $8022, $8042, ...
-> $4000 ; route_REVERSED                                = 1 << 7,       ; set if the route is to be followed in reverse order
+> $4000 ; Bit 1 is set when the hero is cutting wire. (Hero only)
+> $4000 ; vischar_FLAGS_CUTTING_WIRE                    = 2,
 > $4000 ;
-> $4000 ; ; $8007, $8027, $8047, ...
-> $4000 ; vischar_BYTE7_MASK_LO                         = $0F,
+> $4000 ; Bits 0..3 are a mask to isolate the pursuit mode.
+> $4000 ; vischar_FLAGS_PURSUIT_MASK                    = $0F,
+> $4000 ;
+> $4000 ; Pursuit mode == 1 when a friendly character was nearby when a bribe was used
+> $4000 ; or when a hostile is pursuing with intent to capture. (NPC only) Set in
+> $4000 ; #R$CCAB.
+> $4000 ; vischar_PURSUIT_PURSUE                        = 1,
+> $4000 ;
+> $4000 ; Pursuit mode == 2 when a hostile sees a player-controlled hero, or the flag
+> $4000 ; is red. It causes hostiles to follow the hero and get in his way but not
+> $4000 ; arrest him. (NPC only)
+> $4000 ; Set in #R$CC37.
+> $4000 ; vischar_PURSUIT_HASSLE                        = 2,
+> $4000 ;
+> $4000 ; Pursuit mode == 3 when food is in the vicinity of a dog. (Guard dog NPC only)
+> $4000 ; vischar_PURSUIT_DOG_FOOD                      = 3,
+> $4000 ;
+> $4000 ; Pursuit mode == 4 when a hostile was nearby when a bribe was accepted. It
+> $4000 ; causes the hostile to target the character who accepted the bribe. (Hostile
+> $4000 ; NPC only)
+> $4000 ; vischar_PURSUIT_SAW_BRIBE                     = 4,
+> $4000 ;
+> $4000 ; Bits 4 and 5 are unused.
+> $4000 ;
+> $4000 ; Bit 6 is set when the next target is a door.
+> $4000 ; vischar_FLAGS_TARGET_IS_DOOR                  = 1 << 6,
+> $4000 ;
+> $4000 ; Bit 7 is set in #R$B5CE to stop #R$AFDF running for this vischar.
+> $4000 ; vischar_FLAGS_NO_COLLIDE                      = 1 << 7,
+> $4000 ;
+> $4000 ; vischar byte 7 'counter_and_flags' ::
+> $4000 ;
+> $4000 ; Bits 0..3 form a mask to isolate the character behaviour delay field.
+> $4000 ; #R$C918 counts this field down to zero at which point it performs character
+> $4000 ; behaviours. In the game this is only ever set to five.
 > $4000 ; vischar_BYTE7_COUNTER_MASK                    = $F0,
-> $4000 ; vischar_BYTE7_Y_DOMINANT                      = 1 << 5,       ; set when hero hits an obstacle
-> $4000 ; vischar_BYTE7_DONT_MOVE_MAP                   = 1 << 6,       ; set while touch() entered
-> $4000 ; vischar_DRAWABLE                              = 1 << 7,       ; vischar should be drawn
 > $4000 ;
-> $4000 ; ; $800C, $802C, $804C, ...
-> $4000 ; vischar_ANIMINDEX_BIT7                        = 1 << 7,       ; is this a kick flag?
+> $4000 ; Bit 4 is unused.
 > $4000 ;
-> $4000 ; ; $800E, $802E, $804E, ...
+> $4000 ; Bit 5 is set when #$CA49 should run in preference to #R$CA11.
+> $4000 ; vischar_BYTE7_Y_DOMINANT                      = 1 << 5,
+> $4000 ;
+> $4000 ; Bit 6 is set when map movement should be inhibited. (Hero only)
+> $4000 ; Set in #R$AF8F.
+> $4000 ; vischar_BYTE7_DONT_MOVE_MAP                   = 1 << 6,
+> $4000 ;
+> $4000 ; Bit 7 is set when #R$AF8F is entered, implying that vischar.mi etc. are
+> $4000 ; setup.
+> $4000 ; vischar_DRAWABLE                              = 1 << 7,
+> $4000 ;
+> $4000 ; vischar byte $C 'animindex' ::
+> $4000 ;
+> $4000 ; Bit 7 is set to play the animation in reverse.
+> $4000 ; vischar_ANIMINDEX_BIT7                        = 1 << 7,
+> $4000 ;
+> $4000 ; vischar byte $E 'direction' ::
+> $4000 ;
+> $4000 ; Bits 0..1 form a mask to isolate the direction field.
 > $4000 ; vischar_DIRECTION_MASK                        = $03,
+> $4000 ;
+> $4000 ; Bit 2 is set when crawling.
 > $4000 ; vischar_DIRECTION_CRAWL                       = 1 << 2,
 > $4000 ;
+> $4000 ; ITEMSTRUCT
+> $4000 ; ----------
+> $4000 ;
+> $4000 ; itemstruct byte 0 'item_and_flags' ::
+> $4000 ;
+> $4000 ; Bits 0..3 form a mask to isolate the item field.
 > $4000 ; itemstruct_ITEM_MASK                          = $0F,
+> $4000 ;
+> $4000 ; Bit 4 is an unknown purpose flag used in a mask by #R$7B36, but never set.
+> $4000 ; It's possibly evidence of a larger itemstruct_ITEM_MASK.
+> $4000 ;
+> $4000 ; Bit 5 is set on item_FOOD when it is poisoned. This only affects the amount
+> $4000 ; of time a guard dog is stalled for. The dog will eat the food and "die"
+> $4000 ; (halt) either way.
 > $4000 ; itemstruct_ITEM_FLAG_POISONED                 = 1 << 5,
-> $4000 ; itemstruct_ITEM_FLAG_HELD                     = 1 << 7,       ; set when the item has been encountered
+> $4000 ;
+> $4000 ; Bit 6 is unused.
+> $4000 ;
+> $4000 ; Bit 7 is set when the item is picked up for the first time (for scoring).
+> $4000 ; itemstruct_ITEM_FLAG_HELD                     = 1 << 7,
+> $4000 ;
+> $4000 ; itemstruct byte 1 'room_and_flags' ::
+> $4000 ;
+> $4000 ; Bits 0..5 form a mask to isolate the room field.
 > $4000 ; itemstruct_ROOM_MASK                          = $3F,
-> $4000 ; itemstruct_ROOM_FLAG_NEARBY_6                 = 1 << 6,       ; possibly vestigal, needs more investigation
-> $4000 ; itemstruct_ROOM_FLAG_NEARBY_7                 = 1 << 7,       ; set when the item is nearby
+> $4000 ;
+> $4000 ; Indicates that the item is nowhere. This is (item_NONE &
+> $4000 ; itemstruct_ROOM_MASK).
+> $4000 ; itemstruct_ROOM_NONE                          = $3F,
+> $4000 ;
+> $4000 ; Bit 6 is set when the item is nearby.
+> $4000 ; Cleared by #R$DB9E and #R$B89C.
+> $4000 ; itemstruct_ROOM_FLAG_NEARBY_6                 = 1 << 6,
+> $4000 ;
+> $4000 ; Bit 7 is set when the item is nearby.
+> $4000 ; Cleared by #R$DB9E. Enables #R$7C82 for the item. #R$C918 uses it on
+> $4000 ; item_FOOD to trigger guard dog behaviour.
+> $4000 ; itemstruct_ROOM_FLAG_NEARBY_7                 = 1 << 7,
+> $4000 ;
+> $4000 ; OTHERS
+> $4000 ; ------
+> $4000 ;
+> $4000 ; route_REVERSED                                = 1 << 7,       ; set if the route is to be followed in reverse order
 > $4000 ;
 > $4000 ; door_REVERSE                                  = 1 << 7,       ; used to reverse door transitions
 > $4000 ; door_LOCKED                                   = 1 << 7,       ; used to lock doors in locked_doors[]
