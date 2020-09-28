@@ -4,9 +4,6 @@ body {
   background-color: black;
   font-family: "ITC Berkeley Oldstyle Std", Cambria, sans-serif;
 }
-img {
-  border-width: 0;
-}
 th {
   text-align: center;
   vertical-align: middle;
@@ -81,16 +78,22 @@ div.box-1 {
   background-color: #153167;
 }
 div.box-2 {
-  background-color: #4a79cb;
+  background-color: #071731;
 }
-/* DPT: This "table table" rule is strange. */
-table table.default th,
 table.default th {
   background-color: #4a79cb;
 }
-table table.default td,
 table.default td {
   background-color: #153167;
+}
+table table.default {
+  background-color: black;
+}
+table table.default th {
+  background-color: black;
+}
+table table.default td {
+  background-color: #071731;
 }
 td.centre {
   text-align: center;
@@ -139,21 +142,21 @@ div.comments {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-table.input-1,
-table.output-1 {
+table.input,
+table.output {
   margin-bottom: 10px;
 }
-table.input-1 th,
-table.output-1 th {
+table.input th,
+table.output th {
   background-color: #4a79cb;
 }
-table.input-1 td,
-table.output-1 td {
+table.input td,
+table.output td {
   background-color: #153167;
 }
 /* Give input and output tables the same minimum width */
-table.input-1,
-table.output-1 {
+table.input,
+table.output {
   min-width: 20em;
 }
 td.register {
@@ -161,7 +164,7 @@ td.register {
   width: 20px;
   text-align: center;
 }
-td.asm-label-1 {
+td.asm-label {
   color: #e9a740;
   padding-right: 10px;
 }
@@ -183,7 +186,7 @@ td.instruction {
   padding-right: 10px;
   font-weight: 400;
 }
-td.comment-11 {
+td.comment-1 {
   background-color: #071731;
   border-bottom: 1px solid #153167;
 }
@@ -202,8 +205,8 @@ table.map td {
 div.map-intro {
   margin-bottom: 10px;
 }
-table.map td.map-page-1,
-table.map td.map-byte-1,
+table.map td.map-page,
+table.map td.map-byte,
 table.map td.map-b,
 td.map-w,
 table.map td.map-c,
@@ -213,8 +216,8 @@ table.map td.map-s,
 td.map-u {
   text-align: right;
 }
-table.map td.map-page-1,
-table.map td.map-byte-1 {
+table.map td.map-page,
+table.map td.map-byte {
   background-color: transparent;
 }
 table.map td.map-b,
@@ -267,14 +270,14 @@ table.map td.map-w-desc {
   font-style: normal;
 }
 /* Game status buffer */
-td.map-length-1 {
+td.map-length {
   text-align: center;
 }
 div.map-entry-title-11 {
   font-weight: bolder;
 }
 div.map-entry-title-11,
-div.map-entry-desc-1,
+div.map-entry-desc,
 td.map-s-desc,
 td.map-u-desc {
   font-family: "ITC Berkeley Oldstyle Std", Cambria, sans-serif;
@@ -310,7 +313,7 @@ div.list-entry-1 {
   background-color: #153167;
 }
 div.list-entry-2 {
-  background-color: #153167;
+  background-color: #071731;
 }
 div.list-entry-desc {
   margin-top: 5px;
@@ -319,6 +322,6 @@ ul.list-entry {
   margin-top: 5px;
   margin-bottom: 0;
 }
-.gallery TD {
+.gallery td {
   vertical-align: top;
 }
