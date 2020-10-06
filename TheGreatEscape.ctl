@@ -10710,7 +10710,7 @@ C $DC87,1 Move counter to #REGc
 C $DC88,1 Unbank the opcode we'll write`
 N $DC89 Set the addresses in the jump table to NOP or LD (HL),A.
 @ $DC89 label=sip_enables_iters
-C $DC89,3 Point #REGhl at masked_sprite_plotter_16_enables[0]
+C $DC89,3 Point #REGhl at plot_masked_sprite_16px_enables[0]
 C $DC8C,2 Set #REGb for 3 iterations / 3 pairs of self modified locations
 N $DC8E Start loop
 @ $DC8E label=sip_enables_loop
@@ -11052,7 +11052,7 @@ u $E0D7 Unreferenced bytes.
 B $E0D7,9,8,1
 w $E0E0 Addresses of self-modified locations which are changed between NOPs and LD (HL),A.
 D $E0E0 (<- setup_item_plotting, setup_vischar_plotting)
-@ $E0E0 label=masked_sprite_plotter_16_enables
+@ $E0E0 label=plot_masked_sprite_16px_enables
 W $E0E0,2,2 pms16_right_plot_enable_0
 W $E0E2,2,2 pms16_left_plot_enable_0
 W $E0E4,2,2 pms16_right_plot_enable_1
@@ -11061,7 +11061,7 @@ W $E0E8,2,2 pms16_right_plot_enable_2
 W $E0EA,2,2 pms16_left_plot_enable_2
 w $E0EC Addresses of self-modified locations which are changed between NOPs and LD (HL),A.
 D $E0EC (<- setup_vischar_plotting)
-@ $E0EC label=masked_sprite_plotter_24_enables
+@ $E0EC label=plot_masked_sprite_24px_enables
 W $E0EC,2,2 pms24_right_plot_enable_0
 W $E0EE,2,2 pms24_left_plot_enable_0
 W $E0F0,2,2 pms24_right_plot_enable_1
@@ -11074,7 +11074,7 @@ N $E0FC These two look different. Unused?
 W $E0FC,2,2 plot_masked_sprite_16px
 W $E0FE,2,2 plot_masked_sprite_24px
 u $E100 Unused word?
-D $E100 Unsure if related to the above masked_sprite_plotter_24_enables table.
+D $E100 Unsure if related to the above plot_masked_sprite_24px_enables table.
 W $E100,2,2
 c $E102 Sprite plotter for 24 pixel-wide masked sprites.
 D $E102 This is used for characters and objects.
@@ -11620,14 +11620,14 @@ C $E48E,1 Copy the clipped height into #REGa
 C $E48F,3 Write clipped height to the instruction at #R$E2C1 in plot_masked_sprite_16px (shift right case)
 C $E492,3 Write clipped height to the instruction at #R$E362 in plot_masked_sprite_16px (shift left case)
 C $E495,2 Set for three enables
-C $E497,3 Point #REGhl at masked_sprite_plotter_16_enables
+C $E497,3 Point #REGhl at plot_masked_sprite_16px_enables
 C $E49A,2 (else)
 @ $E49C label=svp_24_wide
 C $E49C,1 Copy the clipped height into #REGa
 C $E49D,3 Write clipped height to the instruction at #R$E120 in plot_masked_sprite_24px (shift right case)
 C $E4A0,3 Write clipped height to the instruction at #R$E1E1 in plot_masked_sprite_24px (shift left case)
 C $E4A3,2 Set for four enables
-C $E4A5,3 Point #REGhl at masked_sprite_plotter_24_enables
+C $E4A5,3 Point #REGhl at plot_masked_sprite_24px_enables
 @ $E4A8 label=svp_do_enables
 C $E4A8,1 Preserve enables pointer
 C $E4A9,4 Write enable count to the instruction at #R$E4BF (self modify) and keep a copy
