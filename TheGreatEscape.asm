@@ -3,7 +3,7 @@
 ; https://github.com/dpt/The-Great-Escape
 ;
 ; Copyright 1986 Ocean Software Ltd. (The Great Escape)
-; Copyright 2012-2019 David Thomas <dave@davespace.co.uk> (this disassembly)
+; Copyright 2012-2020 David Thomas <dave@davespace.co.uk> (this disassembly)
 ;
 ;
 ; //////////////////////////////////////////////////////////////////////////////
@@ -17,8 +17,8 @@
 ;   and has been invented for the purposes of the disassembly. I have seen none
 ;   of the original source, nor know anything of how it was built.
 ;
-;   When I contacted the author he informed me that the original source is
-;   probably now lost forever. :-(
+;   When I contacted the designer and author, John Heap, he informed me that
+;   the original source is probably now lost forever. :-(
 ;
 ; * The md5sum of the original tape image this disassembly was taken from is
 ;   a6e5d50ab065accb017ecc957a954b53 and was sourced from
@@ -74,18 +74,19 @@
 ;
 ;
 ; //////////////////////////////////////////////////////////////////////////////
-; COMMENTARY
+; COMMENTARY TERMS
 ; //////////////////////////////////////////////////////////////////////////////
 ;
-; "Exit via" - indicates that the code jumped to does not return. It itself
-; will RET to the caller.
+; "CHECK". This indicates something that is still to be proven or verified.
 ;
+; "Exit via". This indicates that, instead of a RET, the instruction will jump
+; into another routine which itself will perform the RET.
 ;
 ; //////////////////////////////////////////////////////////////////////////////
 ; ZX SPECTRUM BASIC DEFINITIONS
 ; //////////////////////////////////////////////////////////////////////////////
 ;
-; These are here for information only and are not used by any of the
+; These are here for information only and are not used by any of the assembly
 ; directives.
 ;
 ; attribute_BLUE_OVER_BLACK                     = 1,
@@ -114,10 +115,10 @@
 ;
 ;
 ; //////////////////////////////////////////////////////////////////////////////
-; ENUMERATIONS
+; CONSTANTS
 ; //////////////////////////////////////////////////////////////////////////////
 ;
-; These are here for information only and are not used by any of the
+; These are here for information only and are not used by any of the assembly
 ; directives.
 ;
 ; character_0_COMMANDANT                        = 0,
@@ -275,14 +276,14 @@
 ; interiorobject_TUNNEL_ENTRANCE                = 18,
 ; interiorobject_PRISONER_SAT_END_TABLE         = 19,
 ; interiorobject_COLLAPSED_TUNNEL_SW_NE         = 20,
-; interiorobject_UNUSED_21                      = 21,   ; object unused by game, draws as interiorobject_ROOM_OUTLINE_22x12_A
+; interiorobject_UNUSED_21                      = 21,   ; unused by game, draws as interiorobject_ROOM_OUTLINE_22x12_A
 ; interiorobject_CHAIR_FACING_SE                = 22,
 ; interiorobject_OCCUPIED_BED                   = 23,
 ; interiorobject_ORNATE_WARDROBE_FACING_SW      = 24,
 ; interiorobject_CHAIR_FACING_SW                = 25,
 ; interiorobject_CUPBOARD_FACING_SE             = 26,
 ; interiorobject_ROOM_OUTLINE_18x10_A           = 27,
-; interiorobject_UNUSED_28                      = 28,   ; object unused by game, draws as interiorobject_TABLE
+; interiorobject_UNUSED_28                      = 28,   ; unused by game, draws as interiorobject_TABLE
 ; interiorobject_TABLE                          = 29,
 ; interiorobject_STOVE_PIPE                     = 30,
 ; interiorobject_PAPERS_ON_FLOOR                = 31,
@@ -293,7 +294,7 @@
 ; interiorobject_TINY_DOOR_FRAME_NE             = 36,   ; tunnel entrance
 ; interiorobject_NOTICEBOARD_FACING_SE          = 37,
 ; interiorobject_DOOR_FRAME_NW                  = 38,
-; interiorobject_UNUSED_39                      = 39,   ; object unused by game, draws as interiorobject_END_DOOR_FRAME_NW_SE
+; interiorobject_UNUSED_39                      = 39,   ; unused by game, draws as interiorobject_END_DOOR_FRAME_NW_SE
 ; interiorobject_DOOR_FRAME_NE                  = 40,
 ; interiorobject_ROOM_OUTLINE_15x8              = 41,
 ; interiorobject_CUPBOARD_FACING_SW             = 42,
@@ -335,6 +336,9 @@
 ; These are here for information only and are not used by any of the
 ; directives.
 ;
+; INPUT
+; -----
+;
 ; input_NONE                                    = 0,
 ; input_UP                                      = 1,
 ; input_DOWN                                    = 2,
@@ -346,47 +350,139 @@
 ; input_LEFT_FIRE                               = input_LEFT  + input_FIRE,
 ; input_RIGHT_FIRE                              = input_RIGHT + input_FIRE,
 ;
-; ; $8000, $8020, $8040, ...
-; vischar_CHARACTER_MASK                        = $1F,          ; character index mask. this is used in a couple of places but it's not consistently applied. i've not spotted anything else sharing the this field.
+; VISCHAR
+; -------
 ;
-; ; $8001, $8021, $8041, ...
+; vischar byte 0 'character' ::
+;
+; Character index mask. This is used in a couple of places but it's not
+; consistently applied. I've not spotted anything else sharing the this field.
+; vischar_CHARACTER_MASK                        = $1F,
+;
+; vischar byte 1 'flags' ::
+;
+; Indicates that this vischar is unused.
 ; vischar_FLAGS_EMPTY_SLOT                      = $FF,
+;
+; Bits 0..5 form a mask to isolate all of the modes.
+; Note: $0F would be sufficient.
 ; vischar_FLAGS_MASK                            = $3F,
-; vischar_FLAGS_PICKING_LOCK                    = 1 << 0,       ; hero only
-; vischar_FLAGS_CUTTING_WIRE                    = 1 << 1,       ; hero only
 ;
-; Four pursuit modes:
-; vischar_PURSUIT_PURSUE                        = 1 << 0,       ; non-hero only. this flag is set when a visible friendly was nearby when a bribe was used. it's also set by hostiles_pursue
-; vischar_PURSUIT_HASSLE                        = 2 << 0,       ; this flag is set in guards_follow_suspicious_character when a hostile is following the hero
-; vischar_PURSUIT_DOG_FOOD                      = 3 << 0,       ; set when food is in the vicinity of a dog
-; vischar_PURSUIT_SAW_BRIBE                     = 4 << 0,       ; this flag is set when a visible hostile was nearby when a bribe was used. perhaps it distracts the guards?
+; The bottom nibble of flags contains either two flags for the hero, or a
+; pursuit mode field for NPCs.
 ;
-; vischar_FLAGS_TARGET_IS_DOOR                  = 1 << 6,       ; affects scaling
-; vischar.FLAGS.NO.COLLIDE                      = 1 << 7,       ; don't do collision() for this vischar
+; Bit 0 is set when the hero is picking a lock. (Hero only)
+; vischar_FLAGS_PICKING_LOCK                    = 1,
 ;
-; ; $8002, $8022, $8042, ...
-; route_REVERSED                                = 1 << 7,       ; set if the route is to be followed in reverse order
+; Bit 1 is set when the hero is cutting wire. (Hero only)
+; vischar_FLAGS_CUTTING_WIRE                    = 2,
 ;
-; ; $8007, $8027, $8047, ...
-; vischar_BYTE7_MASK_LO                         = $0F,
+; Bits 0..3 are a mask to isolate the pursuit mode.
+; vischar_FLAGS_PURSUIT_MASK                    = $0F,
+;
+; Pursuit mode == 1 when a friendly character was nearby when a bribe was used
+; or when a hostile is pursuing with intent to capture. (NPC only) Set in
+; #R$CCAB.
+; vischar_PURSUIT_PURSUE                        = 1,
+;
+; Pursuit mode == 2 when a hostile sees a player-controlled hero, or the flag
+; is red. It causes hostiles to follow the hero and get in his way but not
+; arrest him. (NPC only)
+; Set in #R$CC37.
+; vischar_PURSUIT_HASSLE                        = 2,
+;
+; Pursuit mode == 3 when food is in the vicinity of a dog. (Guard dog NPC only)
+; vischar_PURSUIT_DOG_FOOD                      = 3,
+;
+; Pursuit mode == 4 when a hostile was nearby when a bribe was accepted. It
+; causes the hostile to target the character who accepted the bribe. (Hostile
+; NPC only)
+; vischar_PURSUIT_SAW_BRIBE                     = 4,
+;
+; Bits 4 and 5 are unused.
+;
+; Bit 6 is set when the next target is a door.
+; vischar_FLAGS_TARGET_IS_DOOR                  = 1 << 6,
+;
+; Bit 7 is set in #R$B5CE to stop #R$AFDF running for this vischar.
+; vischar_FLAGS_NO_COLLIDE                      = 1 << 7,
+;
+; vischar byte 7 'counter_and_flags' ::
+;
+; Bits 0..3 form a mask to isolate the character behaviour delay field.
+; #R$C918 counts this field down to zero at which point it performs character
+; behaviours. In the game this is only ever set to five.
 ; vischar_BYTE7_COUNTER_MASK                    = $F0,
-; vischar_BYTE7_Y_DOMINANT                      = 1 << 5,       ; set when hero hits an obstacle
-; vischar_BYTE7_DONT_MOVE_MAP                   = 1 << 6,       ; set while touch() entered
-; vischar_DRAWABLE                              = 1 << 7,       ; vischar should be drawn
 ;
-; ; $800C, $802C, $804C, ...
-; vischar_ANIMINDEX_BIT7                        = 1 << 7,       ; is this a kick flag?
+; Bit 4 is unused.
 ;
-; ; $800E, $802E, $804E, ...
+; Bit 5 is set when #$CA49 should run in preference to #R$CA11.
+; vischar_BYTE7_Y_DOMINANT                      = 1 << 5,
+;
+; Bit 6 is set when map movement should be inhibited. (Hero only)
+; Set in #R$AF8F.
+; vischar_BYTE7_DONT_MOVE_MAP                   = 1 << 6,
+;
+; Bit 7 is set when #R$AF8F is entered, implying that vischar.mi etc. are
+; setup.
+; vischar_DRAWABLE                              = 1 << 7,
+;
+; vischar byte $C 'animindex' ::
+;
+; Bit 7 is set to play the animation in reverse.
+; vischar_ANIMINDEX_BIT7                        = 1 << 7,
+;
+; vischar byte $E 'direction' ::
+;
+; Bits 0..1 form a mask to isolate the direction field.
 ; vischar_DIRECTION_MASK                        = $03,
+;
+; Bit 2 is set when crawling.
 ; vischar_DIRECTION_CRAWL                       = 1 << 2,
 ;
+; ITEMSTRUCT
+; ----------
+;
+; itemstruct byte 0 'item_and_flags' ::
+;
+; Bits 0..3 form a mask to isolate the item field.
 ; itemstruct_ITEM_MASK                          = $0F,
+;
+; Bit 4 is an unknown purpose flag used in a mask by #R$7B36, but never set.
+; It's possibly evidence of a larger itemstruct_ITEM_MASK.
+;
+; Bit 5 is set on item_FOOD when it is poisoned. This only affects the amount
+; of time a guard dog is stalled for. The dog will eat the food and "die"
+; (halt) either way.
 ; itemstruct_ITEM_FLAG_POISONED                 = 1 << 5,
-; itemstruct_ITEM_FLAG_HELD                     = 1 << 7,       ; set when the item has been encountered
+;
+; Bit 6 is unused.
+;
+; Bit 7 is set when the item is picked up for the first time (for scoring).
+; itemstruct_ITEM_FLAG_HELD                     = 1 << 7,
+;
+; itemstruct byte 1 'room_and_flags' ::
+;
+; Bits 0..5 form a mask to isolate the room field.
 ; itemstruct_ROOM_MASK                          = $3F,
-; itemstruct_ROOM_FLAG_NEARBY_6                 = 1 << 6,       ; possibly vestigal, needs more investigation
-; itemstruct_ROOM_FLAG_NEARBY_7                 = 1 << 7,       ; set when the item is nearby
+;
+; Indicates that the item is nowhere. This is (item_NONE &
+; itemstruct_ROOM_MASK).
+; itemstruct_ROOM_NONE                          = $3F,
+;
+; Bit 6 is set when the item is nearby.
+; Cleared by #R$DB9E and #R$B89C.
+; itemstruct_ROOM_FLAG_NEARBY_6                 = 1 << 6,
+;
+; Bit 7 is set when the item is nearby.
+; Cleared by #R$DB9E. Enables #R$7C82 for the item. #R$C918 uses it on
+; item_FOOD to trigger guard dog behaviour.
+; itemstruct_ROOM_FLAG_NEARBY_7                 = 1 << 7,
+;
+; OTHERS
+; ------
+;
+; route_REVERSED                                = 1 << 7,       ; set if the route is to be followed in reverse order
 ;
 ; door_REVERSE                                  = 1 << 7,       ; used to reverse door transitions
 ; door_LOCKED                                   = 1 << 7,       ; used to lock doors in locked_doors[]
@@ -15296,7 +15392,7 @@ sip_enable_cont:
   EX AF,AF'               ; Unbank the opcode we'll write`
 ; Set the addresses in the jump table to NOP or LD (HL),A.
 sip_enables_iters:
-  LD HL,masked_sprite_plotter_16_enables ; Point HL at masked_sprite_plotter_16_enables[0]
+  LD HL,plot_masked_sprite_16px_enables ; Point HL at plot_masked_sprite_16px_enables[0]
   LD B,$03                ; Set B for 3 iterations / 3 pairs of self modified locations
 ; Start loop
 sip_enables_loop:
@@ -16028,7 +16124,7 @@ LE0D7:
 ; Addresses of self-modified locations which are changed between NOPs and LD (HL),A.
 ;
 ; (<- setup_item_plotting, setup_vischar_plotting)
-masked_sprite_plotter_16_enables:
+plot_masked_sprite_16px_enables:
   DEFW pms16_right_plot_enable_0 ; pms16_right_plot_enable_0
   DEFW pms16_left_plot_enable_0 ; pms16_left_plot_enable_0
   DEFW pms16_right_plot_enable_1 ; pms16_right_plot_enable_1
@@ -16039,7 +16135,7 @@ masked_sprite_plotter_16_enables:
 ; Addresses of self-modified locations which are changed between NOPs and LD (HL),A.
 ;
 ; (<- setup_vischar_plotting)
-masked_sprite_plotter_24_enables:
+plot_masked_sprite_24px_enables:
   DEFW pms24_right_plot_enable_0 ; pms24_right_plot_enable_0
   DEFW pms24_left_plot_enable_0 ; pms24_left_plot_enable_0
   DEFW pms24_right_plot_enable_1 ; pms24_right_plot_enable_1
@@ -16054,7 +16150,7 @@ masked_sprite_plotter_24_enables:
 
 ; Unused word?
 ;
-; Unsure if related to the above masked_sprite_plotter_24_enables table.
+; Unsure if related to the above plot_masked_sprite_24px_enables table.
 LE100:
   DEFW $0806
 
@@ -16958,14 +17054,14 @@ svp_16_wide:
   LD ($E2C2),A            ; Write clipped height to the instruction at pms16_right_height_iters in plot_masked_sprite_16px (shift right case)
   LD ($E363),A            ; Write clipped height to the instruction at pms16_left_height_iters in plot_masked_sprite_16px (shift left case)
   LD A,$03                ; Set for three enables
-  LD HL,masked_sprite_plotter_16_enables ; Point HL at masked_sprite_plotter_16_enables
+  LD HL,plot_masked_sprite_16px_enables ; Point HL at plot_masked_sprite_16px_enables
   JR svp_do_enables       ; (else)
 svp_24_wide:
   LD A,E                  ; Copy the clipped height into A
   LD ($E121),A            ; Write clipped height to the instruction at pms24_right_height_iters in plot_masked_sprite_24px (shift right case)
   LD ($E1E2),A            ; Write clipped height to the instruction at pms24_left_height_iters in plot_masked_sprite_24px (shift left case)
   LD A,$04                ; Set for four enables
-  LD HL,masked_sprite_plotter_24_enables ; Point HL at masked_sprite_plotter_24_enables
+  LD HL,plot_masked_sprite_24px_enables ; Point HL at plot_masked_sprite_24px_enables
 svp_do_enables:
   PUSH HL                 ; Preserve enables pointer
   LD ($E4C0),A            ; Write enable count to the instruction at svp_enables_iters (self modify) and keep a copy
