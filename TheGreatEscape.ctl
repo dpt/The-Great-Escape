@@ -10487,7 +10487,7 @@ B $D7BD,58,8*7,2 bitmap: GUARD FACING BOTTOM RIGHT 2
 N $D7F7 #UDGTABLE { #UDGARRAY2,7,4,2;$D7F7-$D82E-1-16{0,0,64,112}(bitmap-guard-facing-bottom-right-3) } TABLE#
 @ $D7F7 label=bitmap_guard_facing_bottom_right_3
 B $D7F7,56,8 bitmap: GUARD FACING BOTTOM RIGHT 3
-N $D82F #UDGTABLE { #UDGARRAY1,7,4,2;$D82F-$D866-1-16{0,0,64,112}(bitmap-guard-facing-bottom-right-4) } TABLE#
+N $D82F #UDGTABLE { #UDGARRAY2,7,4,2;$D82F-$D866-1-16{0,0,64,112}(bitmap-guard-facing-bottom-right-4) } TABLE#
 @ $D82F label=bitmap_guard_facing_bottom_right_4
 B $D82F,56,8 bitmap: GUARD FACING BOTTOM RIGHT 4
 N $D867 #UDGTABLE { #UDGARRAY3,7,4,3;$D867-$D896-1-24{0,0,96,64}(bitmap-dog-facing-top-left-1) } TABLE#
