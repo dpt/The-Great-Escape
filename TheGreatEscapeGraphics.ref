@@ -28,60 +28,118 @@ Spotted by Bandit on WoS forums.
 PageContent=#INCLUDE(PageContent:Characters)
 
 [PageContent:Characters]
-<h3>Commandant facing away</h3>
-#UDGTABLE(gallery)
-{ #UDGARRAY2,7,4,2,,,,2;$D026-$D05F-1-16:$D485-$D4C4-1-16{0,0,64,116}(sprite-commandant-facing-top-left-1*) | #UDGARRAY2,7,4,2,,,,2;$D060-$D099-1-16:$D4C5-$D504-1-16{0,0,64,116}(sprite-commandant-facing-top-left-2*) | #UDGARRAY2,7,4,2,,,,2;$D09A-$D0D5-1-16:$D505-$D544-1-16{0,0,64,120}(sprite-commandant-facing-top-left-3*) | #UDGARRAY2,7,4,2,,,,2;$D0D6-$D10E-1-16:$D545-$D584-1-16{0,0,64,112}(sprite-commandant-facing-top-left-4*) }
-TABLE#
 
-<h3>Commandant facing toward</h3>
-#UDGTABLE(gallery)
-{ #UDGARRAY2,7,4,2,,,,2;$D10E-$D143-1-16:$D585-$D5C4-1-16{0,0,64,108}(sprite-commandant-facing-bottom-right-1*) | #UDGARRAY2,7,4,2,,,,2;$D144-$D17B-1-16:$D5C5-$D604-1-16{0,0,64,112}(sprite-commandant-facing-bottom-right-2*) | #UDGARRAY2,7,4,2,,,,2;$D17C-$D1B1-1-16:$D605-$D63C-1-16{0,0,64,108}(sprite-commandant-facing-bottom-right-3*) | #UDGARRAY2,7,4,2,,,,2;$D1B2-$D1E9-1-16:$D63D-$D676-1-16{0,0,64,112}(sprite-commandant-facing-bottom-right-4*) }
-TABLE#
+<h3>Character Animations</h3>
 
-<h3>Prisoner facing away</h3>
-#UDGTABLE(gallery)
-{ #UDGARRAY2,7,4,2,,,,2;$D1EA-$D21F-1-16:$D485-$D4C4-1-16{0,0,64,108}(sprite-prisoner-facing-top-left-1*) | #UDGARRAY2,7,4,2,,,,2;$D220-$D255-1-16:$D4C5-$D504-1-16{0,0,64,108}(sprite-prisoner-facing-top-left-2*) | #UDGARRAY2,7,4,2,,,,2;$D256-$D28B-1-16:$D505-$D544-1-16{0,0,64,108}(sprite-prisoner-facing-top-left-3*) | #UDGARRAY2,7,4,2,,,,2;$D28C-$D2BF-1-16:$D545-$D584-1-16{0,0,64,104}(sprite-prisoner-facing-top-left-4*) }
-TABLE#
+<p>This page shows every frame of animation for all of the characters in the game. The commandant animation is unique to a single character. The prisoner animation is used by the hero and his six fellow prisoners. The guard animation is shared across fifteen guards. The dog animation is shared between four guard dogs.</p>
 
-<h3>Prisoner facing toward</h3>
-#UDGTABLE(gallery)
-{ #UDGARRAY2,7,4,2,,,,2;$D2C0-$D2F3-1-16:$D585-$D5C4-1-16{0,0,64,108}(sprite-prisoner-facing-bottom-right-1*) | #UDGARRAY2,7,4,2,,,,2;$D2F4-$D32B-1-16:$D5C5-$D604-1-16{0,0,64,116}(sprite-prisoner-facing-bottom-right-2*) | #UDGARRAY2,7,4,2,,,,2;$D32C-$D361-1-16:$D605-$D63C-1-16{0,0,64,112}(sprite-prisoner-facing-bottom-right-3*) | #UDGARRAY2,7,4,2,,,,2;$D362-$D397-1-16:$D63D-$D676-1-16{0,0,64,112}(sprite-prisoner-facing-bottom-right-4*) }
-TABLE#
+<p>The stove and crate objects don't animate, but they are treated by the game as characters since they're permitted to move around the room, albeit only on a single axis, when our hero pushes them. The stove is used in two rooms whereas the crate is used in just one.</p>
 
-<h3>Crawling facing toward</h3>
-#UDGTABLE(gallery)
-{ #UDGARRAY3,7,4,3,,,,2;$D398-$D3C4-1-24:$D677-$D6A6-1-24{0,0,96,60}(sprite-crawl-facing-bottom-left-1*) | #UDGARRAY3,7,4,3,,,,2;$D3C5-$D3F4-1-24:$D677-$D6A6-1-24{0,0,96,64}(sprite-crawl-facing-bottom-left-2*) }
-TABLE#
+<p>In the frames decoded below the green pixels represent the transparent parts of the mask. You can see that the masks used for the frames are inaccurate and misshapen. This is because the masks are "worst case" ones shared between multiple frames to save space. Due to the mostly black background this is not too obvious when in-game, except perhaps when you stand next to a wall.</p>
 
-<h3>Crawling facing away</h3>
-#UDGTABLE(gallery)
-{ #UDGARRAY3,7,4,3,,,,2;$D3F5-$D424-1-24:$D455-$D484-1-24{0,0,96,64}(sprite-crawl-facing-top-left-1*) | #UDGARRAY3,7,4,3,,,,2;$D425-$D454-1-24:$D455-$D484-1-24{0,0,96,64}(sprite-crawl-facing-top-left-2*) }
-TABLE#
+<h3>The Commandant</h3>
+#UDGTABLE(gallery) {
+#UDGARRAY2,7,4,2,,,,2;$D026-$D05F-1-16:$D485-$D4C4-1-16{0,0,64,120}(commandant-tl-1*) |
+#UDGARRAY2,7,4,2,,,,2;$D060-$D099-1-16:$D4C5-$D504-1-16{0,0,64,120}(commandant-tl-2*) |
+#UDGARRAY2,7,4,2,,,,2;$D09A-$D0D5-1-16:$D505-$D544-1-16{0,0,64,120}(commandant-tl-3*) |
+#PUSHS #POKES$D10E,$00,8 #UDGARRAY2,7,4,2,,,,2;$D0D6-$D10E-1-16:$D545-$D584-1-16{0,0,64,120}(commandant-tl-4*) #POPS |
+#UDGARRAY*commandant-tl-4;commandant-tl-3;commandant-tl-2;commandant-tl-1(commandant-tl)
+} TABLE#
 
-<h3>Guard facing away</h3>
-#UDGTABLE(gallery)
-{ #UDGARRAY2,7,4,2,,,,2;$D6A7-$D6DC-1-16:$D485-$D4C4-1-16{0,0,64,108}(sprite-guard-facing-top-left-1*) | #UDGARRAY2,7,4,2,,,,2;$D6DD-$D712-1-16:$D4C5-$D504-1-16{0,0,64,108}(sprite-guard-facing-top-left-2*) | #UDGARRAY2,7,4,2,,,,2;$D713-$D74C-1-16:$D505-$D544-1-16{0,0,64,116}(sprite-guard-facing-top-left-3*) | #UDGARRAY2,7,4,2,,,,2;$D74D-$D782-1-16:$D545-$D584-1-16{0,0,64,108}(sprite-guard-facing-top-left-4*) }
-TABLE#
+#UDGTABLE(gallery) {
+#UDGARRAY2,7,4,2,,,,2;$D10E-$D143-1-16:$D585-$D5C4-1-16{0,0,64,112}(commandant-br-1*) |
+#UDGARRAY2,7,4,2,,,,2;$D144-$D17B-1-16:$D5C5-$D604-1-16{0,0,64,112}(commandant-br-2*) |
+#UDGARRAY2,7,4,2,,,,2;$D17C-$D1B1-1-16:$D605-$D63C-1-16{0,0,64,112}(commandant-br-3*) |
+#UDGARRAY2,7,4,2,,,,2;$D1B2-$D1E9-1-16:$D63D-$D676-1-16{0,0,64,112}(commandant-br-4*) |
+#UDGARRAY*commandant-br-1;commandant-br-2;commandant-br-3;commandant-br-4(commandant-br)
+} TABLE#
 
-<h3>Guard facing toward</h3>
-#UDGTABLE(gallery)
-{ #UDGARRAY2,7,4,2,,,,2;$D783-$D7BC-1-16:$D585-$D5C4-1-16{0,0,64,116}(sprite-guard-facing-bottom-right-1*) | #UDGARRAY2,7,4,2,,,,2;$D7BD-$D7F6-1-16:$D5C5-$D604-1-16{0,0,64,116}(sprite-guard-facing-bottom-right-2*) | #UDGARRAY2,7,4,2,,,,2;$D7F7-$D82E-1-16:$D605-$D63C-1-16{0,0,64,112}(sprite-guard-facing-bottom-right-3*) | #UDGARRAY2,7,4,2,,,,2;$D82F-$D866-1-16:$D63D-$D676-1-16{0,0,64,112}(sprite-guard-facing-bottom-right-4*) }
-TABLE#
+<h3>The Hero / A Prisoner</h3>
+#UDGTABLE(gallery) {
+#UDGARRAY2,7,4,2,,,,2;$D1EA-$D21F-1-16:$D485-$D4C4-1-16{0,0,64,108}(prisoner-tl-1*) |
+#UDGARRAY2,7,4,2,,,,2;$D220-$D255-1-16:$D4C5-$D504-1-16{0,0,64,108}(prisoner-tl-2*) |
+#UDGARRAY2,7,4,2,,,,2;$D256-$D28B-1-16:$D505-$D544-1-16{0,0,64,108}(prisoner-tl-3*) |
+#UDGARRAY2,7,4,2,,,,2;$D28C-$D2BF-1-16:$D545-$D584-1-16{0,0,64,108}(prisoner-tl-4*) |
+#UDGARRAY*prisoner-tl-4;prisoner-tl-3;prisoner-tl-2;prisoner-tl-1(prisoner-tl)
+} TABLE#
 
-<h3>Dog facing away</h3>
-#UDGTABLE(gallery)
-{ #UDGARRAY3,7,4,3,,,,2;$D867-$D896-1-24:$D921-$D950-1-24{0,0,96,64}(sprite-dog-facing-top-left-1*) | #UDGARRAY3,7,4,3,,,,2;$D897-$D8C6-1-24:$D921-$D950-1-24{0,0,96,64}(sprite-dog-facing-top-left-2*) | #UDGARRAY3,7,4,3,,,,2;$D8C7-$D8F3-1-24:$D921-$D950-1-24{0,0,96,60}(sprite-dog-facing-top-left-3*) | #UDGARRAY3,7,4,3,,,,2;$D8F4-$D920-1-24:$D921-$D950-1-24{0,0,96,60}(sprite-dog-facing-top-left-4*) }
-TABLE#
+#UDGTABLE(gallery) {
+#PUSHS #POKES$D2F6,$00,4 #UDGARRAY2,7,4,2,,,,2;$D2C0-$D2F3-1-16:$D585-$D5C4-1-16{0,0,64,116}(prisoner-br-1*) #POPS |
+#UDGARRAY2,7,4,2,,,,2;$D2F4-$D32B-1-16:$D5C5-$D604-1-16{0,0,64,116}(prisoner-br-2*) |
+#PUSHS #POKES$D364,$00,2 #UDGARRAY2,7,4,2,,,,2;$D32C-$D361-1-16:$D605-$D63C-1-16{0,0,64,116}(prisoner-br-3*) #POPS |
+#UDGARRAY2,7,4,2,,,,2;$D362-$D397-1-16:$D63D-$D676-1-16{0,0,64,116}(prisoner-br-4*) |
+#UDGARRAY*prisoner-br-1;prisoner-br-2;prisoner-br-3;prisoner-br-4(prisoner-br)
+} TABLE#
 
-<h3>Dog facing toward</h3>
-#UDGTABLE(gallery)
-{ #UDGARRAY3,7,4,3,,,,2;$D951-$D97A-1-24:$D9F9-$DA28-1-24{0,0,96,56}(sprite-dog-facing-bottom-right-1*) | #UDGARRAY3,7,4,3,,,,2;$D97B-$D9A7-1-24:$D9F9-$DA28-1-24{0,0,96,60}(sprite-dog-facing-bottom-right-2*) | #UDGARRAY3,7,4,3,,,,2;$D9A8-$D9CE-1-24:$D9F9-$DA28-1-24{0,0,96,60}(sprite-dog-facing-bottom-right-3*) | #UDGARRAY3,7,4,3,,,,2;$D9CF-$D9F8-1-24:$D9F9-$DA28-1-24{0,0,96,56}(sprite-dog-facing-bottom-right-4*) }
-TABLE#
+<h3>The Hero when Crawling</h3>
+#UDGTABLE(gallery) {
+#UDGARRAY3,7,4,3,,,,2;$D398-$D3C4-1-24:$D677-$D6A6-1-24{0,0,96,64}(crawl-bl-1*) |
+#UDGARRAY3,7,4,3,,,,2;$D3C5-$D3F4-1-24:$D677-$D6A6-1-24{0,0,96,64}(crawl-bl-2*) |
+#UDGARRAY*crawl-bl-2;crawl-bl-1(crawl-bl)
+} TABLE#
 
-<h3>Crate and Stove</h3>
-#UDGTABLE(gallery)
-{ #UDGARRAY3,7,4,3,,,,2;$DAB6-$DAFD-1-24:$DAFE-$DB45-1-24(sprite-crate) | #UDGARRAY2,7,4,2,,,,2;$DB46-$DB72-1-16:$DB72-$DB9D-1-16{0,0,64,88}(sprite-stove) }
-TABLE#
+#UDGTABLE(gallery) {
+#UDGARRAY3,7,4,3,,,,2;$D3F5-$D424-1-24:$D455-$D484-1-24{0,0,96,64}(crawl-tl-1*) |
+#UDGARRAY3,7,4,3,,,,2;$D425-$D454-1-24:$D455-$D484-1-24{0,0,96,64}(crawl-tl-2*) |
+#UDGARRAY*crawl-tl-1;crawl-tl-2(crawl-tl)
+} TABLE#
+
+<h3>A Guard</h3>
+#UDGTABLE(gallery) {
+#PUSHS #POKES$D6DF,$00,2 #UDGARRAY2,7,4,2,,,,2;$D6A7-$D6DC-1-16:$D485-$D4C4-1-16{0,0,64,116}(guard-tl-1*) #POPS |
+#PUSHS #POKES$D715,$00,2 #UDGARRAY2,7,4,2,,,,2;$D6DD-$D712-1-16:$D4C5-$D504-1-16{0,0,64,116}(guard-tl-2*) #POPS |
+#UDGARRAY2,7,4,2,,,,2;$D713-$D74C-1-16:$D505-$D544-1-16{0,0,64,116}(guard-tl-3*) |
+#UDGARRAY2,7,4,2,,,,2;$D74D-$D782-1-16:$D545-$D584-1-16{0,0,64,116}(guard-tl-4*) |
+#UDGARRAY*guard-tl-4;guard-tl-3;guard-tl-2;guard-tl-1(guard-tl)
+} TABLE#
+
+<p>You'll notice that there is a problem with the animation frames where the guard is facing forward. The pointers to the frame data at #R$CEBE are erroneously offset backwards by two bytes. This means that the bitmap content (as opposed to the mask content) is drawn too low by one pixel row. Again, because of the mostly black background in the game it's not really too noticable unless you specifically go looking for it.</p>
+
+#UDGTABLE(gallery) {
+#UDGARRAY2,7,4,2,,,,2;$D783-$D7BC-1-16:$D585-$D5C4-1-16{0,0,64,116}(guard-br-1*) |
+#UDGARRAY2,7,4,2,,,,2;$D7BD-$D7F6-1-16:$D5C5-$D604-1-16{0,0,64,116}(guard-br-2*) |
+#UDGARRAY2,7,4,2,,,,2;$D7F7-$D82E-1-16:$D605-$D63C-1-16{0,0,64,116}(guard-br-3*) |
+#PUSHS #POKES$D867,$00,2 #UDGARRAY2,7,4,2,,,,2;$D82F-$D866-1-16:$D63D-$D676-1-16{0,0,64,116}(guard-br-4*) #POPS |
+#UDGARRAY*guard-br-1;guard-br-2;guard-br-3;guard-br-4(guard-br)
+} TABLE#
+
+<p>And here's how they ought to look:</p>
+
+#UDGTABLE(gallery) {
+#UDGARRAY2,7,4,2,,,,2;$D785-$D7BE-1-16:$D585-$D5C4-1-16{0,0,64,116}(guard-br-f-1*) |
+#UDGARRAY2,7,4,2,,,,2;$D7BF-$D7F8-1-16:$D5C5-$D604-1-16{0,0,64,116}(guard-br-f-2*) |
+#UDGARRAY2,7,4,2,,,,2;$D7F9-$D830-1-16:$D605-$D63C-1-16{0,0,64,116}(guard-br-f-3*) |
+#PUSHS #POKES$D867,$00,4 #UDGARRAY2,7,4,2,,,,2;$D831-$D868-1-16:$D63D-$D676-1-16{0,0,64,116}(guard-br-f-4*) #POPS |
+#UDGARRAY*guard-br-f-1;guard-br-f-2;guard-br-f-3;guard-br-f-4(guard-br-f)
+} TABLE#
+
+<h3>A Guard Dog</h3>
+
+<p>Note that the fourth frame has part of the mask data showing through on the bottom row due to a complication with the graphics decoding. This is not present in the real game.</p>
+
+#UDGTABLE(gallery) {
+#UDGARRAY3,7,4,3,,,,2;$D867-$D896-1-24:$D921-$D950-1-24{0,0,96,64}(dog-tl-1*) |
+#UDGARRAY3,7,4,3,,,,2;$D897-$D8C6-1-24:$D921-$D950-1-24{0,0,96,64}(dog-tl-2*) |
+#PUSHS #POKES$D8F4,$00,3 #UDGARRAY3,7,4,3,,,,2;$D8C7-$D8F3-1-24:$D921-$D950-1-24{0,0,96,64}(dog-tl-3*) #POPS |
+#PUSHS #UDGARRAY3,7,4,3,,,,2;$D8F4-$D920-1-24:$D921-$D950-1-24{0,0,96,64}(dog-tl-4*) #POPS |
+#UDGARRAY*dog-tl-4;dog-tl-3;dog-tl-2;dog-tl-1(dog-tl)
+} TABLE#
+
+<p>See that third frame in the following sequence has two stray pixels on the bottom row. These are present in the real game too. The fourth frame has the same problem as above.</p>
+
+#UDGTABLE(gallery) {
+#UDGARRAY3,7,4,3,,,,2;$D951-$D97A-1-24:$D9F9-$DA28-1-24{0,0,96,60}(dog-br-1*) |
+#UDGARRAY3,7,4,3,,,,2;$D97B-$D9A7-1-24:$D9F9-$DA28-1-24{0,0,96,60}(dog-br-2*) |
+#UDGARRAY3,7,4,3,,,,2;$D9A8-$D9CE-1-24:$D9F9-$DA28-1-24{0,0,96,60}(dog-br-3*) |
+#PUSHS #UDGARRAY3,7,4,3,,,,2;$D9CF-$D9F8-1-24:$D9F9-$DA28-1-24{0,0,96,60}(dog-br-4*) #POPS |
+#UDGARRAY*dog-br-1;dog-br-2;dog-br-3;dog-br-4(dog-br)
+} TABLE#
+
+<h3>Movable Items</h3>
+#UDGTABLE(gallery) {
+#UDGARRAY3,7,4,3,,,,2;$DAB6-$DAFD-1-24:$DAFE-$DB45-1-24(sprite-crate) |
+#UDGARRAY2,7,4,2,,,,2;$DB46-$DB72-1-16:$DB72-$DB9D-1-16{0,0,64,88}(sprite-stove)
+} TABLE#
 
 [Page:Items]
 PageContent=#INCLUDE(PageContent:Items)
