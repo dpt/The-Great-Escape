@@ -992,6 +992,8 @@ D $68A0 #TABLE(default) { =h Room | =h Description | =h Movable Object | =h Item
 @ $68A0 label=room_index
 B $68A0,1,1
 g $68A1 The current door id.
+D $68A1 Used by the routines at #R$B1D4, #R$B1F5, #R$B32D and #R$CB98.
+D $68A1 Bit 7 is the door_REVERSE flag.
 @ $68A1 label=current_door
 B $68A1,1,1
 c $68A2 The current visible character is made to change room.
@@ -1185,13 +1187,13 @@ C $6A0F,2 ...loop
 C $6A11,1 Return
 c $6A12 Turn a door index into a door_t pointer.
 D $6A12 Used by the routines at #R$B32D, #R$B4D0, #R$C651 and #R$CA81.
-R $6A12 I:A Index of door + reverse flag in bit 7.
+R $6A12 I:A Index of door + door_REVERSE flag in bit 7.
 R $6A12 O:HL Pointer to door_t.
 @ $6A12 label=get_door
 C $6A12,1 Save the original #REGa so we can test its flag bit in a moment
-C $6A13,1 First double #REGa since doors[] contains pairs of doors. This also discards the flag in bit 7
+C $6A13,1 First double #REGa since doors[] contains pairs of doors. This also discards the door_REVERSE flag in bit 7
 C $6A14,9 Form the address of doors[#REGa] in #REGhl
-C $6A1D,2 Was the door_REVERSE flag bit set on entry?
+C $6A1D,2 Was the door_REVERSE flag (bit 7) set on entry?
 C $6A1F,1 If not, return with #REGhl pointing to the entry
 C $6A20,6 Otherwise, point to the next entry along
 C $6A26,1 Return
