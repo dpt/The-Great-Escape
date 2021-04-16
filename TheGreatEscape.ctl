@@ -762,10 +762,10 @@
 b $4000 Loading screen.
 D $4000 #UDGTABLE { #SCR(loading) | This is the loading screen. } TABLE#
 @ $4000 label=screen
-B $4000,6144,32 Pixels.
-B $5800,768,32 Attributes.
+B $4000,6144,32 Pixel data.
+B $5800,768,32 Attribute data.
 b $5B00 Super tiles.
-D $5B00 The game's exterior map (at #R$BCEE) is constructed of references to these "super tiles" which are in turn a 4x4 array of tile indices.
+D $5B00 The map for the game's exterior section (defined by #R$BCEE) is built from references to these 32x32 pixel "super tiles". Each super tile is a 4x4 array of tile indices (defined by #R$8590).
 @ $5B00 label=super_tiles
 B $5B00,16,4 super_tile $00 #HTML[#CALL:supertile($5B00, 0)]
 B $5B10,16,4 super_tile $01 #HTML[#CALL:supertile($5B10, 0)]
