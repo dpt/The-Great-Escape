@@ -996,14 +996,17 @@ D $68A1 Used by the routines at #R$B1D4, #R$B1F5, #R$B32D and #R$CB98.
 D $68A1 Bit 7 is the door_REVERSE flag.
 @ $68A1 label=current_door
 B $68A1,1,1
-c $68A2 The current visible character is made to change room.
+c $68A2 Transition from room to room, or to a new part of the map.
+D $68A2 This is called when a visible character (a vischar, pointed to by #REGiy) needs to change room, or to change position on the exterior map, e.g. when the hero moves outside of the main gate.
+D $68A2 vischar.room is expected to already be set to the new room index. If the character is outdoors we take the given map position, (a tinypos, pointed to by #REGhl) scale it up, multiplying the values by 4, then store those as vischar.mi.mappos. Otherwise we just copy them across without scaling.
+D $68A2 If the current vischar is not the hero then we reset the character. Otherwise we're handling the hero so we either reset the visible scene for outdoors, or for the new room.
 D $68A2 Used by the routines at #R$B1F5, #R$B32D, #R$CA81, #R$CB98 and #R$EFCB.
-R $68A2 !I:HL Pointer to position. FIXME: Specify type.
+R $68A2 I:HL Pointer to map position (type: tinypos_t).
 R $68A2 I:IY Pointer to current visible character.
 @ $68A2 label=transition
 C $68A2,1 Save position into #REGde
 C $68A3,3 Copy the current visible character pointer into #REGhl
-C $68A6,1 Extract the visible character's offset
+C $68A6,1 Extract the visible character's index/offset
 C $68A7,1 Save it for later
 C $68A8,3 Point #REGhl at the visible character's position
 C $68AB,3 Fetch the visible character's current room index
@@ -1018,7 +1021,7 @@ C $68B6,3 Multiply it by 4, widening it to a word in #REGbc
 C $68B9,5 Store it to visible character's position and increment pointers
 C $68BE,1 Restore
 C $68BF,2 Loop
-C $68C1,2 !Jump over indoors case (ELSE part)
+C $68C1,2 Jump over indoors case
 N $68C3 We're indoors.
 N $68C3 Set position on X, Y axis and height by copying.
 C $68C3,2 Iterate thrice: X, Y and height fields
@@ -1028,7 +1031,7 @@ C $68CE,1 Retrieve vischar index/offset stacked at $68A7
 C $68D0,1 Is it the hero?
 C $68D1,3 Jump if so
 N $68D4 Not the hero.
-N $68D4 This is an unusual construct. Why did the author not use JP NZ,$C5D3 above and fallthrough otherwise?
+N $68D4 Commentary: This is an unusual construct. Why did the author not use JP NZ,$C5D3 above and fallthrough otherwise?
 C $68D4,3 If not, exit via #R$C5D3 resetting the visible character
 N $68D7 Hero only.
 N $68D7 #REGhl points to the hero's visible character at this point.
