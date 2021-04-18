@@ -1049,6 +1049,7 @@ C $68EB,4 Fetch the direction field and clear the non-direction bits, resetting 
 C $68EF,3 Reset the hero's position, redraw the scene then zoombox it onto the screen
 C $68F2,2 Restart from main loop
 c $68F4 The hero enters a room.
+D $68F4 This is called when the hero should enter a room. It resets the game window position, expands out the room definition into tile references then plots those tiles, centres the map position, sets an appropriate sprite for the hero (walk or crawl), sets up movable items then zoomboxes the scenes onto the screen and boosts the score by one. Finally it squashes the stack and jumps to the main loop.
 D $68F4 Used by the routines at #R$68A2, #R$9D78, #R$9DE5 and #R$B75A.
 @ $68F4 label=enter_room
 C $68F4,6 Reset the game_window_offset X and Y coordinates to zero
