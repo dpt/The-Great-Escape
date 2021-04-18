@@ -1063,6 +1063,7 @@ C $6912,3 Zoombox the scene onto the screen
 C $6915,5 Increment score by one
 E $68F4 FALL THROUGH into squash_stack_goto_main.
 c $691A Squash the stack then jump into the game's main loop.
+D $691A This is called by transition or enter_room to restart the game's main loop, after they have performed a scene change.
 D $691A Used by the routines at #R$68A2 and #R$68F4 (a fall through).
 @ $691A label=squash_stack_goto_main
 C $691A,3 Set stack to the very top of RAM
