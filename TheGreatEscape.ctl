@@ -1148,8 +1148,9 @@ B $69BF,1,1 Index: 0
 W $69C0,6,6 Position (62, 35, 16)
 W $69C6,2,2 Sprite: sprite_stove
 B $69C8,1,1 Index: 0
-c $69C9 Reset all seven non-player visible characters.
-D $69C9 Used by the routine at #R$6939 only. (!could merge into the above)
+c $69C9 Reset non-player visible characters.
+D $69C9 This is called by setup_movable_items to reset all seven non-player visible characters.
+D $69C9 Used by the routine at #R$6939 only.
 @ $69C9 label=reset_nonplayer_visible_characters
 @ $69C9 nowarn
 C $69C9,3 Start at the second visible character
