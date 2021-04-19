@@ -1161,6 +1161,7 @@ C $69D6,3 Step #REGhl to the next visible character
 C $69D9,2 ...loop
 C $69DB,1 Return
 c $69DC Setup interior doors.
+D $69DC This is called by setup_room to setup the #R$81D6 array. It walks through the #R$78D6 array, extracting the indices of doors relevant to the current room and stores those indices into #R$81D6.
 D $69DC Used by the routine at #R$6A35 only.
 N $69DC Clear the interior_doors[] array with door_NONE ($FF).
 @ $69DC label=setup_doors
