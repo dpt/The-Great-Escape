@@ -1069,8 +1069,9 @@ D $691A Used by the routines at #R$68A2 and #R$68F4 (a fall through).
 C $691A,3 Set stack to the very top of RAM
 C $691D,3 Jump to the start of the game's main loop
 c $6920 Set appropriate hero sprite for room.
+D $6920 This is called by enter_room to select an appropriate hero sprite for the current room. This forces the use of the prisoner sprite set with the crawl flag enabled, when the hero is in a tunnel room.
+D $6920 This routine doesn't remember your uniform state, so if you enter a tunnel while wearing the guards' uniform you will find it removed on exit from the tunnel.
 D $6920 Used by the routine at #R$68F4.
-D $6920 Called when changing rooms.
 @ $6920 label=set_hero_sprite_for_room
 @ $6920 nowarn
 C $6920,5 Set the hero's visible character input field to input_KICK
