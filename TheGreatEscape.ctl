@@ -1194,6 +1194,7 @@ C $6A0E,1 Step #REGhl' to the next door
 C $6A0F,2 ...loop
 C $6A11,1 Return
 c $6A12 Turn a door index into a door_t pointer.
+D $6A12 This is called by a few routines to turn a door index into a pointer to a door structure (a door_t). The doors[] array contains pairs of door structures. If the door_REVERSE flag is set in bit 7, the first of the pair is returned, otherwise the second is.
 D $6A12 Used by the routines at #R$B32D, #R$B4D0, #R$C651 and #R$CA81.
 R $6A12 I:A Index of door + door_REVERSE flag in bit 7.
 R $6A12 O:HL Pointer to door_t.
