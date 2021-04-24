@@ -1276,12 +1276,13 @@ C $6AAC,3 Expand RLE-encoded object out to a set of tile references
 C $6AB2,2 ...loop
 C $6AB4,1 Return
 c $6AB5 Expands RLE-encoded objects to a full set of tile references.
-D $6AB5 Used by the routine at #R$6A35.
-D $6AB5 Object format:
+D $6AB5 This is called only by setup_room. It expands the run length encoded object data with the given index into indices in the visible tile array.
+D $6AB5 Objects have the following format:
 D $6AB5 #TABLE(default) { =c2 Each object starts with two bytes which specify its dimensions: } { <w> <h>               | Width in tiles, Height in tiles } { =c2 Which are then followed by a repetition of the following bytes: } { <t>                   | Literal: Emit tile <t> } { <$FF> <$FF>           | Escape: Emit <$FF> } { <$FF> <128..254> <t>  | Repetition: Emit tile <t> up to 126 times } { <$FF> <64..79> <t>    | Range: Emit tile <t> <t+1> <t+2> .. up to <t+15> } { <$FF> <other>         | Other encodings are not used } TABLE#
 D $6AB5 Tile references of zero produce no output.
+D $6AB5 Used by the routine at #R$6A35.
 R $6AB5 I:A Object index.
-R $6AB5 I:DE Tile buffer location to expand to.
+R $6AB5 I:DE Tile array location to expand to.
 @ $6AB5 label=expand_object
 C $6AB5,12 Fetch the object pointer from #R$7095[A] into #REGhl
 C $6AC1,2 Fetch the object's width (in tiles)
