@@ -1213,6 +1213,7 @@ D $6A27 Used by the routines at #R$6A35, #R$A50B and #R$AB6B.
 C $6A27,13 Set all RAM from $F0F8 to $F0F8 + 24 * 17 - 1 to zero
 C $6A34,1 Return
 c $6A35 Expand out the room definition for room_index.
+D $6A35 This first wipes the visible tiles array then sets up interior doors, gets the room definition pointer then uses that to setup boundaries, set up interior masks and finally plot all objects into the visible tile array.
 D $6A35 Used by the routines at #R$68F4, #R$7B36, #R$9E07, #R$A289, #R$A2E2, #R$A479 and #R$B3F6.
 @ $6A35 label=setup_room
 C $6A35,3 Wipe the visible tiles array
