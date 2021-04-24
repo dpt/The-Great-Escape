@@ -1207,6 +1207,7 @@ C $6A1F,1 If not, return with #REGhl pointing to the entry
 C $6A20,6 Otherwise, point to the next entry along
 C $6A26,1 Return
 c $6A27 Wipe the visible tiles array.
+D $6A27 The visible tiles array is a 24x17 grid of tile references. The game uses it to render room interiors and the exterior map. This routine clears all of the tiles all to zero.
 D $6A27 Used by the routines at #R$6A35, #R$A50B and #R$AB6B.
 @ $6A27 label=wipe_visible_tiles
 C $6A27,13 Set all RAM from $F0F8 to $F0F8 + 24 * 17 - 1 to zero
