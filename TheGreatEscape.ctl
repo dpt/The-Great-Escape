@@ -1228,9 +1228,9 @@ C $6A48,1 Push it
 C $6A49,3 Setup interior doors
 C $6A4C,1 Pop it
 N $6A4D Copy the count of boundaries into state.
-C $6A4D,3 Point DE at #R$81BE roomdef_bounds_index
-C $6A50,2 Copy first byte of roomdef into roomdef_bounds_index. (DE, HL incremented).
-N $6A52 DE now points to #R$81BF
+C $6A4D,3 Point #REGde at #R$81BE roomdef_bounds_index
+C $6A50,2 Copy first byte of roomdef into roomdef_bounds_index. (#REGde, #REGhl incremented).
+N $6A52 #REGde now points to #R$81BF
 N $6A52 Copy all boundary structures into state, if any.
 C $6A52,1 Fetch count of boundaries
 C $6A53,1 Is it zero?
@@ -2857,7 +2857,7 @@ C $7BBE,2 Jump if not
 N $7BC0 Outdoors.
 C $7BC0,1 Point #REGhl at itemstruct.pos
 C $7BC1,1 Save for below
-C $7BC2,2 Bug: HL is incremented by two here but then is immediately overwritten by the LD HL at $7BC5.
+C $7BC2,2 Bug: #REGhl is incremented by two here but then is immediately overwritten by the LD HL at $7BC5.
 C $7BC4,1 Restore itemstruct.pos pointer into #REGde
 C $7BC5,3 Point #REGhl at the hero's map position
 C $7BC8,3 Scale down hero's map position (#REGhl) and assign the result to itemstruct's tinypos (#REGde). #REGde is updated to point after tinypos on return
@@ -3037,7 +3037,7 @@ C $7CBB,2 Ran out of items: set NZ (not found)
 C $7CBD,1 Return
 c $7CBE Plot a bitmap without masking.
 D $7CBE Used by the routines at #R$7C46, #R$A035 and #R$A0C9.
-R $7CBE I:BC Dimensions (B x C == width x height, where width is specified in bytes).
+R $7CBE I:BC Dimensions (#REGb x #REGc == width x height, where width is specified in bytes).
 R $7CBE I:DE Source address.
 R $7CBE I:HL Destination address.
 @ $7CBE label=plot_bitmap
@@ -3058,7 +3058,7 @@ C $7CD0,3 ...loop for every row
 C $7CD3,1 Return
 c $7CD4 Wipe an area of the screen.
 D $7CD4 Used by the routine at #R$7C46.
-R $7CD4 I:BC Dimensions (B x C == width x height, where width is specified in bytes).
+R $7CD4 I:BC Dimensions (#REGb x #REGb == width x height, where width is specified in bytes).
 R $7CD4 I:HL Destination address.
 @ $7CD4 label=screen_wipe
 C $7CD4,1 Set #REGa to the byte width of the area to wipe
@@ -3194,7 +3194,7 @@ C $7D9C,3 Queue start address
 C $7D9F,2 Is the queue pointer at the start of the queue?
 C $7DA1,1 Return if so
 C $7DA3,2 Get message index from queue
-C $7DA5,1 Bug: C is loaded here but not used. This could be a hangover from 16-bit message IDs
+C $7DA5,1 Bug: #REGc is loaded here but not used. This could be a hangover from 16-bit message IDs
 C $7DA6,15 Set current message character pointer to messages_table[A]
 C $7DB5,11 Shunt the whole queue back by two bytes discarding the first element
 C $7DC0,8 Move the message queue pointer back
@@ -4618,7 +4618,7 @@ C $A013,1 Fetch the global current room index
 C $A014,1 Is it room_0_OUTDOORS? (0)
 C $A015,1 Return if not
 C $A016,3 Point #REGde at hero_map_position
-C $A019,1 Unbank A - restoring original A
+C $A019,1 Unbank #REGa - restoring original #REGa
 E $A007 FALL THROUGH to within_camp_bounds.
 c $A01A Is the specified position within the bounds of the indexed area?
 D $A01A Used by the routine at #R$CB98.
@@ -4709,7 +4709,7 @@ C $A087,1 Just decrement the high byte of the address to go back a scanline
 C $A088,1 Return
 N $A089 Complicated case.
 C $A089,3 Load #REGde with $06E0 by default
-C $A08C,3 Is L < 32?
+C $A08C,3 Is #REGl < 32?
 C $A08F,2 Jump if not
 C $A091,2 If so bits Y5-Y4-Y3 are clear. Load #REGde with $FFE0 (-32)
 C $A093,1 Add
@@ -4890,7 +4890,7 @@ D $A13D Write/read-write by dispatch_timed_event, reset_map_and_characters.
 @ $A13D label=clock
 B $A13D,1,1
 g $A13E 'Character index is valid' flag.
-D $A13E In character_bed_state etc.: when non-zero, character_index is valid, otherwise IY points to character_struct.
+D $A13E In character_bed_state etc.: when non-zero, character_index is valid, otherwise #REGiy points to character_struct.
 D $A13E Read-only by charevnt_bed, charevnt_breakfast.
 D $A13E Write/read-write by set_route, spawn_character, move_character, automatics, set_route.
 @ $A13E label=entered_move_a_character
@@ -5273,7 +5273,7 @@ C $A38F,2 Is the character on-screen? characterstruct_FLAG_ON_SCREEN
 C $A391,3 It's not - jump to characterstruct setting code
 @ $A394 label=set_vischar_route
 C $A394,1 Save route step
-C $A395,3 A = *HL & characterstruct_CHARACTER_MASK;
+C $A395,3 #REGa = *#REGhl & characterstruct_CHARACTER_MASK;
 N $A398 Search non-player characters to see if this character is already on-screen.
 C $A398,2 There are seven non-player vischars
 C $A39A,3 Prepare the vischar stride
@@ -6293,7 +6293,7 @@ C $AC5D,1 Restore the destination pointer
 C $AC5E,1 Exchange
 C $AC5F,3 Set the row-to-row delta to 32
 C $AC62,1 Isolate
-C $AC63,2 Is A < 224? This sets the C flag if we're NOT at the end of the current third of the screen
+C $AC63,2 Is #REGa < 224? This sets the C flag if we're NOT at the end of the current third of the screen
 C $AC65,2 Jump over if so
 C $AC67,2 Otherwise set the stride to $0720 so we will step forward to the next third of the screen. In this case #REGhl is of the binary form 010ttyyy111xxxxx. Adding $0720 - binary 0000011100100000 - will result in 010TTyyy000xxxxx where the 't' bits are incremented, moving the pointer forward to the next screen third
 C $AC69,1 Step
@@ -6455,7 +6455,7 @@ C $AD8A,1 !overshot? count down counter byte
 C $AD8B,2 !go negative
 C $AD8D,2 Pointer -= 2
 C $AD8F,1 Bug: #REGa is loaded but never used again
-C $AD90,2 HL -= 2;
+C $AD90,2 #REGhl -= 2
 N $AD92 Copy counter + direction_t.
 C $AD92,4 Copy counter
 C $AD96,2 Copy direction
@@ -6813,14 +6813,14 @@ N $B05B Currently tested vischar (HL) is the hero's.
 C $B05B,3 Fetch global bribed character
 C $B05E,3 Does it match IY's vischar character?
 C $B061,2 No, jump forward to solitary check
-N $B063 Vischar IY is a bribed character pursuing the hero.
+N $B063 Vischar #REGiy is a bribed character pursuing the hero.
 N $B063 When the pursuer catches the hero the bribe will be accepted.
 C $B063,3 Call accept_bribe
 C $B066,2 (else)
-N $B068 Vischar IY is a hostile who's caught the hero!
+N $B068 Vischar #REGiy is a hostile who's caught the hero!
 C $B068,1 Restore vischar pointer
 C $B069,1 Restore loop counter
-C $B06A,4 Unused sequence: HL = IY + 1
+C $B06A,4 Unused sequence: #REGhl = #REGiy + 1
 C $B06E,3 Exit via solitary
 N $B071 Check for collisions with items.
 C $B071,1 Restore vischar pointer
@@ -7793,22 +7793,22 @@ N $B729 Set vischar.iso_pos.x to ($200 - saved_pos_x + saved_pos_y) * 2
 @ $B729 label=calc_vischar_iso_pos_from_state
 C $B729,1 Preserve vischar pointer
 C $B72A,4 Point #REGde at vischar.iso_pos.x (note shortcut - no rollover into high byte)
-C $B72E,7 HL = saved_pos_y + $200
+C $B72E,7 #REGhl = saved_pos_y + $200
 C $B735,4 Fetch saved_pos_x
 C $B739,1 Clear the carry flag
-C $B73A,2 HL -= saved_pos_x
+C $B73A,2 #REGhl -= saved_pos_x
 C $B73C,1 Double the result
 C $B73D,1 Restore vischar pointer
 C $B73E,4 Store result in vischar.iso_pos.x
 N $B742 Set vischar.iso_pos_y = $800 - saved_pos_x - saved_pos_y - saved_height
 C $B742,1 Preserve vischar pointer
-C $B743,3 HL = $800
+C $B743,3 #REGhl = $800
 C $B746,1 Clear the carry flag
-C $B747,2 HL -= saved_pos_x
+C $B747,2 #REGhl -= saved_pos_x
 C $B749,4 Fetch saved_height
-C $B74D,2 HL -= saved_height
+C $B74D,2 #REGhl -= saved_height
 C $B74F,4 Fetch saved_pos_y
-C $B753,2 HL -= saved_pos_y
+C $B753,2 #REGhl -= saved_pos_y
 C $B755,1 Restore vischar pointer
 C $B756,3 Store result in vischar.iso_pos.y
 C $B759,1 Return
@@ -8290,7 +8290,7 @@ C $BAA0,2 Otherwise mask it off, giving the repeat count
 C $BAA2,1 Advance the mask data pointer
 N $BAA3 (resume point)
 @ $BAA3 label=rmb_trailskip_dive_in
-C $BAA3,4 right_skip = A = (right_skip - A)
+C $BAA3,4 right_skip = #REGa = (right_skip - #REGa)
 C $BAA7,2 Jump if it went negative
 C $BAA9,1 Advance the mask data pointer (doesn't affect flags)
 C $BAAA,2 if (right_skip > 0) goto START OF LOOP
@@ -8548,7 +8548,7 @@ C $BC41,3 Point #REGde at the window buffer's start address (windowbuf)
 C $BC44,1 Add
 C $BC45,1 Swap the buffer offset into #REGde. #REGhl is about to be overwritten
 N $BC46 Calculate the offset into the tile buffer.
-N $BC46 Compute pointer = C * 24 + A + $F0F8
+N $BC46 Compute pointer = #REGc * 24 + #REGa + $F0F8
 C $BC46,1 Stack the x and y values
 C $BC47,1 Bank
 C $BC48,1 Restore into #REGhl
@@ -9408,15 +9408,15 @@ C $C852,4 automatic_player_counter = 0; // force automatic control
 C $C856,6 set_hero_route(0x0025); return;
 N $C85C charevnt_wander_left
 @ $C85C label=charevnt_wander_left
-C $C85C,2 C = 0x10; // 0xFF10
+C $C85C,2 #REGc = 0x10; // 0xFF10
 C $C85E,2 goto exit;
 N $C860 charevnt_wander_yard
 @ $C860 label=charevnt_wander_yard
-C $C860,2 C = 0x38; // 0xFF38
+C $C860,2 #REGc = 0x38; // 0xFF38
 C $C862,2 goto exit;
 N $C864 charevnt_wander_top
 @ $C864 label=charevnt_wander_top
-C $C864,2 C = 0x08; // 0xFF08 // sampled HL=$8022,$8042,$8002,$8062
+C $C864,2 #REGc = 0x08; // 0xFF08 // sampled HL=$8022,$8042,$8002,$8062
 C $C866,1 exit:
 C $C867,3 *HL++ = 0xFF;
 C $C86A,1 *HL   = C;
@@ -9918,7 +9918,7 @@ C $CB6A,1 Restore the route pointer
 C $CB6B,7 Copy #REGhl (ptr to doorpos or location) to vischar->target
 C $CB72,2 (This return value is never used)
 C $CB74,1 Return
-c $CB75 Widen A to BC (multiply by 1).
+c $CB75 Widen #REGa to #REGbc (multiply by 1).
 @ $CB75 label=multiply_by_1
 C $CB75,3 Widen #REGa into #REGbc
 C $CB78,1 Return
@@ -10152,9 +10152,9 @@ C $CCE5,2 Jump if so
 C $CCE7,1 Advance to the next itemstruct
 C $CCE8,2 ..loop
 C $CCEA,1 Return
-N $CCEB Suspected bug: HL is decremented, but not re-incremented before 'goto next'. So it must be reading a byte early when iteration is resumed. Consequences? I think it'll screw up when multiple items are in range.
+N $CCEB Suspected bug: #REGhl is decremented, but not re-incremented before 'goto next'. So it must be reading a byte early when iteration is resumed. Consequences? I think it'll screw up when multiple items are in range.
 @ $CCEB label=iid_nearby
-C $CCEC,3 A = *HL & itemstruct_ITEM_MASK; // sampled HL=$772A (&item_structs[item_PURSE].item)
+C $CCEC,3 #REGa = *#REGhl & itemstruct_ITEM_MASK; // sampled HL=$772A (&item_structs[item_PURSE].item)
 N $CCEF The green key and food items are ignored.
 C $CCEF,2 Is it item_GREEN_KEY?
 C $CCF1,2 Jump to next iteration if so
@@ -12187,7 +12187,7 @@ C $F1B2,1 Advance #REGhl to the flags field
 C $F1B3,1 Set the vischar's flags to $FF
 C $F1B4,1 Advance the vischar pointer
 C $F1B5,2 ...loop until the vischar flags are set
-N $F1B7 Zero $118 bytes at HL ($8100 is mask_buffer) onwards.
+N $F1B7 Zero $118 bytes at #REGhl ($8100 is mask_buffer) onwards.
 N $F1B7 This wipes everything up until the start of tiles ($8218).
 C $F1B7,3 Set #REGb to $118
 N $F1BA Start loop
@@ -12703,7 +12703,7 @@ C $F534,3 Fetch frequency from table
 N $F537 DPT: This increment could be baked into the table itself.
 C $F537,1 Increment
 C $F538,1 Increment
-C $F539,3 If B rolled over, increment C (big endian?)
+C $F539,3 If #REGb rolled over, increment #REGc (big endian?)
 C $F53C,2 Reset #REGl - this is the border+beeper value for OUT
 C $F53E,2 Return #REGde and #REGbc the same
 C $F540,1 Return
@@ -12982,7 +12982,7 @@ C $FEBF,1 Rotate 'R' out: RLDUFxxx
 C $FEC0,2 If carry was set then right was pressed, otherwise skip
 C $FEC2,2 left_right = input_RIGHT
 N $FEC4 Fire
-C $FEC4,2 Test fire bit (and set A to zero if not set)
+C $FEC4,2 Test fire bit (and set #REGa to zero if not set)
 C $FEC6,2 If bit was set then fire was pressed, otherwise skip
 C $FEC8,2 fire = input_FIRE
 C $FECA,2 Combine the fire, up_down and left_right values
