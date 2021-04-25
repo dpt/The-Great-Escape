@@ -1060,7 +1060,7 @@ D $68F4 Used by the routines at #R$68A2, #R$9D78, #R$9DE5 and #R$B75A.
 @ $68F4 label=enter_room
 C $68F4,6 Reset the game_window_offset X and Y coordinates to zero
 C $68FA,3 Setup the room
-C $68FD,3 Expand tile buffer into screen buffer
+C $68FD,3 Render visible tiles array into the screen buffer
 C $6900,6 Set the map_position to (116,234)
 C $6906,3 Set appropriate sprite for the room (standing or crawl)
 C $6909,6 Reset the hero's screen position
@@ -1401,8 +1401,8 @@ C $6B3D,2 ...loop if non-zero
 C $6B3F,1 Advance the data pointer
 C $6B40,2 Jump to main expand loop
 ;
-c $6B42 Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer.
-D $6B42 ...
+c $6B42 Render visible tiles array into the screen buffer.
+D $6B42 This routine expands all of the tile indices in the visible tiles array to the screen buffer. It's only ever used when drawing interior scenes (rooms).
 D $6B42 Used by the routines at #R$68F4, #R$7B36, #R$9E07, #R$A289, #R$A2E2, #R$A479, #R$A50B, #R$AB6B and #R$B3F6.
 @ $6B42 label=plot_interior_tiles
 C $6B42,3 Point #REGhl at the screen buffer's start address
@@ -2912,7 +2912,7 @@ C $7B5A,3 Plot all tiles
 C $7B5D,2 Jump over indoor handling
 @ $7B5F label=pick_up_indoors
 C $7B5F,3 Expand out the room definition for room_index
-C $7B62,3 Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer
+C $7B62,3 Render visible tiles array into the screen buffer.
 C $7B65,3 Choose game window attributes
 C $7B68,3 Set game window attributes
 C $7B6B,1 Retrieve the item_struct item pointer
@@ -4562,7 +4562,7 @@ C $9E7A,3 Point #REGhl at hero in bed flag
 @ $9E7D label=process_player_input_common
 C $9E7D,2 Clear the hero at breakfast / hero in bed flag
 C $9E7F,3 Expand out the room definition for room_index
-C $9E82,3 Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer
+C $9E82,3 Render visible tiles array into the screen buffer.
 @ $9E85 label=process_player_input_check_fire
 C $9E85,1 Unbank input routine result
 C $9E86,2 Was fire pressed?
@@ -5382,7 +5382,7 @@ N $A2CF Update the hero's bed object to be empty and redraw if required.
 C $A2CF,4 Set room definition 2's bed object to interiorobject_EMPTY_BED
 C $A2D3,8 If the global current room index is outdoors, or is not a hut room (6 or above) then return
 C $A2DB,3 Expand out the room definition for room_index
-C $A2DE,3 Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer
+C $A2DE,3 Render visible tiles array into the screen buffer.
 C $A2E1,1 Return
 ;
 c $A2E2 End of breakfast time.
@@ -5421,7 +5421,7 @@ C $A32B,3 Set room definition 25's bench_F object to interiorobject_EMPTY_BENCH
 C $A32E,3 Set room definition 25's bench_G object to interiorobject_EMPTY_BENCH
 C $A331,8 If the global current room index is outdoors, or a tunnel room then return
 C $A339,3 Expand out the room definition for room_index
-C $A33C,3 Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer and exit via (note: different to wake_up's end)
+C $A33C,3 Render visible tiles array into the screen buffer and exit via (note: different to wake_up's end)
 ;
 c $A33F Set the hero's route, unless he's in solitary.
 D $A33F Used by the routines at #R$9F21, #R$A1C3, #R$A289, #R$A2E2, #R$A351, #R$A3F8, #R$A4A9, #R$A4B7, #R$A4C5, #R$A4D8 and #R$A4FD.
@@ -5677,7 +5677,7 @@ c $A479 Select room and plot.
 D $A479 Used by the routine at #R$A491.
 @ $A479 label=select_room_and_plot
 C $A479,3 Expand out the room definition for room_index
-C $A47C,3 Expand tile buffer into screen buffer, exit via
+C $A47C,3 Render visible tiles array into the screen buffer, exit via
 ;
 c $A47F The hero sits.
 D $A47F Used by the routine at #R$C7C6.
@@ -5765,7 +5765,7 @@ c $A50B Reset the screen.
 D $A50B Used by the routines at #R$9DE5 and #R$A51C.
 @ $A50B label=screen_reset
 C $A50B,3 Wipe the visible tiles array
-C $A50E,3 Expand tile buffer into screen buffer
+C $A50E,3 Render visible tiles array into the screen buffer
 C $A511,3 Zoombox the scene onto the screen
 C $A514,3 Plot the game screen
 C $A517,2 Set #REGa to attribute_WHITE_OVER_BLACK
@@ -6475,7 +6475,7 @@ C $AB93,1 Item is torch?
 C $AB94,2 Jump if so
 N $AB96 The hero holds no torch - wipe the tiles so that nothing gets drawn.
 C $AB96,3 Wipe the visible tiles array
-C $AB99,3 Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer
+C $AB99,3 Render visible tiles array into the screen buffer
 C $AB9C,2 For a dark tunnel we use attribute_BLUE_OVER_BLACK
 C $AB9E,2 Jump to set_attribute_from_A
 ;
@@ -7704,7 +7704,7 @@ N $B407 Remove the blockage graphic.
 C $B407,4 roomdef_50_blocked_tunnel_collapsed_tunnel = 0
 C $B40B,3 Setup the room
 C $B40E,3 Choose game window attributes
-C $B411,3 Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer
+C $B411,3 Render visible tiles array into the screen buffer
 C $B414,3 Increase morale by 10, score by 50 and exit via
 ;
 c $B417 Use wiresnips.
