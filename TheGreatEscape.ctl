@@ -1435,15 +1435,15 @@ N $6B78 End
 C $6B78,1 Return
 ;
 w $6B79 Table of pointers to prisoner bed objects in room definition data.
-D $6B79 Six pointers to bed objects in room definition data. These are the beds of the active prisoners (characters 20 to 25).
-D $6B79 Note that the topmost hut has three prisoners permanently in bed and one permanently empty bed.
+D $6B79 This is an array of six pointers to room definition bed objects. These are the beds of the active prisoners (characters 20 to 25).
+D $6B79 Note that the topmost hut does not feature in this list. It has three prisoners permanently in bed and one permanently empty bed.
 @ $6B79 label=beds
-W $6B79,2,2 roomdef_3_hut2_right byte 29 - rightmost bed in hut 2 right - used by char route 7
-W $6B7B,2,2 roomdef_3_hut2_right byte 32 - middle bed in hut 2 right - used by char route 8
-W $6B7D,2,2 roomdef_3_hut2_right byte 35 - leftmost bed in hut 2 right - used by char route 9
-W $6B7F,2,2 roomdef_5_hut3_right byte 29 - rightmost in hut 3 right - used by char route 10
-W $6B81,2,2 roomdef_5_hut3_right byte 32 - middle in hut 3 right - used by char route 11
-W $6B83,2,2 roomdef_5_hut3_right byte 35 - leftmost in hut 3 right - used by char route 12
+W $6B79,2,2 roomdef_3_hut2_right byte 29. The rightmost bed in hut 2 right. This is used by route 7.
+W $6B7B,2,2 roomdef_3_hut2_right byte 32. The middle bed in hut 2 right. This is used by route 8.
+W $6B7D,2,2 roomdef_3_hut2_right byte 35. The leftmost bed in hut 2 right. This is used by route 9.
+W $6B7F,2,2 roomdef_5_hut3_right byte 29. The rightmost in hut 3 right. This is used by route 10.
+W $6B81,2,2 roomdef_5_hut3_right byte 32. The middle in hut 3 right. This is used by route 11.
+W $6B83,2,2 roomdef_5_hut3_right byte 35. The leftmost in hut 3 right. This is used by route 12.
 ;
 b $6B85 Room dimensions.
 D $6B85 The room definitions specify their dimensions via an index into this table. Note that it looks like a bounds_t but has a different order.
