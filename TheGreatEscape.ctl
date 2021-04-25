@@ -1276,9 +1276,9 @@ C $6AAC,3 Expand RLE-encoded object out to a set of tile references
 C $6AB2,2 ...loop
 C $6AB4,1 Return
 c $6AB5 Expands RLE-encoded objects to a full set of tile references.
-D $6AB5 This is called only by setup_room. It expands the run length encoded object data with the given index into indices in the visible tile array.
+D $6AB5 This is only ever called by setup_room. It expands the run length encoded object with the given index into indices in the visible tile array.
 D $6AB5 Objects have the following format:
-D $6AB5 #TABLE(default) { =c2 Each object starts with two bytes which specify its dimensions: } { <w> <h>               | Width in tiles, Height in tiles } { =c2 Which are then followed by a repetition of the following bytes: } { <t>                   | Literal: Emit tile <t> } { <$FF> <$FF>           | Escape: Emit <$FF> } { <$FF> <128..254> <t>  | Repetition: Emit tile <t> up to 126 times } { <$FF> <64..79> <t>    | Range: Emit tile <t> <t+1> <t+2> .. up to <t+15> } { <$FF> <other>         | Other encodings are not used } TABLE#
+D $6AB5 #TABLE(default) { =c2 Each object starts with two bytes which specify its dimensions: } { <w> <h> | Width in tiles, Height in tiles } { =c2 Which are then followed by a repetition of the following bytes: } { <t> | Literal: Emit a single tile <t> } { <$FF> <$FF> | Escape: Emit a single tile $FF } { <$FF> <c=128..254> <t> | Repetition: Emit tile <t> count (<c> AND 127) times } { <$FF> <c=64..79> <t> | Ascending range: Emit tile <t> then <t+1> then <t+2> and so on, up to <t+(c AND 15)> } { <$FF> <other> | Other encodings are not used } TABLE#
 D $6AB5 Tile references of zero produce no output.
 D $6AB5 Used by the routine at #R$6A35.
 R $6AB5 I:A Object index.
@@ -1350,7 +1350,7 @@ C $6B14,2 ...loop if non-zero
 C $6B16,1 Advance the data pointer
 C $6B17,2 Jump to main expand loop
 N $6B19 Escape + 64..79 case: emit an ascending range of bytes
-N $6B19 Bug: This self-modifies the INC A at #R$6B28 at the end of the loop body, but nothing else in the code modifies it! Possible evidence that other encodings (e.g. 'DEC A') were attempted.
+N $6B19 Trivial bug: This self-modifies the INC A at #R$6B28 at the end of the loop body, but nothing else in the code modifies it! Possible evidence that other encodings (e.g. 'DEC A') were attempted.
 @ $6B19 label=range
 @ $6B1B nowarn
 C $6B19,5 Make the instruction at #R$6B28 an 'INC A'
