@@ -6900,7 +6900,7 @@ C $AE9B,1 Is (map_position.y + 6) >= (searchlight.y + 12)?
 N $AE9C Is the searchlight hotspot bottom edge beyond the hero's top edge?
 C $AE9C,1 Return if so - the hero isn't in the hotspot
 N $AE9D The hero is in the hotspot.
-N $AE9D DPT: It seems odd to not do this next test first, since it's cheaper.
+N $AE9D Commentary: It seems odd to not do this next test first, since it's cheaper.
 C $AE9D,5 Is searchlight_state set to searchlight_STATE_CAUGHT? ($1F)
 C $AEA2,1 Return if so
 C $AEA3,5 Set searchlight_state to searchlight_STATE_CAUGHT
@@ -7385,7 +7385,7 @@ C $B21C,2 If not in range, jump to door_handling_found
 @ $B21E label=door_handling_next
 C $B21E,7 Step forward two entries
 C $B225,2 ...loop
-N $B227 DPT: This seems to exist to set Z, but this routine doesn't return anything!
+N $B227 Commentary: This seems to exist to set Z, but this routine doesn't return anything!
 C $B227,1 Set Z (#REGb is zero here)
 C $B228,1 Return
 @ $B229 label=door_handling_found
@@ -8005,7 +8005,7 @@ C $B63F,2 Subtract the delta
 C $B641,3 Save it in saved_height
 C $B644,3 Test for characters meeting obstacles like doors and map bounds
 C $B647,3 If outside bounds (collided with something), jump to animate_pop_next to halt any animation
-C $B64A,3 Decrement animation index (DPT: Was there a bug around here?)
+C $B64A,3 Decrement animation index [DPT: Was there a bug around here?]
 C $B64D,2 (else)
 N $B64F Have we reached the end of the animation?
 C $B64F,1 Is the animation index equal to the number of frames in the animation?
@@ -8577,7 +8577,7 @@ C $BA6F,2 Set #REGc for (self modified height) iterations
 N $BA71 Start loop
 C $BA71,2 Set #REGb for (self modified width) iterations
 N $BA73 Start loop
-N $BA73 DPT: The banking of #REGa is hard to follow here. It's difficult to see if this section is entered with a skip value whether it will be handled correctly.
+N $BA73 Commentary: The banking of #REGa is hard to follow here. It's difficult to see if this section is entered with a skip value whether it will be handled correctly.
 C $BA73,1 Bank the <repeat length>
 C $BA74,1 Read a byte. It could be a repeat count or a tile index
 C $BA75,1 Is the MASK_RUN_FLAG set?
@@ -8821,7 +8821,7 @@ C $BBD4,3 Shift it right by three bits
 C $BBD7,2 Mask away the rotated-out bits
 C $BBD9,2 Add two
 C $BBDB,1 Save the computed height
-N $BBDC DPT: It seems that the following sequence (from $BBDC to $BC01) duplicates the work done by vischar_visible. I can't see any benefit to it.
+N $BBDC Commentary: It seems that the following sequence (from $BBDC to $BC01) duplicates the work done by vischar_visible. I can't see any benefit to it.
 N $BBDC Compute bottom = height + iso_pos_y - map_position_y. This is the distance of the (clipped) bottom edge of the vischar from the top of the window.
 C $BBDC,3 Point #REGhl at iso_pos_y
 C $BBDF,1 Add iso_pos_y to height
@@ -9156,7 +9156,7 @@ C $C4AC,1 Copy result #REGc
 C $C4AD,1 Copy miny to #REGa
 C $C4AE,1 Is miny >= result?
 C $C4AF,2 Jump to reset if so (out of bounds)
-N $C4B1 DPT: 16 is used for screen height here, but 24 is used for width below - so that doesn't line up with the actual values which are 24x17.
+N $C4B1 Commentary: 16 is used for screen height here, but 24 is used for width below - so that doesn't line up with the actual values which are 24x17.
 C $C4B1,2 Add 16 + 2 * 9 (16 => screen height, 9 => buffer zone size)
 C $C4B3,4 Clamp to a maximum of 255
 C $C4B7,1 Is result > (miny + buffer size, clamped to 255)?
@@ -10355,7 +10355,7 @@ C $CBDE,4 Advance #REGhl to the next itemstruct
 C $CBE2,2 ...loop
 N $CBE4 Move the hero to solitary.
 C $CBE4,5 Set vischar[0].room to room_24_SOLITARY
-N $CBE9 DPT: I reckon this should instead be 24 which is the door between room_22_REDKEY and room_24_SOLITARY.
+N $CBE9 Commentary: This should instead be 24 which is the door between room_22_REDKEY and room_24_SOLITARY.
 C $CBE9,5 Set the global current door to 20
 C $CBEE,5 Decrease morale by 35
 C $CBF3,3 Reset all visible characters, clock, day_or_night flag, general flags, collapsed tunnel objects, lock the gates, reset all beds, clear the mess halls and reset characters
@@ -12557,7 +12557,7 @@ N $F17D Construct a table of 256 bit-reversed bytes at $7F00.
 C $F17D,3 Point #REGhl at $7F00
 N $F180 Start loop
 C $F180,1 Shuffle
-C $F181,2 Zero #REGc (DPT: Could have used XOR C)
+C $F181,2 Zero #REGc (Commentary: Could have used XOR C)
 N $F183 Reverse a byte
 C $F183,2 Set #REGb for eight iterations
 N $F185 Start loop
@@ -12580,7 +12580,7 @@ C $F19E,1 Restore vischar pointer
 C $F19F,4 Advance #REGhl to the next vischar (assumes no overflow)
 C $F1A3,1 Restore vischar_initial
 C $F1A4,3 ...loop until the vischars are populated
-N $F1A7 Write $FF $FF at $8020 and every 32 bytes after. (DPT: Possibly easier to do the inverse and clear those bytes at $8000).
+N $F1A7 Write $FF $FF at $8020 and every 32 bytes after. (Commentary: It could be easier to do the inverse and clear those bytes at $8000).
 C $F1A7,2 Set #REGb for seven iterations
 N $F1A9 Iterate over non-player visible characters.
 @ $F1A9 nowarn
@@ -13124,7 +13124,7 @@ C $F52D,3 Point #REGhl at the semitone to frequency table
 C $F530,3 Widen: #REGde = #REGa
 C $F533,1 Add
 C $F534,3 Fetch frequency from table
-N $F537 DPT: This increment could be baked into the table itself.
+N $F537 Commentary: This increment could be baked into the table itself.
 C $F537,1 Increment
 C $F538,1 Increment
 C $F539,3 If #REGb rolled over, increment #REGc (big endian?)
@@ -13395,7 +13395,7 @@ N $FEA3 O:A Input value (as per enum input).
 C $FEA3,3 Load #REGbc with port number $7F
 C $FEA6,2 Read that port. We'll receive FxxxRLDU
 C $FEA8,3 Clear our variables
-N $FEAB DPT: This is odd. It's testing an unspecified bit to see whether to complement the read value. I don't see a reference for that behaviour anywhere.
+N $FEAB Commentary: This is odd. It's testing an unspecified bit to see whether to complement the read value. I don't see a reference for that behaviour anywhere.
 C $FEAB,2 Test bit 4
 C $FEAD,2 Jump forward if clear
 C $FEAF,1 Complement the value
