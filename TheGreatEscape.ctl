@@ -2097,8 +2097,9 @@ B $708F,3,3 { interiorobject_TUNNEL_SW_NE, 4, 8 }
 B $7092,3,3 { interiorobject_TUNNEL_SW_NE, 0, 10 }
 ;
 b $7095 Interior object definitions.
+D $7095 This is an array of pointers to interior object definitions. It's 54 entries long.
 @ $7095 label=interior_object_defs
-W $7095,108,2 Array of pointer to interior object definitions, 54 entries long (== number of interior objects).
+W $7095,108,2
 ;
 b $7101 Room object 0: Straight tunnel section SW-NE
 @ $7101 label=interior_object_tile_refs_0
