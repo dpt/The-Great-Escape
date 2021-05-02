@@ -2460,36 +2460,36 @@ B $75B2,96,8 tile references (incl. RLE)
 E $75B0 #HTML[#CALL:decode_object($75B0, 27)]
 ;
 b $7612 Character structures.
-D $7612 This array contains one of these 7-byte structures for each of the 26 game characters:
-D $7612 #TABLE(default) { =h Type   | =h Bytes | =h Name             | =h Meaning } { Character |        1 | character_and_flags | Character index; bit 6 = on-screen flag } { Room      |        1 | room                | The room the character's in, and flags } { TinyPos   |        3 | pos                 | Map position of the character } { Route     |        2 | route               | The route the character's on } TABLE#
+D $7612 This array contains one of the following seven-byte structures for each of the 26 game characters.
+D $7612 #TABLE(default) { =h Type | =h Bytes | =h Name | =h Meaning } { Character | 1 | character_and_flags | Character index. Bit 6 set => on-screen } { Room | 1 | room | Index of the room this character is in, and flags } { TinyPos | 3 | pos | Map position of the character } { Route | 2 | route | The route the character's on } TABLE#
 @ $7612 label=character_structs
-B $7612,7,7 character_0_COMMANDANT, room_11_PAPERS,   ( 46,  46, 24), (0x03, 0x00)
-B $7619,7,7 character_1_GUARD_1, room_0_OUTDOORS, (102,  68,  3), (0x01, 0x00)
-B $7620,7,7 character_2_GUARD_2, room_0_OUTDOORS, ( 68, 104,  3), (0x01, 0x02)
-B $7627,7,7 character_3_GUARD_3, room_16_CORRIDOR, ( 46,  46, 24), (0x03, 0x13)
-B $762E,7,7 character_4_GUARD_4, room_0_OUTDOORS, ( 61, 103,  3), (0x02, 0x04)
-B $7635,7,7 character_5_GUARD_5, room_0_OUTDOORS, (106,  56, 13), (0x00, 0x00)
-B $763C,7,7 character_6_GUARD_6, room_0_OUTDOORS, ( 72,  94, 13), (0x00, 0x00)
-B $7643,7,7 character_7_GUARD_7, room_0_OUTDOORS, ( 72,  70, 13), (0x00, 0x00)
-B $764A,7,7 character_8_GUARD_8, room_0_OUTDOORS, ( 80,  46, 13), (0x00, 0x00)
-B $7651,7,7 character_9_GUARD_9, room_0_OUTDOORS, (108,  71, 21), (0x04, 0x00)
-B $7658,7,7 character_10_GUARD_10, room_0_OUTDOORS,  ( 92,  52,  3), (0xFF, 0x38)
-B $765F,7,7 character_11_GUARD_11, room_0_OUTDOORS,  (109,  69,  3), (0x00, 0x00)
-B $7666,7,7 character_12_GUARD_12, room_3_HUT2RIGHT, ( 40,  60, 24), (0x00, 0x08)
+B $7612,7,7 { character_0_COMMANDANT, room_11_PAPERS, ( 46, 46, 24), (0x03, 0x00) }
+B $7619,7,7 { character_1_GUARD_1, room_0_OUTDOORS, (102, 68, 3), (0x01, 0x00) }
+B $7620,7,7 { character_2_GUARD_2, room_0_OUTDOORS, ( 68, 104, 3), (0x01, 0x02) }
+B $7627,7,7 { character_3_GUARD_3, room_16_CORRIDOR, ( 46, 46, 24), (0x03, 0x13) }
+B $762E,7,7 { character_4_GUARD_4, room_0_OUTDOORS, ( 61, 103, 3), (0x02, 0x04) }
+B $7635,7,7 { character_5_GUARD_5, room_0_OUTDOORS, (106, 56, 13), (0x00, 0x00) }
+B $763C,7,7 { character_6_GUARD_6, room_0_OUTDOORS, ( 72, 94, 13), (0x00, 0x00) }
+B $7643,7,7 { character_7_GUARD_7, room_0_OUTDOORS, ( 72, 70, 13), (0x00, 0x00) }
+B $764A,7,7 { character_8_GUARD_8, room_0_OUTDOORS, ( 80, 46, 13), (0x00, 0x00) }
+B $7651,7,7 { character_9_GUARD_9, room_0_OUTDOORS, (108, 71, 21), (0x04, 0x00) }
+B $7658,7,7 { character_10_GUARD_10, room_0_OUTDOORS, ( 92, 52, 3), (0xFF, 0x38) }
+B $765F,7,7 { character_11_GUARD_11, room_0_OUTDOORS, (109, 69, 3), (0x00, 0x00) }
+B $7666,7,7 { character_12_GUARD_12, room_3_HUT2RIGHT, ( 40, 60, 24), (0x00, 0x08) }
 N $766D Bug: The room field here is 2 but reset_map_and_characters will reset it to 3.
-B $766D,7,7 character_13_GUARD_13, room_2_HUT2LEFT,  ( 36,  48, 24), (0x00, 0x08)
-B $7674,7,7 character_14_GUARD_14, room_5_HUT3RIGHT, ( 40,  60, 24), (0x00, 0x10)
-B $767B,7,7 character_15_GUARD_15, room_5_HUT3RIGHT, ( 36,  34, 24), (0x00, 0x10)
-B $7682,7,7 character_16_GUARD_DOG_1, room_0_OUTDOORS,  ( 68,  84,  1), (0xFF, 0x00)
-B $7689,7,7 character_17_GUARD_DOG_2, room_0_OUTDOORS,  ( 68, 104,  1), (0xFF, 0x00)
-B $7690,7,7 character_18_GUARD_DOG_3, room_0_OUTDOORS,  (102,  68,  1), (0xFF, 0x18)
-B $7697,7,7 character_19_GUARD_DOG_4, room_0_OUTDOORS,  ( 88,  68,  1), (0xFF, 0x18)
-B $769E,7,7 character_20_PRISONER_1,  room_NONE, ( 52,  60, 24), (0x00, 0x08)
-B $76A5,7,7 character_21_PRISONER_2,  room_NONE, ( 52,  44, 24), (0x00, 0x08)
-B $76AC,7,7 character_22_PRISONER_3,  room_NONE, ( 52,  28, 24), (0x00, 0x08)
-B $76B3,7,7 character_23_PRISONER_4,  room_NONE, ( 52,  60, 24), (0x00, 0x10)
-B $76BA,7,7 character_24_PRISONER_5,  room_NONE, ( 52,  44, 24), (0x00, 0x10)
-B $76C1,7,7 character_25_PRISONER_6,  room_NONE, ( 52,  28, 24), (0x00, 0x10)
+B $766D,7,7 { character_13_GUARD_13, room_2_HUT2LEFT, ( 36, 48, 24), (0x00, 0x08) }
+B $7674,7,7 { character_14_GUARD_14, room_5_HUT3RIGHT, ( 40, 60, 24), (0x00, 0x10) }
+B $767B,7,7 { character_15_GUARD_15, room_5_HUT3RIGHT, ( 36, 34, 24), (0x00, 0x10) }
+B $7682,7,7 { character_16_GUARD_DOG_1, room_0_OUTDOORS, ( 68, 84, 1), (0xFF, 0x00) }
+B $7689,7,7 { character_17_GUARD_DOG_2, room_0_OUTDOORS, ( 68, 104, 1), (0xFF, 0x00) }
+B $7690,7,7 { character_18_GUARD_DOG_3, room_0_OUTDOORS, (102, 68, 1), (0xFF, 0x18) }
+B $7697,7,7 { character_19_GUARD_DOG_4, room_0_OUTDOORS, ( 88, 68, 1), (0xFF, 0x18) }
+B $769E,7,7 { character_20_PRISONER_1, room_NONE, ( 52, 60, 24), (0x00, 0x08) }
+B $76A5,7,7 { character_21_PRISONER_2, room_NONE, ( 52, 44, 24), (0x00, 0x08) }
+B $76AC,7,7 { character_22_PRISONER_3, room_NONE, ( 52, 28, 24), (0x00, 0x08) }
+B $76B3,7,7 { character_23_PRISONER_4, room_NONE, ( 52, 60, 24), (0x00, 0x10) }
+B $76BA,7,7 { character_24_PRISONER_5, room_NONE, ( 52, 44, 24), (0x00, 0x10) }
+B $76C1,7,7 { character_25_PRISONER_6, room_NONE, ( 52, 28, 24), (0x00, 0x10) }
 ;
 b $76C8 Item structures (a.k.a. itemstructs).
 D $76C8 This array contains one of these 7-byte structures for each of the 16 game items:
