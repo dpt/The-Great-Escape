@@ -2491,27 +2491,31 @@ B $76B3,7,7 { character_23_PRISONER_4, room_NONE, ( 52, 60, 24), (0x00, 0x10) }
 B $76BA,7,7 { character_24_PRISONER_5, room_NONE, ( 52, 44, 24), (0x00, 0x10) }
 B $76C1,7,7 { character_25_PRISONER_6, room_NONE, ( 52, 28, 24), (0x00, 0x10) }
 ;
-b $76C8 Item structures (a.k.a. itemstructs).
-D $76C8 This array contains one of these 7-byte structures for each of the 16 game items:
-D $76C8 #TABLE(default) { =h Type | =h Bytes | =h Name        | =h Meaning } { Item    |        1 | item_and_flags | bits 0..3 = item; bits 4..7 = flags } { Room    |        1 | room_and_flags | bits 0..5 = room; bits 6..7 = flags } { TinyPos |        3 | pos            | Map position of the item } { IsoPos  |        2 | iso_pos        | Isometric projected position of the item } TABLE#
+b $76C8 Item structures.
+D $76C8 This array contains one of these seven-byte structures for each of the 16 game items:
+D $76C8 #TABLE(default) { =h Type | =h Bytes | =h Name | =h Meaning } { Item | 1 | item_and_flags | bits 0..3 = item; bits 4..7 = flags } { Room | 1 | room_and_flags | bits 0..5 = room; bits 6..7 = flags } { TinyPos | 3 | pos | Map position of the item } { IsoPos | 2 | iso_pos | Isometric projected position of the item } TABLE#
 @ $76C8 label=item_structs
-B $76C8,7,7 item_WIRESNIPS,        room_NONE, (64, 32,  2), (0x78, 0xF4) // <- item_to_itemstruct, find_nearby_item
-B $76CF,7,7 item_SHOVEL,           room_9_CRATE, (62, 48,  0), (0x7C, 0xF2)
-B $76D6,7,7 item_LOCKPICK, room_10_LOCKPICK, (73, 36, 16), (0x77, 0xF0)
-B $76DD,7,7 item_PAPERS, room_11_PAPERS,   (42, 58,  4), (0x84, 0xF3)
-B $76E4,7,7 item_TORCH,            room_14_TORCH, (34, 24,  2), (0x7A, 0xF6)
-B $76EB,7,7 item_BRIBE,            room_NONE, (36, 44,  4), (0x7E, 0xF4) // <- accept_bribe
-B $76F2,7,7 item_UNIFORM, room_15_UNIFORM,  (44, 65, 16), (0x87, 0xF1)
+N $76C8 The first entry is used by #R$7C26, #R$7C82.
+B $76C8,7,7 { item_WIRESNIPS, room_NONE, (64, 32, 2), (0x78, 0xF4) }
+B $76CF,7,7 { item_SHOVEL, room_9_CRATE, (62, 48, 0), (0x7C, 0xF2) }
+B $76D6,7,7 { item_LOCKPICK, room_10_LOCKPICK, (73, 36, 16), (0x77, 0xF0) }
+B $76DD,7,7 { item_PAPERS, room_11_PAPERS, (42, 58, 4), (0x84, 0xF3) }
+B $76E4,7,7 { item_TORCH, room_14_TORCH, (34, 24, 2), (0x7A, 0xF6) }
+N $76EB The bribe item is used by #R$B107.
+B $76EB,7,7 { item_BRIBE, room_NONE, (36, 44, 4), (0x7E, 0xF4) }
+B $76F2,7,7 { item_UNIFORM, room_15_UNIFORM, (44, 65, 16), (0x87, 0xF1) }
 @ $76F9 label=item_structs_food
-B $76F9,7,7 item_FOOD,             room_19_FOOD, (64, 48, 16), (0x7E, 0xF0) // <- action_poison, called_from_main_loop
-B $7700,7,7 item_POISON, room_1_HUT1RIGHT, (66, 52,  4), (0x7C, 0xF1)
-B $7707,7,7 item_RED_KEY, room_22_REDKEY,   (60, 42,  0), (0x7B, 0xF2)
-B $770E,7,7 item_YELLOW_KEY, room_11_PAPERS, (28, 34,  0), (0x81, 0xF8)
-B $7715,7,7 item_GREEN_KEY, room_0_OUTDOORS, (74, 72,  0), (0x7A, 0x6E)
-B $771C,7,7 item_RED_CROSS_PARCEL, room_NONE, (28, 50, 12), (0x85, 0xF6) // <- event_new_red_cross_parcel, new_red_cross_parcel
-B $7723,7,7 item_RADIO,            room_18_RADIO, (36, 58,  8), (0x85, 0xF4)
-B $772A,7,7 item_PURSE,            room_NONE, (36, 44,  4), (0x7E, 0xF4)
-B $7731,7,7 item_COMPASS,          room_NONE, (52, 28,  4), (0x7E, 0xF4)
+N $76F9 The food item is used by #R$B3C4, #R$C892.
+B $76F9,7,7 { item_FOOD, room_19_FOOD, (64, 48, 16), (0x7E, 0xF0) }
+B $7700,7,7 { item_POISON, room_1_HUT1RIGHT, (66, 52, 4), (0x7C, 0xF1) }
+B $7707,7,7 { item_RED_KEY, room_22_REDKEY, (60, 42, 0), (0x7B, 0xF2) }
+B $770E,7,7 { item_YELLOW_KEY, room_11_PAPERS, (28, 34, 0), (0x81, 0xF8) }
+B $7715,7,7 { item_GREEN_KEY, room_0_OUTDOORS, (74, 72, 0), (0x7A, 0x6E) }
+N $771C The red cross parcel is used by #R$A228, #R$B387.
+B $771C,7,7 { item_RED_CROSS_PARCEL, room_NONE, (28, 50, 12), (0x85, 0xF6) }
+B $7723,7,7 { item_RADIO, room_18_RADIO, (36, 58, 8), (0x85, 0xF4) }
+B $772A,7,7 { item_PURSE, room_NONE, (36, 44, 4), (0x7E, 0xF4) }
+B $7731,7,7 { item_COMPASS, room_NONE, (52, 28, 4), (0x7E, 0xF4) }
 @ $7738 assemble=,1
 ;
 b $7738 Table of pointers to routes.
