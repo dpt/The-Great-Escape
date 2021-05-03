@@ -2492,7 +2492,7 @@ B $76BA,7,7 { character_24_PRISONER_5, room_NONE, ( 52, 44, 24), (0x00, 0x10) }
 B $76C1,7,7 { character_25_PRISONER_6, room_NONE, ( 52, 28, 24), (0x00, 0x10) }
 ;
 b $76C8 Item structures.
-D $76C8 This array contains one of these seven-byte structures for each of the 16 game items:
+D $76C8 This array contains one of the following seven-byte structures for each of the 16 game items:
 D $76C8 #TABLE(default) { =h Type | =h Bytes | =h Name | =h Meaning } { Item | 1 | item_and_flags | bits 0..3 = item; bits 4..7 = flags } { Room | 1 | room_and_flags | bits 0..5 = room; bits 6..7 = flags } { TinyPos | 3 | pos | Map position of the item } { IsoPos | 2 | iso_pos | Isometric projected position of the item } TABLE#
 @ $76C8 label=item_structs
 N $76C8 The first entry is used by #R$7C26, #R$7C82.
@@ -2519,85 +2519,86 @@ B $7731,7,7 { item_COMPASS, room_NONE, (52, 28, 4), (0x7E, 0xF4) }
 @ $7738 assemble=,1
 ;
 b $7738 Table of pointers to routes.
+D $7738 Array, 46 long, of pointers to $FF-terminated runs.
 @ $7738 label=routes
-W $7738,92,2 Array, 46 long, of pointers to $FF-terminated runs.
-B $7794,1,1 Fake terminator used by get_target
+W $7738,92,2
+B $7794,1,1 Fake terminator used by get_target.
 @ $7795 label=route_7795
-B $7795,4,4 L-shaped route in the fenced area #ROUTE($7795)
+B $7795,4,4 L-shaped route in the fenced area. #ROUTE($7795)
 @ $7799 label=route_7799
-B $7799,7,7 guard's route around the front perimeter wall  #ROUTE($7799)
+B $7799,7,7 The guard's route around the front perimeter wall. #ROUTE($7799)
 @ $77A0 label=route_commandant
-B $77A0,45,8*5,5 the commandant's route - the longest of all the routes #ROUTE($77A0)
+B $77A0,45,8*5,5 The commandant's route. This is the longest of all the routes. #ROUTE($77A0)
 @ $77CD label=route_77CD
-B $77CD,3,3 guard's route marching over the front gate  #ROUTE($77CD)
+B $77CD,3,3 The route of the guard marching over the front gate. #ROUTE($77CD)
 @ $77D0 label=route_exit_hut2
-B $77D0,4,4 route_exit_hut2  #ROUTE($77D0)
+B $77D0,4,4 route_exit_hut2. #ROUTE($77D0)
 @ $77D4 label=route_exit_hut3
-B $77D4,4,4 route_exit_hut3  #ROUTE($77D4)
+B $77D4,4,4 route_exit_hut3. #ROUTE($77D4)
 @ $77D8 label=route_prisoner_sleeps_1
-B $77D8,2,2 route_prisoner_sleeps_1 #ROUTE($77D8)
+B $77D8,2,2 route_prisoner_sleeps_1. #ROUTE($77D8)
 @ $77DA label=route_prisoner_sleeps_2
-B $77DA,2,2 route_prisoner_sleeps_2 #ROUTE($77DA)
+B $77DA,2,2 route_prisoner_sleeps_2. #ROUTE($77DA)
 @ $77DC label=route_prisoner_sleeps_3
-B $77DC,2,2 route_prisoner_sleeps_3 #ROUTE($77DC)
+B $77DC,2,2 route_prisoner_sleeps_3. #ROUTE($77DC)
 @ $77DE label=route_77DE
-B $77DE,3,3 route_77DE  #ROUTE($77DE)
+B $77DE,3,3 route_77DE. #ROUTE($77DE)
 @ $77E1 label=route_77E1
-B $77E1,6,6 route_77E1  #ROUTE($77E1)
+B $77E1,6,6 route_77E1. #ROUTE($77E1)
 @ $77E7 label=route_77E7
-B $77E7,5,5 route_77E7  #ROUTE($77E7)
+B $77E7,5,5 route_77E7. #ROUTE($77E7)
 @ $77EC label=route_77EC
-B $77EC,5,5 route_77EC  #ROUTE($77EC)
+B $77EC,5,5 route_77EC. #ROUTE($77EC)
 @ $77F1 label=route_prisoner_sits_1
-B $77F1,2,2 route_prisoner_sits_1 #ROUTE($77F1)
+B $77F1,2,2 route_prisoner_sits_1. #ROUTE($77F1)
 @ $77F3 label=route_prisoner_sits_2
-B $77F3,2,2 route_prisoner_sits_2 #ROUTE($77F3)
+B $77F3,2,2 route_prisoner_sits_2. #ROUTE($77F3)
 @ $77F5 label=route_prisoner_sits_3
-B $77F5,2,2 route_prisoner_sits_3 #ROUTE($77F5)
+B $77F5,2,2 route_prisoner_sits_3. #ROUTE($77F5)
 @ $77F7 label=route_guardA_breakfast
-B $77F7,2,2 route_guardA_breakfast #ROUTE($77F7)
+B $77F7,2,2 route_guardA_breakfast. #ROUTE($77F7)
 @ $77F9 label=route_guardB_breakfast
-B $77F9,2,2 route_guardB_breakfast #ROUTE($77F9)
+B $77F9,2,2 route_guardB_breakfast. #ROUTE($77F9)
 @ $77FB label=route_guard_12_roll_call
-B $77FB,2,2 route_guard_12_roll_call #ROUTE($77FB)
+B $77FB,2,2 route_guard_12_roll_call. #ROUTE($77FB)
 @ $77FD label=route_guard_13_roll_call
-B $77FD,2,2 route_guard_13_roll_call #ROUTE($77FD)
+B $77FD,2,2 route_guard_13_roll_call. #ROUTE($77FD)
 @ $77FF label=route_guard_14_roll_call
-B $77FF,2,2 route_guard_14_roll_call #ROUTE($77FF)
+B $77FF,2,2 route_guard_14_roll_call. #ROUTE($77FF)
 @ $7801 label=route_guard_15_roll_call
-B $7801,2,2 route_guard_15_roll_call #ROUTE($7801)
+B $7801,2,2 route_guard_15_roll_call. #ROUTE($7801)
 @ $7803 label=route_prisoner_1_roll_call
-B $7803,2,2 route_prisoner_1_roll_call #ROUTE($7803)
+B $7803,2,2 route_prisoner_1_roll_call. #ROUTE($7803)
 @ $7805 label=route_prisoner_2_roll_call
-B $7805,2,2 route_prisoner_2_roll_call #ROUTE($7805)
+B $7805,2,2 route_prisoner_2_roll_call. #ROUTE($7805)
 @ $7807 label=route_prisoner_3_roll_call
-B $7807,2,2 route_prisoner_3_roll_call #ROUTE($7807)
+B $7807,2,2 route_prisoner_3_roll_call. #ROUTE($7807)
 @ $7809 label=route_prisoner_4_roll_call
-B $7809,2,2 route_prisoner_4_roll_call #ROUTE($7809)
+B $7809,2,2 route_prisoner_4_roll_call. #ROUTE($7809)
 @ $780B label=route_prisoner_5_roll_call
-B $780B,2,2 route_prisoner_5_roll_call #ROUTE($780B)
+B $780B,2,2 route_prisoner_5_roll_call. #ROUTE($780B)
 @ $780D label=route_prisoner_6_roll_call
-B $780D,2,2 route_prisoner_6_roll_call #ROUTE($780D)
+B $780D,2,2 route_prisoner_6_roll_call. #ROUTE($780D)
 @ $780F label=route_go_to_solitary
-B $780F,6,6 route_go_to_solitary #ROUTE($780F)
+B $780F,6,6 route_go_to_solitary. #ROUTE($780F)
 @ $7815 label=route_hero_leave_solitary
-B $7815,5,5 route_hero_leave_solitary #ROUTE($7815)
+B $7815,5,5 route_hero_leave_solitary. #ROUTE($7815)
 @ $781A label=route_guard_12_bed
-B $781A,5,5 route_guard_12_bed  #ROUTE($781A)
+B $781A,5,5 route_guard_12_bed. #ROUTE($781A)
 @ $781F label=route_guard_13_bed
-B $781F,6,6 route_guard_13_bed  #ROUTE($781F)
+B $781F,6,6 route_guard_13_bed. #ROUTE($781F)
 @ $7825 label=route_guard_14_bed
-B $7825,6,6 route_guard_14_bed  #ROUTE($7825)
+B $7825,6,6 route_guard_14_bed. #ROUTE($7825)
 @ $782B label=route_guard_15_bed
-B $782B,6,6 route_guard_15_bed  #ROUTE($782B)
+B $782B,6,6 route_guard_15_bed. #ROUTE($782B)
 @ $7831 label=route_hut2_left_to_right
-B $7831,2,2 route_hut2_left_to_right #ROUTE($7831)
+B $7831,2,2 route_hut2_left_to_right. #ROUTE($7831)
 @ $7833 label=route_7833
-B $7833,2,2 route_7833  #ROUTE($7833)
+B $7833,2,2 route_7833. #ROUTE($7833)
 @ $7835 label=route_hut2_right_to_left
-B $7835,3,3 route_hut2_right_to_left #ROUTE($7835)
+B $7835,3,3 route_hut2_right_to_left. #ROUTE($7835)
 @ $7838 label=route_hero_roll_call
-B $7838,2,2 route_hero_roll_call #ROUTE($7838)
+B $7838,2,2 route_hero_roll_call. #ROUTE($7838)
 @ $783A assemble=,0
 ;
 w $783A Table of map locations used in routes.
