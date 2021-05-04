@@ -2845,9 +2845,10 @@ D $7AC6 Used by #R$CB98.
 @ $7AC6 label=solitary_pos
 B $7AC6,3,3
 ;
-c $7AC9 Check for 'pick up', 'drop' and 'use' input events.
+c $7AC9 Check for 'fire' events.
+D $7AC9 This checks for the input events triggered by the fire button: 'pick up', 'drop' and 'use'.
 D $7AC9 Used by the routine at #R$9E07.
-R $7AC9 I:A Input event.
+R $7AC9 I:A Input event (type: input_t).
 @ $7AC9 label=process_player_input_fire
 C $7AC9,2 Is the input event fire + up?
 C $7ACB,3 Test for the next input event if not
