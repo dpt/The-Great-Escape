@@ -2840,9 +2840,10 @@ B $7ABE,4,4 BYTE(room_52,                     0), 0x64, 0x34, 12 },
 B $7AC2,4,4 BYTE(room_51,                     2), 0x38, 0x54, 12 },
 ;
 b $7AC6 Solitary map position.
-D $7AC6 Used by solitary.
+D $7AC6 This is the coordinates (type: tinypos_t) of where our hero stands when he's in solitary.
+D $7AC6 Used by #R$CB98.
 @ $7AC6 label=solitary_pos
-B $7AC6,3,3 0x3A, 0x2A, 24 // tinypos_t
+B $7AC6,3,3
 ;
 c $7AC9 Check for 'pick up', 'drop' and 'use' input events.
 D $7AC9 Used by the routine at #R$9E07.
