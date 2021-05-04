@@ -2707,7 +2707,7 @@ W $78D4,2,2 (117, 109)
 ;
 b $78D6 Door positions.
 D $78D6 62 pairs of four-byte structs laid out as follows:
-D $78D6 #TABLE(default) { =h Type | =h Bytes | =h Name            | =h Meaning } { Byte    |        1 | room_and_direction | Top six bits are a room index. Bottom two bits are a direction_t } { TinyPos |        3 | pos                | Map position of the door } TABLE#
+D $78D6 #TABLE(default) { =h Type | =h Bytes | =h Name | =h Meaning } { Byte | 1 | room_and_direction | bits 0..1 = direction door faces (direction_t); bits 2..7 = target room of door (room_t) } { TinyPos | 3 | pos | Map position of the door } TABLE#
 D $78D6 Each door is stored as a pair of two "half doors". Each half of the pair contains (room, direction, position) where the room is the *target* room index, the direction is the direction in which the door faces and the position is the coordinates of the door. Outdoor coordinates are divided by four.
 @ $78D6 label=doors
 B $78D6,4,4 BYTE(room_0_OUTDOORS,             1), 0xB2, 0x8A, 6 }, // 0
