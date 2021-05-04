@@ -2601,8 +2601,8 @@ B $7835,3,3 route_hut2_right_to_left. #ROUTE($7835)
 B $7838,2,2 route_hero_roll_call. #ROUTE($7838)
 @ $783A assemble=,0
 ;
-w $783A Table of map locations used in routes.
-D $783A Array, 78 long, of two-byte locations (x,y)
+w $783A Table of locations used by routes.
+D $783A Array, 78 long, of two-byte locations (index, step).
 @ $783A label=locations
 @ $783A keep
 W $783A,2,2 ( 68, 104)
