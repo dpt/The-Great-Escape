@@ -2992,7 +2992,7 @@ C $7BCC,3 Set height to zero
 C $7BCF,1 Move itemstruct pointer into #REGhl
 E $7BB5 FALL THROUGH into calc_exterior_item_iso_pos.
 ;
-c $7BD0 Calculate isometric screen position for dropped exterior items.
+c $7BD0 Calculate isometric screen position for exterior item.
 D $7BD0 Used by the routine at #R$CD31.
 R $7BD0 I:HL Pointer to itemstruct's pos.height field.
 N $7BD0 Set #REGc to ($40 + y - x) * 2
@@ -3030,11 +3030,11 @@ C $7BEF,1 Point #REGhl at itemstruct.height
 C $7BF0,2 Set height to five
 E $7BE4 FALL THROUGH into calc_interior_item_iso_pos.
 ;
-c $7BF2 Calculate isometric screen position for dropped interior items.
-D $7BF2 TODO: Describe why this has to scale things whereas the above exterior variant doesn't.
+c $7BF2 Calculate isometric screen position for interior item.
+D $7BF2 Unlike the exterior version of this routine at #R$7BD0, this version scales the result down with rounding to nearest.
 D $7BF2 Used by the routine at #R$CD31.
 R $7BF2 I:HL Pointer to itemstruct's pos.height field.
-R $7BF2 Set #REGa' to ($200 + y - x) * 2
+N $7BF2 Set #REGa' to ($200 + y - x) * 2
 @ $7BF2 label=calc_interior_item_iso_pos
 C $7BF2,1 Step #REGhl back to itemstruct.pos.y
 C $7BF3,3 Start with $200 + pos.y
