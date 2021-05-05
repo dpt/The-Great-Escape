@@ -2970,6 +2970,7 @@ C $7BB4,1 Restore item
 E $7B8B FALL THROUGH into drop_item_tail.
 ;
 c $7BB5 Drop item, tail part.
+D $7BB5 This updates the itemstruct with the dropped item. It is its own function so that #R$B387 can make use of it.
 D $7BB5 Used by the routine at #R$B387.
 R $7BB5 I:A Item index.
 @ $7BB5 label=drop_item_tail
