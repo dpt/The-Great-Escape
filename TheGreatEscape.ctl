@@ -2937,7 +2937,7 @@ C $7B77,1 Zero #REGa
 C $7B78,2 Zero itemstruct->room_and_flags
 C $7B7A,4 Advance #REGhl to itemstruct->iso_pos
 C $7B7E,3 Zero itemstruct->iso_pos.screen_x and screen_y
-C $7B81,3 Draw both held items
+C $7B81,3 Draw held items
 C $7B84,6 Play the "pick up item" sound
 C $7B8A,1 Return
 ;
@@ -2962,7 +2962,7 @@ C $7BA1,2 Set it to item_NONE
 C $7BA3,1 Now point to the first held item
 C $7BA4,1 Store the fetched item there
 N $7BA5 Redraw the items.
-C $7BA5,3 Draw both held items
+C $7BA5,3 Draw held items
 C $7BA8,6 Play the "drop item" sound
 C $7BAE,3 Choose game window attributes
 C $7BB1,3 Set game window attributes
@@ -3079,7 +3079,8 @@ C $7C2B,3 Point #REGhl at the first element of item_structs
 C $7C2E,4 Add the two
 C $7C32,1 Return i'th element of item_structs in #REGhl
 ;
-c $7C33 Draw both held items.
+c $7C33 Draw held items.
+D $7C33 This draws both held items.
 D $7C33 Used by the routines at #R$7B36, #R$7B8B, #R$B107, #R$B387, #R$B3C4, #R$B75A and #R$CB98.
 @ $7C33 label=draw_all_items
 C $7C33,3 Point #REGhl at the screen address of item 1
@@ -7231,7 +7232,7 @@ C $B122,1 Return if not
 N $B123 Remove the bribe item.
 C $B123,3 Assign item_NONE to the item slot, removing the bribe item
 C $B126,5 Set the bribe item's item_struct room to itemstruct_ROOM_NONE
-C $B12B,3 Draw both held items
+C $B12B,3 Draw held items
 N $B12E Set the vischar_PURSUIT_SAW_BRIBE flag on all visible hostiles. Iterate over hostile and visible non-player characters.
 C $B12E,2 7 iterations
 @ $B130 nowarn
@@ -7642,7 +7643,7 @@ C $B392,2 Jump if so
 C $B394,1 Advance if not
 N $B395 #REGhl now points to the held item.
 C $B395,2 Remove parcel from the inventory
-C $B397,3 Draw both held items
+C $B397,3 Draw held items
 C $B39A,3 Fetch the value of the parcel's current contents
 C $B39D,3 Pass that into "drop item, tail part"
 C $B3A0,5 Queue the message "YOU OPEN THE BOX"
@@ -7684,7 +7685,7 @@ C $B3D1,2 Is bit 5 set? (itemstruct_ITEM_FLAG_POISONED)
 C $B3D3,1 Return if so - the food is already poisoned
 C $B3D4,2 Set bit 5
 C $B3D6,5 Set the screen attribute for the food item to bright-purple over black
-C $B3DB,3 Draw both held items
+C $B3DB,3 Draw held items
 C $B3DE,3 Increase morale by 10, score by 50 and exit via
 ;
 c $B3E1 Use guard's uniform.
@@ -8171,7 +8172,7 @@ C $B77B,2 Set morale to morale_MAX
 C $B77D,3 Draw the current score to the screen
 N $B780 Reset and redraw items.
 C $B780,6 Set both items_held to item_NONE ($FF)
-C $B786,3 Draw both held items
+C $B786,3 Draw held items
 N $B789 Reset the hero's sprite.
 C $B789,6 Set vischar.mi.sprite to the prisoner sprite set
 C $B78F,5 Set the global current room index to room_2_HUT2LEFT
@@ -10327,7 +10328,7 @@ C $CBA5,3 Point #REGhl at items_held[1]
 C $CBA8,1 Fetch the item
 C $CBA9,2 Set it to item_NONE
 C $CBAB,3 Discover the item
-C $CBAE,3 Redraw both held items
+C $CBAE,3 Draw held items
 N $CBB1 Discover all items.
 C $CBB1,2 Set #REGb to 16 iterations - once per item
 C $CBB3,3 Point #REGhl at item_structs[0].room
