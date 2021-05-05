@@ -3068,10 +3068,11 @@ C $7C23,1 Unbank x result
 C $7C24,1 Store #REGa (x result)
 C $7C25,1 Return
 ;
-c $7C26 Convert an item to an itemstruct pointer.
+c $7C26 Item to itemstruct.
+D $7C26 This turns an item index to an itemstruct pointer.
 D $7C26 Used by the routines at #R$7BB5, #R$A228 and #R$CD31.
-R $7C26 I:A Item index.
-R $7C26 O:HL Pointer to itemstruct.
+R $7C26 I:A Item index (type: item_t).
+R $7C26 O:HL Pointer to itemstruct (type: itemstruct_t).
 @ $7C26 label=item_to_itemstruct
 C $7C26,5 Multiply item index by seven
 C $7C2B,3 Point #REGhl at the first element of item_structs
