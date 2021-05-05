@@ -2941,14 +2941,15 @@ C $7B81,3 Draw both held items
 C $7B84,6 Play the "pick up item" sound
 C $7B8A,1 Return
 ;
-c $7B8B Drop the first held item then shuffle the second into the first slot.
+c $7B8B Drop an item.
+D $7B8B This drops the hero's first held item then moves the second into the first slot.
 D $7B8B Used by the routine at #R$7AC9.
-N $7B8B Return if no items held.
+N $7B8B Return if no items are held.
 @ $7B8B label=drop_item
 C $7B8B,3 Fetch the first held item
 C $7B8E,2 Is the item item_NONE? ($FF)
 C $7B90,1 Return if so - there are no items to drop
-N $7B91 When dropping the uniform reset the hero's sprite.
+N $7B91 If dropping the uniform reset the hero's sprite.
 C $7B91,2 Does #REGa contain item_UNIFORM? (6)
 C $7B93,3 Jump if not
 C $7B96,6 Set the hero's sprite definition pointer to #R$CE2E to remove the guard's uniform
@@ -2960,7 +2961,7 @@ C $7BA0,1 Fetch its value
 C $7BA1,2 Set it to item_NONE
 C $7BA3,1 Now point to the first held item
 C $7BA4,1 Store the fetched item there
-N $7BA5 Redraw
+N $7BA5 Redraw the items.
 C $7BA5,3 Draw both held items
 C $7BA8,6 Play the "drop item" sound
 C $7BAE,3 Choose game window attributes
