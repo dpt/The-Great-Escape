@@ -3233,9 +3233,10 @@ C $7CF9,1 Step
 C $7CFA,1 Restore
 C $7CFB,1 Return
 ;
-g $7CFC The pending message queue.
+g $7CFC Queue of pending messages.
+D $7CFC This is a queue of pending message indexes. Each is a two-byte value. Terminated by a single message_QUEUE_END byte ($FF).
 @ $7CFC label=message_queue
-B $7CFC,19,8*2,3 Queue of message indexes. Pairs of bytes + 0xFF terminator.
+B $7CFC,19,8*2,3
 ;
 g $7D0F Countdown to the next message.
 @ $7D0F label=message_display_delay
