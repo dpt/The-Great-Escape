@@ -3092,8 +3092,9 @@ C $7C42,3 Draw the item
 C $7C45,1 Return
 ;
 c $7C46 Draw a single held item.
+D $7C46 This draws the required item at the specified screen address.
 D $7C46 Used by the routine at #R$7C33.
-R $7C46 I:A Item index.
+R $7C46 I:A Item index (type: item_t).
 R $7C46 I:HL Screen address of item.
 @ $7C46 label=draw_item
 C $7C46,1 Save screen address of item
