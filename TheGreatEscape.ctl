@@ -3215,7 +3215,8 @@ C $7CE4,1 Decrement the row counter
 C $7CE5,3 ...loop for every row
 C $7CE8,1 Return
 ;
-c $7CE9 Given a screen address, return the same position on the next scanline down.
+c $7CE9 Return the same position on the next scanline down.
+D $7CE9 Given a screen address, this returns the same horizontal position but on the next scanline down.
 D $7CE9 Used by the routines at #R$7CBE, #R$7CD4, #R$A035 and #R$F20B.
 R $7CE9 I:HL Original screen address.
 R $7CE9 O:HL Updated screen address.
