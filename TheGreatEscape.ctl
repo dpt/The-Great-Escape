@@ -3128,7 +3128,8 @@ C $7C7D,1 Retrieve screen address saved at #R$7C54
 C $7C7E,3 Plot the bitmap without masking
 C $7C81,1 Return
 ;
-c $7C82 Returns an item within range of the hero.
+c $7C82 Return the first item within range of the hero.
+D $7C82 This returns the first item within range of the hero not by distance but by item order. A radius of one is used when outdoors, otherwise a radius of six is used.
 D $7C82 Used by the routine at #R$7B36.
 R $7C82 O:AF Z set if item found, NZ otherwise.
 R $7C82 O:HL If item was found contains pointer to the item.
