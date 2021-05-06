@@ -3197,7 +3197,7 @@ C $7CD3,1 Return
 ;
 c $7CD4 Wipe an area of the screen.
 D $7CD4 Used by the routine at #R$7C46.
-R $7CD4 I:BC Dimensions (#REGb x #REGb == width x height, where width is specified in bytes).
+R $7CD4 I:BC Dimensions (#REGb x #REGc == width x height, where width is specified in bytes).
 R $7CD4 I:HL Destination address.
 @ $7CD4 label=screen_wipe
 C $7CD4,1 Set #REGa to the byte width of the area to wipe
