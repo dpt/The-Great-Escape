@@ -3366,11 +3366,9 @@ C $7DC8,4 Zero the message display index
 C $7DCC,1 Return
 ;
 w $7DCD Messages table.
-D $7DCD This is an array of 19 pointers to game messages. Game messages are encoded to match the game font and are $FF terminated.
+D $7DCD This is an array of 19 pointers to game messages. The game messages aren't ASCII: they're encoded to match the game font and are $FF terminated.
 @ $7DCD label=messages_table
 W $7DCD,40,2
-t $7DF5 Game messages.
-D $7DF5 Non-ASCII: encoded to match the font; $FF terminated.
 @ $7DF5 label=messages_missed_roll_call
 B $7DF5,17,17 "MISSED ROLL CALL" #HTML[/ #CALL:decode_stringFF($7DF5)]
 @ $7E06 label=messages_time_to_wake_up
