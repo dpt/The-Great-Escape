@@ -3277,7 +3277,8 @@ C $7D26,5 Store the new message index
 C $7D2B,3 Update the message queue pointer
 C $7D2E,1 Return
 ;
-c $7D2F Plot a single glyph (indirectly).
+c $7D2F Plot glyph.
+D $7D2F This plots a single glyph (indirectly).
 D $7D2F Used by the routines at #R$7D48, #R$A10B, #R$A5BF and #R$F350.
 R $7D2F I:HL Pointer to glyph index.
 R $7D2F I:DE Pointer to screen destination.
@@ -3287,9 +3288,10 @@ R $7D2F O:DE Points to the next character position to the right.
 C $7D2F,1 Fetch the glyph index
 E $7D2F FALL THROUGH into plot_single_glyph,
 ;
-c $7D30 Plot a single glyph.
+c $7D30 Plot single glyph.
+D $7D30 This plots the specified glyph at the given screen address.
 D $7D30 Used by the routine at #R$7D87.
-D $7D30 Note: This won't work for arbitrary screen locations.
+D $7D30 Note: This will only work for screen addresses that stay within their respective third of the screen.
 R $7D30 I:HL Glyph index.
 R $7D30 I:DE Pointer to screen destination.
 R $7D30 O:HL Preserved.
@@ -3308,7 +3310,8 @@ C $7D44,2 Restore and point #REGde at the next character position to the right
 C $7D46,1 Restore #REGhl
 C $7D47,1 Return
 ;
-c $7D48 Incrementally wipe and display queued game messages.
+c $7D48 Message display.
+D $7D48 This incrementally wipes and displays queued game messages.
 D $7D48 Used by the routine at #R$9D7B.
 N $7D48 Proceed only if message display delay is zero.
 @ $7D48 label=message_display
@@ -3333,7 +3336,8 @@ C $7D82,1 Return
 C $7D83,3 If it wasn't the end of the string set current message character to #REGhl
 C $7D86,1 Return
 ;
-c $7D87 Incrementally wipe away any on-screen game message.
+c $7D87 Wipe message.
+D $7D87 This incrementally wipes away any on-screen game message.
 D $7D87 Used by the routine at #R$7D48.
 @ $7D87 label=wipe_message
 C $7D87,7 Decrement the message display index
@@ -3344,7 +3348,8 @@ C $7D93,2 Glyph index of space
 C $7D95,3 Plot the single space glyph
 C $7D98,1 Return
 ;
-c $7D99 Change to displaying the next queued game message.
+c $7D99 Next message.
+D $7D99 This causes the next queued game message to get displayed.
 D $7D99 Used by the routine at #R$7D48.
 D $7D99 Called when messages.display_index == 128.
 @ $7D99 label=next_message
@@ -3360,7 +3365,8 @@ C $7DC0,8 Move the message queue pointer back
 C $7DC8,4 Zero the message display index
 C $7DCC,1 Return
 ;
-w $7DCD Array of pointers to game messages.
+w $7DCD Messages table.
+D $7DCD This is an array of 19 pointers to game messages. Game messages are encoded to match the game font and are $FF terminated.
 @ $7DCD label=messages_table
 W $7DCD,40,2
 t $7DF5 Game messages.
