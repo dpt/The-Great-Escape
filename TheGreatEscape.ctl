@@ -3238,19 +3238,24 @@ D $7CFC This is a queue of pending message indexes. Each is a two-byte value. Te
 @ $7CFC label=message_queue
 B $7CFC,19,8*2,3
 ;
-g $7D0F Countdown to the next message.
+g $7D0F Message display delay.
+D $7D0F This is a decrementing counter. When it reaches zero it shows the next message.
 @ $7D0F label=message_display_delay
-B $7D0F,1,1 Decrementing counter which shows the next message when it reaches zero.
+B $7D0F,1,1
 ;
-g $7D10 Index into the message we're displaying or wiping.
+g $7D10 Message display index.
+D $7D10 This is an index into the message that we're displaying or wiping.
+D $7D10 #R$7D48 uses this. If it's 128 then we call #R$7D99. If it exceeds 128 then we call #R$7D87. Otherwise we proceed with displaying the next character.
 @ $7D10 label=message_display_index
-B $7D10,1,1 If 128 then next_message. If > 128 then wipe_message. Else display.
+B $7D10,1,1
 ;
-g $7D11 Pointer to the next available slot in the message queue.
+g $7D11 Message queue pointer.
+D $7D11 This is a pointer to the next available slot in the message queue.
 @ $7D11 label=message_queue_pointer
 W $7D11,2,2
 ;
-g $7D13 Pointer to the next message character to be displayed.
+g $7D13 Current message character.
+D $7D13 This is a pointer to the next message character to be displayed.
 @ $7D13 label=current_message_character
 W $7D13,2,2
 ;
