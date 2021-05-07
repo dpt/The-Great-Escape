@@ -3259,11 +3259,12 @@ D $7D13 This is a pointer to the next message character to be displayed.
 @ $7D13 label=current_message_character
 W $7D13,2,2
 ;
-c $7D15 Add a new message index to the pending messages queue.
+c $7D15 Queue message.
+D $7D15 This adds a new message index to the pending messages queue.
 D $7D15 Used by the routines at #R$9DCF, #R$9E98, #R$A1D3, #R$A1E7, #R$A1F0, #R$A1F9, #R$A206, #R$A219, #R$A228, #R$B107, #R$B1D4, #R$B387, #R$B417, #R$B495, #R$B4B8, #R$CB98, #R$CD31 and #R$EF9A.
-D $7D15 The use of #REGc on entry to this routine is puzzling. One routine (#R$9DCF) explicitly sets it to zero before calling, but the other callers do not so we receive whatever was in #REGc previously.
+D $7D15 Commentary: The use of #REGc on entry to this routine is puzzling. One routine (#R$9DCF) explicitly sets it to zero before calling, but the other callers do not so we receive whatever was in #REGc previously.
 R $7D15 I:B Message index.
-R $7D15 I:C Unknown: possibly a second message index.
+R $7D15 I:C Unknown: Possibly intended as a second message index.
 @ $7D15 label=queue_message
 C $7D15,3 Fetch the message queue pointer
 C $7D18,3 Is the currently pointed-to index message_QUEUE_END? ($FF)
