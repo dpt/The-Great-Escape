@@ -3492,8 +3492,8 @@ B $819A,9,9 bell_middle_middle
 u $81A3 Unreferenced byte.
 B $81A3,1,1
 ;
-g $81A4 Saved/stashed position.
-D $81A4 Structure type: pos_t.
+g $81A4 Saved position.
+D $81A4 This holds a position (type: pos_t OR tinypos_t, depending on the code). It is used all over the code either for scratch space or for argument passing.
 @ $81A4 label=saved_pos_x
 @ $81A4 keep
 @ $81A6 label=saved_pos_y
