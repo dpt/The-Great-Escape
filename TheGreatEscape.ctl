@@ -3509,6 +3509,7 @@ u $81AB Unreferenced byte.
 B $81AB,1,1
 ;
 g $81AC Bitmap and mask pointers.
+D $81AC These are used by the vischar and item plotting code.
 @ $81AC label=bitmap_pointer
 @ $81AE label=mask_pointer
 @ $81B0 label=foreground_mask_pointer
