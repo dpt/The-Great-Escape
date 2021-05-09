@@ -3500,7 +3500,8 @@ D $81A4 This holds a position (type: pos_t OR tinypos_t, depending on the code).
 @ $81A8 label=saved_height
 W $81A4,6,2
 ;
-g $81AA Used by touch() only.
+g $81AA Touch's stash for register A.
+D $81AA The only user of this is #R$AF8F which stashes a copy of #REGa here.
 @ $81AA label=touch_stashed_A
 B $81AA,1,1
 ;
