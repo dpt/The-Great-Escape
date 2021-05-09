@@ -3515,10 +3515,9 @@ D $81AC These are used by the vischar and item plotting code.
 @ $81B0 label=foreground_mask_pointer
 W $81AC,6,2
 ;
-g $81B2 Saved/stashed position.
-D $81B2 Structure type: tinypos_t.
-D $81B2 Written by setup_item_plotting, setup_vischar_plotting.
-D $81B2 Read by render_mask_buffer, guards_follow_suspicious_character.
+g $81B2 Saved (tiny) position.
+D $81B2 This holds a position (type: tinypos_t). This is populated when a vischar or item is readied for plotting. It's then used to control the rendering of masks into the mask buffer.
+D $81B2 #R$CC37 also uses it as a scratch space.
 @ $81B2 label=tinypos_stash_x
 @ $81B3 label=tinypos_stash_y
 @ $81B4 label=tinypos_stash_height
