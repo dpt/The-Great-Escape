@@ -3535,7 +3535,7 @@ D $81B7 This is set by #R$E420. When set, the top bit causes the character to be
 B $81B7,1,1
 ;
 g $81B8 Hero's map position.
-D $81B8 Structure type: tinypos_t.
+D $81B8 This holds the hero's map position (type: tinypos_t). #R$EF9A, for example, uses this to test that the hero is within the roll call area.
 @ $81B8 label=hero_map_position_x
 @ $81B9 label=hero_map_position_y
 @ $81BA label=hero_map_position_height
