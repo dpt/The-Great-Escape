@@ -3523,7 +3523,8 @@ D $81B2 #R$CC37 also uses it as a scratch space.
 @ $81B4 label=tinypos_stash_height
 B $81B2,3,1
 ;
-g $81B5 Current vischar's isometric projected map position.
+g $81B5 Isometric position.
+D $81B5 This holds the current vischar's isometric projected map position.
 @ $81B5 label=iso_pos_x
 @ $81B6 label=iso_pos_y
 B $81B5,2,1
