@@ -3553,32 +3553,35 @@ D $81BD #TABLE(default,centre) { =h Value | =h Meaning } { 255 | Searching } { 3
 @ $81BD label=searchlight_state
 B $81BD,1,1
 ;
-g $81BE Copy of first byte of current room def.
-D $81BE Indexes roomdef_dimensions[].
+g $81BE Room definition bounds index.
+D $81BE This is a copy of the first byte of the current room definition. It indexes roomdef_dimensions[] allowing #R$B29F to perform a bounds check.
 @ $81BE label=roomdef_bounds_index
 B $81BE,1,1
 ;
-g $81BF Count of object bounds.
+g $81BF Room definition object bounds count.
+D $81BF This is the count of object bounds (places where the hero cannot move to) held in #R$81C0.
 @ $81BF label=roomdef_object_bounds_count
 B $81BF,1,1
 ;
-g $81C0 Copy of current room def's additional bounds (allows for four room objects).
+g $81C0 Room definition object bounds.
+D $81C0 This holds up to four object bounds (places where the hero cannot move to) copied from the current room definition.
 @ $81C0 label=roomdef_object_bounds
 B $81C0,16,4
 ;
 g $81D0 Unreferenced bytes.
-D $81D0 These are possibly spare object bounds bytes, but not ever used.
 B $81D0,6,6
 ;
-g $81D6 Indices of interior doors.
+g $81D6 Interior doors.
+D $81D6 This holds up to four interior doors indices.
 D $81D6 Used by the routines at #R$69DC, #R$B32D, #R$B4D0.
 @ $81D6 label=interior_doors
 B $81D6,4,4
 ;
 g $81DA Interior mask data.
+D $81DA This holds a count byte followed by up to seven mask structures for the current room definition.
 D $81DA Used by the routines at #R$6A35 and #R$B916.
-D $81DA The first byte is a count, followed by 'count' mask_t's:
-D $81DA #TABLE(default) { =h Type   | =h Bytes | =h Name | =h Meaning } { Byte      |        1 | index   | Index into mask_pointers } { bounds_t  |        4 | bounds  | Isometric projected bounds of the mask. Used for culling. } { tinypos_t |        3 | pos     | If a character is behind this point then the mask is enabled. ("Behind" here means when character coord x is greater and y is greater-or-equal). } TABLE#
+D $81DA The first byte is a count, followed by <count> mask_t's, with the following format:
+D $81DA #TABLE(default) { =h Type | =h Bytes | =h Name | =h Meaning } { Byte | 1 | index | An index into mask_pointers (the RLE mask data pointer) } { bounds_t | 5 | bounds | Isometric projected bounds of the mask. Used for culling. } { tinypos_t | 3 | pos | If a character is behind this point then the mask is enabled. ("Behind" here means when the character's x-coord is greater and y-coord is greater-or-equal). } TABLE#
 @ $81DA label=interior_mask_data
 B $81DA,57,8*7,1
 ;
