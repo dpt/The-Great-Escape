@@ -3542,7 +3542,7 @@ D $81B8 This holds the hero's map position (type: tinypos_t). #R$EF9A, for examp
 B $81B8,3,1
 ;
 g $81BB Map position.
-D $81BB Used when drawing tiles.
+D $81BB This is used when drawing tiles and is also used to decide whether to permit the map to scroll.
 @ $81BB label=map_position
 W $81BB,2,2
 ;
