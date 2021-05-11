@@ -3529,7 +3529,8 @@ D $81B5 This holds the current vischar's isometric projected map position.
 @ $81B6 label=iso_pos_y
 B $81B5,2,1
 ;
-g $81B7 Controls character left/right flipping.
+g $81B7 Flip sprite.
+D $81B7 This is set by #R$E420. When set, the top bit causes the character to be drawn flipped horizontally.
 @ $81B7 label=flip_sprite
 B $81B7,1,1
 ;
