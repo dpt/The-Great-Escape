@@ -3547,9 +3547,9 @@ D $81BB This is used when drawing tiles and is also used to decide whether to pe
 W $81BB,2,2
 ;
 g $81BD Searchlight state.
-D $81BD Suspect that this is a 'hero has been found in searchlight' flag. (possible states: 0, 31, 255)
+D $81BD This is set to searchlight_STATE_SEARCHING ($FF) when the hero is being searched for. It's set to searchlight_STATE_CAUGHT ($1F) when the hero is caught in the searchlight. Otherwise it's set to ($00..$1E) when the hero has evaded the searchlight.
 D $81BD Used by the routines at #R$ADBD, #R$B866.
-D $81BD #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Searchlight is sweeping } { 31 | Searchlight is tracking the hero } { 255 | Searchlight is off } TABLE#
+D $81BD #TABLE(default,centre) { =h Value | =h Meaning } { 255 | Searching } { 31 | Caught the hero } { 0..30 | Tracking the hero } TABLE#
 @ $81BD label=searchlight_state
 B $81BD,1,1
 ;
