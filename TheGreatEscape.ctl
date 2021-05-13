@@ -3606,7 +3606,7 @@ D $8217 The current character index.
 @ $8217 label=character_index
 B $8217,1,1
 ;
-b $8218 Tiles
+b $8218 Tiles.
 D $8218 Exterior tiles set 0. 111 tiles.
 @ $8218 label=tiles
 @ $8218 label=mask_tiles
@@ -4493,11 +4493,13 @@ B $9D70,8,8 #HTML[#UDGARRAY1,7,4,1;$9D70-$9D77-8(interior-tiles-193)]
 ;
 c $9D78 Main loop setup.
 D $9D78 Used by the routine at #R$F163.
-D $9D78 There seems to be litle point in this: enter_room terminates with 'goto main_loop' so it never returns. In fact, the single calling routine (main) might just as well goto enter_room instead of goto main_loop_setup.
+D $9D78 Commentary: There seems to be litle point in this: enter_room terminates with 'goto main_loop' so it never returns. In fact, the single calling routine (main) might just as well goto enter_room instead of goto main_loop_setup.
 @ $9D78 label=main_loop_setup
 C $9D78,3 The hero enters a room - returns via squash_stack_goto_main
 ;
-c $9D7B Main game loop.
+c $9D7B Main loop.
+D $9D7B This is the main game loop.
+D $9D7B Unlike in higher-level languages The Great Escape's calling convention is not always strictly hierarchical. At points in the game where a reset or transition is required (see #R$68A2, #R$68F4) the game will "give up" and call #R$691A. It will reset the stack pointer and jump to this main loop.
 D $9D7B Used by the routine at #R$691A.
 @ $9D7B label=main_loop
 C $9D7B,3 Check morale level, report if (near) zero and inhibit player control if exhausted
