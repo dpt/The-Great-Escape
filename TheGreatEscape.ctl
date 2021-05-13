@@ -4527,7 +4527,8 @@ C $9DC2,3 Wave the morale flag
 C $9DC5,8 Dispatch a timed event event once every 64 ticks of the game counter
 C $9DCD,2 ...loop forever
 ;
-c $9DCF Check morale level, report if (near) zero and inhibit player control if exhausted.
+c $9DCF Check morale.
+D $9DCF This routine checks the morale level and reports if it's (near) zero and inhibits player control if exhausted.
 D $9DCF Used by the routine at #R$9D7B.
 @ $9DCF label=check_morale
 C $9DCF,6 If morale is greater than one then return
