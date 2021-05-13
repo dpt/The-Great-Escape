@@ -4660,19 +4660,19 @@ B $9EE1,1,1 input_UP   + input_RIGHT + input_KICK
 B $9EE2,1,1 input_DOWN + input_RIGHT + input_KICK
 B $9EE3,1,1 input_DOWN + input_LEFT  + input_KICK
 ;
-b $9EE4 Maps route indices to arrays of valid rooms or areas.
-D $9EE4 #R$9F21 uses this to check if the hero is in an area permitted for the current route.
+b $9EE4 Route to permitted.
+D $9EE4 This table maps a route index to a list of valid rooms and areas. #R$9F21 uses this to check if the hero is in an area permitted by the current route.
 @ $9EE4 label=route_to_permitted
-B $9EE4,3,3 (Route 42: #R$9EF9)
-B $9EE7,3,3 (Route  5: #R$9EFC)
-B $9EEA,3,3 (Route 14: #R$9F01)
-B $9EED,3,3 (Route 16: #R$9F08)
-B $9EF0,3,3 (Route 44: #R$9F0E)
-B $9EF3,3,3 (Route 43: #R$9F11)
-B $9EF6,3,3 (Route 45: #R$9F13)
-N $9EF9 Seven variable-length arrays which encode a list of valid rooms (if top bit is set) or permitted areas (0, 1 or 2) for a given route and step within the route. Terminated with $FF.
-N $9EF9 Note that while routes encode transitions _between_ rooms this table encodes individual rooms or areas, so each list here will be one entry longer than the corresponding route.
-N $9EF9 In the table: R => Room, A => Area
+B $9EE4,3,3 Route 42: #R$9EF9
+B $9EE7,3,3 Route  5: #R$9EFC
+B $9EEA,3,3 Route 14: #R$9F01
+B $9EED,3,3 Route 16: #R$9F08
+B $9EF0,3,3 Route 44: #R$9F0E
+B $9EF3,3,3 Route 43: #R$9F11
+B $9EF6,3,3 Route 45: #R$9F13
+N $9EF9 This is followed by seven lists which encode a list of valid rooms (if top bit is set) or permitted areas (0, 1 or 2) for a given route and step within the route. Each list is terminated by $FF.
+N $9EF9 Note that while routes encode the transitions _between_ rooms, this table encodes individual rooms or areas, so each list here will be one entry longer than the corresponding route.
+N $9EF9 In the comments below: R<n> => Room n, A<m> => Area m.
 B $9EF9,3,3 ( R2, R2,                    $FF)
 B $9EFC,5,5 ( R3, A1,  A1,  A1,          $FF)
 B $9F01,7,7 ( A1, A1,  A1,  A0,  A2, A2, $FF)
