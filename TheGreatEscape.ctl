@@ -4616,7 +4616,8 @@ C $9E93,1 Return if not
 C $9E94,3 Kick a sprite update if it did
 C $9E97,1 Return
 ;
-c $9E98 Locks the player out until the lock is picked.
+c $9E98 Picking lock.
+D $9E98 This locks the player out while the lock is being picked.
 D $9E98 Used by the routine at #R$9E07.
 @ $9E98 label=picking_lock
 C $9E98,8 Return unless player_locked_out_until becomes equal to game_counter
