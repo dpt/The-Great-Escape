@@ -4537,7 +4537,8 @@ C $9DDB,5 Set the "morale exhausted" flag to inhibit player input
 C $9DE0,4 Immediately take automatic control of the hero
 C $9DE4,1 Return
 ;
-c $9DE5 Check for a BREAK keypress.
+c $9DE5 Keyscan BREAK.
+D $9DE5 Check for a BREAK keypress.
 D $9DE5 Used by the routine at #R$9D7B.
 D $9DE5 If pressed then clear the screen and confirm with the player that they want to reset the game. Reset if requested.
 @ $9DE5 label=keyscan_break
