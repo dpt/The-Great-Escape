@@ -3590,7 +3590,8 @@ D $8213 Written to by #R$DC41 setup_item_plotting but never read.
 @ $8213 label=saved_item
 B $8213,1,1
 ;
-g $8214 A copy of item_definition height.
+g $8214 Item height.
+D $8214 This is a copy of item_definition height.
 D $8214 Used by the routines at #R$DC41, #R$DD02.
 @ $8214 label=item_height
 B $8214,1,1
