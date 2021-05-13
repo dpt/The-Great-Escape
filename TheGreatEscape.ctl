@@ -4629,7 +4629,8 @@ N $9EAA This entry point is used by the routine at #R$9EB2.
 C $9EAA,7 Clear the vischar_FLAGS_PICKING_LOCK and vischar_FLAGS_CUTTING_WIRE flags
 C $9EB1,1 Return
 ;
-c $9EB2 Locks the player out until the wire is snipped.
+c $9EB2 Cutting wire.
+D $9EB2 This locks the player out while the wire fence is being cut open.
 D $9EB2 Used by the routine at #R$9E07.
 @ $9EB2 label=cutting_wire
 C $9EB2,7 How much longer do we have to wait until the wire cutting is complete?
