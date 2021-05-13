@@ -3601,7 +3601,8 @@ D $8215 The two items which the hero is holding. Each byte holds one item. Initi
 @ $8215 label=items_held
 W $8215,2,2
 ;
-g $8217 The current character index.
+g $8217 Character index.
+D $8217 The current character index.
 @ $8217 label=character_index
 B $8217,1,1
 ;
