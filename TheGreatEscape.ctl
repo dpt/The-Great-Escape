@@ -3585,7 +3585,8 @@ D $81DA #TABLE(default) { =h Type | =h Bytes | =h Name | =h Meaning } { Byte | 1
 @ $81DA label=interior_mask_data
 B $81DA,57,8*7,1
 ;
-g $8213 Written to by #R$DC41 setup_item_plotting but never read.
+g $8213 Saved item.
+D $8213 Written to by #R$DC41 setup_item_plotting but never read.
 @ $8213 label=saved_item
 B $8213,1,1
 ;
