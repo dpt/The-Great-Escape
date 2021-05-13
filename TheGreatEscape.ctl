@@ -3596,8 +3596,8 @@ D $8214 Used by the routines at #R$DC41, #R$DD02.
 @ $8214 label=item_height
 B $8214,1,1
 ;
-g $8215 The items which the hero is holding.
-D $8215 Each byte holds one item. Initialised to 0xFFFF meaning no item in either slot.
+g $8215 Items held.
+D $8215 The two items which the hero is holding. Each byte holds one item. Initialised to ($FF,$FF) meaning no item in either slot.
 @ $8215 label=items_held
 W $8215,2,2
 ;
