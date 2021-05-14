@@ -4550,6 +4550,7 @@ C $9DFD,7 If the global current room index is room_0_OUTDOORS then !(Reset the h
 C $9E04,3 The hero enters a room - returns via squash_stack_goto_main
 ;
 c $9E07 Process player input.
+D $9E07 This first checks for reasons to not handle the player's input, such as the hero being in solitary, the 'game over' state of his morale being exhausted, or the hero being busy picking a lock or cutting through a wire fence. If none of those are the case we fetch the current player input into #REGa. If the player's input is non-zero (ie. the player is pressing a button) we reset the #R$A139 and check for the hero being in bed, or at breakfast. If the hero was in bed, or at breakfast, we make him stand up, then update the scenery and refresh the screen. We then check for 'pick up', 'drop' and 'use' input events which are handled by #R$7AC9. Finally assign the new input value to the hero's vischar then set the kick flag to make it update.
 D $9E07 Used by the routine at #R$9D7B.
 N $9E07 Morale exhausted? If so then don't allow input.
 @ $9E07 label=process_player_input
@@ -4689,7 +4690,8 @@ B $9F15,4,4 Corridor to exercise yard
 B $9F19,4,4 Hut area
 B $9F1D,4,4 Exercise yard area
 ;
-c $9F21 Check the hero's map position, check for escape and colour the flag accordingly.
+c $9F21 In permitted area.
+D $9F21 This checks the hero's map position and colours the flag accordingly. It also detects escapes.
 D $9F21 This also sets the main (hero's) map position in #R$81B8 to that of the hero's vischar position.
 D $9F21 Used by the routine at #R$9D7B.
 @ $9F21 label=in_permitted_area
@@ -4817,7 +4819,8 @@ C $9FFF,4 Set the vischar's input to 0
 C $A003,2 Set the red flag flag
 C $A005,2 Jump to flag_select
 ;
-c $A007 Check that the hero is in the specified room or camp bounds.
+c $A007 In permitted area (end bit).
+D $A007 This checks that the hero is in the specified room or camp bounds.
 D $A007 Used by the routine at #R$9F21.
 R $A007 I:A If bit 7 is set then bits 0..6 contain a room index. Otherwise it's an area index as passed into within_camp_bounds.
 R $A007 O:F Z set if in the permitted area.
@@ -4837,10 +4840,11 @@ C $A016,3 Point #REGde at hero_map_position
 C $A019,1 Unbank #REGa - restoring original #REGa
 E $A007 FALL THROUGH to within_camp_bounds.
 ;
-c $A01A Is the specified position within the bounds of the indexed area?
+c $A01A Within camp bounds.
+D $A01A This returns whether the given position is within the indexed area's bounds.
 D $A01A Used by the routine at #R$CB98.
 R $A01A I:A Index (0..2) into permitted_bounds[] table.
-R $A01A I:DE Pointer to position (a TinyPos).
+R $A01A I:DE Pointer to position (type: tinypos_t).
 R $A01A O:F Z set if position is within the area specified.
 R $A01A Point #REGhl at permitted_bounds[A]
 @ $A01A label=within_camp_bounds
@@ -4863,7 +4867,8 @@ C $A030,1 Advance to second axis for bounds
 C $A031,2 ...loop
 C $A033,2 Return with flags Z (within area)
 ;
-c $A035 Wave the morale flag.
+c $A035 Wave morale flag.
+D $A035 This waves the morale flag up and down.
 D $A035 Used by the routines at #R$9D7B and #R$F4B7.
 @ $A035 label=wave_morale_flag
 C $A035,3 Point #REGhl at the game counter
@@ -4899,7 +4904,8 @@ C $A068,3 Get the screen address of the morale flag
 C $A06B,3 Plot the flag always at 24x25 pixels in size
 C $A06E,3 Exit via plot_bitmap
 ;
-c $A071 Set the screen attributes of the morale flag.
+c $A071 Set morale flag screen attributes.
+D $A071 This sets the screen attributes for the morale flag.
 D $A071 Used by the routines at #R$9F21 and #R$F163.
 R $A071 I:A Screen attributes to use.
 @ $A071 label=set_morale_flag_screen_attributes
@@ -4912,7 +4918,8 @@ C $A07E,1 Move to next row
 C $A07F,2 ...loop
 C $A081,1 Return
 ;
-c $A082 Given a screen address, returns the same position on the next scanline up.
+c $A082 Next scanline up.
+D $A082 This, given a screen address, returns the same position on the scanline above.
 D $A082 Spectrum screen memory addresses have the form:
 D $A082 #TABLE(default) bit: { 15 | 14 | 13 | 12 | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 } field: { =c3 0-1-0 | =c2 Y7-Y6 | =c3 Y2-Y1-Y0 | =c3 Y5-Y4-Y3 | =c5 X4-X3-X2-X1-X0 } TABLE#
 D $A082 To calculate the address of the previous scanline (that is the next scanline higher up) we test two of the fields in sequence and subtract accordingly:
@@ -4935,13 +4942,15 @@ C $A091,2 If so bits Y5-Y4-Y3 are clear. Load #REGde with $FFE0 (-32)
 C $A093,1 Add
 C $A094,1 Return
 ;
-c $A095 Delay loop called only when the hero is indoors.
+c $A095 Interior delay loop.
+D $A095 This slows down the game. It is called only when the hero is indoors.
 D $A095 Used by the routine at #R$9D7B.
 @ $A095 label=interior_delay_loop
 C $A095,8 Count down from 4095
 C $A09D,1 Return
 ;
-c $A09E Ring the alarm bell.
+c $A09E Ring bell.
+D $A09E This rings the alarm bell.
 D $A09E Used by the routine at #R$9D7B.
 D $A09E Called three times from main_loop.
 @ $A09E label=ring_bell
@@ -4969,13 +4978,15 @@ C $A0C6,3 Point #REGde at bell_ringer_bitmap_on
 E $A09E FALL THROUGH to plot_ringer.
 ;
 c $A0C9 Plot ringer.
+D $A0C9 This draws the bell ringer.
 D $A0C9 Used by the routine at #R$A09E.
 R $A0C9 I:HL Source bitmap.
 @ $A0C9 label=plot_ringer
 C $A0C9,3 Point #REGhl at screenaddr_bell_ringer
 C $A0CC,6 Plot the bell always at 8x12 pixels in size, exiting via it
 ;
-c $A0D2 Increase morale level.
+c $A0D2 Increase morale.
+D $A0D2 This increases the morale level by the amount specified in #REGb.
 D $A0D2 Used by the routines at #R$A0E9 and #R$A0F2.
 R $A0D2 I:B Amount to increase morale level by. (Preserved)
 @ $A0D2 label=increase_morale
@@ -4983,14 +4994,16 @@ C $A0D2,4 Fetch morale level and add #REGb onto it
 C $A0D6,6 Clamp morale level to morale_MAX (112)
 E $A0D2 FALL THROUGH into set_morale.
 ;
-c $A0DC Set morale level.
+c $A0DC Set morale.
+D $A0DC This sets the morale level to the amount specified in #REGa.
 D $A0DC Used by the routines at #R$A0D2 and #R$A0E0.
 R $A0DC I:A Morale.
 @ $A0DC label=set_morale
 C $A0DC,3 Set morale level to #REGa
 C $A0DF,1 Return
 ;
-c $A0E0 Decrease morale level.
+c $A0E0 Decrease morale.
+D $A0E0 This decreases the morale level by the amount specified in #REGb.
 D $A0E0 Used by the routines at #R$A1D3, #R$AE78, #R$CB98 and #R$CD31.
 R $A0E0 I:B Amount to decrease morale level by. (Preserved)
 @ $A0E0 label=decrease_morale
@@ -5010,7 +5023,8 @@ D $A0F2 Used by the routine at #R$7B36.
 C $A0F2,5 Increase morale by 5
 C $A0F7,2 Increase score by 5, exiting via it
 ;
-c $A0F9 Increases the score then plots it.
+c $A0F9 Increase score.
+D $A0F9 This increases the score by the amount specified in #REGb then plots it.
 D $A0F9 Used by the routines at #R$68F4, #R$A0E9 and #R$A0F2.
 R $A0F9 I:B Amount to increase score by.
 N $A0F9 Increment the score digit-wise until #REGb is zero.
@@ -5030,7 +5044,8 @@ C $A108,1 Restore HL
 C $A109,2 ...loop until the (score specified on entry) turns have been had
 E $A0F9 FALL THROUGH into plot_score.
 ;
-c $A10B Draws the current score to screen.
+c $A10B Plot score.
+D $A10B This draws the current score to the screen.
 D $A10B Used by the routines at #R$B75A and #R$F163.
 @ $A10B label=plot_score
 C $A10B,3 Point #REGhl at the first of the score digits
@@ -5045,7 +5060,8 @@ C $A119,1 Restore BC
 C $A11A,2 ...loop until all digits plotted
 C $A11C,1 Return
 ;
-c $A11D Plays a sound.
+c $A11D Play speaker.
+D $A11D This plays the speaker for #REGb iterations with a delay #REGc.
 D $A11D Used by the routines at #R$7B36, #R$7B8B, #R$A09E, #R$C4E0 and #R$CA81.
 R $A11D I:B Number of iterations to play for.
 R $A11D I:C Delay inbetween each iteration.
@@ -5060,13 +5076,14 @@ C $A12C,2 ...loop
 C $A12E,1 Return
 ;
 g $A12F Game counter.
-D $A12F Counts 00..FF then wraps.
+D $A12F This counts $00..$FF then wraps around.
 D $A12F Read-only by main_loop, picking_lock, cutting_wire, action_wiresnips, action_lockpick.
 D $A12F Write/read-write by wave_morale_flag.
 @ $A12F label=game_counter
 B $A12F,1,1
 ;
 g $A130 Bell.
+D $A130 This is the state of the bell.
 D $A130 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Ring indefinitely } { 255 | Don't ring } { N | Ring for N calls } TABLE#
 D $A130 Read-only by automatics.
 D $A130 Write/read-write by in_permitted_area, ring_bell, event_wake_up, event_go_to_roll_call, event_go_to_breakfast_time, event_breakfast_time, event_go_to_exercise_time, event_exercise_time, event_go_to_time_for_bed, searchlight_caught, solitary, guards_follow_suspicious_character, event_roll_call.
@@ -5082,12 +5099,14 @@ D $A132 Write/read-write by increase_score, reset_game.
 @ $A132 label=score_digits
 B $A132,5,5
 ;
-g $A137 'Hero is at breakfast' flag.
+g $A137 Hero in breakfast.
+D $A137 This is the 'hero is at breakfast' flag.
 D $A137 Write/read-write by process_player_input, end_of_breakfast, hero_sit_sleep_common.
 @ $A137 label=hero_in_breakfast
 B $A137,1,1
 ;
-g $A138 'Red morale flag' flag.
+g $A138 Red flag.
+D $A138 This is the 'red morale flag' flag.
 D $A138 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | The hero is in a permitted area } { 255 | The hero is not in a permitted area } TABLE#
 D $A138 Read-only by automatics, guards_follow_suspicious_character.
 D $A138 Write/read-write by in_permitted_area.
@@ -5095,22 +5114,22 @@ D $A138 Write/read-write by in_permitted_area.
 B $A138,1,1
 ;
 g $A139 Automatic player counter.
-D $A139 Counts down until zero at which point CPU control of the player is assumed. It's usually set to 31 by input events.
+D $A139 This counts down while there are no input events. An input event will reset it to 31. When it reaches zero the CPU will assume control of the hero.
 D $A139 Read-only by touch, automatics, character_behaviour.
 D $A139 Write/read-write by check_morale, process_player_input, charevnt_hero_release, solitary.
 @ $A139 label=automatic_player_counter
 B $A139,1,1
 ;
-g $A13A 'In solitary' flag.
-D $A13A Stops set_hero_route working.
+g $A13A In solitary.
+D $A13A This is the 'in solitary' flag. It stops set_hero_route working.
 D $A13A Used to set flag colour.
 D $A13A Read-only by process_player_input, in_permitted_area, set_hero_route, automatics.
 D $A13A Write/read-write by charevnt_solitary_ends, solitary.
 @ $A13A label=in_solitary
 B $A13A,1,1
 ;
-g $A13B 'Morale exhausted' flag.
-D $A13B Inhibits user input when non-zero.
+g $A13B Morale exhausted.
+D $A13B This is the 'morale exhausted' flag. It inhibits user input when non-zero.
 D $A13B Set by check_morale.
 D $A13B Reset by reset_game.
 D $A13B Read-only by process_player_input.
@@ -5119,57 +5138,61 @@ D $A13B Write/read-write by check_morale.
 B $A13B,1,1
 ;
 g $A13C Remaining morale.
-D $A13C Ranges morale_MIN..morale_MAX.
+D $A13C This is the hero's current morale level. It ranges from morale_MIN (0) to morale_MAX (112).
 D $A13C Read-only by check_morale, wave_morale_flag.
 D $A13C Write/read-write by increase_morale, decrease_morale, reset_game.
 @ $A13C label=morale
 B $A13C,1,1
 ;
-g $A13D Game clock.
-D $A13D Ranges 0..139.
+g $A13D Clock.
+D $A13D This is the game clock. It ranges from 0 to 139.
 D $A13D Read-only by in_permitted_area.
 D $A13D Write/read-write by dispatch_timed_event, reset_map_and_characters.
 @ $A13D label=clock
 B $A13D,1,1
 ;
-g $A13E 'Character index is valid' flag.
-D $A13E In character_bed_state etc.: when non-zero, character_index is valid, otherwise #REGiy points to character_struct.
+g $A13E Entered move_a_character.
+D $A13E This is the 'character index is valid' flag. In character_bed_state etc.: when non-zero, character_index is valid, otherwise #REGiy points to a character_struct.
 D $A13E Read-only by charevnt_bed, charevnt_breakfast.
 D $A13E Write/read-write by set_route, spawn_character, move_character, automatics, set_route.
 @ $A13E label=entered_move_a_character
 B $A13E,1,1
 ;
-g $A13F 'Hero in bed' flag.
+g $A13F Hero in bed.
+D $A13F This is the 'hero in bed' flag.
 D $A13F Read-only by event_night_time,
 D $A13F Write/read-write by process_player_input, wake_up, hero_sit_sleep_common.
 @ $A13F label=hero_in_bed
 B $A13F,1,1
 ;
-g $A140 Currently displayed morale.
-D $A140 This lags behind actual morale while the flag moves steadily to its target.
+g $A140 Displayed morale.
+D $A140 This is the currently-displayed morale. It lags behind the actual morale at #R$A13C while the flag drifts to its target level.
 D $A140 Write/read-write by wave_morale_flag.
 @ $A140 label=displayed_morale
 B $A140,1,1
 ;
-g $A141 Pointer to the screen address where the morale flag was last plotted.
+g $A141 Morale flag screen address.
+D $A141 This is a pointer to the screen address where the morale flag was most recently plotted.
 D $A141 Write/read-write by wave_morale_flag.
 @ $A141 label=moraleflag_screen_address
 W $A141,2,2
 ;
-g $A143 Address of door (in locked_doors[]) in which bit 7 is cleared when picked.
+g $A143 Pointer to door being lockpicked.
+D $A143 This is the address of a door (in locked_doors[]) in which bit 7 is cleared when successfully picked.
 D $A143 Read-only by picking_lock.
 D $A143 Write/read-write by action_lockpick.
 @ $A143 label=ptr_to_door_being_lockpicked
 W $A143,2,2
 ;
-g $A145 The game time when player control will be restored.
-D $A145 e.g. when picking a lock or cutting wire.
+g $A145 Player locked out until.
+g $A145 This is the game time at which player control will be restored, e.g. when picking a lock or cutting though a wire fence.
 D $A145 Read-only by picking_lock, cutting_wire.
 D $A145 Write/read-write by action_wiresnips, action_lockpick.
 @ $A145 label=player_locked_out_until
 B $A145,1,1
 ;
-g $A146 'Night-time' flag.
+g $A146 Day or night.
+g $A146 This is the 'night-time' flag.
 D $A146 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Daytime } { 255 | Night-time } TABLE#
 D $A146 Read-only by main_loop, choose_game_window_attributes.
 D $A146 Write/read-write by set_day_or_night, reset_map_and_characters.
@@ -5177,15 +5200,15 @@ D $A146 Write/read-write by set_day_or_night, reset_map_and_characters.
 B $A146,1,1
 ;
 b $A147 Bell ringer bitmaps.
-D $A147 These are the bitmaps for the left hand side of the bell graphic which animates when the bell rings.
+D $A147 These are the graphics for the ringer on the left hand side of the bell which animates while the bell rings.
 D $A147 8x12 pixels.
 @ $A147 label=bell_ringer_bitmap_off
 @ $A153 label=bell_ringer_bitmap_on
 B $A147,24,1
 ;
 c $A15F Set game window attributes.
+D $A15F This, starting at $5847, sets 23 columns of 16 rows to the specified attribute byte.
 D $A15F Used by the routines at #R$7B36, #R$7B8B, #R$A1D3, #R$A50B, #R$B83B and #R$F350.
-D $A15F Starting at $5847, set 23 columns of 16 rows to the specified attribute byte.
 R $A15F I:A Attribute byte.
 @ $A15F label=set_game_window_attributes
 C $A15F,3 Point #REGhl at the top-left game window attribute
@@ -5203,27 +5226,27 @@ C $A16F,3 ...loop
 C $A172,1 Return
 ;
 b $A173 Timed events.
-D $A173 Array of 15 structures which map game times to event handlers.
+D $A173 This is an array of fifteen structures which maps the time of in-game events to their event handlers.
 @ $A173 label=timed_events
-B $A173,3,3 (   0, event_another_day_dawns ),
-B $A176,3,3 (   8, event_wake_up ),
-B $A179,3,3 (  12, event_new_red_cross_parcel ),
-B $A17C,3,3 (  16, event_go_to_roll_call ),
-B $A17F,3,3 (  20, event_roll_call ),
-B $A182,3,3 (  21, event_go_to_breakfast_time ),
-B $A185,3,3 (  36, event_breakfast_time ),
-B $A188,3,3 (  46, event_go_to_exercise_time ),
-B $A18B,3,3 (  64, event_exercise_time ),
-B $A18E,3,3 (  74, event_go_to_roll_call ),
-B $A191,3,3 (  78, event_roll_call ),
-B $A194,3,3 (  79, event_go_to_time_for_bed ),
-B $A197,3,3 (  98, event_time_for_bed ),
-B $A19A,3,3 ( 100, event_night_time ),
-B $A19D,3,3 ( 130, event_search_light ),
+B $A173,3,3 (  0, event_another_day_dawns),
+B $A176,3,3 (  8, event_wake_up),
+B $A179,3,3 ( 12, event_new_red_cross_parcel),
+B $A17C,3,3 ( 16, event_go_to_roll_call),
+B $A17F,3,3 ( 20, event_roll_call),
+B $A182,3,3 ( 21, event_go_to_breakfast_time),
+B $A185,3,3 ( 36, event_breakfast_time),
+B $A188,3,3 ( 46, event_go_to_exercise_time),
+B $A18B,3,3 ( 64, event_exercise_time),
+B $A18E,3,3 ( 74, event_go_to_roll_call),
+B $A191,3,3 ( 78, event_roll_call),
+B $A194,3,3 ( 79, event_go_to_time_for_bed),
+B $A197,3,3 ( 98, event_time_for_bed),
+B $A19A,3,3 (100, event_night_time),
+B $A19D,3,3 (130, event_search_light),
 ;
-c $A1A0 Dispatch timed events.
+c $A1A0 Dispatch timed event.
+D $A1A0 This dispatches time-based game events like parcels, meals, exercise times and roll calls.
 D $A1A0 Used by the routine at #R$9D7B.
-D $A1A0 Dispatches time-based game events like parcels, meals, exercise and roll calls.
 N $A1A0 Increment the clock, wrapping at 140.
 @ $A1A0 label=dispatch_timed_event
 C $A1A0,3 Point #REGhl at the game clock
@@ -5250,6 +5273,7 @@ C $A1BF,3 Point #REGbc at bell
 C $A1C2,1 Jump to the event handler
 ;
 c $A1C3 Event: Night time.
+D $A1C3 This makes the hero move to bed, then sets the night-time flag.
 @ $A1C3 label=event_night_time
 C $A1C3,4 Is the hero already in his bed?
 C $A1C7,2 Skip route setting if so
@@ -5258,6 +5282,7 @@ C $A1CF,2 Set the night time flag ($FF)
 C $A1D1,2 Jump to set_attrs
 ;
 c $A1D3 Event: Another day dawns.
+D $A1D3 This queues the "ANOTHER DAY DAWNS" message, decreases morale by 25, clears the night-time flag, then sets the game window attributes back to daylight colours.
 @ $A1D3 label=event_another_day_dawns
 C $A1D3,5 Queue the message "ANOTHER DAY DAWNS"
 C $A1D8,5 Decrease morale by 25
@@ -5269,29 +5294,34 @@ C $A1E1,3 Choose game window attributes
 C $A1E4,3 Exit via set_game_window_attributes
 ;
 c $A1E7 Event: Wake up.
+D $A1E7 This rings the bell then queues the "TIME TO WAKE UP" message.
 @ $A1E7 label=event_wake_up
 C $A1E7,1 Ring the bell 40 times as passed in
 C $A1E8,5 Queue the message "TIME TO WAKE UP"
 C $A1ED,3 Exit via wake_up
 ;
 c $A1F0 Event: Go to roll call.
+D $A1F0 This rings the bell then queues the "ROLL CALL" message.
 @ $A1F0 label=event_go_to_roll_call
 C $A1F0,1 Ring the bell 40 times as passed in
 C $A1F1,5 Queue the message "ROLL CALL"
 C $A1F6,3 Exit via go_to_roll_call
 ;
 c $A1F9 Event: Go to breakfast time.
+D $A1F9 This rings the bell then queues the "BREAKFAST TIME" message.
 @ $A1F9 label=event_go_to_breakfast_time
 C $A1F9,1 Ring the bell 40 times as passed in
 C $A1FA,5 Queue the message "BREAKFAST TIME"
 C $A1FF,3 Exit via set_route_go_to_breakfast
 ;
 c $A202 Event: Breakfast time.
+D $A202 This rings the bell.
 @ $A202 label=event_breakfast_time
 C $A202,1 Ring the bell 40 times as passed in
 C $A203,3 Exit via end_of_breakfast
 ;
 c $A206 Event: Go to exercise time.
+D $A206 This rings the bell, queues the message "EXERCISE TIME", then unlocks the exercise yard gates.
 @ $A206 label=event_go_to_exercise_time
 C $A206,1 Ring the bell 40 times as passed in
 C $A207,5 Queue the message "EXERCISE TIME"
@@ -5299,11 +5329,13 @@ C $A20C,6 Unlock the gates to the exercise yard
 C $A212,3 Exit via set_route_go_to_yard
 ;
 c $A215 Event: Exercise time.
+D $A215 This rings the bell.
 @ $A215 label=event_exercise_time
 C $A215,1 Ring the bell 40 times as passed in
 C $A216,3 Exit via set_route_go_to_yard_reversed
 ;
 c $A219 Event: Go to time for bed.
+D $A219 This rings the bell, locks the gates to the exercise yard, then queues the message "TIME FOR BED".
 @ $A219 label=event_go_to_time_for_bed
 C $A219,1 Ring the bell 40 times as passed in
 C $A21A,6 Lock the gates to the exercise yard
@@ -5311,6 +5343,7 @@ C $A220,5 Queue the message "TIME FOR BED"
 C $A225,3 Exit via go_to_time_for_bed
 ;
 c $A228 Event: New red cross parcel.
+D $A228 This selects the next red cross parcel, spawns it, if required, then queues the mesage "RED CROSS PARCEL".
 N $A228 Don't deliver a new red cross parcel while the previous one still exists.
 @ $A228 label=event_new_red_cross_parcel
 C $A228,3 Fetch the red cross parcel's room (and flags)
@@ -5346,16 +5379,19 @@ B $A260,1,1 item_WIRESNIPS
 B $A261,1,1 item_BRIBE
 B $A262,1,1 item_COMPASS
 ;
-g $A263 Current contents of red cross parcel.
+g $A263 Red cross parcel current contents.
+g $A263 This holds the current contents of the red cross parcel.
 @ $A263 label=red_cross_parcel_current_contents
 B $A263,1,1
 ;
 c $A264 Event: Time for bed.
+D $A264 This sets the routes for guard 12 to 15 to enter huts 2 and 3.
 @ $A264 label=event_time_for_bed
 C $A264,4 Set route to (REVERSED routeindex_38_GUARD_12_BED, 3)
 C $A268,2 Jump to $A26E
 ;
 c $A26A Event: Search light.
+D $A26A This sets the routes for guards 12 to 15 to leave huts 2 and 3.
 @ $A26A label=event_search_light
 C $A26A,4 Set route to (routeindex_38_GUARD_12_BED, 0)
 N $A26E This entry point is used by the routine at #R$A264.
@@ -5372,7 +5408,8 @@ C $A27A,1 Increment the route index
 C $A27C,2 ...loop
 C $A27E,1 Return
 ;
-b $A27F List of non-player characters: six prisoners and four guards.
+b $A27F Prisoners and guards.
+D $A27F This is a list of the non-player characters: six prisoners and four guards.
 D $A27F Read-only by set_prisoners_and_guards_route, set_prisoners_and_guards_route_B.
 @ $A27F label=prisoners_and_guards
 B $A27F,1,1 character_12_GUARD_12
@@ -5387,6 +5424,7 @@ B $A287,1,1 character_24_PRISONER_5
 B $A288,1,1 character_25_PRISONER_6
 ;
 c $A289 Wake up.
+D $A289 This gets the hero and the six other prisoners out of bed.
 D $A289 Used by the routine at #R$A1E7.
 @ $A289 label=wake_up
 C $A289,7 If the hero's not in bed, jump forward (note: it could jump one instruction later instead)
@@ -5428,7 +5466,8 @@ C $A2DB,3 Expand out the room definition for room_index
 C $A2DE,3 Render visible tiles array into the screen buffer.
 C $A2E1,1 Return
 ;
-c $A2E2 End of breakfast time.
+c $A2E2 End of breakfast.
+D $A2E2 This makes the hero and the six other prisoners finish breakfast.
 D $A2E2 Used by the routine at #R$A202.
 @ $A2E2 label=end_of_breakfast
 C $A2E2,7 If the hero's not at breakfast, jump forward (note: it could jump one instruction later instead)
@@ -5466,7 +5505,8 @@ C $A331,8 If the global current room index is outdoors, or a tunnel room then re
 C $A339,3 Expand out the room definition for room_index
 C $A33C,3 Render visible tiles array into the screen buffer and exit via (note: different to wake_up's end)
 ;
-c $A33F Set the hero's route, unless he's in solitary.
+c $A33F Set hero route.
+D $A33F This sets the hero's route, unless he's in solitary.
 D $A33F Used by the routines at #R$9F21, #R$A1C3, #R$A289, #R$A2E2, #R$A351, #R$A3F8, #R$A4A9, #R$A4B7, #R$A4C5, #R$A4D8 and #R$A4FD.
 R $A33F I:B Route index.
 R $A33F I:C Route step.
@@ -5474,7 +5514,8 @@ R $A33F I:C Route step.
 C $A33F,5 Do nothing if the hero's in solitary
 E $A33F FALL THROUGH into set_hero_route_force
 ;
-c $A344 Set the hero's route
+c $A344 Set hero route (force).
+D $A344 This sets the hero's route, even if he's in solitary.
 D $A344 Used by the routine at #R$C7C6.
 R $A344 I:B Route index.
 R $A344 I:C Route step.
@@ -5485,6 +5526,7 @@ C $A34D,3 Set the route
 C $A350,1 Return
 ;
 c $A351 Go to time for bed.
+D $A351 This makes the hero and other characters head to bed.
 D $A351 Used by the routine at #R$A219.
 @ $A351 label=go_to_time_for_bed
 C $A351,6 Set the hero's route to (REVERSED routeindex_5_EXIT_HUT2, 2)
@@ -5492,7 +5534,8 @@ C $A357,3 Set route index to (REVERSED routeindex_5_EXIT_HUT2)
 C $A35A,2 Set route step to 2
 C $A35C,3 Set the routes of all characters in prisoners_and_guards and exit via
 ;
-c $A35F Set individual routes for all characters in prisoners_and_guards.
+c $A35F Set prisoners and guards route (variant "A").
+D $A35F This sets individual routes for all characters in prisoners_and_guards[].
 D $A35F The route passed in (#REGa',#REGc) is assigned to the first character. The second character gets route (#REGa'+1,#REGc) and so on.
 D $A35F Used by the routine at #R$A4FD.
 R $A35F I:A' Route index.
@@ -5512,7 +5555,8 @@ C $A36F,1 Advance to the next character
 C $A370,2 ...loop
 C $A372,1 Return
 ;
-c $A373 Set joint routes for all characters in prisoners_and_guards.
+c $A35F Set prisoners and guards route (variant "B").
+D $A373 This sets joint routes for all characters in prisoners_and_guards[].
 D $A373 The first half of the list (guards 12,13 and prisoners 1,2,3) are set to the route passed in (#REGa',#REGc). The second half of the list (guards 14,15 and prisoners 4,5,6) are set to route (#REGa'+1,#REGc).
 D $A373 Used by the routines at #R$A289, #R$A2E2, #R$A351, #R$A4A9, #R$A4B7 and #R$A4C5.
 R $A373 I:A' Route index.
@@ -5535,9 +5579,9 @@ C $A388,1 Advance to the next character
 C $A389,2 ...loop
 C $A38B,1 Return
 ;
-c $A38C Set the route for a character.
+c $A38C Set character route.
+D $A38C This finds the charstruct, or vischar, of the specified character index (#REGa) and stores the route (#REGa',#REGc) in it.
 D $A38C Used by the routines at #R$A26A, #R$A35F and #R$A373.
-D $A38C Finds a charstruct, or a vischar, and stores a route.
 R $A38C I:A Character index.
 R $A38C I:A' Route index.
 R $A38C I:C Route step.
