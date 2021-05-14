@@ -4681,7 +4681,9 @@ B $9F0E,3,3 ( R3, R2,                    $FF)
 B $9F11,2,2 (R25,                        $FF)
 B $9F13,2,2 ( A1,                        $FF)
 ;
-b $9F15 Boundings of the three main exterior areas.
+b $9F15 Permitted bounds.
+D $9F15 This is an array (type: bounds_t) of the three main exterior areas.
+D $9F15 Used by the routine at #R$A01A.
 @ $9F15 label=permitted_bounds
 B $9F15,4,4 Corridor to exercise yard
 B $9F19,4,4 Hut area
