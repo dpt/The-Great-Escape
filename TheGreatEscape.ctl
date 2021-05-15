@@ -4950,9 +4950,8 @@ C $A095,8 Count down from 4095
 C $A09D,1 Return
 ;
 c $A09E Ring bell.
-D $A09E This rings the alarm bell.
+D $A09E This rings the alarm bell. It is called three times from main_loop.
 D $A09E Used by the routine at #R$9D7B.
-D $A09E Called three times from main_loop.
 @ $A09E label=ring_bell
 C $A09E,3 Point #REGhl at bell ring counter/flag
 C $A0A1,1 Fetch its value
@@ -5121,8 +5120,7 @@ D $A139 Write/read-write by check_morale, process_player_input, charevnt_hero_re
 B $A139,1,1
 ;
 g $A13A In solitary.
-D $A13A This is the 'in solitary' flag. It stops set_hero_route working.
-D $A13A Used to set flag colour.
+D $A13A This is the 'in solitary' flag. When set ($FF) it stops #R$A33F working, stops automatic from running, stops process_player_input from running, i_p_a too.
 D $A13A Read-only by process_player_input, in_permitted_area, set_hero_route, automatics.
 D $A13A Write/read-write by charevnt_solitary_ends, solitary.
 @ $A13A label=in_solitary
@@ -5617,7 +5615,8 @@ C $A3B4,4 Reset vischar_FLAGS_TARGET_IS_DOOR flag
 C $A3B8,3 Store the route at #REGhl
 E $A38C FALL THROUGH into set_route.
 ;
-c $A3BB Calls get_target and assigns the result into vischar.
+c $A3BB Set route.
+D $A3BB This fetches the current target coordinates using $C651 then assigns the result into the vischar (#REGhl).
 D $A3BB Used by the routine at #R$A33F.
 R $A3BB I:HL Points to route.step.
 R $A3BB O:BC Preserved.
@@ -5652,7 +5651,8 @@ C $A3E9,2 Set the vischar_FLAGS_TARGET_IS_DOOR flag
 C $A3EB,1 Restore
 C $A3EC,1 Return
 ;
-c $A3ED Store a route at the specified address.
+c $A3ED Store route.
+D $A3ED This stores the route in (#REGa',#REGc) at #REGhl.
 D $A3ED Used by the routine at #R$A38C.
 R $A3ED I:A' Route index.
 R $A3ED I:C Route step.
@@ -5665,14 +5665,16 @@ C $A3EF,1 Bank the route index
 C $A3F0,2 Store the route step
 C $A3F2,1 Return
 ;
-c $A3F3 Character goes to bed: used when entered_move_a_character is non-zero.
+c $A3F3 Character -> bed (state).
+D $A3F3 This is the entry point for #R$A404 used when #R$A13E is non-zero.
 D $A3F3 Used by the routine at #R$C7C6.
 R $A3F3 I:HL Pointer to location.
 @ $A3F3 label=character_bed_state
 C $A3F3,3 Get the current character index
 C $A3F6,2 Jump to character_bed_common
 ;
-c $A3F8 Character goes to bed: used when entered_move_a_character is zero.
+c $A3F8 Character -> bed (vischar).
+D $A3F8 This is the entry point for #R$A404 used when #R$A13E is zero.
 D $A3F8 Used by the routine at #R$C7C6.
 R $A3F8 I:HL Pointer to location.
 @ $A3F8 label=character_bed_vischar
@@ -5680,7 +5682,8 @@ C $A3F8,3 Read the current vischar's character index
 C $A3FB,3 If it's not the commandant (0) then goto character_bed_common
 C $A3FE,6 Otherwise set the commandant's route to ($2C,$00) and exit via
 ;
-c $A404 Common end of above two routines.
+c $A404 Character -> bed (common).
+D $A404 This is the common tail of the previous two routines. It uses the character index (in #REGa) to assign a "walk to bed" route to the specified character.
 D $A404 Used by the routines at #R$A3F3 and #R$A3F8.
 R $A404 I:A Character index.
 R $A404 I:HL Pointer to route.
@@ -5699,6 +5702,7 @@ C $A41D,2 Save route index
 C $A41F,1 Return
 ;
 c $A420 Character sits.
+D $A420 This makes a character disappear when it sits down and updates the room definition to show them sitting.
 D $A420 Used by the routine at #R$C7C6.
 R $A420 I:A Route index.
 R $A420 I:HL Pointer to route.
@@ -5723,6 +5727,7 @@ C $A440,2 Otherwise room is room_23_MESS_HALL
 C $A442,2 Jump to character_sit_sleep_common
 ;
 c $A444 Character sleeps.
+D $A444 This makes a character disappear when it gets into bed and updates the room definition to show them sleeping.
 D $A444 Used by the routine at #R$C7C6.
 R $A444 I:A Route index.
 R $A444 I:HL Pointer to route.
@@ -5741,7 +5746,8 @@ C $A45C,4 Otherwise room is room_3_HUT2RIGHT
 C $A460,2 Room is room_5_HUT3RIGHT
 E $A444 FALL THROUGH into character_sit_sleep_common.
 ;
-c $A462 Common end of character sits/sleeps.
+c $A462 Character sit/sleep (common).
+D $A462 This makes characters disappear, repainting the screen if required.
 D $A462 Used by the routines at #R$A420 and #R$A444.
 R $A462 I:C Room.
 R $A462 I:DE Pointer to route.
@@ -5761,26 +5767,30 @@ C $A477,2 Set room to room_NONE ($FF)
 E $A462 FALL THROUGH into select_room_and_plot.
 ;
 c $A479 Select room and plot.
+D $A479 This expands out the current room definition into the visible tiles array then repaints those tiles to the screen.
 D $A479 Used by the routine at #R$A491.
 @ $A479 label=select_room_and_plot
 C $A479,3 Expand out the room definition for room_index
 C $A47C,3 Render visible tiles array into the screen buffer, exit via
 ;
-c $A47F The hero sits.
+c $A47F Hero sits.
+D $A47F This is called when the hero should sit down in the mess hall for breakfast.
 D $A47F Used by the routine at #R$C7C6.
 @ $A47F label=hero_sits
 C $A47F,5 Set room definition 25's bench_G object (where the hero sits) to interiorobject_PRISONER_SAT_DOWN_END_TABLE
 C $A484,3 Point #REGhl at the hero_in_breakfast flag
 C $A487,2 Jump to hero_sit_sleep_common
 ;
-c $A489 The hero sleeps.
+c $A489 Hero sleeps.
+D $A489 This is called when the hero should sleep.
 D $A489 Used by the routines at #R$B75A and #R$C7C6.
 @ $A489 label=hero_sleeps
 C $A489,5 Set room definition 2's bed object (where the hero sleeps) to interiorobject_OCCUPIED_BED
 C $A48E,3 Point #REGhl at the hero_in_bed flag
 E $A489 FALL THROUGH into hero_sit_sleep_common.
 ;
-c $A491 Common end of hero sits/sleeps.
+c $A491 Hero sit/sleep (common).
+D $A491 This is the common end of the above two routines. It sets the appropriate breakfast/bed flag, halts the hero, sets his position to (0,0), recalculates his isometric position then re-plots the room.
 D $A491 Used by the routine at #R$A47F.
 R $A491 I:HL Pointer to hero_in_breakfast or hero_in_bed flag.
 @ $A491 label=hero_sit_sleep_common
@@ -5791,40 +5801,44 @@ C $A498,9 Zero $800F..$8012
 C $A4A1,6 Reset the hero's screen position
 C $A4A7,2 Exit via select_room_and_plot
 ;
-c $A4A9 Set hero's and prisoners_and_guards's routes to "go to yard".
+c $A4A9 Set route: "go to yard".
+D $A4A9 This sets the hero's and prisoners_and_guards's routes to "go to yard".
 D $A4A9 Used by the routine at #R$A206.
 @ $A4A9 label=set_route_go_to_yard
 C $A4A9,6 Set the hero's route to (routeindex_14_GO_TO_YARD, 0)
 C $A4AF,8 And set the routes of all characters in prisoners_and_guards to the same route (exit via)
 ;
-c $A4B7 Set hero's and prisoners_and_guards's routes to "go to yard" reversed.
+c $A4B7 Set route: "go to yard" reversed.
+c $A4B7 This sets the hero's and prisoners_and_guards's routes to "go to yard" reversed.
 D $A4B7 Used by the routine at #R$A215.
 @ $A4B7 label=set_route_go_to_yard_reversed
 C $A4B7,6 Set the hero's route to (REVERSED routeindex_14_GO_TO_YARD, 4)
 C $A4BD,8 And set the routes of all characters in prisoners_and_guards to the same route (exit via)
 ;
-c $A4C5 Set hero's and prisoners_and_guards's routes to "go to breakfast".
+c $A4C5 Set route: "go to breakfast".
+D $A4C5 This sets the hero's and prisoners_and_guards's routes to "go to breakfast".
 D $A4C5 Used by the routine at #R$A1F9.
 @ $A4C5 label=set_route_go_to_breakfast
 C $A4C5,6 Set the hero's route to (routeindex_16_BREAKFAST_25, 0)
 C $A4CB,8 And set the routes of all characters in prisoners_and_guards to the same route (exit via)
 ;
-c $A4D3 Character event: used when entered_move_a_character is non-zero.
+c $A4D3 Character event: breakfast (state).
+D $A4D3 This is the entry point for #R$A4E4 used when #R$A13E is non-zero.
 D $A4D3 Used by the routine at #R$C7C6.
-D $A4D3 Something character related [very similar to the routine at $A3F3].
 @ $A4D3 label=charevnt_breakfast_state
 C $A4D3,3 Get the current character index
 C $A4D6,2 Jump to charevnt_breakfast_common
 ;
-c $A4D8 Character event: used when entered_move_a_character is zero.
+c $A4D8 Character event: breakfast (vischar).
+D $A4D8 This is the entry point for #R$A4E4 used when #R$A13E is zero.
 D $A4D8 Used by the routine at #R$C7C6.
 @ $A4D8 label=charevnt_breakfast_vischar
 C $A4D8,3 Read the current vischar's character index
 C $A4DB,3 If it's not the commandant (0) then goto charevnt_breakfast_common
 C $A4DE,6 Otherwise set the commandant's route to ($2B,$00) and exit via
 ;
-c $A4E4 Common end of above two routines.
-D $A4E4 Sets routes for prisoners and guards.
+c $A4E4 Character event: breakfast (common).
+D $A4E4 This is the common end of the above two routines. It sets routes for prisoners and guards.
 D $A4E4 Used by the routines at #R$A4D3 and #R$A4D8.
 R $A4E4 I:A Character index.
 R $A4E4 I:HL Pointer to route.
@@ -5842,13 +5856,15 @@ C $A4FA,2 Store route index
 C $A4FC,1 Return
 ;
 c $A4FD Go to roll call.
+D $A4FD This sends all those enumerated in prisoners_and_guards and the hero to roll call.
 D $A4FD Used by the routine at #R$A1F0.
 @ $A4FD label=go_to_roll_call
 C $A4FD,5 Set route to (routeindex_26_GUARD_12_ROLL_CALL, 0)
 C $A502,3 Set individual routes for prisoners_and_guards
 C $A505,6 Set the hero's route to (routeindex_45_HERO_ROLL_CALL, 0)
 ;
-c $A50B Reset the screen.
+c $A50B Screen reset.
+D $A50B This wipes and re-renders the visible tiles array into window_buf. It then zoomboxes the window_buf onto the screen and does a final plot after that.
 D $A50B Used by the routines at #R$9DE5 and #R$A51C.
 @ $A50B label=screen_reset
 C $A50B,3 Wipe the visible tiles array
@@ -5858,9 +5874,11 @@ C $A514,3 Plot the game screen
 C $A517,2 Set #REGa to attribute_WHITE_OVER_BLACK
 C $A519,3 Set game window attributes (exit via)
 ;
-c $A51C Hero has escaped.
+c $A51C Escaped.
+D $A51C This is called when the hero has made an escape attempt. It prints the 'WELL DONE' message then tests to see if the correct objects were used in the escape attempt. It then prints an according sequence of messages. If the attempt was successful then on restart the game is reset, otherwise the hero is sent to solitary.
+D $A51C The items map to win-lose states as follows:
+D $A51C #TABLE(default) { =h,r2 Combination | =h,c4 Items | =h,r2 Message | =h,r2 Result } { =h Uniform | =h Purse | =h Papers | =h Compass } { 0 | . | . | . | . | "BUT WERE RECAPTURED TOTALLY UNPREPARED" | Lose } { 1 | . | . | . | X | "BUT WERE RECAPTURED DUE TO LACK OF PAPERS" | Lose } { 2 | . | . | X | . | "BUT WERE RECAPTURED TOTALLY LOST" | Lose } { 3 | . | . | X | X | (the game offers no extra message) | Win } { 4 | . | X | . | . | "BUT WERE RECAPTURED TOTALLY LOST" | Lose } { 5 | . | X | . | X | "AND WILL CROSS THE BORDER SUCCESSFULLY" | Win } { 6 | . | X | X | . | "BUT WERE RECAPTURED TOTALLY LOST" | Lose } { 8 | X | . | . | . | "BUT WERE RECAPTURED AND SHOT AS A SPY" | Lose } { 9 | X | . | . | X | "BUT WERE RECAPTURED AND SHOT AS A SPY" | Lose } { 10 | X | . | X | . | "BUT WERE RECAPTURED AND SHOT AS A SPY" | Lose } { 12 | X | X | . | . | "BUT WERE RECAPTURED AND SHOT AS A SPY" | Lose } TABLE#
 D $A51C Used by the routine at #R$9F21.
-D $A51C Print 'well done' message then test to see if the correct objects were used in the escape attempt.
 @ $A51C label=escaped
 C $A51C,3 Reset the screen
 N $A51F Print standard prefix messages.
