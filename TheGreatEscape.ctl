@@ -10582,7 +10582,8 @@ B $CC32,3,3 pos   = 116, 100, 3
 B $CC35,2,2 route = 36, 0
 ;
 c $CC37 Guards follow suspicious character.
-D $CC37 This routine decides whether the given vischar pursues the hero. - The commandant can see through the hero's disguise if he's wearing the guard's uniform, but other guards do not. - Bribed characters will ignore the hero. - When outdoors, line of sight checking is used to determine if the hero will be pursued. - If the red_flag is in effect the hero will be pursued, otherwise he will just be hassled.
+D $CC37 This routine decides whether the given vischar should pursue the hero.
+D $CC37 The commandant can see through the hero's disguise if he's wearing the guard's uniform, but other guards do not. Bribed characters will ignore the hero. When outdoors, line of sight checking is used to determine if the hero will be pursued. If the red_flag is in effect the hero will be pursued, otherwise he will just be hassled.
 R $CC37 Used by the routine at #R$C892.
 N $CC37 I:IY Pointer to visible character.
 @ $CC37 label=guards_follow_suspicious_character
@@ -10657,10 +10658,10 @@ C $CCA3,4 Make the bell ring perpetually
 C $CCA7,3 Call hostiles_pursue
 C $CCAA,1 Return
 ;
-c $CCAB Hostiles pursue prisoners.
-D $CCAB Used by the routines at #R$C892, #R$CC37, #R$CCCD and #R$EF9A.
-D $CCAB For all visible, hostile characters, at height < 32, set the bribed/pursue flag.
+c $CCAB Hostiles pursue.
+D $CCAB This sets the pursue flag for all visible, hostile characters (who aren't in up in towers).
 D $CCAB Research: If I nop this out then guards don't spot the items I drop. Iterate non-player characters.
+D $CCAB Used by the routines at #R$C892, #R$CC37, #R$CCCD and #R$EF9A.
 @ $CCAB label=hostiles_pursue
 @ $CCAB nowarn
 C $CCAB,3 Point #REGhl at the second vischar
@@ -10687,9 +10688,8 @@ C $CCCA,2 ...loop
 C $CCCC,1 Return
 ;
 c $CCCD Is item discoverable?
+D $CCCD This searches through item_structs for items dropped nearby. If items are found then hostiles are made to pursue the hero, but the green key and food items are ignored.
 D $CCCD Used by the routine at #R$C892.
-D $CCCD Searches item_structs for items dropped nearby. If items are found the hostiles are made to pursue the hero.
-D $CCCD Green key and food items are ignored.
 @ $CCCD label=is_item_discoverable
 C $CCCD,3 Get the global current room index
 C $CCD0,1 Is it room_0_OUTDOORS?
@@ -10722,8 +10722,8 @@ C $CCF5,2 Jump to next iteration if so
 C $CCF7,3 Otherwise, hostiles pursue prisoners
 C $CCFA,1 Return
 ;
-c $CCFB Is an item discoverable indoors?
-D $CCFB A discoverable item is one which has been moved away from its default room, and one that isn't the red cross parcel.
+c $CCFB Is item discoverable (interior).
+D $CCFB This searches through item_structs for items which have been moved away from their default room. The red cross parcel is ignored.
 D $CCFB Used by the routines at #R$C6A0 and #R$CCCD.
 R $CCFB I:A Room index to check against
 R $CCFB O:C Item (if found)
@@ -10768,7 +10768,8 @@ C $CD2C,2 Jump to the next iteration
 C $CD2E,1 Return the item's index in #REGc
 C $CD2F,2 Return with Z set (found)
 ;
-c $CD31 An item is discovered.
+c $CD31 Item discovered.
+D $CD31 This resets an item which has been discovered.
 D $CD31 Used by the routines at #R$B75A, #R$C6A0, #R$C892 and #R$CB98.
 R $CD31 I:C Item index.
 @ $CD31 label=item_discovered
@@ -10801,9 +10802,9 @@ C $CD62,3 Exit via calc_exterior_item_iso_pos
 C $CD65,2 Set height to 5
 C $CD67,3 Exit via calc_interior_item_iso_pos
 ;
-b $CD6A Default locations of items.
-D $CD6A An array of 16 three-byte structures.
-D $CD6A #TABLE(default) { =h Type | =h Bytes | =h Name        | =h Meaning } { Byte    |        1 | room_and_flags | Room index; bits 6,7 = flags (T.B.D.) } { Byte    |        1 | x              | X position  } { Byte    |        1 | y              | Y position  } TABLE#
+b $CD6A Default item locations.
+D $CD6A This is an array of 16 three-byte structures that define the default locations of the items available in the game.
+D $CD6A #TABLE(default) { =h Type | =h Bytes | =h Name | =h Meaning } { Byte | 1 | room_and_flags | Room index; bits 6,7 = flags (T.B.D.) } { Byte | 1 | x | X position } { Byte | 1 | y | Y position } TABLE#
 D $CD6A #define ITEM_ROOM(room_no, flags) ((room_no & 0x3F) | (flags << 6)) do the next flags mean that the wiresnips are always or /never/ found?
 @ $CD6A label=default_item_locations
 B $CD6A,3,3 item_WIRESNIPS        { ITEM_ROOM(room_NONE, 3), ... }
