@@ -10922,7 +10922,13 @@ B $CEFA,6,6 3, 27, { bitmap_commandant_facing_bottom_right_3, mask_various_facin
 B $CF00,6,6 3, 28, { bitmap_commandant_facing_bottom_right_4, mask_various_facing_bottom_right_4 } // (16x28,$D1B2,$D63D)
 ;
 b $CF06 Animations.
-D $CF06 Read by routine around $B64F (animate)
+D $CF06 This is a sequence of variably-sized entries (type: anim_t).
+D $CF06 If suffixed '_tl' the character faces top left of the screen, if suffixed '_br' the character faces bottom right of the screen, etc.
+D $CF06 Animations (type: anim_t) have the following format:
+D $CF06 #TABLE(default) { =h Type | =h Bytes | =h Name | =h Meaning } { Byte | 1 | nframes | Number of frames in this animation } { direction_t | 1 | from | Which direction to turn to when animation starts (when reversed) } { direction_t | 1 | to | Which direction to turn to when animation starts (when not reversed) } { direction_t | 1 | map_direction | Direction to move the map, or 255 to not move it } { animframe_t | nframes * 4 | frames | Animation frames } TABLE#
+D $CF06 Animation frames (type: animframe_t) have the following format:
+D $CF06 #TABLE(default) { =h Type | =h Bytes | =h Name | =h Meaning } { Byte | 1 | dx | How much this frame moves the character by on the X axis. Signed delta } { Byte | 1 | dy | How much this frame moves the character by on the Y axis. Signed delta } { Byte | 1 | dh | How much this frame moves the character by on the height axis. Signed delta } { Byte | 1 | spriteindex | Sprite index (relative to vischar's sprite base) + flip flag in top bit } TABLE#
+D $CF06 Used by the routine at #R$B5CE.
 @ $CF06 label=anim_crawlwait_tl
 @ $CF0E label=anim_crawlwait_tr
 @ $CF16 label=anim_crawlwait_br
