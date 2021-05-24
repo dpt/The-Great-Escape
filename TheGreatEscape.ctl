@@ -11122,9 +11122,9 @@ N $DB72 #UDGTABLE { #UDGARRAY2,7,4,2;$DB72-$DB9D-1-16(mask-stove) } TABLE#
 B $DB72,44,8*5,4 mask: STOVE
 ;
 c $DB9E Mark nearby items.
-D $DB9E Iterates over itemstructs, testing to see if each item is within the range (-1..22, 0..15) of the current map position. If it is it sets the flags itemstruct_ROOM_FLAG_NEARBY_6 and itemstruct_ROOM_FLAG_NEARBY_7 on the item, otherwise it clears both of those flags.
+D $DB9E This iterates over itemstructs, testing to see if each item is within the range (-1..22, 0..15) of the current map position. If it is it sets the flags itemstruct_ROOM_FLAG_NEARBY_6 and itemstruct_ROOM_FLAG_NEARBY_7 on the item, otherwise it clears both of those flags.
+D $DB9E This is similar to #R$CCFB in that it iterates over all item_structs.
 D $DB9E Used by the routines at #R$6939 and #R$9D7B.
-D $DB9E This is similar to is_item_discoverable_interior in that it iterates over all item_structs.
 @ $DB9E label=mark_nearby_items
 C $DB9E,3 Get the global current room index
 C $DBA1,2 Is it room_NONE?
