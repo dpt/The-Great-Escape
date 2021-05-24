@@ -10824,7 +10824,9 @@ B $CD91,3,3 item_RADIO            { ITEM_ROOM(room_18, 0), ... }
 B $CD94,3,3 item_PURSE            { ITEM_ROOM(room_NONE, 0), ... }
 B $CD97,3,3 item_COMPASS          { ITEM_ROOM(room_NONE, 0), ... }
 ;
-w $CD9A Data for the four classes of characters. (<- spawn_character)
+w $CD9A Character meta data.
+D $CD9A This is an array of four definitions (type: character_class_data_t), one for each of the character classes.
+D $CD9A Used by the routine at #R$C4E0.
 @ $CD9A label=character_meta_data_commandant
 W $CD9A,2,2 &animations[0]
 W $CD9C,2,2 sprite_commandant
@@ -10838,9 +10840,14 @@ W $CDA4,2,2 sprite_dog
 W $CDA6,2,2 &animations[0]
 W $CDA8,2,2 sprite_prisoner
 ;
-b $CDAA Indices into animations.
-D $CDAA none, up, down, left, up+left, down+left, right, up+right, down+right, fire
-D $CDAA Groups of nine. (<- animate)
+b $CDAA Animation indices.
+D $CDAA This maps a character's direction and user input to an animation index and reverse flag.
+D $CDAA The horizontal axis is input (U/D/L/R = Up/Down/Left/Right) and the vertical axis is direction (TL/TR/BR/BL + crawl flag).
+D $CDAA For example:
+D $CDAA if (direction,input) is (TL, None) then index is 8 which is #R$CE02 / anim_wait_tl.
+D $CDAA if (direction,input) is (TR + Crawl, D+L) then index is 21 which is #R$CE1C / anim_crawlwait_tr.
+D $CDAA Modulo the reverse flag the highest index in the table is 23 which is the max index in #R$CDF2 (== animations__LIMIT - 1).
+D $CDAA Used by the routine at #R$B5CE.
 @ $CDAA label=animindices
 B $CDAA,9,9 TL
 B $CDB3,9,9 TR
@@ -10851,37 +10858,17 @@ B $CDD7,9,9 TR + crawl
 B $CDE0,9,9 BR + crawl
 B $CDE9,9,9 BL + crawl
 ;
-w $CDF2 Animation states.
-D $CDF2 Array, 24 long, of pointers to data.
+w $CDF2 Animations.
+D $CDF2 This is an array, 24 long, of pointers to animation data.
 @ $CDF2 label=animations
-W $CDF2,2,2 anim_walk_tl
-W $CDF4,2,2 anim_walk_tr
-W $CDF6,2,2 anim_walk_br
-W $CDF8,2,2 anim_walk_bl
-W $CDFA,2,2 anim_turn_tl
-W $CDFC,2,2 anim_turn_tr
-W $CDFE,2,2 anim_turn_br
-W $CE00,2,2 anim_turn_bl
-W $CE02,2,2 anim_wait_tl
-W $CE04,2,2 anim_wait_tr
-W $CE06,2,2 anim_wait_br
-W $CE08,2,2 anim_wait_bl
-W $CE0A,2,2 anim_crawl_tl
-W $CE0C,2,2 anim_crawl_tr
-W $CE0E,2,2 anim_crawl_br
-W $CE10,2,2 anim_crawl_bl
-W $CE12,2,2 anim_crawlturn_tl
-W $CE14,2,2 anim_crawlturn_tr
-W $CE16,2,2 anim_crawlturn_br
-W $CE18,2,2 anim_crawlturn_bl
-W $CE1A,2,2 anim_crawlwait_tl
-W $CE1C,2,2 anim_crawlwait_tr
-W $CE1E,2,2 anim_crawlwait_br
-W $CE20,2,2 anim_crawlwait_bl
+N $CDF2 Normal animations, move the map
+N $CDFA Normal + turning
+N $CE02 Standing still
+N $CE0A Note that when crawling the hero won't spin around in the tunnel. He'll retain his orientation until specficially spun around using the controls opposite to the direction of the tunnel.
+N $CE0A Crawling
+N $CE12 Crawling + turning
+N $CE1A Crawling still
 ;
-b $CE22 Sprites: objects which can move.
-D $CE22 This include STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT.
-D $CE22 Structure: (b) width in bytes + 1, (b) height in rows, (w) data ptr, (w) mask ptr
 D $CE22 'tl' => character faces top left of the screen
 D $CE22 'br' => character faces bottom right of the screen
 @ $CE22 label=sprites
