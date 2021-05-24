@@ -2521,7 +2521,7 @@ B $7731,7,7 { item_COMPASS, room_NONE, (52, 28, 4), (0x7E, 0xF4) }
 @ $7738 assemble=,1
 ;
 b $7738 Routes.
-D $7738 Array, 46 long, of pointers to $FF-terminated runs.
+D $7738 This is an array, 46 long, of pointers to $FF-terminated runs.
 @ $7738 label=routes
 W $7738,92,2
 B $7794,1,1 Fake terminator used by get_target.
