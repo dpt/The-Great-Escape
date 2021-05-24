@@ -11247,9 +11247,10 @@ C $DC38,6 Advance by stride to next item
 C $DC3E,2 ...loop
 C $DC40,1 Return
 ;
-c $DC41 Set up item plotting.
+c $DC41 Set-up item plotting.
+D $DC41 This checks that the item is visible, and if so readies the sprite plotter for the given item. The clipped values from the visibility check are used to enable or disable portions of the inner loop to cause clipping. Note that item plotting only ever uses the 16 pixel plotter.
+D $DC41 Note: This is the counterpart of, and very similar to, the routine at #R$E420.
 D $DC41 Used by the routine at #R$B866.
-D $DC41 Counterpart of, and very similar to, the routine at #R$E420.
 R $DC41 I:A Item index
 R $DC41 I:IY Pointer to item_struct
 R $DC41 O:F Z set if item is visible, NZ otherwise
@@ -12146,9 +12147,10 @@ C $E41D,1 Load the flipped byte into #REGd
 C $E41E,1 Restore original bank
 C $E41F,1 Return
 ;
-c $E420 Set up vischar plotting.
+c $E420 Set-up vischar plotting.
+D $E420 This checks that the vischar is visible, and if so readies the sprite plotter for the given vischar. The clipped values from the visibility check are used to enable or disable portions of the inner loop to cause clipping.
+D $E420 Note: This is the counterpart of, and very similar to, the routine at #R$DC41.
 D $E420 Used by the routine at #R$B866.
-D $E420 Counterpart of, and very similar to, the routine at #R$DC41.
 R $E420 I:HL Pointer to visible character
 R $E420 I:IY Pointer to visible character
 R $E420 O:F Z set if vischar is visible, NZ otherwise
