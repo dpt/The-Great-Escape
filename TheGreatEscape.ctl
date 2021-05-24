@@ -10869,55 +10869,57 @@ N $CE0A Crawling
 N $CE12 Crawling + turning
 N $CE1A Crawling still
 ;
-D $CE22 'tl' => character faces top left of the screen
-D $CE22 'br' => character faces bottom right of the screen
+b $CE22 Sprites.
+D $CE22 These are the objects which can move. This includes STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT.
+D $CE22 Structure:
+D $CE22 #TABLE(default) { =h Type | =h Description } { Byte | Width in bytes + 1 } { Byte | Height in rows } { Pointer | Data pointer } { Pointer | Mask pointer } TABLE#
 @ $CE22 label=sprites
 @ $CE22 label=sprite_stove
-B $CE22,6,6 3, 22, &bitmap_stove, &mask_stove } // (16x22,$DB46,$DB72)
+B $CE22,6,6 3, 22, { bitmap_stove, mask_stove } // (16x22,$DB46,$DB72)
 @ $CE28 label=sprite_crate
-B $CE28,6,6 4, 24, &bitmap_crate, &mask_crate } // (24x24,$DAB6,$DAFE)
+B $CE28,6,6 4, 24, { bitmap_crate, mask_crate } // (24x24,$DAB6,$DAFE)
 N $CE2E Glitch: All of the prisoner sprites are one row too high.
 @ $CE2E label=sprite_prisoner
-B $CE2E,6,6 3, 27, &bitmap_prisoner_facing_top_left_1, &mask_various_facing_top_left_1 } // (16x27,$D28C,$D545)
-B $CE34,6,6 3, 28, &bitmap_prisoner_facing_top_left_2, &mask_various_facing_top_left_2 } // (16x28,$D256,$D505)
-B $CE3A,6,6 3, 28, &bitmap_prisoner_facing_top_left_3, &mask_various_facing_top_left_3 } // (16x28,$D220,$D4C5)
-B $CE40,6,6 3, 28, &bitmap_prisoner_facing_top_left_4, &mask_various_facing_top_left_4 } // (16x28,$D1EA,$D485)
-B $CE46,6,6 3, 27, &bitmap_prisoner_facing_bottom_right_1, &mask_various_facing_bottom_right_1 } // (16x27,$D2C0,$D585)
-B $CE4C,6,6 3, 29, &bitmap_prisoner_facing_bottom_right_2, &mask_various_facing_bottom_right_2 } // (16x29,$D2F4,$D5C5)
-B $CE52,6,6 3, 28, &bitmap_prisoner_facing_bottom_right_3, &mask_various_facing_bottom_right_3 } // (16x28,$D32C,$D605)
-B $CE58,6,6 3, 28, &bitmap_prisoner_facing_bottom_right_4, &mask_various_facing_bottom_right_4 } // (16x28,$D362,$D63D)
-B $CE5E,6,6 4, 16, &bitmap_crawl_facing_bottom_left_1, &mask_crawl_facing_bottom_left } // (24x16,$D3C5,$D677)
-B $CE64,6,6 4, 15, &bitmap_crawl_facing_bottom_left_2, &mask_crawl_facing_bottom_left } // (24x15,$D398,$D677)
-B $CE6A,6,6 4, 16, &bitmap_crawl_facing_top_left_1, &mask_crawl_facing_top_left } // (24x16,$D3F5,$D455)
-B $CE70,6,6 4, 16, &bitmap_crawl_facing_top_left_2, &mask_crawl_facing_top_left } // (24x16,$D425,$D455)
+B $CE2E,6,6 3, 27, { bitmap_prisoner_facing_top_left_1, mask_various_facing_top_left_1 } // (16x27,$D28C,$D545)
+B $CE34,6,6 3, 28, { bitmap_prisoner_facing_top_left_2, mask_various_facing_top_left_2 } // (16x28,$D256,$D505)
+B $CE3A,6,6 3, 28, { bitmap_prisoner_facing_top_left_3, mask_various_facing_top_left_3 } // (16x28,$D220,$D4C5)
+B $CE40,6,6 3, 28, { bitmap_prisoner_facing_top_left_4, mask_various_facing_top_left_4 } // (16x28,$D1EA,$D485)
+B $CE46,6,6 3, 27, { bitmap_prisoner_facing_bottom_right_1, mask_various_facing_bottom_right_1 } // (16x27,$D2C0,$D585)
+B $CE4C,6,6 3, 29, { bitmap_prisoner_facing_bottom_right_2, mask_various_facing_bottom_right_2 } // (16x29,$D2F4,$D5C5)
+B $CE52,6,6 3, 28, { bitmap_prisoner_facing_bottom_right_3, mask_various_facing_bottom_right_3 } // (16x28,$D32C,$D605)
+B $CE58,6,6 3, 28, { bitmap_prisoner_facing_bottom_right_4, mask_various_facing_bottom_right_4 } // (16x28,$D362,$D63D)
+B $CE5E,6,6 4, 16, { bitmap_crawl_facing_bottom_left_1, mask_crawl_facing_bottom_left } // (24x16,$D3C5,$D677)
+B $CE64,6,6 4, 15, { bitmap_crawl_facing_bottom_left_2, mask_crawl_facing_bottom_left } // (24x15,$D398,$D677)
+B $CE6A,6,6 4, 16, { bitmap_crawl_facing_top_left_1, mask_crawl_facing_top_left } // (24x16,$D3F5,$D455)
+B $CE70,6,6 4, 16, { bitmap_crawl_facing_top_left_2, mask_crawl_facing_top_left } // (24x16,$D425,$D455)
 @ $CE76 label=sprite_dog
-B $CE76,6,6 4, 16, &bitmap_dog_facing_top_left_1, &mask_dog_facing_top_left } // (24x16,$D867,$D921)
-B $CE7C,6,6 4, 16, &bitmap_dog_facing_top_left_2, &mask_dog_facing_top_left } // (24x16,$D897,$D921)
-B $CE82,6,6 4, 15, &bitmap_dog_facing_top_left_3, &mask_dog_facing_top_left } // (24x15,$D8C7,$D921)
-B $CE88,6,6 4, 15, &bitmap_dog_facing_top_left_4, &mask_dog_facing_top_left } // (24x15,$D8F4,$D921)
-B $CE8E,6,6 4, 14, &bitmap_dog_facing_bottom_right_1, &mask_dog_facing_bottom_right } // (24x14,$D951,$D9F9)
-B $CE94,6,6 4, 15, &bitmap_dog_facing_bottom_right_2, &mask_dog_facing_bottom_right } // (24x15,$D97B,$D9F9)
+B $CE76,6,6 4, 16, { bitmap_dog_facing_top_left_1, mask_dog_facing_top_left } // (24x16,$D867,$D921)
+B $CE7C,6,6 4, 16, { bitmap_dog_facing_top_left_2, mask_dog_facing_top_left } // (24x16,$D897,$D921)
+B $CE82,6,6 4, 15, { bitmap_dog_facing_top_left_3, mask_dog_facing_top_left } // (24x15,$D8C7,$D921)
+B $CE88,6,6 4, 15, { bitmap_dog_facing_top_left_4, mask_dog_facing_top_left } // (24x15,$D8F4,$D921)
+B $CE8E,6,6 4, 14, { bitmap_dog_facing_bottom_right_1, mask_dog_facing_bottom_right } // (24x14,$D951,$D9F9)
+B $CE94,6,6 4, 15, { bitmap_dog_facing_bottom_right_2, mask_dog_facing_bottom_right } // (24x15,$D97B,$D9F9)
 N $CE9A Glitch: The height of following sprite is two rows too high.
-B $CE9A,6,6 4, 15, &bitmap_dog_facing_bottom_right_3, &mask_dog_facing_bottom_right } // (24x15,$D9A8,$D9F9)
-B $CEA0,6,6 4, 14, &bitmap_dog_facing_bottom_right_4, &mask_dog_facing_bottom_right } // (24x14,$D9CF,$D9F9)
+B $CE9A,6,6 4, 15, { bitmap_dog_facing_bottom_right_3, mask_dog_facing_bottom_right } // (24x15,$D9A8,$D9F9)
+B $CEA0,6,6 4, 14, { bitmap_dog_facing_bottom_right_4, mask_dog_facing_bottom_right } // (24x14,$D9CF,$D9F9)
 @ $CEA6 label=sprite_guard
-B $CEA6,6,6 3, 27, &bitmap_guard_facing_top_left_1, &mask_various_facing_top_left_1 } // (16x27,$D74D,$D545)
-B $CEAC,6,6 3, 29, &bitmap_guard_facing_top_left_2, &mask_various_facing_top_left_2 } // (16x29,$D713,$D505)
-B $CEB2,6,6 3, 27, &bitmap_guard_facing_top_left_3, &mask_various_facing_top_left_3 } // (16x27,$D6DD,$D4C5)
-B $CEB8,6,6 3, 27, &bitmap_guard_facing_top_left_4, &mask_various_facing_top_left_4 } // (16x27,$D6A7,$D485)
-B $CEBE,6,6 3, 29, &bitmap_guard_facing_bottom_right_1, &mask_various_facing_bottom_right_1 } // (16x29,$D783,$D585)
-B $CEC4,6,6 3, 29, &bitmap_guard_facing_bottom_right_2, &mask_various_facing_bottom_right_2 } // (16x29,$D7BD,$D5C5)
-B $CECA,6,6 3, 28, &bitmap_guard_facing_bottom_right_3, &mask_various_facing_bottom_right_3 } // (16x28,$D7F7,$D605)
-B $CED0,6,6 3, 28, &bitmap_guard_facing_bottom_right_4, &mask_various_facing_bottom_right_4 } // (16x28,$D82F,$D63D)
+B $CEA6,6,6 3, 27, { bitmap_guard_facing_top_left_1, mask_various_facing_top_left_1 } // (16x27,$D74D,$D545)
+B $CEAC,6,6 3, 29, { bitmap_guard_facing_top_left_2, mask_various_facing_top_left_2 } // (16x29,$D713,$D505)
+B $CEB2,6,6 3, 27, { bitmap_guard_facing_top_left_3, mask_various_facing_top_left_3 } // (16x27,$D6DD,$D4C5)
+B $CEB8,6,6 3, 27, { bitmap_guard_facing_top_left_4, mask_various_facing_top_left_4 } // (16x27,$D6A7,$D485)
+B $CEBE,6,6 3, 29, { bitmap_guard_facing_bottom_right_1, mask_various_facing_bottom_right_1 } // (16x29,$D783,$D585)
+B $CEC4,6,6 3, 29, { bitmap_guard_facing_bottom_right_2, mask_various_facing_bottom_right_2 } // (16x29,$D7BD,$D5C5)
+B $CECA,6,6 3, 28, { bitmap_guard_facing_bottom_right_3, mask_various_facing_bottom_right_3 } // (16x28,$D7F7,$D605)
+B $CED0,6,6 3, 28, { bitmap_guard_facing_bottom_right_4, mask_various_facing_bottom_right_4 } // (16x28,$D82F,$D63D)
 @ $CED6 label=sprite_commandant
-B $CED6,6,6 3, 28, &bitmap_commandant_facing_top_left_1, &mask_various_facing_top_left_1 } // (16x28,$D0D6,$D545)
-B $CEDC,6,6 3, 30, &bitmap_commandant_facing_top_left_2, &mask_various_facing_top_left_2 } // (16x30,$D09A,$D505)
-B $CEE2,6,6 3, 29, &bitmap_commandant_facing_top_left_3, &mask_various_facing_top_left_3 } // (16x29,$D060,$D4C5)
-B $CEE8,6,6 3, 29, &bitmap_commandant_facing_top_left_4, &mask_various_facing_top_left_4 } // (16x29,$D026,$D485)
-B $CEEE,6,6 3, 27, &bitmap_commandant_facing_bottom_right_1, &mask_various_facing_bottom_right_1 } // (16x27,$D10E,$D585)
-B $CEF4,6,6 3, 28, &bitmap_commandant_facing_bottom_right_2, &mask_various_facing_bottom_right_2 } // (16x28,$D144,$D5C5)
-B $CEFA,6,6 3, 27, &bitmap_commandant_facing_bottom_right_3, &mask_various_facing_bottom_right_3 } // (16x27,$D17C,$D605)
-B $CF00,6,6 3, 28, &bitmap_commandant_facing_bottom_right_4, &mask_various_facing_bottom_right_4 } // (16x28,$D1B2,$D63D)
+B $CED6,6,6 3, 28, { bitmap_commandant_facing_top_left_1, mask_various_facing_top_left_1 } // (16x28,$D0D6,$D545)
+B $CEDC,6,6 3, 30, { bitmap_commandant_facing_top_left_2, mask_various_facing_top_left_2 } // (16x30,$D09A,$D505)
+B $CEE2,6,6 3, 29, { bitmap_commandant_facing_top_left_3, mask_various_facing_top_left_3 } // (16x29,$D060,$D4C5)
+B $CEE8,6,6 3, 29, { bitmap_commandant_facing_top_left_4, mask_various_facing_top_left_4 } // (16x29,$D026,$D485)
+B $CEEE,6,6 3, 27, { bitmap_commandant_facing_bottom_right_1, mask_various_facing_bottom_right_1 } // (16x27,$D10E,$D585)
+B $CEF4,6,6 3, 28, { bitmap_commandant_facing_bottom_right_2, mask_various_facing_bottom_right_2 } // (16x28,$D144,$D5C5)
+B $CEFA,6,6 3, 27, { bitmap_commandant_facing_bottom_right_3, mask_various_facing_bottom_right_3 } // (16x27,$D17C,$D605)
+B $CF00,6,6 3, 28, { bitmap_commandant_facing_bottom_right_4, mask_various_facing_bottom_right_4 } // (16x28,$D1B2,$D63D)
 ;
 b $CF06 Animations.
 D $CF06 Read by routine around $B64F (animate)
