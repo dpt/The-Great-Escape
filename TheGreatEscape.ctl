@@ -10956,7 +10956,9 @@ D $CF06 Used by the routine at #R$B5CE.
 B $CF06,288,8*4,20*4,8*4,12
 ;
 b $D026 Sprite bitmaps and masks.
-D $D026 #UDGTABLE { #UDGARRAY2,7,4,2;$D026-$D05F-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-1) } TABLE#
+D $D026 This section contains the bitmaps and masks for all of the movable items in the game. This includes STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT. This section also contains the sprite for the waving morale flag.
+D $D026 The sprite definitions at #R$CE22 onwards point into the data in this section to create animatable sprites. In particular this allows the same masks to be re-used across multiple game characters, which saves space.
+N $D026 #UDGTABLE { #UDGARRAY2,7,4,2;$D026-$D05F-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-1) } TABLE#
 @ $D026 label=bitmap_commandant_facing_top_left_4
 B $D026,58,8*7,2 bitmap: COMMANDANT FACING TOP LEFT 4
 N $D060 #UDGTABLE { #UDGARRAY2,7,4,2;$D060-$D099-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-2) } TABLE#
