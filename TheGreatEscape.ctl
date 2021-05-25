@@ -8864,12 +8864,12 @@ C $BAF6,1 Return
 c $BAF7 Vischar visible.
 D $BAF7 This clips the given vischar's dimensions to the game window.
 D $BAF7 Used by the routines at #R$BB98 and #R$E420.
-R $BAF7 I:IY Pointer to visible character.
-R $BAF7 O:A 0/255 => vischar visible/not visible.
-R $BAF7 O:B Lefthand skip (bytes).
+R $BAF7 I:IY Pointer to visible character
+R $BAF7 O:A 0/255 => vischar visible/not visible
+R $BAF7 O:B Lefthand skip (bytes
 R $BAF7 O:C Clipped width (bytes).
-R $BAF7 O:D Top skip (rows).
-R $BAF7 O:E Clipped height (rows).
+R $BAF7 O:D Top skip (rows)
+R $BAF7 O:E Clipped height (rows)
 N $BAF7 To determine visibility and sort out clipping there are five cases to consider per axis: (A) the vischar is completely off the left/top of window, (B) the vischar is clipped on its left/top, (C) the vischar is entirely visible, (D) the vischar is clipped on its right/bottom, and (E) the vischar is completely off the right/bottom of window.
 N $BAF7 Note that no vischar will ever be wider than the window so we never need to consider if clipping will occur on both sides.
 N $BAF7 First handle the horizontal cases.
