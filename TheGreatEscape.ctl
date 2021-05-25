@@ -5561,7 +5561,7 @@ C $A36F,1 Advance to the next character
 C $A370,2 ...loop
 C $A372,1 Return
 ;
-c $A35F Set prisoners and guards route (variant "B").
+c $A373 Set prisoners and guards route (variant "B").
 D $A373 This sets joint routes for all characters in prisoners_and_guards[].
 D $A373 The first half of the list (guards 12,13 and prisoners 1,2,3) are set to the route passed in (#REGa',#REGc). The second half of the list (guards 14,15 and prisoners 4,5,6) are set to route (#REGa'+1,#REGc).
 D $A373 Used by the routines at #R$A289, #R$A2E2, #R$A351, #R$A4A9, #R$A4B7 and #R$A4C5.
