@@ -11178,7 +11178,8 @@ C $DBE1,7 Advance #REGhl by stride
 C $DBE8,2 ...loop
 C $DBEA,1 Return
 ;
-c $DBEB Find the next item to draw that is furthest behind (x,y).
+c $DBEB Get next drawable itemstruct.
+D $DBEB This finds the next item to draw that is furthest behind (x,y).
 D $DBEB Used by the routine at #R$B89C.
 R $DBEB I:A' A value to leave in #REGa' when nothing is found (e.g. 255)
 R $DBEB I:BC' X position
@@ -11356,8 +11357,9 @@ N $DD00 This XOR A isn't strictly needed - the Z flag should still be set from #
 C $DD00,1 Set Z flag to signal "is visible" for return
 C $DD01,1 Return
 ;
-c $DD02 Clip the given item's dimensions to the game window.
-D $DD02 Counterpart to vischar_visible.
+c $DD02 Item visible.
+D $DD02 This clips the given item's dimensions to the game window.
+D $DD02 Counterpart of #R$BAF7 see that for further comments.
 D $DD02 Used by the routine at #R$DC41.
 R $DD02 O:B Lefthand skip (bytes)
 R $DD02 O:C Clipped width (bytes)
@@ -11445,8 +11447,9 @@ C $DD66,2 Clear Z (item is not visible)
 C $DD68,1 Return
 ;
 b $DD69 Item attributes.
-D $DD69 20 bytes, 4 of which are unknown, possibly unused.
-D $DD69 'Yellow/black' means yellow ink over black paper, for example.
+D $DD69 This defines the attribute byte to use for all sixteen items,
+D $DD69 This is an array of 20 bytes, the final four of which are unused.
+D $DD69 In the descriptions 'yellow/black' means yellow ink over black paper, for example.
 @ $DD69 label=item_attributes
 B $DD69,1,1 item_attribute: WIRESNIPS - yellow/black
 B $DD6A,1,1 item_attribute: SHOVEL - cyan/black
@@ -11466,14 +11469,14 @@ B $DD75,1,1 item_attribute: PARCEL - cyan/black
 B $DD76,1,1 item_attribute: RADIO - white/black
 B $DD77,1,1 item_attribute: PURSE - white/black
 B $DD78,1,1 item_attribute: COMPASS - green/black
-N $DD79 The following are likely unused.
+N $DD79 The final four bytes are unused.
 B $DD79,1,1 item_attribute: yellow/black
 B $DD7A,1,1 item_attribute: cyan/black
 B $DD7B,1,1 item_attribute: bright-red/black
 B $DD7C,1,1 item_attribute: bright-red/black
 ;
 b $DD7D Item definitions.
-D $DD7D Array of "sprite" structures.
+D $DD7D This is an array of 16 "sprite" structures.
 D $DD7D item_definition: WIRESNIPS
 @ $DD7D label=item_definitions
 B $DD7D,1,1 width
@@ -11557,6 +11560,8 @@ W $DDD9,2,2 bitmap pointer
 W $DDDB,2,2 mask pointer
 ;
 b $DDDD Item bitmaps and masks.
+D $DDDD This section contains the bitmaps and masks for all of the (non-movable) items in the game. This includes SHOVEL, KEY, LOCKPICK, COMPASS, PURSE, PAPERS and so on.
+D $DDDD The item definitions at #R$DD7D onwards point into the data in this section to create placable items. In particular this allows the same masks to be re-used across multiple game items, which saves space.
 D $DDDD #UDGTABLE { #UDGARRAY2,7,4,2;$DDDD-$DDF6-1-16{0,0,64,52}(item-shovel) } TABLE#
 @ $DDDD label=bitmap_shovel
 B $DDDD,26,2 item_bitmap: SHOVEL (16x13)
