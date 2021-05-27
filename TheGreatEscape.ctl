@@ -6002,7 +6002,8 @@ C $A5C9,1 Advance the glyph pointer
 C $A5CA,1 Restore the counter
 C $A5CB,2 ...loop until the counter is zero
 C $A5CD,1 Return
-t $A5CE Escape messages.
+;
+t $A5CE Escape messages
 D $A5CE "WELL DONE"
 @ $A5CE label=escape_strings
 B $A5CE,12,12 #HTML[#CALL:decode_screenlocstring($A5CE)]
@@ -7007,7 +7008,7 @@ N $AE76 These are the coordinates of the searchlight when the hero is caught.
 W $AE76,2,2
 ;
 c $AE78 Searchlight caught.
-c $AE78 This detects when the hero gets caught in the searchlight.
+D $AE78 This detects when the hero gets caught in the searchlight.
 D $AE78 Used by the routine at #R$ADBD.
 R $AE78 I:HL Pointer to searchlight movement data.
 @ $AE78 label=searchlight_caught
@@ -8491,7 +8492,7 @@ C $B897,3 Call the sprite plotter for 16-pixel-wide sprites
 C $B89A,2 ...loop
 ;
 c $B89C Get next drawable.
-c $B89C This finds the next vischar or item that should be drawn.
+D $B89C This finds the next vischar or item that should be drawn.
 D $B89C Used by the routine at #R$B866.
 R $B89C O:F Z set if a valid vischar or item was returned.
 R $B89C O:A Returns (vischars_LENGTH - iters) if vischar, or ((item__LIMIT - iters) | (1 << 6)) if itemstruct.
@@ -11647,37 +11648,37 @@ B $E0B7,32,2 item_mask: FOOD (16x16)
 u $E0D7 Unreferenced bytes.
 B $E0D7,9,8,1
 ;
-w $E0E0 Addresses of self-modified locations which are changed between NOPs and LD (HL),A.
-D $E0E0 (<- setup_item_plotting, setup_vischar_plotting)
+w $E0E0 Plot masked sprites (16px) enables
+D $E0E0 These are the addresses of self-modified locations which are set to NOP or LD (HL),A depending on the clipping required.
+D $E0E0 Used by the routines at #R$DC41, #R$E420.
 @ $E0E0 label=plot_masked_sprite_16px_enables
-W $E0E0,2,2 pms16_right_plot_enable_0
-W $E0E2,2,2 pms16_left_plot_enable_0
-W $E0E4,2,2 pms16_right_plot_enable_1
-W $E0E6,2,2 pms16_left_plot_enable_1
-W $E0E8,2,2 pms16_right_plot_enable_2
-W $E0EA,2,2 pms16_left_plot_enable_2
+W $E0E0,2,2
+W $E0E2,2,2
+W $E0E4,2,2
+W $E0E6,2,2
+W $E0E8,2,2
+W $E0EA,2,2
 ;
-w $E0EC Addresses of self-modified locations which are changed between NOPs and LD (HL),A.
-D $E0EC (<- setup_vischar_plotting)
+w $E0EC Plot masked sprites (24px) enables
+D $E0EC These are the addresses of self-modified locations which are set to NOP or LD (HL),A depending on the clipping required.
+D $E0EC Used by the routine at #R$E420.
 @ $E0EC label=plot_masked_sprite_24px_enables
-W $E0EC,2,2 pms24_right_plot_enable_0
-W $E0EE,2,2 pms24_left_plot_enable_0
-W $E0F0,2,2 pms24_right_plot_enable_1
-W $E0F2,2,2 pms24_left_plot_enable_1
-W $E0F4,2,2 pms24_right_plot_enable_2
-W $E0F6,2,2 pms24_left_plot_enable_2
-W $E0F8,2,2 pms24_right_plot_enable_3
-W $E0FA,2,2 pms24_left_plot_enable_3
-N $E0FC These two look different. Unused?
-W $E0FC,2,2 plot_masked_sprite_16px
-W $E0FE,2,2 plot_masked_sprite_24px
-;
-u $E100 Unused word?
-D $E100 Unsure if related to the above plot_masked_sprite_24px_enables table.
+W $E0EC,2,2
+W $E0EE,2,2
+W $E0F0,2,2
+W $E0F2,2,2
+W $E0F4,2,2
+W $E0F6,2,2
+W $E0F8,2,2
+W $E0FA,2,2
+
+u $E0FC Unreferenced bytes
+W $E0FC,2,2
+W $E0FE,2,2
 W $E100,2,2
 ;
-c $E102 Sprite plotter for 24 pixel-wide masked sprites.
-D $E102 This is used for characters and objects.
+c $E102 Plot masked sprite (24px)
+D $E102 This is the sprite plotter for 24 pixel-wide masked sprites. It's used for both characters and objects.
 D $E102 Used by the routine at #R$B866.
 R $E102 I:IY Pointer to visible character.
 N $E102 Mask off the bottom three bits of the vischar's (isometric projected) x position and treat it as a signed field. This tells us how far we need to shift the sprite left or right. -4..-1 => left shift by 4..1px; 0..3 => right shift by 0..3px.
@@ -11686,7 +11687,7 @@ C $E102,5 x = (vischar.iso_pos.x & 7)
 C $E107,2 Is x equal to 4 or above? (-4..-1)
 C $E109,3 Jump if so
 N $E10C Right shifting case.
-N $E10C #REGa is 0..3 here: the amount by which we want to shift the sprite right. The following op turns that into a jump table distance. e.g. it turns (0,1,2,3) into (3,2,1,0) then scales it by the length of each rotate sequence (8 bytes) to obtain the jump offset.
+N $E10C #REGa is 0..3 here: the amount by which we want to shift the sprite right. The following op turns that into a jump table distance. e.g. It turns (0,1,2,3) into (3,2,1,0) then scales it by the length of each rotate sequence (8 bytes) to obtain the jump offset.
 C $E10C,3 x = (~x & 3)
 C $E10F,3 Multiply by eight to get the jump distance
 C $E112,3 Self modify the JR at #R$E160 to jump into the mask rotate sequence
@@ -11747,13 +11748,13 @@ C $E172,8 Do the same again
 N $E17A Plot using the foreground mask.
 N $E17A In TGE the bitmap pixels are set to 0 for black and 1 for white, and the mask pixels are set to 0 for opaque and 1 for transparent.
 N $E17A TGE uses "AND-OR" type masks. In this type of mask the screen contents are ANDed with the mask (preserving only those pixels set in the mask) then the bitmap is ORed into place, like so: result = (mask & screen) | bitmap
-N $E17A #TABLE(default) { =h Bitmap | =h Mask | =h Result } {         0 |       0 | Set to black } {         0 |       1 | Set to background (transparent) } {         1 |       0 | Set to white } {         1 |       1 | Set to white } TABLE#
+N $E17A #TABLE(default) { =h Bitmap | =h Mask | =h Result } { 0 | 0 | Set to black } { 0 | 1 | Set to background (transparent) } { 1 | 0 | Set to white } { 1 | 1 | Set to white } TABLE#
 N $E17A See also https://skoolkit.ca/docs/skoolkit-6.2/skool-macros.html#masks
 N $E17A However TGE also has a foreground layer to consider. This allows objects to be in front of a sprite too. The foreground mask removes from a sprite the pixels of objects in front of it. This gives us our final expression: result = ((~foreground_mask | mask) & screen) | (bitmap & foreground_mask)
 N $E17A In the left term: ((~foreground_mask | mask) & screen) :: The foreground mask is first inverted so that it will preserve the foreground layer's pixels. It's then ORed with the vischar's mask so that it preserves the transparent pixels around the vischar. The result is ANDed with the screen (buffer) pixels, creating a "hole" into which we will insert the bitmap pixels.
 N $E17A In the right term: (bitmap & foreground_mask) :: We take the vischar's bitmap pixels and mask them against the foreground mask. This means that we retain the parts of the vischar outside of the foreground mask.
 N $E17A Finally the OR merges the result with the screen-with-a-hole-cut-out.
-N $E17A #TABLE(default) { =h Foreground | =h Bitmap | =h Mask | =h Result } {             0 |       any |     any | Set to foreground } {             1 |         0 |       0 | Set to black } {             1 |         0 |       1 | Set to background (transparent) } {             1 |         1 |       0 | Set to white } {             1 |         1 |       1 | Set to white } TABLE#
+N $E17A #TABLE(default) { =h Foreground | =h Bitmap | =h Mask | =h Result } { 0 | any | any | Set to foreground } { 1 | 0 | 0 | Set to black } { 1 | 0 | 1 | Set to background (transparent) } { 1 | 1 | 0 | Set to white } { 1 | 1 | 1 | Set to white } TABLE#
 @ $E17A label=pms24_right_plot_0
 C $E17A,1 Load a foreground mask byte
 C $E17B,1 Invert it
@@ -11892,14 +11893,15 @@ C $E299,1 Restore the loop counter
 C $E29A,4 ...loop
 C $E29E,1 Return
 ;
-c $E29F Alternative entry point for plot_masked_sprite_16px that assumes x is zero.
+c $E29F Plot masked sprite (16px) (x is zero)
+D $E29F This is an alternative entry point for #R$E2A2 that assumes x is zero.
 D $E29F Used by the routine at #R$B866.
 @ $E29F label=plot_masked_sprite_16px_x_is_zero
 C $E29F,1 Zero x
 C $E2A0,2 Jump to pms16_left
 ;
-c $E2A2 Sprite plotter for 16 pixel-wide masked sprites.
-D $E2A2 This is used for characters and objects.
+c $E2A2 Plot masked sprite (16px)
+D $E2A2 This is a plotter for 16 pixel-wide masked sprites. This is used for characters and objects.
 D $E2A2 Used by the routines at #R$B866, #R$E29F and #R$E2A2.
 R $E2A2 I:IY Pointer to visible character.
 N $E2A2 Mask off the bottom three bits of the vischar's (isometric projected) x position and treat it as a signed field. This tells us how far we need to shift the sprite left or right. -4..-1 => left shift by 4..1px; 0..3 => right shift by 0..3px.
@@ -11908,7 +11910,7 @@ C $E2A2,5 x = (vischar.iso_pos.x & 7)
 C $E2A7,2 Is x equal to 4 or above? (-4..-1)
 C $E2A9,3 Jump if so
 N $E2AC Right shifting case.
-N $E2AC #REGa is 0..3 here: the amount by which we want to shift the sprite right. The following op turns that into a jump table distance. e.g. it turns (0,1,2,3) into (3,2,1,0) then scales it by the length of each rotate sequence (6 bytes) to obtain the jump offset.
+N $E2AC #REGa is 0..3 here: the amount by which we want to shift the sprite right. The following op turns that into a jump table distance. e.g. It turns (0,1,2,3) into (3,2,1,0) then scales it by the length of each rotate sequence (6 bytes) to obtain the jump offset.
 @ $E2AC label=pms16_right
 C $E2AC,3 x = (~x & 3)
 C $E2AF,4 Multiply by six to get the jump distance
@@ -12096,14 +12098,21 @@ C $E3F4,1 Restore the bitmap pointer
 C $E3F5,4 ...loop
 C $E3F9,1 Return
 ;
-c $E3FA Horizontally flips the 24 pixels in E,C,B and counterpart masks in E',C',B'.
+c $E3FA Flip 24 masked pixels
+D $E3FA This horizontally flips the 24 pixels in #REGe,#REGc,#REGb and counterpart masks in #REGe',#REGc',#REGb'.
 D $E3FA Used by the routine at #R$E102.
-R $E3FA I:B Left 8 pixels.
-R $E3FA I:C Middle 8 pixels.
-R $E3FA I:E Right 8 pixels.
-R $E3FA O:B Flipped left 8 pixels.
-R $E3FA O:C Flipped middle 8 pixels.
-R $E3FA O:E Flipped right 8 pixels.
+R $E3FA I:B Left eight pixels.
+R $E3FA I:C Middle eight pixels.
+R $E3FA I:E Right eight pixels.
+R $E3FA I:B' Left eight mask pixels.
+R $E3FA I:C' Middle eight mask pixels.
+R $E3FA I:E' Right eight mask pixels.
+R $E3FA O:B Flipped left eight pixels.
+R $E3FA O:C Flipped middle eight pixels.
+R $E3FA O:E Flipped right eight pixels.
+R $E3FA O:B' Flipped left eight mask pixels.
+R $E3FA O:C' Flipped middle eight mask pixels.
+R $E3FA O:E' Flipped right eight mask pixels.
 N $E3FA Horizontally flip the bitmap bytes by looking up each byte in the flipped / bit-reversed table at $7F00 and swapping the left and right pixels over.
 @ $E3FA label=flip_24_masked_pixels
 C $E3FA,2 Point #REGhl into the table of 256 flipped bytes at $7Fxx
@@ -12127,12 +12136,17 @@ C $E40C,1 Load the flipped byte into #REGc
 C $E40D,1 Restore original bank
 C $E40E,1 Return
 ;
-c $E40F Horizontally flips the 16 pixels in D,E and counterpart masks in D',E'.
+c $E40F Flip 16 masked pixels
+D $E40F This horizontally flips the 16 pixels in #REGd,#REGe and counterpart masks in #REGd',#REGe'.
 D $E40F Used by the routines at #R$E2AC and #R$E34E.
-R $E40F I:D Left 8 pixels.
-R $E40F I:E Right 8 pixels.
-R $E40F O:D Flipped left 8 pixels.
-R $E40F O:E Flipped right 8 pixels.
+R $E40F I:D Left eight pixels.
+R $E40F I:E Right eight pixels.
+R $E40F I:D Left eight mask pixels.
+R $E40F I:E Right eight mask pixels.
+R $E40F O:D Flipped left eight pixels.
+R $E40F O:E Flipped right eight pixels.
+R $E40F O:D Flipped left eight mask pixels.
+R $E40F O:E Flipped right eight mask pixels.
 N $E40F Horizontally flip the bitmap bytes by looking up each byte in the flipped / bit-reversed table at $7F00 and swapping the left and right pixels over.
 @ $E40F label=flip_16_masked_pixels
 C $E40F,2 Point #REGhl into the table of 256 flipped bytes at $7Fxx
@@ -12315,9 +12329,9 @@ C $E540,1 Restore the lefthand skip and clipped width
 N $E541 The Z flag remains set from #R$E52E signalling "is visible".
 C $E541,1 Return
 ;
-c $E542 Scale down a pos_t and assign result to a tinypos_t.
+c $E542 Position to tinypos
+D $E542 This divides the three input 16-bit words (type: pos_t) by 8, with rounding to nearest, storing the result as bytes (type: tinypos_t).
 D $E542 Used by the routines at #R$7BB5, #R$9F21, #R$C5D3, #R$C918 and #R$CC37.
-D $E542 Divides the three input 16-bit words by 8, with rounding to nearest, storing the result as bytes.
 R $E542 I:HL Pointer to input pos_t.
 R $E542 I:DE Pointer to output tinypos_t.
 R $E542 O:HL Updated.
@@ -12333,7 +12347,8 @@ C $E54C,1 Advance #REGde to the next output tinypos
 C $E54D,2 ...loop
 C $E54F,1 Return
 ;
-c $E550 Divide AC by 8, with rounding to nearest.
+c $E550 Divide by eight with rounding
+D $E550 This divides (#REGc,#REGa) by 8, with rounding to nearest, returning the result in #REGa.
 D $E550 Used by the routines at #R$7BF2, #R$C47E, #R$E420 and #R$E542.
 R $E550 I:A Low.
 R $E550 I:C High.
@@ -12342,7 +12357,8 @@ R $E550 O:A Result.
 C $E550,5 Add 4 to AC
 E $E550 FALL THROUGH into divide_by_8.
 ;
-c $E555 Divide AC by 8.
+c $E555 Divide by eight
+D $E555 This divides (#REGc,#REGa) by 8 returning the result in #REGa.
 D $E555 Used by the routines at #R$B2FC, #R$C47E, #R$E420 and #R$E550.
 R $E555 I:A Low.
 R $E555 I:C High.
@@ -12355,74 +12371,73 @@ C $E55B,3 And again
 C $E55E,1 Return
 ;
 b $E55F Masks
-D $E55F Mask encoding: A top-bit-set byte indicates a repetition, the count of which is in the bottom seven bits. The subsequent byte is the value to repeat.
-D $E55F { byte count+flags; ... }
+D $E55F This is a sequence of RLE-compressed masks.
+D $E55F In each mask, the first byte is the width. Following that a top-bit-set byte indicates a repetition, the count of which is in the bottom seven bits. The subsequent byte is the value to repeat. The repetition count is +1, so <0x83> <0x01> expands to <0x01> <0x01>.
 @ $E55F label=masks
 @ $E55F label=exterior_mask_0
-B $E55F,160,8 exterior_mask_0
+B $E55F,160,8
 @ $E5FF label=exterior_mask_1
-B $E5FF,31,8*3,7 exterior_mask_1
+B $E5FF,31,8*3,7
 @ $E61E label=exterior_mask_2
-B $E61E,172,8*21,4 exterior_mask_2
+B $E61E,172,8*21,4
 @ $E6CA label=exterior_mask_3
-B $E6CA,129,8*16,1 exterior_mask_3
+B $E6CA,129,8*16,1
 @ $E74B label=exterior_mask_4
-B $E74B,13,8,5 exterior_mask_4
+B $E74B,13,8,5
 @ $E758 label=exterior_mask_5
-B $E758,39,8*4,7 exterior_mask_5
+B $E758,39,8*4,7
 @ $E77F label=exterior_mask_6
-B $E77F,23,8*2,7 exterior_mask_6
+B $E77F,23,8*2,7
 @ $E796 label=exterior_mask_7
-B $E796,25,8*3,1 exterior_mask_7
+B $E796,25,8*3,1
 @ $E7AF label=exterior_mask_8
-B $E7AF,173,8*21,5 exterior_mask_8
+B $E7AF,173,8*21,5
 @ $E85C label=exterior_mask_9
-B $E85C,71,8*8,7 exterior_mask_9
+B $E85C,71,8*8,7
 @ $E8A3 label=exterior_mask_10
-B $E8A3,77,8*9,5 exterior_mask_10
+B $E8A3,77,8*9,5
 @ $E8F0 label=exterior_mask_11
-B $E8F0,63,8*7,7 exterior_mask_11
+B $E8F0,63,8*7,7
 @ $E92F label=exterior_mask_12
-B $E92F,17,8*2,1 exterior_mask_12
+B $E92F,17,8*2,1
 @ $E940 label=exterior_mask_13
-B $E940,50,8*6,2 exterior_mask_13
+B $E940,50,8*6,2
 @ $E972 label=exterior_mask_14
-B $E972,40,8 exterior_mask_14
+B $E972,40,8
 @ $E99A label=interior_mask_15
-B $E99A,5,5 interior_mask_15
+B $E99A,5,5
 @ $E99F label=interior_mask_16
-B $E99F,26,8*3,2 interior_mask_16
+B $E99F,26,8*3,2
 @ $E9B9 label=interior_mask_17
-B $E9B9,13,8,5 interior_mask_17
+B $E9B9,13,8,5
 @ $E9C6 label=interior_mask_18
-B $E9C6,5,5 interior_mask_18
+B $E9C6,5,5
 @ $E9CB label=interior_mask_19
-B $E9CB,27,8*3,3 interior_mask_19
+B $E9CB,27,8*3,3
 @ $E9E6 label=interior_mask_20
-B $E9E6,15,8,7 interior_mask_20
+B $E9E6,15,8,7
 @ $E9F5 label=interior_mask_21
-B $E9F5,25,8*3,1 interior_mask_21
+B $E9F5,25,8*3,1
 @ $EA0E label=interior_mask_22
-B $EA0E,29,8*3,5 interior_mask_22
+B $EA0E,29,8*3,5
 @ $EA2B label=interior_mask_23
-B $EA2B,10,8,2 interior_mask_23
+B $EA2B,10,8,2
 @ $EA35 label=interior_mask_24
-B $EA35,14,8,6 interior_mask_24
+B $EA35,14,8,6
 @ $EA43 label=interior_mask_25
-B $EA43,7,7 interior_mask_25
+B $EA43,7,7
 @ $EA4A label=interior_mask_26
-B $EA4A,9,8,1 interior_mask_26
+B $EA4A,9,8,1
 @ $EA53 label=interior_mask_27
-B $EA53,10,8,2 interior_mask_27
+B $EA53,10,8,2
 @ $EA5D label=interior_mask_28
-B $EA5D,10,8,2 interior_mask_28
+B $EA5D,10,8,2
 @ $EA67 label=interior_mask_29
-B $EA67,21,8*2,5 interior_mask_29
+B $EA67,21,8*2,5
 ;
-b $EA7C Interior masking data.
+b $EA7C Interior mask data source
+D $EA7C This is an array of 47 mask structs with the constant final height byte omitted. Copied to $81DB by #R$6A35.
 D $EA7C Used only by setup_room.
-D $EA7C 47 mask structs with the constant final height byte omitted.
-D $EA7C Copied to $81DB by setup_room.
 @ $EA7C label=interior_mask_data_source
 B $EA7C,7,7 $1B, { $7B, $7F, $F1, $F3 }, { $36, $28 }
 B $EA83,7,7 $1B, { $77, $7B, $F3, $F5 }, { $36, $18 }
@@ -12472,46 +12487,45 @@ B $EBB0,7,7 $11, { $7B, $7D, $F3, $F5 }, { $0A, $0A }
 B $EBB7,7,7 $11, { $79, $7B, $F4, $F6 }, { $0A, $0A }
 B $EBBE,7,7 $0F, { $88, $8C, $F5, $F8 }, { $0A, $0A }
 ;
-w $EBC5 Pointers to run-length encoded mask data.
-D $EBC5 The first half is outdoor masks, the second is indoor masks.
-R $EBC5 30 pointers to byte arrays.
+w $EBC5 Mask pointers
+D $EBC5 This is an array of 30 pointers to run-length encoded mask data. The first half is outdoor masks, the second is indoor masks.
 @ $EBC5 label=mask_pointers
-W $EBC5,2,2 exterior_mask
-W $EBC7,2,2 exterior_mask
-W $EBC9,2,2 exterior_mask
-W $EBCB,2,2 exterior_mask
-W $EBCD,2,2 exterior_mask
-W $EBCF,2,2 exterior_mask
-W $EBD1,2,2 exterior_mask
-W $EBD3,2,2 exterior_mask
-W $EBD5,2,2 exterior_mask
-W $EBD7,2,2 exterior_mask
-W $EBD9,2,2 exterior_mask
-W $EBDB,2,2 exterior_mask
-W $EBDD,2,2 exterior_mask
-W $EBDF,2,2 exterior_mask
-W $EBE1,2,2 exterior_mask
-W $EBE3,2,2 interior_mask
-W $EBE5,2,2 interior_mask
-W $EBE7,2,2 interior_mask
-W $EBE9,2,2 interior_mask
-W $EBEB,2,2 interior_mask
-W $EBED,2,2 interior_mask
-W $EBEF,2,2 interior_mask
-W $EBF1,2,2 interior_mask
-W $EBF3,2,2 interior_mask
-W $EBF5,2,2 interior_mask
-W $EBF7,2,2 interior_mask
-W $EBF9,2,2 interior_mask
-W $EBFB,2,2 interior_mask
-W $EBFD,2,2 interior_mask
-W $EBFF,2,2 interior_mask
+W $EBC5,2,2
+W $EBC7,2,2
+W $EBC9,2,2
+W $EBCB,2,2
+W $EBCD,2,2
+W $EBCF,2,2
+W $EBD1,2,2
+W $EBD3,2,2
+W $EBD5,2,2
+W $EBD7,2,2
+W $EBD9,2,2
+W $EBDB,2,2
+W $EBDD,2,2
+W $EBDF,2,2
+W $EBE1,2,2
+W $EBE3,2,2
+W $EBE5,2,2
+W $EBE7,2,2
+W $EBE9,2,2
+W $EBEB,2,2
+W $EBED,2,2
+W $EBEF,2,2
+W $EBF1,2,2
+W $EBF3,2,2
+W $EBF5,2,2
+W $EBF7,2,2
+W $EBF9,2,2
+W $EBFB,2,2
+W $EBFD,2,2
+W $EBFF,2,2
 ;
-b $EC01 mask_t structs for the exterior scene.
-D $EC01 58 mask_t structs.
-D $EC01 'mask_t' defines a mask:
-D $EC01 #TABLE(default) { =h Type   | =h Bytes | =h Name | =h Meaning } { Byte      |        1 |   index | An index into mask_pointers } { bounds_t  |        4 |  bounds | The isometric projected bounds of the mask. Used for culling } { tinypos_t |        3 |     pos | If a character is behind this point then the mask is enabled. ("Behind" here means when character coord x is greater and y is greater-or-equal) } TABLE#
-D $EC01 Used by render_mask_buffer. Used in outdoor mode only.
+b $EC01 Exterior mask data
+D $EC01 This is an array of 58 mask definitions (type: mask_t) used for the exterior scene.
+D $EC01 A mask_t is defined as follows:
+D $EC01 #TABLE(default) { =h Type | =h Bytes | =h Name | =h Meaning } { Byte | 1 | index | An index into mask_pointers } { bounds_t | 4 | bounds | The isometric projected bounds of the mask. Used for culling } { tinypos_t | 3 | pos | If a character is behind this point then the mask is enabled. ("Behind" here means when character coord x is greater and y is greater-or-equal) } TABLE#
+D $EC01 Used by render_mask_buffer in outdoor mode only.
 @ $EC01 label=exterior_mask_data
 B $EC01,464,8
 ;
@@ -12520,16 +12534,16 @@ D $EDD1 Used by plot_game_window and wipe_game_window.
 @ $EDD1 label=saved_sp
 W $EDD1,2,2
 ;
-w $EDD3 Game screen start addresses.
+w $EDD3 Game window start addresses
 D $EDD3 128 screen pointers.
 @ $EDD3 label=game_window_start_addresses
 W $EDD3,256,2
 ;
-c $EED3 Plot the game screen.
-D $EED3 This transfers the game's linear screen buffer into the game window region of the Spectrum's screen memory. The input buffer is 24x17x8 bytes. The output region is smaller at 23x16x8 bytes. The addresses are stored precalculated in the table at #R$EDD3.
-D $EED3 Scrolling to 4-bit nibble accuracy is permitted by implementing two cases here: aligned and unaligned. Aligned transfers just have to move the bytes across and so are fast. Unaligned transfers have to roll bytes right to effect the left shift, so are much slower.
+c $EED3 Plot game window
+D $EED3 This transfers the game's linear screen buffer into the game window region of the Spectrum's screen memory. The input buffer is 24x17x8 bytes. The output region is smaller: 23x16x8 bytes. The destination addresses are stored precalculated in the table at #R$EDD3.
+D $EED3 Scrolling to 4-bit accuracy is permitted by implementing two cases here: aligned and unaligned. Aligned transfers just have to move the bytes across and so are fast. Unaligned transfers have to roll bytes right to effect the left shift, so are much slower.
 D $EED3 The aligned case copies 23 bytes per scanline starting at $F291 (one byte into buffer). The unaligned case rolls the bytes right (so it moves left? CHECK) starting at $F290.
-D $EED3 Uses the Z80 SP stack trick.
+D $EED3 This uses the Z80 SP stack trick.
 D $EED3 Used by the routines at #R$9D7B and #R$A50B.
 @ $EED3 label=plot_game_window
 C $EED3,4 Preserve the stack pointer
@@ -12587,8 +12601,8 @@ C $EF93,2 ...loop
 C $EF95,4 Restore the stack pointer
 C $EF99,1 Return
 ;
-c $EF9A Event: roll call.
-D $EF9A Range checking that X is in ($72..$7C) and Y is in ($6A..$72).
+c $EF9A Event: Roll call
+D $EF9A This checks that the hero is within the roll call bounds. #R$81B8 must be in ($72..$7C) and #R$81B9 must be in ($6A..$72). If not, then the bell is sounded and the "MISSED ROLL CALL" message is queued. Otherwise all visible characters are made to face bottom left.
 N $EF9A Is the hero within the roll call area bounds?
 @ $EF9A label=event_roll_call
 @ $EF9A keep
@@ -12618,8 +12632,8 @@ C $EFC0,4 Make the bell ring perpetually
 C $EFC4,4 Queue the message "MISSED ROLL CALL"
 C $EFC8,3 Exit via hostiles_pursue
 ;
-c $EFCB Use papers.
-D $EFCB Is the hero within the main gate bounds?
+c $EFCB Action: Papers
+D $EFCB This checks that the hero is within the main gate bounds. #R$81B8 must be in ($69..$6D) and #R$81B9 must be in ($49..$4B). If so, the hero will be transported to the outside of the gates.
 N $EFCB Range checking that X is in ($69..$6D) and Y is in ($49..$4B).
 @ $EFCB label=action_papers
 @ $EFCB keep
@@ -12651,11 +12665,12 @@ N $EFF9 The position outside of the main gate to which the hero is transported.
 @ $EFF9 label=outside_main_gate
 B $EFF9,3,3
 ;
-c $EFFC Wait for the user to press 'Y' or 'N'.
+c $EFFC User confirm
+D $EFFC This waits until the user presses 'Y' or 'N', then returns an indication of which was pressed in the Z flag.
 D $EFFC Used by the routines at #R$9DE5 and #R$F350.
 R $EFFC O:F 'Y'/'N' pressed => return Z/NZ
 @ $EFFC label=user_confirm
-C $EFFC,6 Print "CONFIRM. Y OR N"
+C $EFFC,6 Print "CONFIRM Y OR N"
 N $F002 Start loop (infinite)
 C $F002,3 Set #REGbc to port_KEYBOARD_POIUY
 C $F005,2 Read the port
@@ -12666,10 +12681,11 @@ C $F00C,2 Read the port
 C $F00E,1 Invert the bits to turn active low into active high
 C $F00F,2 Was bit 3 set? (active high meaning 'N' is pressed)
 C $F011,1 Return with Z clear if so
-C $F012,2 ...loop
-t $F014 Confirm query.
-B $F014,18,18 "CONFIRM. Y OR N" #HTML[/ #CALL:decode_screenlocstring($F014)]
-t $F026 Further game messages.
+C $F012,2 ..loop
+@ $F014 label=confirm_query
+B $F014,18,18 "CONFIRM Y OR N" #HTML[/ #CALL:decode_screenlocstring($F014)]
+;
+t $F026 Further game messages
 @ $F026 label=more_messages_he_takes_the_bribe
 B $F026,19,19 "HE TAKES THE BRIBE" #HTML[/ #CALL:decode_stringFF($F026)]
 @ $F039 label=more_messages_and_acts_as_decoy
@@ -12677,7 +12693,8 @@ B $F039,18,18 "AND ACTS AS DECOY" #HTML[/ #CALL:decode_stringFF($F039)]
 @ $F04B label=more_messages_another_day_dawns
 B $F04B,18,18 "ANOTHER DAY DAWNS" #HTML[/ #CALL:decode_stringFF($F04B)]
 ;
-b $F05D Locked gates and doors.
+b $F05D Locked doors
+D $F05D This is a list of locked gates and doors.
 @ $F05D label=locked_doors
 B $F05D,2,2 gates
 B $F05F,7,7 doors
@@ -12687,8 +12704,8 @@ c $F068 Jump to main.
 D $F068 Used by the routine at #R$FDE1.
 @ $F068 label=jump_to_main
 ;
-g $F06B User-defined keys.
-D $F06B Pairs of (port, key mask).
+g $F06B Key definitions
+D $F06B These are the user-defined keys. It's pairs of (port, key mask).
 @ $F06B label=keydefs
 B $F06B,2,2 Left
 B $F06D,2,2 Right
@@ -12707,14 +12724,16 @@ B $F073,2,2 Fire
 > $F075 ; $FF80..$FFFF - the stack
 > $F075
 ;
-g $F075 Static tiles plot direction.
-D $F075 #TABLE(default,centre) { =h Value | =h Meaning } {        0 | Horizontal } {      255 | Vertical   } TABLE#
+g $F075 Static tiles plot direction
+D $F075 This is a stash location used by #R$F20B.
+D $F075 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Horizontal } { 255 | Vertical } TABLE#
 @ $F075 label=static_tiles_plot_direction
 B $F075,1,1
 ;
-b $F076 Definitions of fixed graphic elements.
+b $F076 Static graphic definitions
+D $F076 These are the definitions for the fixed graphic elements.
 D $F076 Only used by #R$F1E0.
-D $F076 #TABLE(default) { =h Type | =h Bytes | =h Name          | =h Meaning                } { Pointer |        2 | screenloc        | Screen address to draw at } { Byte    |        1 | flags_and_length | Direction flag and length } { Byte    |   Length | tiles            | Index into static_tiles   } TABLE#
+D $F076 #TABLE(default) { =h Type | =h Bytes | =h Name | =h Meaning } { Pointer | 2 | screenloc | Screen address to draw at } { Byte | 1 | flags_and_length | Direction flag and length } { Byte | Length | tiles | Index into static_tiles } TABLE#
 @ $F076 label=static_graphic_defs
 @ $F076 label=statics_flagpole
 @ $F08D label=statics_game_window_left_border
@@ -12736,7 +12755,8 @@ D $F076 #TABLE(default) { =h Type | =h Bytes | =h Name          | =h Meaning    
 @ $F15E label=statics_corner_br
 B $F076,237,23*3,26*2,8,16,14*3,13,6*2,5
 ;
-c $F163 The game starts here.
+c $F163 Main
+D $F163 This is where the game starts.
 D $F163 Used by the routine at #R$F068.
 @ $F163 label=main
 C $F163,1 Disable interrupts
@@ -12819,7 +12839,8 @@ B $F1D7,1,1 direction
 W $F1D8,6,6 mi.pos
 W $F1DE,2,2 mi.sprite
 ;
-c $F1E0 Plot all static graphics and menu text.
+c $F1E0 Plot statics and menu text
+D $F1E0 This plots all static graphics and menu text.
 D $F1E0 Used by the routine at #R$F163.
 @ $F1E0 label=plot_statics_and_menu_text
 C $F1E0,3 Point #REGhl at static_graphic_defs
@@ -12844,7 +12865,7 @@ C $F202,1 Restore the loop counter
 C $F203,2 ...loop
 C $F205,1 Return
 ;
-c $F206 Plot static tiles horizontally.
+c $F206 Plot static tiles, horizontal
 D $F206 Used by the routine at #R$F1E0.
 R $F206 I:DE Pointer to screen address.
 R $F206 I:HL Pointer to [count, tile indices, ...].
@@ -12852,7 +12873,7 @@ R $F206 I:HL Pointer to [count, tile indices, ...].
 C $F206,1 Set direction flag to zero
 C $F207,2 Exit via plot static tiles
 ;
-c $F209 Plot static tiles vertically.
+c $F209 Plot static tiles, vertical
 D $F209 Used by the routine at #R$F1E0.
 R $F209 I:DE Pointer to screen address.
 R $F209 I:HL Pointer to [count, tile indices, ...].
@@ -12861,6 +12882,7 @@ C $F209,2 Set the plot direction flag to $FF (vertical)
 E $F209 FALL THROUGH into plot_static_tiles
 ;
 c $F20B Plot static tiles.
+D $F20B This draws static tiles to the screen - the tiles used by the morale flag, score, etc.
 D $F20B Used by the routine at #R$F206.
 R $F20B I:A Plot direction: 0 => horizontal, $FF => vertical.
 R $F20B I:DE Pointer to destination screen address.
@@ -12913,7 +12935,8 @@ C $F253,1 Advance to the next input byte
 C $F254,2 ...loop
 C $F256,1 Return
 ;
-c $F257 Clear the full screen and attributes and set the screen border to black.
+c $F257 Wipe full screen and attributes
+D $F257 This clears the full screen and attributes and sets the screen border to black.
 D $F257 Used by the routine at #R$F163.
 N $F257 Clear the pixels to zero
 @ $F257 label=wipe_full_screen_and_attributes
@@ -12933,9 +12956,9 @@ C $F26D,1 Set #REGa to zero
 C $F26E,2 Set the border (and speaker)
 C $F270,1 Return
 ;
-c $F271 Menu screen key handling.
+c $F271 Check menu keys
+D $F271 This scans for a keypress. It will either start the game, select an input device or do nothing. If an input device is chosen, update the menu highlight to match and record which input device was chosen.
 D $F271 Used by the routine at #R$F4B7.
-D $F271 Scan for a keypress. It will either start the game, select an input device or do nothing. If an input device is chosen, update the menu highlight to match and record which input device was chosen.
 D $F271 If the game is started then copy the required input routine to $F075. If the chosen input device is the keyboard, then exit via choose_keys.
 @ $F271 label=check_menu_keys
 C $F271,3 Scan for keys that select an input device. Result is in #REGa
@@ -12973,35 +12996,39 @@ C $F2A6,1 Restore index
 C $F2A7,1 Was the keyboard chosen?
 C $F2A8,3 Call choose keys if so
 C $F2AB,2 Discard the previous return address and resume at #R$F17D
-t $F2AD Key choice prompt strings.
+;
+t $F2AD Define key prompts
+D $F2AD This is the set of prompts used when defining keys.
 @ $F2AD label=define_key_prompts
 B $F2AD,14,12:c1:1 "CHOOSE KEYS" #HTML[/ #CALL:decode_screenlocstring($F2AD)]
-B $F2BB,8,7:c1 "LEFT." #HTML[/ #CALL:decode_screenlocstring($F2BB)]
-B $F2C3,9,8:c1 "RIGHT." #HTML[/ #CALL:decode_screenlocstring($F2C3)]
-B $F2CC,6,5:c1 "UP." #HTML[/ #CALL:decode_screenlocstring($F2CC)]
-B $F2D2,8,7:c1 "DOWN." #HTML[/ #CALL:decode_screenlocstring($F2D2)]
-B $F2DA,7,7 "FIRE." #HTML[/ #CALL:decode_screenlocstring($F2DA)]
+B $F2BB,8,7:c1 "LEFT" #HTML[/ #CALL:decode_screenlocstring($F2BB)]
+B $F2C3,9,8:c1 "RIGHT" #HTML[/ #CALL:decode_screenlocstring($F2C3)]
+B $F2CC,6,5:c1 "UP" #HTML[/ #CALL:decode_screenlocstring($F2CC)]
+B $F2D2,8,7:c1 "DOWN" #HTML[/ #CALL:decode_screenlocstring($F2D2)]
+B $F2DA,7,7 "FIRE" #HTML[/ #CALL:decode_screenlocstring($F2DA)]
 ;
 b $F2E1 byte_F2E1
-D $F2E1 Unsure if anything reads this byte for real, but its address is taken prior to accessing keyboard_port_hi_bytes.
-D $F2E1 (<- choose_keys)
+D $F2E1 Nothing uses this byte for storage but its address is taken by #R$F350 prior to accessing #R$F2E2.
+D $F2E1 Used by the routine at #R$F350.
 @ $F2E1 label=byte_F2E1
 B $F2E1,1,1
 ;
-b $F2E2 Table of keyscan high bytes.
-D $F2E2 Zero terminated.
-D $F2E2 (<- choose_keys)
+b $F2E2 Keyboard port high bytes
+D $F2E2 This is a zero-terminated table of high bytes used when doing a keyboard scan.
+D $F2E2 Used by the routine at #R$F350.
 @ $F2E2 label=keyboard_port_hi_bytes
 B $F2E2,9,9
-t $F2EB Table of special key name strings, prefixed by their length.
+;
+t $F2EB Special key names
+D $F2EB This is a table of strings to use for special keys, like ENTER. The strings are prefixed by a length byte.
 @ $F2EB label=special_key_names
 B $F2EB,6,6 "ENTER" #HTML[/ #CALL:decode_stringcounted($F2EB)]
 B $F2F1,5,5 "CAPS" #HTML[/ #CALL:decode_stringcounted($F2F1)]
 B $F2F6,7,7 "SYMBOL" #HTML[/ #CALL:decode_stringcounted($F2F6)]
 B $F2FD,6,6 "SPACE" #HTML[/ #CALL:decode_stringcounted($F2FD)]
 ;
-b $F303 Table mapping key codes to glyph indices.
-D $F303 Each table entry is a character (a glyph index) OR if its top bit is set then bottom seven bits are an index into special_key_names.
+b $F303 Keycode to glyph
+D $F303 This is a table that maps key codes to glyph indices. Each table entry is a character (a glyph index) OR if its top bit is set then bottom seven bits are an index into #R$F2EB.
 @ $F303 label=keycode_to_glyph
 B $F303,5,5 table_12345
 B $F308,5,5 table_09876
@@ -13012,7 +13039,9 @@ B $F31C,5,5 table_ENTERLKJH
 B $F321,5,5 table_SHIFTZXCV
 B $F326,5,5 table_SPACESYMSHFTMNB
 ;
-w $F32B Screen addresses where chosen key names are plotted.
+w $F32B Key name screen addresses
+D $F32B This is the list of screen addresses where chosen key names are plotted.
+D $F32B Used by the routine at #R$F350.
 @ $F32B label=key_name_screen_addrs
 W $F32B,10,2
 ;
@@ -13036,7 +13065,8 @@ C $F347,4 ...loop
 C $F34B,4 Restore the stack pointer
 C $F34F,1 Return
 ;
-c $F350 Choose keys.
+c $F350 Choose keys
+D $F350 This wipes the game window, sets its attributes, draws prompts, then sits in a loop waiting for the player to make their key choices. The chosen keys (defined by port and mask) are stored in the table at #R$F06B. Finally the user is asked to confirm their key choices.
 D $F350 Used by the routine at #R$F271.
 N $F350 Start loop (infinite) - loops until the user confirms the key selection.
 N $F350 Clear the game window.
@@ -13143,7 +13173,7 @@ C $F3D6,2 Set length to 1
 C $F3D8,1 Load the glyph
 C $F3D9,1 Test the top bit
 C $F3DA,3 Jump if clear (JP P => positive)
-N $F3DD If the top bit was set then it's a special key, like BREAK or ENTER.
+N $F3DD If the top bit was set then it's a special key, like SPACE or ENTER.
 C $F3DD,2 Extract the byte offset into special_key_names
 C $F3DF,3 Point #REGde at special_key_names
 C $F3E2,3 Widen byte offset into #REGhl
@@ -13175,7 +13205,8 @@ C $F401,3 Wait for the user to confirm by pressing 'Y' or 'N'
 C $F404,1 If Z set 'Y' was pressed so return
 C $F405,3 ...loop (infinite)
 ;
-c $F408 Set the screen attributes of the specified menu item.
+c $F408 Set menu item attributes
+D $F408 This sets the screen attributes of the specified menu item.
 D $F408 Used by the routines at #R$F163 and #R$F271.
 R $F408 I:A Menu item index.
 R $F408 I:E Attributes.
@@ -13196,7 +13227,8 @@ C $F418,1 Advance to the next
 C $F419,2 ...loop
 C $F41B,1 Return
 ;
-c $F41C Scan for keys that select an input device.
+c $F41C Menu key scan
+D $F41C This scans for keys that select an input device.
 D $F41C Used by the routine at #R$F271.
 R $F41C O:A 0/1/2/3/4 if that key was pressed, or 255 if no relevant key was pressed.
 @ $F41C label=menu_keyscan
@@ -13223,16 +13255,19 @@ C $F436,2 Was 0 pressed? (note active low)
 C $F438,2 Return 0 if so
 C $F43A,3 Otherwise return $FF
 ;
-w $F43D List of available input routines.
-D $F43D Array [4] of pointers to input routines.
+w $F43D Input routines
+D $F43D This is an array of four pointers to input device handling routines.
 @ $F43D label=inputroutines
 W $F43D,8,2
 ;
-g $F445 Chosen input device.
+g $F445 Chosen input device
+D $F445 This records which input device was chosen.
 D $F445 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Keyboard } { 1 | Kempston } { 2 | Sinclair } { 3 | Protek } TABLE#
 @ $F445 label=chosen_input_device
 B $F445,1,1
-t $F446 Key choice screenlocstrings.
+;
+t $F446 Key choice screenlocstrings
+D $F446 This is a table of screenlocstrings to use for the main menu.
 @ $F446 label=key_choice_screenlocstrings
 B $F446,11,11 "CONTROLS" #HTML[/ #CALL:decode_screenlocstring($F446)]
 B $F451,11,11 "0 SELECT" #HTML[/ #CALL:decode_screenlocstring($F451)]
@@ -13243,8 +13278,8 @@ B $F483,11,11 "4 PROTEK" #HTML[/ #CALL:decode_screenlocstring($F483)]
 B $F48E,26,26 "BREAK OR CAPS AND SPACE" #HTML[/ #CALL:decode_screenlocstring($F48E)]
 B $F4A8,15,15 "FOR NEW GAME" #HTML[/ #CALL:decode_screenlocstring($F4A8)]
 ;
-c $F4B7 Run the menu screen.
-D $F4B7 Waits for user to select an input device, waves the morale flag and plays the title tune.
+c $F4B7 Menu screen
+D $F4B7 This runs the main menu. It waits for user to select an input device while waving the morale flag and playing the title tune.
 D $F4B7 Used by the routine at #R$F163.
 N $F4B7 Start loop (infinite)
 @ $F4B7 label=menu_screen
@@ -13314,8 +13349,8 @@ C $F524,1 Unbank the major counter
 C $F525,4 ...loop (major tune speed) / 24 iterations
 C $F529,3 ...loop (infinite)
 ;
-c $F52C Return the frequency to play at to generate the given semitone.
-D $F52C The frequency returned is the number of iterations that the music routine should count for before flipping the speaker output bit.
+c $F52C Frequency for semitone
+D $F52C This returns the frequency that the beeper should be played at to generate the given semitone. The frequency returned is the number of iterations that the music routine should count for before flipping the speaker output bit.
 D $F52C Used by the routine at #R$F4B7.
 R $F52C I:A Semitone index (never larger than 42 in this game).
 R $F52C O:BC Frequency.
@@ -13343,9 +13378,10 @@ W $F541,4,2
 u $F545 Unreferenced byte.
 B $F545,1,1
 ;
-b $F546 High music channel notes (semitones).
-D $F546 Start of The Great Escape theme.
+b $F546 Music channel 0 data
+D $F546 This is the music data for the "high" channel. Each byte is an index into the semitone table.
 @ $F546 label=music_channel0_data
+N $F546 Start of The Great Escape theme.
 B $F546,134,8*16,6
 N $F5CC Start of "Pack Up Your Troubles in Your Old Kit Bag".
 B $F5CC,254,2,8*31,4
@@ -13353,9 +13389,9 @@ N $F6CA Start of "It's a Long Way to Tipperary".
 B $F6CA,252,4,8
 N $F7C6 End of song marker
 B $F7C6,1,1
-N $F7C7 Low music channel notes (semitones).
-N $F7C7 Start of The Great Escape theme.
+N $F7C7 This is the music data for the "low" channel. Each byte is an index into the semitone table.
 @ $F7C7 label=music_channel1_data
+N $F7C7 Start of The Great Escape theme.
 B $F7C7,134,8*16,6
 N $F84D Start of "Pack Up Your Troubles in Your Old Kit Bag".
 B $F84D,254,2,8*31,4
@@ -13363,8 +13399,7 @@ N $F94B Start of "It's a Long Way to Tipperary".
 B $F94B,252,4,8
 N $FA47 End of song marker
 B $FA47,1,1
-N $FA48 The frequency to use to produce the given semitone.
-N $FA48 Covers full octaves from C2 to B6 and C7 only.
+N $FA48 The frequency to use to produce the given semitone. It covers full octaves from C2 to B6 and C7 only.
 N $FA48 Used by #R$F52C
 @ $FA48 label=semitone_to_frequency
 W $FA48,2,2 delay
@@ -13442,11 +13477,12 @@ W $FACA,2,2 C7
 N $FACC It's unclear from the original game data where the table is supposed to end. It's not important in practice since the highest note used by the game is C5#.
 W $FACC,20,2
 ;
-u $FAE0 769 bytes of apparently unreferenced bytes.
+u $FAE0 Unreferenced bytes
+D $FAE0 This is 769 bytes of apparently unreferenced bytes.
 B $FAE0,769,8*96,1
 ;
-c $FDE1 Loaded.
-D $FDE1 This is the very first entry point used to shunt the game image down into its proper position.
+c $FDE1 Loaded
+D $FDE1 This is the very first entry point. It's used to shunt the game image down into its proper position.
 @ $FDE1 label=loaded
 C $FDE1,1 Disable interrupts
 C $FDE2,3 Point #REGsp at the topmost byte of RAM
@@ -13457,8 +13493,8 @@ C $FDF0,3 Exit via jump_to_main
 u $FDF3 Unreferenced bytes.
 B $FDF3,13,8,5
 ;
-c $FE00 Keyboard input routine.
-D $FE00 Walks the keydefs table testing the ports against masks as setup by #R$F350.
+c $FE00 Input routine: Keyboard
+D $FE00 This walks the keydefs table testing the ports against masks as setup by #R$F350.
 R $FE00 O:A Input value (as per enum input).
 @ $FE00 label=inputroutine_keyboard
 C $FE00,3 Point #REGhl at keydefs table - a list of (port high byte, key mask) filled out when the user chose their keys
@@ -13517,8 +13553,8 @@ C $FE43,1 Return the result if fire NOT pressed
 C $FE44,2 result += input_FIRE
 C $FE46,1 Return
 ;
-c $FE47 Protek (cursor) joystick input routine.
-D $FE47 Up/Down/Left/Right/Fire = keys 7/6/5/8/0.
+c $FE47 Input routine: Protek
+D $FE47 This is the input routine for Protek (cursor) joysticks. The Protek interface maps Up/Down/Left/Right/Fire to keys 7/6/5/8/0.
 R $FE47 O:A Input value (as per enum input).
 @ $FE47 label=inputroutine_protek
 C $FE47,3 Load #REGbc with the port number of the keyboard half row for keys 1/2/3/4/5
@@ -13559,8 +13595,8 @@ C $FE7B,1 fire = 0
 C $FE7C,1 Combine the (up_down + left_right) and fire values
 C $FE7D,1 Return
 ;
-c $FE7E Kempston joystick input routine.
-D $FE7E Reading port $1F yields 000FUDLR active high.
+c $FE7E Input routine: Kempston
+D $FE7E This is the Kempston joystick input routine. Reading port $1F yields a byte of format 000FUDLR, where the bits are active high.
 R $FE7E O:A Input value (as per enum input).
 @ $FE7E label=inputroutine_kempston
 C $FE7E,3 Load #REGbc with port number $1F
@@ -13590,9 +13626,9 @@ C $FE9F,1 fire = 0
 C $FEA0,2 Combine the fire, up_down and left_right values
 C $FEA2,1 Return
 ;
-c $FEA3 Fuller joystick input routine.
-D $FEA3 Reading port $7F yields F---RLDU active low.
-R $FEA3 This is unused by the game.
+c $FEA3 Input routine: Fuller
+D $FEA3 This is the Fuller joystick input routine. Reading port $7F yields a byte of format F---RLDU, where the bits are active low
+R $FEA3 This is unused by the game!
 N $FEA3 O:A Input value (as per enum input).
 @ $FEA3 label=inputroutine_fuller
 C $FEA3,3 Load #REGbc with port number $7F
@@ -13625,8 +13661,8 @@ C $FEC8,2 fire = input_FIRE
 C $FECA,2 Combine the fire, up_down and left_right values
 C $FECC,1 Return
 ;
-c $FECD Sinclair joystick input routine.
-D $FECD Up/Down/Left/Right/Fire = keys 9/8/6/7/0.
+c $FECD Input route: Sinclair
+D $FECD This is the input routine for Sinclair joysticks. The Sinclair interface maps Up/Down/Left/Right/Fire to keys 9/8/6/7/0.
 R $FECD O:A Input value (as per enum input).
 @ $FECD label=inputroutine_sinclair
 C $FECD,3 Load #REGbc with the port number of the keyboard half row for keys 6/7/8/9/0
@@ -13657,7 +13693,7 @@ C $FEEF,2 fire = input_FIRE
 C $FEF1,2 Combine the fire, up_down and left_right values
 C $FEF3,1 Return
 ;
-b $FEF4 Data block at FEF4.
+b $FEF4 Junk
 D $FEF4 The final standard speed data block on the tape is loaded at $FC60..$FF81. The bytes from here up to $FF81 come from that block.
 B $FEF4,100,8*12,4
 N $FF58 UDGs 'A' to 'E' follow, with 'F' truncated at its second byte.
