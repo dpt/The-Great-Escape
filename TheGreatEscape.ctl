@@ -760,13 +760,13 @@
 > $4000 ;
 > $4000 @org=$4000
 ;
-b $4000 Loading screen.
+b $4000 Loading screen
 D $4000 #UDGTABLE { #SCR(loading) | This is the loading screen. } TABLE#
 @ $4000 label=screen
 B $4000,6144,32 Pixel data.
 B $5800,768,32 Attribute data.
 ;
-b $5B00 Super tiles.
+b $5B00 Super tiles
 D $5B00 The map for the game's exterior section (defined by #R$BCEE) is built from references to these 32x32 pixel "super tiles". Each super tile is a 4x4 array of tile indices (defined by #R$8590).
 @ $5B00 label=super_tiles
 B $5B00,16,4 super_tile $00 #HTML[#CALL:supertile($5B00, 0)]
@@ -988,21 +988,21 @@ B $6870,16,4 super_tile $D7 #HTML[#CALL:supertile($6870, 0)]
 B $6880,16,4 super_tile $D8 #HTML[#CALL:supertile($6880, 0)]
 B $6890,16,4 super_tile $D9 #HTML[#CALL:supertile($6890, 0)]
 ;
-g $68A0 Room index.
+g $68A0 Room index
 D $68A0 This holds the index of the room that the hero is presently in, or 0 when he's outside.
 D $68A0 The possible room numbers are as follows:
 D $68A0 #TABLE(default) { =h Room | =h Description | =h Movable Object | =h Items } { 0 | Outdoors / exterior / main map | - | Green key } { 1 | Lowest hut, right hand side | - | Poison } { 2 | Middle hut, left hand side (Hero's start room) | - | Stove } { 3 | Middle hut, right hand side | - | - } { 4 | Highest hut, left hand side | - | - } { 5 | Highest hut, right hand side | - | - } { 6 | (unused index) | - | - } { 7 | Corridor | - | - } { 8 | Corridor | - | - } { 9 | "Crate" | Crate | Shovel } { 10 | "Lockpick" | - | Lockpick } { 11 | Commandant's office | - | Papers } { 12 | Corridor | - | - } { 13 | Corridor | - | - } { 14 | Guard’s quarters 1 | - | Torch } { 15 | Guard’s quarters 2 | - | Uniform, Yellow key } { 16 | Corridor | - | - } { 17 | Corridor | - | - } { 18 | “Radio” | - | Radio } { 19 | “Food” | - | Food } { 20 | "Red Cross parcel" | - | From parcel: Purse, Wire snips, Bribe, Compass } { 21 | Corridor | - | - } { 22 | Corridor to solitary | - | Red key } { 23 | Mess hall, right room | - | - } { 24 | Solitary confinement | - | - } { 25 | Mess hall, left room | - | - } { 26 | (unused index) | - | - } { 27 | (unused index) | - | - } { 28 | Lowest hut, left hand side | Stove | - } { 29 | Tunnel 2, start of | - | - } { 30 | Tunnel 2 | - | - } { 31 | Tunnel 2 | - | - } { 32 | Tunnel 2 | - | - } { 33 | Tunnel 2 | - | - } { 34 | Tunnel 2, end of | - | - } { 35 | Tunnel 2 | - | - } { 36 | Tunnel 2 | - | - } { 37 | Tunnel 1, start of | - | - } { 38 | Tunnel 1 | - | - } { 39 | Tunnel 1 | - | - } { 40 | Tunnel 1 | - | - } { 41 | Tunnel 1 | - | - } { 42 | Tunnel 1 | - | - } { 43 | Tunnel 1 | - | - } { 44 | Tunnel 1 | - | - } { 45 | Tunnel 1 | - | - } { 46 | Tunnel 1 | - | - } { 47 | Tunnel 1 | - | - } { 48 | Tunnel 1, end of | - | - } { 49 | Tunnel 1 | - | - } { 50 | Tunnel 1 (initially blocked) | - | - } { 51 | Tunnel 2 | - | - } { 52 | Tunnel 2 | - | - } TABLE#
 @ $68A0 label=room_index
 B $68A0,1,1
 ;
-g $68A1 Current door.
+g $68A1 Current door
 D $68A1 This is the current door id.
 D $68A1 Used by the routines at #R$B1D4, #R$B1F5, #R$B32D and #R$CB98.
 D $68A1 Bit 7 is the door_REVERSE flag.
 @ $68A1 label=current_door
 B $68A1,1,1
 ;
-c $68A2 Transition.
+c $68A2 Transition
 D $68A2 This is called when a visible character (a vischar, pointed to by #REGiy) needs to change room, or to change position on the exterior map, e.g. when the hero moves outside of the main gate.
 D $68A2 vischar.room is expected to already be set to the new room index. If the character is outdoors we take the given map position, (a tinypos, pointed to by #REGhl) scale it up, multiplying the values by 4, then store those as vischar.mi.mappos. Otherwise we just copy them across without scaling.
 D $68A2 If the current vischar is not the hero then we reset the character. Otherwise we're handling the hero so we either reset the visible scene for outdoors, or for the new room.
@@ -1055,7 +1055,7 @@ C $68EB,4 Fetch the direction field and clear the non-direction bits, resetting 
 C $68EF,3 Reset the hero's position, redraw the scene then zoombox it onto the screen
 C $68F2,2 Restart from main loop
 ;
-c $68F4 Enter room.
+c $68F4 Enter room
 D $68F4 This is called when the hero should enter a room. It resets the game window position, expands out the room definition into tile references then plots those tiles, centres the map position, sets an appropriate sprite for the hero (walk or crawl), sets up movable items then zoomboxes the scenes onto the screen and boosts the score by one. Finally it squashes the stack and jumps to the main loop.
 D $68F4 Used by the routines at #R$68A2, #R$9D78, #R$9DE5 and #R$B75A.
 @ $68F4 label=enter_room
@@ -1070,14 +1070,14 @@ C $6912,3 Zoombox the scene onto the screen
 C $6915,5 Increment score by one
 E $68F4 FALL THROUGH into squash_stack_goto_main.
 ;
-c $691A Squash stack, goto main.
+c $691A Squash stack, goto main
 D $691A This is called by transition or enter_room to restart the game's main loop, after they have performed a scene change.
 D $691A Used by the routines at #R$68A2 and #R$68F4 (a fall through).
 @ $691A label=squash_stack_goto_main
 C $691A,3 Set stack to the very top of RAM
 C $691D,3 Jump to the start of the game's main loop
 ;
-c $6920 Set hero sprite for room.
+c $6920 Set hero sprite for room
 D $6920 This is called by enter_room to select an appropriate hero sprite for the current room. This forces the use of the prisoner sprite set with the crawl flag enabled, when the hero is in a tunnel room.
 D $6920 This routine doesn't remember your uniform state, so if you enter a tunnel while wearing the guards' uniform you will find it removed on exit from the tunnel.
 D $6920 Used by the routine at #R$68F4.
@@ -1096,7 +1096,7 @@ N $6936 We're not in a tunnel room.
 C $6936,2 Clear the vischar_DIRECTION_CRAWL bit from vischar.direction
 C $6938,1 Return
 ;
-c $6939 Setup movable items.
+c $6939 Setup movable items
 D $6939 "Movable items" are the stoves and the crate which appear in three rooms in the game. Unlike ordinary items such as keys and the radio the movable items can be pushed around by the hero character walking into them. Internally they use the second visible character slot.
 D $6939 Used by the routines at #R$68F4 and #R$B2FC.
 @ $6939 label=setup_movable_items
@@ -1159,7 +1159,7 @@ W $69C0,6,6 Position (62, 35, 16)
 W $69C6,2,2 Sprite: sprite_stove
 B $69C8,1,1 Index: 0
 ;
-c $69C9 Reset non-player visible characters.
+c $69C9 Reset non-player visible characters
 D $69C9 This is called by setup_movable_items to reset all seven non-player visible characters.
 D $69C9 Used by the routine at #R$6939 only.
 @ $69C9 label=reset_nonplayer_visible_characters
@@ -1172,7 +1172,7 @@ C $69D6,3 Step #REGhl to the next visible character
 C $69D9,2 ...loop
 C $69DB,1 Return
 ;
-c $69DC Setup doors.
+c $69DC Setup doors
 D $69DC This is called by setup_room to setup the #R$81D6 array. It walks through the #R$78D6 array, extracting the indices of doors relevant to the current room and stores those indices into #R$81D6.
 D $69DC Used by the routine at #R$6A35 only.
 N $69DC Clear the interior_doors[] array with door_NONE ($FF).
@@ -1206,7 +1206,7 @@ C $6A0E,1 Step #REGhl' to the next door
 C $6A0F,2 ...loop
 C $6A11,1 Return
 ;
-c $6A12 Get door.
+c $6A12 Get door
 D $6A12 This is called by a few routines to turn a door index into a pointer to a door structure (a door_t). The doors[] array contains pairs of door structures. If the door_REVERSE flag is set in bit 7, the first of the pair is returned, otherwise the second is.
 D $6A12 Used by the routines at #R$B32D, #R$B4D0, #R$C651 and #R$CA81.
 R $6A12 I:A Index of door + door_REVERSE flag in bit 7.
@@ -1220,14 +1220,14 @@ C $6A1F,1 If not, return with #REGhl pointing to the entry
 C $6A20,6 Otherwise, point to the next entry along
 C $6A26,1 Return
 ;
-c $6A27 Wipe visible tiles.
+c $6A27 Wipe visible tiles
 D $6A27 The visible tiles array is a 24x17 grid of tile references. The game uses it to render room interiors and the exterior map. This routine clears all of the tiles all to zero.
 D $6A27 Used by the routines at #R$6A35, #R$A50B and #R$AB6B.
 @ $6A27 label=wipe_visible_tiles
 C $6A27,13 Set all RAM from $F0F8 to $F0F8 + 24 * 17 - 1 to zero
 C $6A34,1 Return
 ;
-c $6A35 Setup room.
+c $6A35 Setup room
 D $6A35 This first wipes the visible tiles array then sets up interior doors, gets the room definition pointer then uses that to setup boundaries, set up interior masks and finally plot all objects into the visible tile array.
 D $6A35 Used by the routines at #R$68F4, #R$7B36, #R$9E07, #R$A289, #R$A2E2, #R$A479 and #R$B3F6.
 @ $6A35 label=setup_room
@@ -1291,7 +1291,7 @@ C $6AAC,3 Expand RLE-encoded object out to a set of tile references
 C $6AB2,2 ...loop
 C $6AB4,1 Return
 ;
-c $6AB5 Expand object.
+c $6AB5 Expand object
 D $6AB5 This is only ever called by setup_room. It expands the run length encoded object with the given index into indices in the visible tile array.
 D $6AB5 Objects have the following format:
 D $6AB5 #TABLE(default) { =c2 Each object starts with two bytes which specify its dimensions: } { <w> <h> | Width in tiles, Height in tiles } { =c2 Which are then followed by a repetition of the following bytes: } { <t> | Literal: Emit a single tile <t> } { <$FF> <$FF> | Escape: Emit a single tile $FF } { <$FF> <c=128..254> <t> | Repetition: Emit tile <t> count (<c> AND 127) times } { <$FF> <c=64..79> <t> | Ascending range: Emit tile <t> then <t+1> then <t+2> and so on, up to <t+(c AND 15)> } { <$FF> <other> | Other encodings are not used } TABLE#
@@ -1402,7 +1402,7 @@ C $6B3D,2 ...loop if non-zero
 C $6B3F,1 Advance the data pointer
 C $6B40,2 Jump to main expand loop
 ;
-c $6B42 Plot interior tiles.
+c $6B42 Plot interior tiles
 D $6B42 This routine expands all of the tile indices in the visible tiles array to the screen buffer. It's only ever used when drawing interior scenes (rooms).
 D $6B42 Used by the routines at #R$68F4, #R$7B36, #R$9E07, #R$A289, #R$A2E2, #R$A479, #R$A50B, #R$AB6B and #R$B3F6.
 @ $6B42 label=plot_interior_tiles
@@ -1435,7 +1435,7 @@ C $6B74,4 ...loop for each row
 N $6B78 End
 C $6B78,1 Return
 ;
-w $6B79 Beds.
+w $6B79 Beds
 D $6B79 This is an array of six pointers to room definition bed objects. These are the beds of the active prisoners (characters 20 to 25).
 D $6B79 Note that the topmost hut does not feature in this list. It has three prisoners permanently in bed and one permanently empty bed.
 @ $6B79 label=beds
@@ -1446,7 +1446,7 @@ W $6B7F,2,2 roomdef_5_hut3_right byte 29. The rightmost in hut 3 right. This is 
 W $6B81,2,2 roomdef_5_hut3_right byte 32. The middle in hut 3 right. This is used by route 11.
 W $6B83,2,2 roomdef_5_hut3_right byte 35. The leftmost in hut 3 right. This is used by route 12.
 ;
-b $6B85 Room definition dimensions.
+b $6B85 Room definition dimensions
 D $6B85 The room definitions specify their dimensions via an index into this table. Note that it looks like a bounds_t but has a different order.
 D $6B85 #TABLE(default) { =h Type | =h Bytes | =h Name | =h Meaning } { Byte    |        1 |      x1 | Maximum x  } { Byte    |        1 |      x0 | Minimum x  } { Byte    |        1 |      y1 | Maximum y  } { Byte    |        1 |      y0 | Minimum y  } TABLE#
 D $6B85 Used by #R$B29F only.
@@ -1462,7 +1462,7 @@ B $6BA1,4,4 ( 56, 50, 100, 26)
 B $6BA5,4,4 (104, 28,  56, 50)
 B $6BA9,4,4 ( 56, 50,  88, 10)
 ;
-w $6BAD Rooms and tunnels.
+w $6BAD Rooms and tunnels
 D $6BAD This is an array of pointers to room and tunnel definitions.
 D $6BAD Room definition format:
 D $6BAD #TABLE(default) { =h Byte | =h Meaning } { <rd> | Room dimensions - indirect via #R$6B85 } { <nb> | Number of boundaries in the room (rectangles where characters can't walk) } { =c2 Followed by an array of those boundaries: } { <x0> <y0> <x1> <y1> | A boundary } { =c2 Then: } { <nm> | Number of mask indices used in the room (indexes #R$EA7C) } { =c2 Followed by an array of those mask bytes: } { <mb> | Mask byte } { =c2 Then: } { <no> | Number of objects in the room } { =c2 Followed by an array of those objects: } { <io> <x> <y> | Interior object ref, x, y } TABLE#
@@ -1500,7 +1500,7 @@ W $6C0F,2,2
 W $6C11,2,2 Room 51 uses the same definition as room 32
 W $6C13,2,2 Room 52 uses the same definition as room 40
 ;
-b $6C15 Room 1: Hut 1, far side.
+b $6C15 Room 1: Hut 1, far side
 @ $6C15 label=roomdef_1_hut1_right
 B $6C15,1,1 0 -- Room dimensions index
 B $6C16,1,1 3 -- Number of boundaries
@@ -1550,7 +1550,7 @@ B $6C44,3,3 { interiorobject_DOOR_FRAME_NW_SE, 7, 10 }
 > $6C47 ;
 > $6C47 ; (Not necessarily to scale.)
 ;
-b $6C47 Room 2: Hut 2, near side.
+b $6C47 Room 2: Hut 2, near side
 @ $6C47 label=roomdef_2_hut2_left
 B $6C47,1,1 1 -- Room dimensions index
 B $6C48,1,1 2 -- Number of boundaries
@@ -1569,7 +1569,7 @@ B $6C64,3,3 { interiorobject_DOOR_FRAME_NW_SE, 7, 9 }
 B $6C67,3,3 { interiorobject_TABLE, 11, 12 }
 B $6C6A,3,3 { interiorobject_SMALL_TUNNEL_ENTRANCE, 5, 9 }
 ;
-b $6C6D Room 3: Hut 2, far side.
+b $6C6D Room 3: Hut 2, far side
 @ $6C6D label=roomdef_3_hut2_right
 B $6C6D,1,1 0 -- Room dimensions index
 B $6C6E,1,1 3 -- Number of boundaries
@@ -1593,7 +1593,7 @@ B $6C96,3,3 { interiorobject_DOOR_FRAME_SW_NE, 15, 8 }
 B $6C99,3,3 { interiorobject_SHORT_WARDROBE, 18, 5 }
 B $6C9C,3,3 { interiorobject_DOOR_FRAME_NW_SE, 7, 10 }
 ;
-b $6C9F Room 4: Hut 3, near side.
+b $6C9F Room 4: Hut 3, near side
 @ $6C9F label=roomdef_4_hut3_left
 B $6C9F,1,1 1 -- Room dimensions index
 B $6CA0,1,1 2 -- Number of boundaries
@@ -1612,7 +1612,7 @@ B $6CC0,3,3 { interiorobject_CHAIR_FACING_SE, 11, 11 }
 B $6CC3,3,3 { interiorobject_CHAIR_FACING_SW, 13, 10 }
 B $6CC6,3,3 { interiorobject_STUFF, 14, 14 }
 ;
-b $6CC9 Room 5: Hut 3, far side.
+b $6CC9 Room 5: Hut 3, far side
 @ $6CC9 label=roomdef_5_hut3_right
 B $6CC9,1,1 0 -- Room dimensions index
 B $6CCA,1,1 3 -- Number of boundaries
@@ -1636,7 +1636,7 @@ B $6CF2,3,3 { interiorobject_CHEST_OF_DRAWERS, 16, 5 }
 B $6CF5,3,3 { interiorobject_CHEST_OF_DRAWERS, 20, 7 }
 B $6CF8,3,3 { interiorobject_DOOR_FRAME_NW_SE, 7, 10 }
 ;
-b $6CFB Room 8: Corridor.
+b $6CFB Room 8: Corridor
 @ $6CFB label=roomdef_8_corridor
 B $6CFB,1,1 2 -- Room dimensions index
 B $6CFC,1,1 0 -- Number of boundaries
@@ -1649,7 +1649,7 @@ B $6D06,3,3 { interiorobject_END_DOOR_FRAME_SW_NE, 4, 6 }
 B $6D09,3,3 { interiorobject_DOOR_FRAME_NW_SE, 5, 10 }
 B $6D0C,3,3 { interiorobject_SHORT_WARDROBE, 18, 6 }
 ;
-b $6D0F Room 9: Room with crate.
+b $6D0F Room 9: Room with crate
 @ $6D0F label=roomdef_9_crate
 B $6D0F,1,1 1 -- Room dimensions index
 B $6D10,1,1 1 -- Number of boundaries
@@ -1668,7 +1668,7 @@ B $6D2E,3,3 { interiorobject_CUPBOARD, 3, 6 }
 B $6D31,3,3 { interiorobject_SMALL_CRATE, 6, 8 }
 B $6D34,3,3 { interiorobject_SMALL_CRATE, 4, 9 }
 ;
-b $6D37 Room 10: Room with lockpick.
+b $6D37 Room 10: Room with lockpick
 @ $6D37 label=roomdef_10_lockpick
 B $6D37,1,1 4 -- Room dimensions index
 B $6D38,1,1 2 -- Number of boundaries
@@ -1692,7 +1692,7 @@ B $6D67,3,3 { interiorobject_CHEST_OF_DRAWERS, 20, 9 }
 B $6D6A,3,3 { interiorobject_SMALL_CRATE, 6, 5 }
 B $6D6D,3,3 { interiorobject_TABLE, 2, 6 }
 ;
-b $6D70 Room 11: Room with papers.
+b $6D70 Room 11: Room with papers
 @ $6D70 label=roomdef_11_papers
 B $6D70,1,1 4 -- Room dimensions index
 B $6D71,1,1 1 -- Number of boundaries
@@ -1710,7 +1710,7 @@ B $6D8B,3,3 { interiorobject_TALL_DRAWERS, 18, 7 }
 B $6D8E,3,3 { interiorobject_TALL_DRAWERS, 20, 8 }
 B $6D91,3,3 { interiorobject_DESK, 12, 10 }
 ;
-b $6D94 Room 12: Corridor.
+b $6D94 Room 12: Corridor
 @ $6D94 label=roomdef_12_corridor
 B $6D94,1,1 1 -- Room dimensions index
 B $6D95,1,1 0 -- Number of boundaries
@@ -1722,7 +1722,7 @@ B $6D9D,3,3 { interiorobject_SMALL_WINDOW, 6, 3 }
 B $6DA0,3,3 { interiorobject_DOOR_FRAME_NW_SE, 9, 10 }
 B $6DA3,3,3 { interiorobject_DOOR_FRAME_SW_NE, 13, 10 }
 ;
-b $6DA6 Room 13: Corridor.
+b $6DA6 Room 13: Corridor
 @ $6DA6 label=roomdef_13_corridor
 B $6DA6,1,1 1 -- Room dimensions index
 B $6DA7,1,1 0 -- Number of boundaries
@@ -1736,7 +1736,7 @@ B $6DB5,3,3 { interiorobject_DOOR_FRAME_SW_NE, 13, 10 }
 B $6DB8,3,3 { interiorobject_TALL_DRAWERS, 12, 5 }
 B $6DBB,3,3 { interiorobject_CHEST_OF_DRAWERS, 14, 7 }
 ;
-b $6DBE Room 14: Room with torch.
+b $6DBE Room 14: Room with torch
 @ $6DBE label=roomdef_14_torch
 B $6DBE,1,1 0 -- Room dimensions index
 B $6DBF,1,1 3 -- Number of boundaries
@@ -1756,7 +1756,7 @@ B $6DE1,3,3 { interiorobject_END_DOOR_FRAME_NW_SE, 20, 4 }
 B $6DE4,3,3 { interiorobject_SMALL_SHELF, 2, 7 }
 B $6DE7,3,3 { interiorobject_EMPTY_BED, 2, 9 }
 ;
-b $6DEA Room 15: Room with uniform.
+b $6DEA Room 15: Room with uniform
 @ $6DEA label=roomdef_15_uniform
 B $6DEA,1,1 0 -- Room dimensions index
 B $6DEB,1,1 4 -- Number of boundaries
@@ -1778,7 +1778,7 @@ B $6E17,3,3 { interiorobject_DOOR_FRAME_NW_SE, 7, 10 }
 B $6E1A,3,3 { interiorobject_DOOR_FRAME_SW_NE, 13, 9 }
 B $6E1D,3,3 { interiorobject_TABLE, 18, 8 }
 ;
-b $6E20 Room 16: Corridor.
+b $6E20 Room 16: Corridor
 @ $6E20 label=roomdef_16_corridor
 B $6E20,1,1 1 -- Room dimensions index
 B $6E21,1,1 0 -- Number of boundaries
@@ -1790,7 +1790,7 @@ B $6E29,3,3 { interiorobject_END_DOOR_FRAME_SW_NE, 4, 4 }
 B $6E2C,3,3 { interiorobject_DOOR_FRAME_NW_SE, 9, 10 }
 B $6E2F,3,3 { interiorobject_DOOR_FRAME_SW_NE, 13, 10 }
 ;
-b $6E32 Room 7: Corridor.
+b $6E32 Room 7: Corridor
 @ $6E32 label=roomdef_7_corridor
 B $6E32,1,1 1 -- Room dimensions index
 B $6E33,1,1 0 -- Number of boundaries
@@ -1802,7 +1802,7 @@ B $6E3A,3,3 { interiorobject_END_DOOR_FRAME_SW_NE, 4, 4 }
 B $6E3D,3,3 { interiorobject_DOOR_FRAME_SW_NE, 13, 10 }
 B $6E40,3,3 { interiorobject_TALL_WARDROBE, 12, 4 }
 ;
-b $6E43 Room 18: Room with radio.
+b $6E43 Room 18: Room with radio
 @ $6E43 label=roomdef_18_radio
 B $6E43,1,1 4 -- Room dimensions index
 B $6E44,1,1 3 -- Number of boundaries
@@ -1823,7 +1823,7 @@ B $6E6D,3,3 { interiorobject_TABLE, 18, 10 }
 B $6E70,3,3 { interiorobject_TINY_TABLE, 16, 12 }
 B $6E73,3,3 { interiorobject_DOOR_FRAME_NW_SE, 5, 7 }
 ;
-b $6E76 Room 19: Room with food.
+b $6E76 Room 19: Room with food
 @ $6E76 label=roomdef_19_food
 B $6E76,1,1 1 -- Room dimensions index
 B $6E77,1,1 1 -- Number of boundaries
@@ -1843,7 +1843,7 @@ B $6E97,3,3 { interiorobject_CHEST_OF_DRAWERS, 14, 7 }
 B $6E9A,3,3 { interiorobject_END_DOOR_FRAME_NW_SE, 16, 5 }
 B $6E9D,3,3 { interiorobject_DOOR_FRAME_NW_SE, 9, 10 }
 ;
-b $6EA0 Room 20: Room with red cross parcel.
+b $6EA0 Room 20: Room with red cross parcel
 @ $6EA0 label=roomdef_20_redcross
 B $6EA0,1,1 1 -- Room dimensions index
 B $6EA1,1,1 2 -- Number of boundaries
@@ -1864,7 +1864,7 @@ B $6EC6,3,3 { interiorobject_TALL_WARDROBE, 16, 6 }
 B $6EC9,3,3 { interiorobject_ORNATE_WARDROBE_FACING_SW, 18, 8 }
 B $6ECC,3,3 { interiorobject_TINY_TABLE, 11, 8 }
 ;
-b $6ECF Room 22: Room with red key.
+b $6ECF Room 22: Room with red key
 @ $6ECF label=roomdef_22_red_key
 B $6ECF,1,1 3 -- Room dimensions index
 B $6ED0,1,1 2 -- Number of boundaries
@@ -1881,7 +1881,7 @@ B $6EE9,3,3 { interiorobject_DOOR_FRAME_NW_SE, 9, 8 }
 B $6EEC,3,3 { interiorobject_TABLE, 9, 6 }
 B $6EEF,3,3 { interiorobject_END_DOOR_FRAME_NW_SE, 14, 4 }
 ;
-b $6EF2 Room 23: Breakfast room.
+b $6EF2 Room 23: Breakfast room
 @ $6EF2 label=roomdef_23_breakfast
 B $6EF2,1,1 0 -- Room dimensions index
 B $6EF3,1,1 1 -- Number of boundaries
@@ -1905,7 +1905,7 @@ B $6F1A,3,3 { interiorobject_EMPTY_BENCH, 10, 6 }
 @ $6F1D label=roomdef_23_breakfast_bench_C
 B $6F1D,3,3 { interiorobject_EMPTY_BENCH, 8, 7 }
 ;
-b $6F20 Room 24: Solitary confinement cell.
+b $6F20 Room 24: Solitary confinement cell
 @ $6F20 label=roomdef_24_solitary
 B $6F20,1,1 3 -- Room dimensions index
 B $6F21,1,1 1 -- Number of boundaries
@@ -1917,7 +1917,7 @@ B $6F29,3,3 { interiorobject_ROOM_OUTLINE_15x8, 5, 6 }
 B $6F2C,3,3 { interiorobject_END_DOOR_FRAME_NW_SE, 14, 4 }
 B $6F2F,3,3 { interiorobject_TINY_TABLE, 10, 9 }
 ;
-b $6F32 Room 25: Breakfast room.
+b $6F32 Room 25: Breakfast room
 @ $6F32 label=roomdef_25_breakfast
 B $6F32,1,1 0 -- Room dimensions index
 B $6F33,1,1 1 -- Number of boundaries
@@ -1940,7 +1940,7 @@ B $6F55,3,3 { interiorobject_EMPTY_BENCH, 8, 7 }
 @ $6F58 label=roomdef_25_breakfast_bench_G
 B $6F58,3,3 { interiorobject_EMPTY_BENCH, 14, 4 }
 ;
-b $6F5B Room 28: Hut 1, near side.
+b $6F5B Room 28: Hut 1, near side
 @ $6F5B label=roomdef_28_hut1_left
 B $6F5B,1,1 1 -- Room dimensions index
 B $6F5C,1,1 2 -- Number of boundaries
@@ -1958,7 +1958,7 @@ B $6F79,3,3 { interiorobject_DOOR_FRAME_NW_SE, 7, 9 }
 B $6F7C,3,3 { interiorobject_CHAIR_FACING_SW, 15, 10 }
 B $6F7F,3,3 { interiorobject_TABLE, 11, 12 }
 ;
-b $6F82 Room 29: Start of second tunnel.
+b $6F82 Room 29: Start of second tunnel
 @ $6F82 label=roomdef_29_second_tunnel_start
 B $6F82,1,1 5 -- Room dimensions index
 B $6F83,1,1 0 -- Number of boundaries
@@ -1972,7 +1972,7 @@ B $6F95,3,3 { interiorobject_TUNNEL_SW_NE, 8, 6 }
 B $6F98,3,3 { interiorobject_TUNNEL_SW_NE, 4, 8 }
 B $6F9B,3,3 { interiorobject_TUNNEL_SW_NE, 0, 10 }
 ;
-b $6F9E Room 31.
+b $6F9E Room 31
 @ $6F9E label=roomdef_31
 B $6F9E,1,1 6 -- Room dimensions index
 B $6F9F,1,1 0 -- Number of boundaries
@@ -1986,7 +1986,7 @@ B $6FB1,3,3 { interiorobject_TUNNEL_NW_SE, 12, 6 }
 B $6FB4,3,3 { interiorobject_TUNNEL_NW_SE, 16, 8 }
 B $6FB7,3,3 { interiorobject_TUNNEL_NW_SE, 20, 10 }
 ;
-b $6FBA Room 36.
+b $6FBA Room 36
 @ $6FBA label=roomdef_36
 B $6FBA,1,1 7 -- Room dimensions index
 B $6FBB,1,1 0 -- Number of boundaries
@@ -1999,7 +1999,7 @@ B $6FCA,3,3 { interiorobject_TUNNEL_SW_NE, 12, 4 }
 B $6FCD,3,3 { interiorobject_TUNNEL_SW_NE, 8, 6 }
 B $6FD0,3,3 { interiorobject_TUNNEL_14, 4, 8 }
 ;
-b $6FD3 Room 32.
+b $6FD3 Room 32
 @ $6FD3 label=roomdef_32
 B $6FD3,1,1 8 -- Room dimensions index
 B $6FD4,1,1 0 -- Number of boundaries
@@ -2012,7 +2012,7 @@ B $6FE3,3,3 { interiorobject_TUNNEL_NW_SE, 8, 4 }
 B $6FE6,3,3 { interiorobject_TUNNEL_NW_SE, 12, 6 }
 B $6FE9,3,3 { interiorobject_TUNNEL_17, 16, 8 }
 ;
-b $6FEC Room 34.
+b $6FEC Room 34
 @ $6FEC label=roomdef_34
 B $6FEC,1,1 6 -- Room dimensions index
 B $6FED,1,1 0 -- Number of boundaries
@@ -2026,7 +2026,7 @@ B $6FFF,3,3 { interiorobject_TUNNEL_NW_SE, 12, 6 }
 B $7002,3,3 { interiorobject_TUNNEL_NW_SE, 16, 8 }
 B $7005,3,3 { interiorobject_TUNNEL_JOIN_18, 20, 10 }
 ;
-b $7008 Room 35.
+b $7008 Room 35
 @ $7008 label=roomdef_35
 B $7008,1,1 6 -- Room dimensions index
 B $7009,1,1 0 -- Number of boundaries
@@ -2040,7 +2040,7 @@ B $701B,3,3 { interiorobject_TUNNEL_NW_SE, 12, 6 }
 B $701E,3,3 { interiorobject_TUNNEL_NW_SE, 16, 8 }
 B $7021,3,3 { interiorobject_TUNNEL_NW_SE, 20, 10 }
 ;
-b $7024 Room 30.
+b $7024 Room 30
 @ $7024 label=roomdef_30
 B $7024,1,1 5 -- Room dimensions index
 B $7025,1,1 0 -- Number of boundaries
@@ -2054,7 +2054,7 @@ B $7038,3,3 { interiorobject_TUNNEL_CORNER_6, 8, 6 }
 B $703B,3,3 { interiorobject_TUNNEL_SW_NE, 4, 8 }
 B $703E,3,3 { interiorobject_TUNNEL_SW_NE, 0, 10 }
 ;
-b $7041 Room 40.
+b $7041 Room 40
 @ $7041 label=roomdef_40
 B $7041,1,1 9 -- Room dimensions index
 B $7042,1,1 0 -- Number of boundaries
@@ -2068,7 +2068,7 @@ B $7054,3,3 { interiorobject_TUNNEL_SW_NE, 8, 6 }
 B $7057,3,3 { interiorobject_TUNNEL_SW_NE, 4, 8 }
 B $705A,3,3 { interiorobject_TUNNEL_SW_NE, 0, 10 }
 ;
-b $705D Room 44.
+b $705D Room 44
 @ $705D label=roomdef_44
 B $705D,1,1 8 -- Room dimensions index
 B $705E,1,1 0 -- Number of boundaries
@@ -2081,7 +2081,7 @@ B $706C,3,3 { interiorobject_TUNNEL_NW_SE, 8, 4 }
 B $706F,3,3 { interiorobject_TUNNEL_NW_SE, 12, 6 }
 B $7072,3,3 { interiorobject_TUNNEL_CORNER_NW_NE, 16, 8 }
 ;
-b $7075 Room 50: Blocked tunnel.
+b $7075 Room 50: Blocked tunnel
 @ $7075 label=roomdef_50_blocked_tunnel
 B $7075,1,1 5 -- Room dimensions index
 B $7076,1,1 1 -- Number of boundaries
@@ -2098,7 +2098,7 @@ B $708C,3,3 { interiorobject_COLLAPSED_TUNNEL_SW_NE, 8, 6 }
 B $708F,3,3 { interiorobject_TUNNEL_SW_NE, 4, 8 }
 B $7092,3,3 { interiorobject_TUNNEL_SW_NE, 0, 10 }
 ;
-b $7095 Interior object definitions.
+b $7095 Interior object definitions
 D $7095 This is an array of pointers to interior object definitions. It's 54 entries long.
 @ $7095 label=interior_object_defs
 W $7095,108,2
@@ -2461,7 +2461,7 @@ B $75B1,1,1 height
 B $75B2,96,8 tile references (incl. RLE)
 E $75B0 #HTML[#CALL:decode_object($75B0, 27)]
 ;
-b $7612 Character structures.
+b $7612 Character structures
 D $7612 This array contains one of the following seven-byte structures for each of the 26 game characters.
 D $7612 #TABLE(default) { =h Type | =h Bytes | =h Name | =h Meaning } { Character | 1 | character_and_flags | Character index. Bit 6 set => on-screen } { Room | 1 | room | Index of the room this character is in, and flags } { TinyPos | 3 | pos | Map position of the character } { Route | 2 | route | The route the character's on } TABLE#
 @ $7612 label=character_structs
@@ -2493,7 +2493,7 @@ B $76B3,7,7 { character_23_PRISONER_4, room_NONE, ( 52, 60, 24), (0x00, 0x10) }
 B $76BA,7,7 { character_24_PRISONER_5, room_NONE, ( 52, 44, 24), (0x00, 0x10) }
 B $76C1,7,7 { character_25_PRISONER_6, room_NONE, ( 52, 28, 24), (0x00, 0x10) }
 ;
-b $76C8 Item structures.
+b $76C8 Item structures
 D $76C8 This array contains one of the following seven-byte structures for each of the 16 game items:
 D $76C8 #TABLE(default) { =h Type | =h Bytes | =h Name | =h Meaning } { Item | 1 | item_and_flags | bits 0..3 = item; bits 4..7 = flags } { Room | 1 | room_and_flags | bits 0..5 = room; bits 6..7 = flags } { TinyPos | 3 | pos | Map position of the item } { IsoPos | 2 | iso_pos | Isometric projected position of the item } TABLE#
 @ $76C8 label=item_structs
@@ -2520,7 +2520,7 @@ B $772A,7,7 { item_PURSE, room_NONE, (36, 44, 4), (0x7E, 0xF4) }
 B $7731,7,7 { item_COMPASS, room_NONE, (52, 28, 4), (0x7E, 0xF4) }
 @ $7738 assemble=,1
 ;
-b $7738 Routes.
+b $7738 Routes
 D $7738 This is an array, 46 long, of pointers to $FF-terminated runs.
 @ $7738 label=routes
 W $7738,92,2
@@ -2603,7 +2603,7 @@ B $7835,3,3 route_hut2_right_to_left. #ROUTE($7835)
 B $7838,2,2 route_hero_roll_call. #ROUTE($7838)
 @ $783A assemble=,0
 ;
-w $783A Locations.
+w $783A Locations
 D $783A Table of locations used by routes.
 D $783A Array, 78 long, of two-byte locations (index, step).
 @ $783A label=locations
@@ -2708,7 +2708,7 @@ W $78D0,2,2 (121, 109)
 W $78D2,2,2 (119, 109)
 W $78D4,2,2 (117, 109)
 ;
-b $78D6 Doors.
+b $78D6 Doors
 D $78D6 Table of 62 pairs of four-byte structs laid out as follows:
 D $78D6 #TABLE(default) { =h Type | =h Bytes | =h Name | =h Meaning } { Byte | 1 | room_and_direction | bits 0..1 = direction door faces (direction_t); bits 2..7 = target room of door (room_t) } { TinyPos | 3 | pos | Map position of the door } TABLE#
 D $78D6 Each door is stored as a pair of two "half doors". Each half of the pair contains (room, direction, position) where the room is the *target* room index, the direction is the direction in which the door faces and the position is the coordinates of the door. Outdoor coordinates are divided by four.
@@ -2842,7 +2842,7 @@ B $7ABA,4,4 BYTE(room_29_SECOND_TUNNEL_START, 3), 0x20, 0x34, 12 },
 B $7ABE,4,4 BYTE(room_52,                     0), 0x64, 0x34, 12 },
 B $7AC2,4,4 BYTE(room_51,                     2), 0x38, 0x54, 12 },
 ;
-b $7AC6 Solitary position.
+b $7AC6 Solitary position
 D $7AC6 This is the coordinates (type: tinypos_t) of where our hero stands when he's in solitary.
 D $7AC6 Used by #R$CB98.
 @ $7AC6 label=solitary_pos
@@ -2900,7 +2900,7 @@ W $7B30,2,2 Return
 W $7B32,2,2 Return
 W $7B34,2,2 Return
 ;
-c $7B36 Pick up item.
+c $7B36 Pick up item
 D $7B36 This handles picking up items.
 D $7B36 Used by the routine at #R$7AC9.
 @ $7B36 label=pick_up_item
@@ -2945,7 +2945,7 @@ C $7B81,3 Draw held items
 C $7B84,6 Play the "pick up item" sound
 C $7B8A,1 Return
 ;
-c $7B8B Drop item.
+c $7B8B Drop item
 D $7B8B This drops the hero's first held item then moves the second into the first slot.
 D $7B8B Used by the routine at #R$7AC9.
 N $7B8B Return if no items are held.
@@ -2973,7 +2973,7 @@ C $7BB1,3 Set game window attributes
 C $7BB4,1 Restore item
 E $7B8B FALL THROUGH into drop_item_tail.
 ;
-c $7BB5 Drop item, tail part.
+c $7BB5 Drop item, tail part
 D $7BB5 This updates the itemstruct with the dropped item. It is its own function so that #R$B387 can make use of it.
 D $7BB5 Used by the routine at #R$B387.
 R $7BB5 I:A Item index.
@@ -2996,7 +2996,7 @@ C $7BCC,3 Set height to zero
 C $7BCF,1 Move itemstruct pointer into #REGhl
 E $7BB5 FALL THROUGH into calc_exterior_item_iso_pos.
 ;
-c $7BD0 Calculate exterior item isometric position.
+c $7BD0 Calculate exterior item isometric position
 D $7BD0 Calculate isometric screen position for exterior item.
 D $7BD0 Used by the routine at #R$CD31.
 R $7BD0 I:HL Pointer to itemstruct's pos.height field.
@@ -3019,7 +3019,7 @@ C $7BDF,1 Point #REGhl at itemstruct.iso_pos
 C $7BE0,3 Store #REGbc
 C $7BE3,1 Return
 ;
-c $7BE4 Drop item, interior.
+c $7BE4 Drop item, interior
 D $7BE4 Used by the routine at #R$7BB5.
 R $7BE4 I:HL Pointer to itemstruct.room.
 @ $7BE4 label=drop_item_interior
@@ -3035,7 +3035,7 @@ C $7BEF,1 Point #REGhl at itemstruct.height
 C $7BF0,2 Set height to five
 E $7BE4 FALL THROUGH into calc_interior_item_iso_pos.
 ;
-c $7BF2 Calculate interior item isometric position.
+c $7BF2 Calculate interior item isometric position
 D $7BF2 This calculates the isometric screen position for the given interior item. Unlike the exterior version of this routine at #R$7BD0, this version scales the result down with rounding to nearest.
 D $7BF2 Used by the routine at #R$CD31.
 R $7BF2 I:HL Pointer to itemstruct's pos.height field.
@@ -3073,7 +3073,7 @@ C $7C23,1 Unbank x result
 C $7C24,1 Store #REGa (x result)
 C $7C25,1 Return
 ;
-c $7C26 Item to itemstruct.
+c $7C26 Item to itemstruct
 D $7C26 This turns an item index to an itemstruct pointer.
 D $7C26 Used by the routines at #R$7BB5, #R$A228 and #R$CD31.
 R $7C26 I:A Item index (type: item_t).
@@ -3084,7 +3084,7 @@ C $7C2B,3 Point #REGhl at the first element of item_structs
 C $7C2E,4 Add the two
 C $7C32,1 Return i'th element of item_structs in #REGhl
 ;
-c $7C33 Draw all items.
+c $7C33 Draw all items
 D $7C33 This draws both held items.
 D $7C33 Used by the routines at #R$7B36, #R$7B8B, #R$B107, #R$B387, #R$B3C4, #R$B75A and #R$CB98.
 @ $7C33 label=draw_all_items
@@ -3096,7 +3096,7 @@ C $7C3F,3 Fetch the second held item
 C $7C42,3 Draw the item
 C $7C45,1 Return
 ;
-c $7C46 Draw item.
+c $7C46 Draw item
 D $7C46 This draws the required item at the specified screen address.
 D $7C46 Used by the routine at #R$7C33.
 R $7C46 I:A Item index (type: item_t).
@@ -3133,7 +3133,7 @@ C $7C7D,1 Retrieve screen address saved at #R$7C54
 C $7C7E,3 Plot the bitmap without masking
 C $7C81,1 Return
 ;
-c $7C82 Find nearby item.
+c $7C82 Find nearby item
 D $7C82 This returns the first item within range of the hero not by distance but by item order. A radius of one is used when outdoors, otherwise a radius of six is used.
 D $7C82 Used by the routine at #R$7B36.
 R $7C82 O:AF Z set if item found, NZ otherwise.
@@ -3178,7 +3178,7 @@ C $7CB9,2 ...loop for each item
 C $7CBB,2 Ran out of items: set NZ (not found)
 C $7CBD,1 Return
 ;
-c $7CBE Plot bitmap.
+c $7CBE Plot bitmap
 D $7CBE This plots a bitmap without masking.
 D $7CBE Used by the routines at #R$7C46, #R$A035 and #R$A0C9.
 R $7CBE I:BC Dimensions (#REGb x #REGc == width x height, where width is specified in bytes).
@@ -3201,7 +3201,7 @@ C $7CCF,1 Decrement the row counter
 C $7CD0,3 ...loop for every row
 C $7CD3,1 Return
 ;
-c $7CD4 Screen wipe.
+c $7CD4 Screen wipe
 D $7CD4 Wipe an area of the screen.
 D $7CD4 Used by the routine at #R$7C46.
 R $7CD4 I:BC Dimensions (#REGb x #REGc == width x height, where width is specified in bytes).
@@ -3222,7 +3222,7 @@ C $7CE4,1 Decrement the row counter
 C $7CE5,3 ...loop for every row
 C $7CE8,1 Return
 ;
-c $7CE9 Next scanline down.
+c $7CE9 Next scanline down
 D $7CE9 This returns the same position on the next scanline down.
 D $7CE9 Given a screen address, this returns the same horizontal position but on the next scanline down.
 D $7CE9 Used by the routines at #R$7CBE, #R$7CD4, #R$A035 and #R$F20B.
@@ -3241,33 +3241,33 @@ C $7CF9,1 Step
 C $7CFA,1 Restore
 C $7CFB,1 Return
 ;
-g $7CFC Message queue.
+g $7CFC Message queue
 D $7CFC This is a queue of pending message indexes. Each is a two-byte value. Terminated by a single message_QUEUE_END byte ($FF).
 @ $7CFC label=message_queue
 B $7CFC,19,8*2,3
 ;
-g $7D0F Message display delay.
+g $7D0F Message display delay
 D $7D0F This is a decrementing counter. When it reaches zero it shows the next message.
 @ $7D0F label=message_display_delay
 B $7D0F,1,1
 ;
-g $7D10 Message display index.
+g $7D10 Message display index
 D $7D10 This is an index into the message that we're displaying or wiping.
 D $7D10 #R$7D48 uses this. If it's 128 then we call #R$7D99. If it exceeds 128 then we call #R$7D87. Otherwise we proceed with displaying the next character.
 @ $7D10 label=message_display_index
 B $7D10,1,1
 ;
-g $7D11 Message queue pointer.
+g $7D11 Message queue pointer
 D $7D11 This is a pointer to the next available slot in the message queue.
 @ $7D11 label=message_queue_pointer
 W $7D11,2,2
 ;
-g $7D13 Current message character.
+g $7D13 Current message character
 D $7D13 This is a pointer to the next message character to be displayed.
 @ $7D13 label=current_message_character
 W $7D13,2,2
 ;
-c $7D15 Queue message.
+c $7D15 Queue message
 D $7D15 This adds a new message index to the pending messages queue.
 D $7D15 Used by the routines at #R$9DCF, #R$9E98, #R$A1D3, #R$A1E7, #R$A1F0, #R$A1F9, #R$A206, #R$A219, #R$A228, #R$B107, #R$B1D4, #R$B387, #R$B417, #R$B495, #R$B4B8, #R$CB98, #R$CD31 and #R$EF9A.
 D $7D15 Commentary: The use of #REGc on entry to this routine is puzzling. One routine (#R$9DCF) explicitly sets it to zero before calling, but the other callers do not so we receive whatever was in #REGc previously.
@@ -3285,7 +3285,7 @@ C $7D26,5 Store the new message index
 C $7D2B,3 Update the message queue pointer
 C $7D2E,1 Return
 ;
-c $7D2F Plot glyph.
+c $7D2F Plot glyph
 D $7D2F This plots a single glyph (indirectly).
 D $7D2F Used by the routines at #R$7D48, #R$A10B, #R$A5BF and #R$F350.
 R $7D2F I:HL Pointer to glyph index.
@@ -3296,7 +3296,7 @@ R $7D2F O:DE Points to the next character position to the right.
 C $7D2F,1 Fetch the glyph index
 E $7D2F FALL THROUGH into plot_single_glyph,
 ;
-c $7D30 Plot single glyph.
+c $7D30 Plot single glyph
 D $7D30 This plots the specified glyph at the given screen address.
 D $7D30 Used by the routine at #R$7D87.
 D $7D30 Note: This will only work for screen addresses that stay within their respective third of the screen.
@@ -3318,7 +3318,7 @@ C $7D44,2 Restore and point #REGde at the next character position to the right
 C $7D46,1 Restore #REGhl
 C $7D47,1 Return
 ;
-c $7D48 Message display.
+c $7D48 Message display
 D $7D48 This incrementally wipes and displays queued game messages.
 D $7D48 Used by the routine at #R$9D7B.
 N $7D48 Proceed only if message display delay is zero.
@@ -3344,7 +3344,7 @@ C $7D82,1 Return
 C $7D83,3 If it wasn't the end of the string set current message character to #REGhl
 C $7D86,1 Return
 ;
-c $7D87 Wipe message.
+c $7D87 Wipe message
 D $7D87 This incrementally wipes away any on-screen game message.
 D $7D87 Used by the routine at #R$7D48.
 @ $7D87 label=wipe_message
@@ -3356,7 +3356,7 @@ C $7D93,2 Glyph index of space
 C $7D95,3 Plot the single space glyph
 C $7D98,1 Return
 ;
-c $7D99 Next message.
+c $7D99 Next message
 D $7D99 This causes the next queued game message to get displayed.
 D $7D99 Used by the routine at #R$7D48.
 D $7D99 Called when messages.display_index == 128.
@@ -3373,7 +3373,7 @@ C $7DC0,8 Move the message queue pointer back
 C $7DC8,4 Zero the message display index
 C $7DCC,1 Return
 ;
-w $7DCD Messages table.
+w $7DCD Messages table
 D $7DCD This is an array of 19 pointers to game messages. The game messages aren't ASCII: they're encoded to match the game font and are $FF terminated.
 @ $7DCD label=messages_table
 W $7DCD,40,2
@@ -3412,11 +3412,11 @@ B $7EDF,15,15 "MORALE IS ZERO" #HTML[/ #CALL:decode_stringFF($7EDF)]
 @ $7EEE label=messages_item_discovered
 B $7EEE,16,16 "ITEM DISCOVERED" #HTML[/ #CALL:decode_stringFF($7EEE)]
 ;
-u $7EFE Unreferenced bytes.
+u $7EFE Unreferenced bytes
 D $7EFE Two alignment bytes to make static_tiles start at $7F00.
 B $7EFE,2,2
 ;
-b $7F00 Static tiles.
+b $7F00 Static tiles
 D $7F00 These tiles are used to draw fixed screen elements such as medals.
 D $7F00 9 bytes each: 8x8 bitmap + 1 byte attribute. 75 tiles.
 D $7F00 #UDGTABLE { #UDGARRAY75,6,1;$7F00,7;$7F09;$7F12;$7F1B;$7F24;$7F2D;$7F36;$7F3F;$7F48;$7F51;$7F5A;$7F63;$7F6C;$7F75;$7F7E;$7F87;$7F90;$7F99;$7FA2;$7FAB;$7FB4;$7FBD;$7FC6;$7FCF;$7FD8,7;$7FE1,7;$7FEA,7;$7FF3,7;$7FFC,4;$8005,4;$800E,4;$8017,4;$8020,3;$8029,7;$8032,3;$803B,3;$8044,3;$804D,3;$8056,3;$805F,3;$8068,3;$8071,3;$807A,3;$8083,3;$808C,7;$8095,3;$809E,3;$80A7,3;$80B0,3;$80B9,7;$80C2,7;$80CB;$80D4;$80DD;$80E6;$80EF,5;$80F8,5;$8101,4;$810A,4;$8113,4;$811C,7;$8125,7;$812E;$8137;$8140;$8149;$8152,5;$815B,5;$8164,5;$816D,4;$8176;$817F;$8188;$8191;$819A(static-tiles) } TABLE#
@@ -3497,10 +3497,10 @@ B $8188,9,9 bell_top_right
 B $8191,9,9 bell_middle_left
 B $819A,9,9 bell_middle_middle
 ;
-u $81A3 Unreferenced byte.
+u $81A3 Unreferenced byte
 B $81A3,1,1
 ;
-g $81A4 Saved position.
+g $81A4 Saved position
 D $81A4 This holds a position (type: pos_t OR tinypos_t, depending on the code). It is used all over the code either for scratch space or for argument passing.
 @ $81A4 label=saved_pos_x
 @ $81A4 keep
@@ -3508,22 +3508,22 @@ D $81A4 This holds a position (type: pos_t OR tinypos_t, depending on the code).
 @ $81A8 label=saved_height
 W $81A4,6,2
 ;
-g $81AA Touch's stash for register A.
+g $81AA Touch's stash for register A
 D $81AA The only user of this is #R$AF8F which stashes a copy of #REGa here.
 @ $81AA label=touch_stashed_A
 B $81AA,1,1
 ;
-u $81AB Unreferenced byte.
+u $81AB Unreferenced byte
 B $81AB,1,1
 ;
-g $81AC Bitmap and mask pointers.
+g $81AC Bitmap and mask pointers
 D $81AC These are used by the vischar and item plotting code.
 @ $81AC label=bitmap_pointer
 @ $81AE label=mask_pointer
 @ $81B0 label=foreground_mask_pointer
 W $81AC,6,2
 ;
-g $81B2 Saved (tiny) position.
+g $81B2 Saved (tiny) position
 D $81B2 This holds a position (type: tinypos_t). This is populated when a vischar or item is readied for plotting. It's then used to control the rendering of masks into the mask buffer.
 D $81B2 #R$CC37 also uses it as a scratch space.
 @ $81B2 label=tinypos_stash_x
@@ -3531,61 +3531,61 @@ D $81B2 #R$CC37 also uses it as a scratch space.
 @ $81B4 label=tinypos_stash_height
 B $81B2,3,1
 ;
-g $81B5 Isometric position.
+g $81B5 Isometric position
 D $81B5 This holds the current vischar's isometric projected map position.
 @ $81B5 label=iso_pos_x
 @ $81B6 label=iso_pos_y
 B $81B5,2,1
 ;
-g $81B7 Flip sprite.
+g $81B7 Flip sprite
 D $81B7 This is set by #R$E420. When set, the top bit causes the character to be drawn flipped horizontally.
 @ $81B7 label=flip_sprite
 B $81B7,1,1
 ;
-g $81B8 Hero's map position.
+g $81B8 Hero's map position
 D $81B8 This holds the hero's map position (type: tinypos_t). #R$EF9A, for example, uses this to test that the hero is within the roll call area.
 @ $81B8 label=hero_map_position_x
 @ $81B9 label=hero_map_position_y
 @ $81BA label=hero_map_position_height
 B $81B8,3,1
 ;
-g $81BB Map position.
+g $81BB Map position
 D $81BB This is used when drawing tiles and is also used to decide whether to permit the map to scroll.
 @ $81BB label=map_position
 W $81BB,2,2
 ;
-g $81BD Searchlight state.
+g $81BD Searchlight state
 D $81BD This is set to searchlight_STATE_SEARCHING ($FF) when the hero is being searched for. It's set to searchlight_STATE_CAUGHT ($1F) when the hero is caught in the searchlight. Otherwise it's set to ($00..$1E) when the hero has evaded the searchlight.
 D $81BD Used by the routines at #R$ADBD, #R$B866.
 D $81BD #TABLE(default,centre) { =h Value | =h Meaning } { 255 | Searching } { 31 | Caught the hero } { 0..30 | Tracking the hero } TABLE#
 @ $81BD label=searchlight_state
 B $81BD,1,1
 ;
-g $81BE Room definition bounds index.
+g $81BE Room definition bounds index
 D $81BE This is a copy of the first byte of the current room definition. It indexes roomdef_dimensions[] allowing #R$B29F to perform a bounds check.
 @ $81BE label=roomdef_bounds_index
 B $81BE,1,1
 ;
-g $81BF Room definition object bounds count.
+g $81BF Room definition object bounds count
 D $81BF This is the count of object bounds (places where the hero cannot move to) held in #R$81C0.
 @ $81BF label=roomdef_object_bounds_count
 B $81BF,1,1
 ;
-g $81C0 Room definition object bounds.
+g $81C0 Room definition object bounds
 D $81C0 This holds up to four object bounds (places where the hero cannot move to) copied from the current room definition.
 @ $81C0 label=roomdef_object_bounds
 B $81C0,16,4
 ;
-g $81D0 Unreferenced bytes.
+g $81D0 Unreferenced bytes
 B $81D0,6,6
 ;
-g $81D6 Interior doors.
+g $81D6 Interior doors
 D $81D6 This holds up to four interior doors indices.
 D $81D6 Used by the routines at #R$69DC, #R$B32D, #R$B4D0.
 @ $81D6 label=interior_doors
 B $81D6,4,4
 ;
-g $81DA Interior mask data.
+g $81DA Interior mask data
 D $81DA This holds a count byte followed by up to seven mask structures for the current room definition.
 D $81DA Used by the routines at #R$6A35 and #R$B916.
 D $81DA The first byte is a count, followed by <count> mask_t's, with the following format:
@@ -3593,28 +3593,28 @@ D $81DA #TABLE(default) { =h Type | =h Bytes | =h Name | =h Meaning } { Byte | 1
 @ $81DA label=interior_mask_data
 B $81DA,57,8*7,1
 ;
-g $8213 Saved item.
+g $8213 Saved item
 D $8213 Written to by #R$DC41 setup_item_plotting but never read.
 @ $8213 label=saved_item
 B $8213,1,1
 ;
-g $8214 Item height.
+g $8214 Item height
 D $8214 This is a copy of item_definition height.
 D $8214 Used by the routines at #R$DC41, #R$DD02.
 @ $8214 label=item_height
 B $8214,1,1
 ;
-g $8215 Items held.
+g $8215 Items held
 D $8215 The two items which the hero is holding. Each byte holds one item. Initialised to ($FF,$FF) meaning no item in either slot.
 @ $8215 label=items_held
 W $8215,2,2
 ;
-g $8217 Character index.
+g $8217 Character index
 D $8217 The current character index.
 @ $8217 label=character_index
 B $8217,1,1
 ;
-b $8218 Tiles.
+b $8218 Tiles
 D $8218 Exterior tiles set 0. 111 tiles.
 @ $8218 label=tiles
 @ $8218 label=mask_tiles
@@ -4499,13 +4499,13 @@ B $9D60,8,8 #HTML[#UDGARRAY1,7,4,1;$9D60-$9D67-8(interior-tiles-191)]
 B $9D68,8,8 #HTML[#UDGARRAY1,7,4,1;$9D68-$9D6F-8(interior-tiles-192)]
 B $9D70,8,8 #HTML[#UDGARRAY1,7,4,1;$9D70-$9D77-8(interior-tiles-193)]
 ;
-c $9D78 Main loop setup.
+c $9D78 Main loop setup
 D $9D78 Used by the routine at #R$F163.
 D $9D78 Commentary: There seems to be litle point in this: enter_room terminates with 'goto main_loop' so it never returns. In fact, the single calling routine (main) might just as well goto enter_room instead of goto main_loop_setup.
 @ $9D78 label=main_loop_setup
 C $9D78,3 The hero enters a room - returns via squash_stack_goto_main
 ;
-c $9D7B Main loop.
+c $9D7B Main loop
 D $9D7B This is the main game loop.
 D $9D7B Unlike in higher-level languages The Great Escape's calling convention is not always strictly hierarchical. At points in the game where a reset or transition is required (see #R$68A2, #R$68F4) the game will "give up" and call #R$691A. It will reset the stack pointer and jump to this main loop.
 D $9D7B Used by the routine at #R$691A.
@@ -4535,7 +4535,7 @@ C $9DC2,3 Wave the morale flag
 C $9DC5,8 Dispatch a timed event event once every 64 ticks of the game counter
 C $9DCD,2 ...loop forever
 ;
-c $9DCF Check morale.
+c $9DCF Check morale
 D $9DCF This routine checks the morale level and reports if it's (near) zero and inhibits player control if exhausted.
 D $9DCF Used by the routine at #R$9D7B.
 @ $9DCF label=check_morale
@@ -4545,7 +4545,7 @@ C $9DDB,5 Set the "morale exhausted" flag to inhibit player input
 C $9DE0,4 Immediately take automatic control of the hero
 C $9DE4,1 Return
 ;
-c $9DE5 Keyscan BREAK.
+c $9DE5 Keyscan BREAK
 D $9DE5 Check for a BREAK keypress.
 D $9DE5 Used by the routine at #R$9D7B.
 D $9DE5 If pressed then clear the screen and confirm with the player that they want to reset the game. Reset if requested.
@@ -4557,7 +4557,7 @@ C $9DFA,3 If 'Y' was pressed (Z set) then reset the game
 C $9DFD,7 If the global current room index is room_0_OUTDOORS then !(Reset the hero's position, redraw the scene, then zoombox it onto the screen) and return
 C $9E04,3 The hero enters a room - returns via squash_stack_goto_main
 ;
-c $9E07 Process player input.
+c $9E07 Process player input
 D $9E07 This first checks for reasons to not handle the player's input, such as the hero being in solitary, the 'game over' state of his morale being exhausted, or the hero being busy picking a lock or cutting through a wire fence. If none of those are the case we fetch the current player input into #REGa. If the player's input is non-zero (ie. the player is pressing a button) we reset the #R$A139 and check for the hero being in bed, or at breakfast. If the hero was in bed, or at breakfast, we make him stand up, then update the scenery and refresh the screen. We then check for 'pick up', 'drop' and 'use' input events which are handled by #R$7AC9. Finally assign the new input value to the hero's vischar then set the kick flag to make it update.
 D $9E07 Used by the routine at #R$9D7B.
 N $9E07 Morale exhausted? If so then don't allow input.
@@ -4610,7 +4610,7 @@ C $9E7A,3 Point #REGhl at hero in bed flag
 @ $9E7D label=process_player_input_common
 C $9E7D,2 Clear the hero at breakfast / hero in bed flag
 C $9E7F,3 Expand out the room definition for room_index
-C $9E82,3 Render visible tiles array into the screen buffer.
+C $9E82,3 Render visible tiles array into the screen buffer
 @ $9E85 label=process_player_input_check_fire
 C $9E85,1 Unbank input routine result
 C $9E86,2 Was fire pressed?
@@ -4625,7 +4625,7 @@ C $9E93,1 Return if not
 C $9E94,3 Kick a sprite update if it did
 C $9E97,1 Return
 ;
-c $9E98 Picking lock.
+c $9E98 Picking lock
 D $9E98 This locks the player out while the lock is being picked.
 D $9E98 Used by the routine at #R$9E07.
 @ $9E98 label=picking_lock
@@ -4638,7 +4638,7 @@ N $9EAA This entry point is used by the routine at #R$9EB2.
 C $9EAA,7 Clear the vischar_FLAGS_PICKING_LOCK and vischar_FLAGS_CUTTING_WIRE flags
 C $9EB1,1 Return
 ;
-c $9EB2 Cutting wire.
+c $9EB2 Cutting wire
 D $9EB2 This locks the player out while the wire fence is being cut open.
 D $9EB2 Used by the routine at #R$9E07.
 @ $9EB2 label=cutting_wire
@@ -4669,7 +4669,7 @@ B $9EE1,1,1 input_UP   + input_RIGHT + input_KICK
 B $9EE2,1,1 input_DOWN + input_RIGHT + input_KICK
 B $9EE3,1,1 input_DOWN + input_LEFT  + input_KICK
 ;
-b $9EE4 Route to permitted.
+b $9EE4 Route to permitted
 D $9EE4 This table maps a route index to a list of valid rooms and areas. #R$9F21 uses this to check if the hero is in an area permitted by the current route.
 @ $9EE4 label=route_to_permitted
 B $9EE4,3,3 Route 42: #R$9EF9
@@ -4690,7 +4690,7 @@ B $9F0E,3,3 ( R3, R2,                    $FF)
 B $9F11,2,2 (R25,                        $FF)
 B $9F13,2,2 ( A1,                        $FF)
 ;
-b $9F15 Permitted bounds.
+b $9F15 Permitted bounds
 D $9F15 This is an array (type: bounds_t) of the three main exterior areas.
 D $9F15 Used by the routine at #R$A01A.
 @ $9F15 label=permitted_bounds
@@ -4698,7 +4698,7 @@ B $9F15,4,4 Corridor to exercise yard
 B $9F19,4,4 Hut area
 B $9F1D,4,4 Exercise yard area
 ;
-c $9F21 In permitted area.
+c $9F21 In permitted area
 D $9F21 This checks the hero's map position and colours the flag accordingly. It also detects escapes.
 D $9F21 This also sets the main (hero's) map position in #R$81B8 to that of the hero's vischar position.
 D $9F21 Used by the routine at #R$9D7B.
@@ -4827,7 +4827,7 @@ C $9FFF,4 Set the vischar's input to 0
 C $A003,2 Set the red flag flag
 C $A005,2 Jump to flag_select
 ;
-c $A007 In permitted area (end bit).
+c $A007 In permitted area (end bit)
 D $A007 This checks that the hero is in the specified room or camp bounds.
 D $A007 Used by the routine at #R$9F21.
 R $A007 I:A If bit 7 is set then bits 0..6 contain a room index. Otherwise it's an area index as passed into within_camp_bounds.
@@ -4848,7 +4848,7 @@ C $A016,3 Point #REGde at hero_map_position
 C $A019,1 Unbank #REGa - restoring original #REGa
 E $A007 FALL THROUGH to within_camp_bounds.
 ;
-c $A01A Within camp bounds.
+c $A01A Within camp bounds
 D $A01A This returns whether the given position is within the indexed area's bounds.
 D $A01A Used by the routine at #R$CB98.
 R $A01A I:A Index (0..2) into permitted_bounds[] table.
@@ -4875,7 +4875,7 @@ C $A030,1 Advance to second axis for bounds
 C $A031,2 ...loop
 C $A033,2 Return with flags Z (within area)
 ;
-c $A035 Wave morale flag.
+c $A035 Wave morale flag
 D $A035 This waves the morale flag up and down.
 D $A035 Used by the routines at #R$9D7B and #R$F4B7.
 @ $A035 label=wave_morale_flag
@@ -4912,7 +4912,7 @@ C $A068,3 Get the screen address of the morale flag
 C $A06B,3 Plot the flag always at 24x25 pixels in size
 C $A06E,3 Exit via plot_bitmap
 ;
-c $A071 Set morale flag screen attributes.
+c $A071 Set morale flag screen attributes
 D $A071 This sets the screen attributes for the morale flag.
 D $A071 Used by the routines at #R$9F21 and #R$F163.
 R $A071 I:A Screen attributes to use.
@@ -4926,7 +4926,7 @@ C $A07E,1 Move to next row
 C $A07F,2 ...loop
 C $A081,1 Return
 ;
-c $A082 Next scanline up.
+c $A082 Next scanline up
 D $A082 This, given a screen address, returns the same position on the scanline above.
 D $A082 Spectrum screen memory addresses have the form:
 D $A082 #TABLE(default) bit: { 15 | 14 | 13 | 12 | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 } field: { =c3 0-1-0 | =c2 Y7-Y6 | =c3 Y2-Y1-Y0 | =c3 Y5-Y4-Y3 | =c5 X4-X3-X2-X1-X0 } TABLE#
@@ -4950,14 +4950,14 @@ C $A091,2 If so bits Y5-Y4-Y3 are clear. Load #REGde with $FFE0 (-32)
 C $A093,1 Add
 C $A094,1 Return
 ;
-c $A095 Interior delay loop.
+c $A095 Interior delay loop
 D $A095 This slows down the game. It is called only when the hero is indoors.
 D $A095 Used by the routine at #R$9D7B.
 @ $A095 label=interior_delay_loop
 C $A095,8 Count down from 4095
 C $A09D,1 Return
 ;
-c $A09E Ring bell.
+c $A09E Ring bell
 D $A09E This rings the alarm bell. It is called three times from main_loop.
 D $A09E Used by the routine at #R$9D7B.
 @ $A09E label=ring_bell
@@ -4984,7 +4984,7 @@ N $A0C6 Plot UDG for the bell ringer "off".
 C $A0C6,3 Point #REGde at bell_ringer_bitmap_on
 E $A09E FALL THROUGH to plot_ringer.
 ;
-c $A0C9 Plot ringer.
+c $A0C9 Plot ringer
 D $A0C9 This draws the bell ringer.
 D $A0C9 Used by the routine at #R$A09E.
 R $A0C9 I:HL Source bitmap.
@@ -4992,7 +4992,7 @@ R $A0C9 I:HL Source bitmap.
 C $A0C9,3 Point #REGhl at screenaddr_bell_ringer
 C $A0CC,6 Plot the bell always at 8x12 pixels in size, exiting via it
 ;
-c $A0D2 Increase morale.
+c $A0D2 Increase morale
 D $A0D2 This increases the morale level by the amount specified in #REGb.
 D $A0D2 Used by the routines at #R$A0E9 and #R$A0F2.
 R $A0D2 I:B Amount to increase morale level by. (Preserved)
@@ -5001,7 +5001,7 @@ C $A0D2,4 Fetch morale level and add #REGb onto it
 C $A0D6,6 Clamp morale level to morale_MAX (112)
 E $A0D2 FALL THROUGH into set_morale.
 ;
-c $A0DC Set morale.
+c $A0DC Set morale
 D $A0DC This sets the morale level to the amount specified in #REGa.
 D $A0DC Used by the routines at #R$A0D2 and #R$A0E0.
 R $A0DC I:A Morale.
@@ -5009,7 +5009,7 @@ R $A0DC I:A Morale.
 C $A0DC,3 Set morale level to #REGa
 C $A0DF,1 Return
 ;
-c $A0E0 Decrease morale.
+c $A0E0 Decrease morale
 D $A0E0 This decreases the morale level by the amount specified in #REGb.
 D $A0E0 Used by the routines at #R$A1D3, #R$AE78, #R$CB98 and #R$CD31.
 R $A0E0 I:B Amount to decrease morale level by. (Preserved)
@@ -5018,19 +5018,19 @@ C $A0E0,4 Fetch morale level and subtract #REGb from it
 C $A0E4,3 Clamp morale level to morale_MIN (0)
 C $A0E7,2 Jump to set_morale
 ;
-c $A0E9 Increase morale by 10, score by 50.
+c $A0E9 Increase morale by 10, score by 50
 D $A0E9 Used by the routines at #R$B107, #R$B387, #R$B3C4, #R$B3E1, #R$B3F6, #R$B4B8 and #R$EFCB.
 @ $A0E9 label=increase_morale_by_10_score_by_50
 C $A0E9,5 Increase morale by 10
 C $A0EE,4 Increase score by 50, exiting via it
 ;
-c $A0F2 Increase morale by 5, score by 5.
+c $A0F2 Increase morale by 5, score by 5
 D $A0F2 Used by the routine at #R$7B36.
 @ $A0F2 label=increase_morale_by_5_score_by_5
 C $A0F2,5 Increase morale by 5
 C $A0F7,2 Increase score by 5, exiting via it
 ;
-c $A0F9 Increase score.
+c $A0F9 Increase score
 D $A0F9 This increases the score by the amount specified in #REGb then plots it.
 D $A0F9 Used by the routines at #R$68F4, #R$A0E9 and #R$A0F2.
 R $A0F9 I:B Amount to increase score by.
@@ -5051,7 +5051,7 @@ C $A108,1 Restore HL
 C $A109,2 ...loop until the (score specified on entry) turns have been had
 E $A0F9 FALL THROUGH into plot_score.
 ;
-c $A10B Plot score.
+c $A10B Plot score
 D $A10B This draws the current score to the screen.
 D $A10B Used by the routines at #R$B75A and #R$F163.
 @ $A10B label=plot_score
@@ -5067,7 +5067,7 @@ C $A119,1 Restore BC
 C $A11A,2 ...loop until all digits plotted
 C $A11C,1 Return
 ;
-c $A11D Play speaker.
+c $A11D Play speaker
 D $A11D This plays the speaker for #REGb iterations with a delay #REGc.
 D $A11D Used by the routines at #R$7B36, #R$7B8B, #R$A09E, #R$C4E0 and #R$CA81.
 R $A11D I:B Number of iterations to play for.
@@ -5082,14 +5082,14 @@ C $A12A,2 Toggle the speaker bit
 C $A12C,2 ...loop
 C $A12E,1 Return
 ;
-g $A12F Game counter.
+g $A12F Game counter
 D $A12F This counts $00..$FF then wraps around.
 D $A12F Read-only by main_loop, picking_lock, cutting_wire, action_wiresnips, action_lockpick.
 D $A12F Write/read-write by wave_morale_flag.
 @ $A12F label=game_counter
 B $A12F,1,1
 ;
-g $A130 Bell.
+g $A130 Bell
 D $A130 This is the state of the bell.
 D $A130 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Ring indefinitely } { 255 | Don't ring } { N | Ring for N calls } TABLE#
 D $A130 Read-only by automatics.
@@ -5097,22 +5097,22 @@ D $A130 Write/read-write by in_permitted_area, ring_bell, event_wake_up, event_g
 @ $A130 label=bell
 B $A130,1,1
 ;
-u $A131 Unreferenced byte.
+u $A131 Unreferenced byte
 B $A131,1,1
 ;
-g $A132 Score digits.
+g $A132 Score digits
 D $A132 Read-only by plot_score.
 D $A132 Write/read-write by increase_score, reset_game.
 @ $A132 label=score_digits
 B $A132,5,5
 ;
-g $A137 Hero in breakfast.
+g $A137 Hero in breakfast
 D $A137 This is the 'hero is at breakfast' flag.
 D $A137 Write/read-write by process_player_input, end_of_breakfast, hero_sit_sleep_common.
 @ $A137 label=hero_in_breakfast
 B $A137,1,1
 ;
-g $A138 Red flag.
+g $A138 Red flag
 D $A138 This is the 'red morale flag' flag.
 D $A138 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | The hero is in a permitted area } { 255 | The hero is not in a permitted area } TABLE#
 D $A138 Read-only by automatics, guards_follow_suspicious_character.
@@ -5120,21 +5120,21 @@ D $A138 Write/read-write by in_permitted_area.
 @ $A138 label=red_flag
 B $A138,1,1
 ;
-g $A139 Automatic player counter.
+g $A139 Automatic player counter
 D $A139 This counts down while there are no input events. An input event will reset it to 31. When it reaches zero the CPU will assume control of the hero.
 D $A139 Read-only by touch, automatics, character_behaviour.
 D $A139 Write/read-write by check_morale, process_player_input, charevnt_hero_release, solitary.
 @ $A139 label=automatic_player_counter
 B $A139,1,1
 ;
-g $A13A In solitary.
+g $A13A In solitary
 D $A13A This is the 'in solitary' flag. When set ($FF) it stops #R$A33F working, stops automatic from running, stops process_player_input from running, i_p_a too.
 D $A13A Read-only by process_player_input, in_permitted_area, set_hero_route, automatics.
 D $A13A Write/read-write by charevnt_solitary_ends, solitary.
 @ $A13A label=in_solitary
 B $A13A,1,1
 ;
-g $A13B Morale exhausted.
+g $A13B Morale exhausted
 D $A13B This is the 'morale exhausted' flag. It inhibits user input when non-zero.
 D $A13B Set by check_morale.
 D $A13B Reset by reset_game.
@@ -5143,76 +5143,76 @@ D $A13B Write/read-write by check_morale.
 @ $A13B label=morale_exhausted
 B $A13B,1,1
 ;
-g $A13C Remaining morale.
+g $A13C Remaining morale
 D $A13C This is the hero's current morale level. It ranges from morale_MIN (0) to morale_MAX (112).
 D $A13C Read-only by check_morale, wave_morale_flag.
 D $A13C Write/read-write by increase_morale, decrease_morale, reset_game.
 @ $A13C label=morale
 B $A13C,1,1
 ;
-g $A13D Clock.
+g $A13D Clock
 D $A13D This is the game clock. It ranges from 0 to 139.
 D $A13D Read-only by in_permitted_area.
 D $A13D Write/read-write by dispatch_timed_event, reset_map_and_characters.
 @ $A13D label=clock
 B $A13D,1,1
 ;
-g $A13E Entered move_a_character.
+g $A13E Entered move_a_character
 D $A13E This is the 'character index is valid' flag. In character_bed_state etc.: when non-zero, character_index is valid, otherwise #REGiy points to a character_struct.
 D $A13E Read-only by charevnt_bed, charevnt_breakfast.
 D $A13E Write/read-write by set_route, spawn_character, move_character, automatics, set_route.
 @ $A13E label=entered_move_a_character
 B $A13E,1,1
 ;
-g $A13F Hero in bed.
+g $A13F Hero in bed
 D $A13F This is the 'hero in bed' flag.
 D $A13F Read-only by event_night_time,
 D $A13F Write/read-write by process_player_input, wake_up, hero_sit_sleep_common.
 @ $A13F label=hero_in_bed
 B $A13F,1,1
 ;
-g $A140 Displayed morale.
+g $A140 Displayed morale
 D $A140 This is the currently-displayed morale. It lags behind the actual morale at #R$A13C while the flag drifts to its target level.
 D $A140 Write/read-write by wave_morale_flag.
 @ $A140 label=displayed_morale
 B $A140,1,1
 ;
-g $A141 Morale flag screen address.
+g $A141 Morale flag screen address
 D $A141 This is a pointer to the screen address where the morale flag was most recently plotted.
 D $A141 Write/read-write by wave_morale_flag.
 @ $A141 label=moraleflag_screen_address
 W $A141,2,2
 ;
-g $A143 Pointer to door being lockpicked.
+g $A143 Pointer to door being lockpicked
 D $A143 This is the address of a door (in locked_doors[]) in which bit 7 is cleared when successfully picked.
 D $A143 Read-only by picking_lock.
 D $A143 Write/read-write by action_lockpick.
 @ $A143 label=ptr_to_door_being_lockpicked
 W $A143,2,2
 ;
-g $A145 Player locked out until.
+g $A145 Player locked out until
 D $A145 This is the game time at which player control will be restored, e.g. when picking a lock or cutting though a wire fence.
 D $A145 Read-only by picking_lock, cutting_wire.
 D $A145 Write/read-write by action_wiresnips, action_lockpick.
 @ $A145 label=player_locked_out_until
 B $A145,1,1
 ;
-g $A146 Day or night.
-g $A146 This is the 'night-time' flag.
+g $A146 Day or night
+g $A146 This is the 'night-time' flag
 D $A146 #TABLE(default,centre) { =h Value | =h Meaning } { 0 | Daytime } { 255 | Night-time } TABLE#
 D $A146 Read-only by main_loop, choose_game_window_attributes.
 D $A146 Write/read-write by set_day_or_night, reset_map_and_characters.
 @ $A146 label=day_or_night
 B $A146,1,1
 ;
-b $A147 Bell ringer bitmaps.
+b $A147 Bell ringer bitmaps
 D $A147 These are the graphics for the ringer on the left hand side of the bell which animates while the bell rings.
 D $A147 8x12 pixels.
 @ $A147 label=bell_ringer_bitmap_off
 @ $A153 label=bell_ringer_bitmap_on
 B $A147,24,1
 ;
-c $A15F Set game window attributes.
+c $A15F Set game window attributes
 D $A15F This, starting at $5847, sets 23 columns of 16 rows to the specified attribute byte.
 D $A15F Used by the routines at #R$7B36, #R$7B8B, #R$A1D3, #R$A50B, #R$B83B and #R$F350.
 R $A15F I:A Attribute byte.
@@ -5231,7 +5231,7 @@ C $A16E,1 Decrement row counter
 C $A16F,3 ...loop
 C $A172,1 Return
 ;
-b $A173 Timed events.
+b $A173 Timed events
 D $A173 This is an array of fifteen structures which maps the time of in-game events to their event handlers.
 @ $A173 label=timed_events
 B $A173,3,3 (  0, event_another_day_dawns),
@@ -5250,7 +5250,7 @@ B $A197,3,3 ( 98, event_time_for_bed),
 B $A19A,3,3 (100, event_night_time),
 B $A19D,3,3 (130, event_search_light),
 ;
-c $A1A0 Dispatch timed event.
+c $A1A0 Dispatch timed event
 D $A1A0 This dispatches time-based game events like parcels, meals, exercise times and roll calls.
 D $A1A0 Used by the routine at #R$9D7B.
 N $A1A0 Increment the clock, wrapping at 140.
@@ -5278,7 +5278,7 @@ C $A1BD,2 Set #REGa to bell_RING_40_TIMES
 C $A1BF,3 Point #REGbc at bell
 C $A1C2,1 Jump to the event handler
 ;
-c $A1C3 Event: Night time.
+c $A1C3 Event: Night time
 D $A1C3 This makes the hero move to bed, then sets the night-time flag.
 @ $A1C3 label=event_night_time
 C $A1C3,4 Is the hero already in his bed?
@@ -5287,7 +5287,7 @@ C $A1C9,6 If not in bed set the hero's route to (routeindex_44_HUT2_RIGHT_TO_LEF
 C $A1CF,2 Set the night time flag ($FF)
 C $A1D1,2 Jump to set_attrs
 ;
-c $A1D3 Event: Another day dawns.
+c $A1D3 Event: Another day dawns
 D $A1D3 This queues the "ANOTHER DAY DAWNS" message, decreases morale by 25, clears the night-time flag, then sets the game window attributes back to daylight colours.
 @ $A1D3 label=event_another_day_dawns
 C $A1D3,5 Queue the message "ANOTHER DAY DAWNS"
@@ -5299,34 +5299,34 @@ C $A1DE,3 Set the night-time flag to #REGa
 C $A1E1,3 Choose game window attributes
 C $A1E4,3 Exit via set_game_window_attributes
 ;
-c $A1E7 Event: Wake up.
+c $A1E7 Event: Wake up
 D $A1E7 This rings the bell then queues the "TIME TO WAKE UP" message.
 @ $A1E7 label=event_wake_up
 C $A1E7,1 Ring the bell 40 times as passed in
 C $A1E8,5 Queue the message "TIME TO WAKE UP"
 C $A1ED,3 Exit via wake_up
 ;
-c $A1F0 Event: Go to roll call.
+c $A1F0 Event: Go to roll call
 D $A1F0 This rings the bell then queues the "ROLL CALL" message.
 @ $A1F0 label=event_go_to_roll_call
 C $A1F0,1 Ring the bell 40 times as passed in
 C $A1F1,5 Queue the message "ROLL CALL"
 C $A1F6,3 Exit via go_to_roll_call
 ;
-c $A1F9 Event: Go to breakfast time.
+c $A1F9 Event: Go to breakfast time
 D $A1F9 This rings the bell then queues the "BREAKFAST TIME" message.
 @ $A1F9 label=event_go_to_breakfast_time
 C $A1F9,1 Ring the bell 40 times as passed in
 C $A1FA,5 Queue the message "BREAKFAST TIME"
 C $A1FF,3 Exit via set_route_go_to_breakfast
 ;
-c $A202 Event: Breakfast time.
+c $A202 Event: Breakfast time
 D $A202 This rings the bell.
 @ $A202 label=event_breakfast_time
 C $A202,1 Ring the bell 40 times as passed in
 C $A203,3 Exit via end_of_breakfast
 ;
-c $A206 Event: Go to exercise time.
+c $A206 Event: Go to exercise time
 D $A206 This rings the bell, queues the message "EXERCISE TIME", then unlocks the exercise yard gates.
 @ $A206 label=event_go_to_exercise_time
 C $A206,1 Ring the bell 40 times as passed in
@@ -5334,13 +5334,13 @@ C $A207,5 Queue the message "EXERCISE TIME"
 C $A20C,6 Unlock the gates to the exercise yard
 C $A212,3 Exit via set_route_go_to_yard
 ;
-c $A215 Event: Exercise time.
+c $A215 Event: Exercise time
 D $A215 This rings the bell.
 @ $A215 label=event_exercise_time
 C $A215,1 Ring the bell 40 times as passed in
 C $A216,3 Exit via set_route_go_to_yard_reversed
 ;
-c $A219 Event: Go to time for bed.
+c $A219 Event: Go to time for bed
 D $A219 This rings the bell, locks the gates to the exercise yard, then queues the message "TIME FOR BED".
 @ $A219 label=event_go_to_time_for_bed
 C $A219,1 Ring the bell 40 times as passed in
@@ -5348,7 +5348,7 @@ C $A21A,6 Lock the gates to the exercise yard
 C $A220,5 Queue the message "TIME FOR BED"
 C $A225,3 Exit via go_to_time_for_bed
 ;
-c $A228 Event: New red cross parcel.
+c $A228 Event: New red cross parcel
 D $A228 This selects the next red cross parcel, spawns it, if required, then queues the mesage "RED CROSS PARCEL".
 N $A228 Don't deliver a new red cross parcel while the previous one still exists.
 @ $A228 label=event_new_red_cross_parcel
@@ -5385,18 +5385,18 @@ B $A260,1,1 item_WIRESNIPS
 B $A261,1,1 item_BRIBE
 B $A262,1,1 item_COMPASS
 ;
-g $A263 Red cross parcel current contents.
-g $A263 This holds the current contents of the red cross parcel.
+g $A263 Red cross parcel current contents
+D $A263 This holds the current contents of the red cross parcel.
 @ $A263 label=red_cross_parcel_current_contents
 B $A263,1,1
 ;
-c $A264 Event: Time for bed.
+c $A264 Event: Time for bed
 D $A264 This sets the routes for guard 12 to 15 to enter huts 2 and 3.
 @ $A264 label=event_time_for_bed
 C $A264,4 Set route to (REVERSED routeindex_38_GUARD_12_BED, 3)
 C $A268,2 Jump to $A26E
 ;
-c $A26A Event: Search light.
+c $A26A Event: Search light
 D $A26A This sets the routes for guards 12 to 15 to leave huts 2 and 3.
 @ $A26A label=event_search_light
 C $A26A,4 Set route to (routeindex_38_GUARD_12_BED, 0)
@@ -5414,7 +5414,7 @@ C $A27A,1 Increment the route index
 C $A27C,2 ...loop
 C $A27E,1 Return
 ;
-b $A27F Prisoners and guards.
+b $A27F Prisoners and guards
 D $A27F This is a list of the non-player characters: six prisoners and four guards.
 D $A27F Read-only by set_prisoners_and_guards_route, set_prisoners_and_guards_route_B.
 @ $A27F label=prisoners_and_guards
@@ -5429,7 +5429,7 @@ B $A286,1,1 character_23_PRISONER_4
 B $A287,1,1 character_24_PRISONER_5
 B $A288,1,1 character_25_PRISONER_6
 ;
-c $A289 Wake up.
+c $A289 Wake up
 D $A289 This gets the hero and the six other prisoners out of bed.
 D $A289 Used by the routine at #R$A1E7.
 @ $A289 label=wake_up
@@ -5472,7 +5472,7 @@ C $A2DB,3 Expand out the room definition for room_index
 C $A2DE,3 Render visible tiles array into the screen buffer.
 C $A2E1,1 Return
 ;
-c $A2E2 End of breakfast.
+c $A2E2 End of breakfast
 D $A2E2 This makes the hero and the six other prisoners finish breakfast.
 D $A2E2 Used by the routine at #R$A202.
 @ $A2E2 label=end_of_breakfast
@@ -5511,7 +5511,7 @@ C $A331,8 If the global current room index is outdoors, or a tunnel room then re
 C $A339,3 Expand out the room definition for room_index
 C $A33C,3 Render visible tiles array into the screen buffer and exit via (note: different to wake_up's end)
 ;
-c $A33F Set hero route.
+c $A33F Set hero route
 D $A33F This sets the hero's route, unless he's in solitary.
 D $A33F Used by the routines at #R$9F21, #R$A1C3, #R$A289, #R$A2E2, #R$A351, #R$A3F8, #R$A4A9, #R$A4B7, #R$A4C5, #R$A4D8 and #R$A4FD.
 R $A33F I:B Route index.
@@ -5520,7 +5520,7 @@ R $A33F I:C Route step.
 C $A33F,5 Do nothing if the hero's in solitary
 E $A33F FALL THROUGH into set_hero_route_force
 ;
-c $A344 Set hero route (force).
+c $A344 Set hero route (force)
 D $A344 This sets the hero's route, even if he's in solitary.
 D $A344 Used by the routine at #R$C7C6.
 R $A344 I:B Route index.
@@ -5531,7 +5531,7 @@ C $A349,4 Assign route
 C $A34D,3 Set the route
 C $A350,1 Return
 ;
-c $A351 Go to time for bed.
+c $A351 Go to time for bed
 D $A351 This makes the hero and other characters head to bed.
 D $A351 Used by the routine at #R$A219.
 @ $A351 label=go_to_time_for_bed
@@ -5540,7 +5540,7 @@ C $A357,3 Set route index to (REVERSED routeindex_5_EXIT_HUT2)
 C $A35A,2 Set route step to 2
 C $A35C,3 Set the routes of all characters in prisoners_and_guards and exit via
 ;
-c $A35F Set prisoners and guards route (variant "A").
+c $A35F Set prisoners and guards route (variant "A")
 D $A35F This sets individual routes for all characters in prisoners_and_guards[].
 D $A35F The route passed in (#REGa',#REGc) is assigned to the first character. The second character gets route (#REGa'+1,#REGc) and so on.
 D $A35F Used by the routine at #R$A4FD.
@@ -5561,7 +5561,7 @@ C $A36F,1 Advance to the next character
 C $A370,2 ...loop
 C $A372,1 Return
 ;
-c $A373 Set prisoners and guards route (variant "B").
+c $A373 Set prisoners and guards route (variant "B")
 D $A373 This sets joint routes for all characters in prisoners_and_guards[].
 D $A373 The first half of the list (guards 12,13 and prisoners 1,2,3) are set to the route passed in (#REGa',#REGc). The second half of the list (guards 14,15 and prisoners 4,5,6) are set to route (#REGa'+1,#REGc).
 D $A373 Used by the routines at #R$A289, #R$A2E2, #R$A351, #R$A4A9, #R$A4B7 and #R$A4C5.
@@ -5585,7 +5585,7 @@ C $A388,1 Advance to the next character
 C $A389,2 ...loop
 C $A38B,1 Return
 ;
-c $A38C Set character route.
+c $A38C Set character route
 D $A38C This finds the charstruct, or vischar, of the specified character index (#REGa) and stores the route (#REGa',#REGc) in it.
 D $A38C Used by the routines at #R$A26A, #R$A35F and #R$A373.
 R $A38C I:A Character index.
@@ -5623,7 +5623,7 @@ C $A3B4,4 Reset vischar_FLAGS_TARGET_IS_DOOR flag
 C $A3B8,3 Store the route at #REGhl
 E $A38C FALL THROUGH into set_route.
 ;
-c $A3BB Set route.
+c $A3BB Set route
 D $A3BB This fetches the current target coordinates using $C651 then assigns the result into the vischar (#REGhl).
 D $A3BB Used by the routine at #R$A33F.
 R $A3BB I:HL Points to route.step.
@@ -5659,7 +5659,7 @@ C $A3E9,2 Set the vischar_FLAGS_TARGET_IS_DOOR flag
 C $A3EB,1 Restore
 C $A3EC,1 Return
 ;
-c $A3ED Store route.
+c $A3ED Store route
 D $A3ED This stores the route in (#REGa',#REGc) at #REGhl.
 D $A3ED Used by the routine at #R$A38C.
 R $A3ED I:A' Route index.
@@ -5673,7 +5673,7 @@ C $A3EF,1 Bank the route index
 C $A3F0,2 Store the route step
 C $A3F2,1 Return
 ;
-c $A3F3 Character -> bed (state).
+c $A3F3 Character -> bed (state)
 D $A3F3 This is the entry point for #R$A404 used when #R$A13E is non-zero.
 D $A3F3 Used by the routine at #R$C7C6.
 R $A3F3 I:HL Pointer to location.
@@ -5681,7 +5681,7 @@ R $A3F3 I:HL Pointer to location.
 C $A3F3,3 Get the current character index
 C $A3F6,2 Jump to character_bed_common
 ;
-c $A3F8 Character -> bed (vischar).
+c $A3F8 Character -> bed (vischar)
 D $A3F8 This is the entry point for #R$A404 used when #R$A13E is zero.
 D $A3F8 Used by the routine at #R$C7C6.
 R $A3F8 I:HL Pointer to location.
@@ -5690,7 +5690,7 @@ C $A3F8,3 Read the current vischar's character index
 C $A3FB,3 If it's not the commandant (0) then goto character_bed_common
 C $A3FE,6 Otherwise set the commandant's route to ($2C,$00) and exit via
 ;
-c $A404 Character -> bed (common).
+c $A404 Character -> bed (common)
 D $A404 This is the common tail of the previous two routines. It uses the character index (in #REGa) to assign a "walk to bed" route to the specified character.
 D $A404 Used by the routines at #R$A3F3 and #R$A3F8.
 R $A404 I:A Character index.
@@ -5709,7 +5709,7 @@ C $A419,4 Otherwise reverse its route by setting the route step to 1 and setting
 C $A41D,2 Save route index
 C $A41F,1 Return
 ;
-c $A420 Character sits.
+c $A420 Character sits
 D $A420 This makes a character disappear when it sits down and updates the room definition to show them sitting.
 D $A420 Used by the routine at #R$C7C6.
 R $A420 I:A Route index.
@@ -5734,7 +5734,7 @@ C $A43E,2 Jump if so
 C $A440,2 Otherwise room is room_23_MESS_HALL
 C $A442,2 Jump to character_sit_sleep_common
 ;
-c $A444 Character sleeps.
+c $A444 Character sleeps
 D $A444 This makes a character disappear when it gets into bed and updates the room definition to show them sleeping.
 D $A444 Used by the routine at #R$C7C6.
 R $A444 I:A Route index.
@@ -5754,7 +5754,7 @@ C $A45C,4 Otherwise room is room_3_HUT2RIGHT
 C $A460,2 Room is room_5_HUT3RIGHT
 E $A444 FALL THROUGH into character_sit_sleep_common.
 ;
-c $A462 Character sit/sleep (common).
+c $A462 Character sit/sleep (common)
 D $A462 This makes characters disappear, repainting the screen if required.
 D $A462 Used by the routines at #R$A420 and #R$A444.
 R $A462 I:C Room.
@@ -5774,14 +5774,14 @@ C $A473,4 Pointer #REGhl at vischar's room member
 C $A477,2 Set room to room_NONE ($FF)
 E $A462 FALL THROUGH into select_room_and_plot.
 ;
-c $A479 Select room and plot.
+c $A479 Select room and plot
 D $A479 This expands out the current room definition into the visible tiles array then repaints those tiles to the screen.
 D $A479 Used by the routine at #R$A491.
 @ $A479 label=select_room_and_plot
 C $A479,3 Expand out the room definition for room_index
 C $A47C,3 Render visible tiles array into the screen buffer, exit via
 ;
-c $A47F Hero sits.
+c $A47F Hero sits
 D $A47F This is called when the hero should sit down in the mess hall for breakfast.
 D $A47F Used by the routine at #R$C7C6.
 @ $A47F label=hero_sits
@@ -5789,7 +5789,7 @@ C $A47F,5 Set room definition 25's bench_G object (where the hero sits) to inter
 C $A484,3 Point #REGhl at the hero_in_breakfast flag
 C $A487,2 Jump to hero_sit_sleep_common
 ;
-c $A489 Hero sleeps.
+c $A489 Hero sleeps
 D $A489 This is called when the hero should sleep.
 D $A489 Used by the routines at #R$B75A and #R$C7C6.
 @ $A489 label=hero_sleeps
@@ -5797,7 +5797,7 @@ C $A489,5 Set room definition 2's bed object (where the hero sleeps) to interior
 C $A48E,3 Point #REGhl at the hero_in_bed flag
 E $A489 FALL THROUGH into hero_sit_sleep_common.
 ;
-c $A491 Hero sit/sleep (common).
+c $A491 Hero sit/sleep (common)
 D $A491 This is the common end of the above two routines. It sets the appropriate breakfast/bed flag, halts the hero, sets his position to (0,0), recalculates his isometric position then re-plots the room.
 D $A491 Used by the routine at #R$A47F.
 R $A491 I:HL Pointer to hero_in_breakfast or hero_in_bed flag.
@@ -5805,39 +5805,39 @@ R $A491 I:HL Pointer to hero_in_breakfast or hero_in_bed flag.
 C $A491,2 Set the sit/sleep flag, whichever it was
 C $A493,5 Stand still - set the hero's route to route_HALT ($00)
 N $A498 Set hero position (x,y) to zero.
-C $A498,9 Zero $800F..$8012
+C $A498,9 Zero $800F.$8012
 C $A4A1,6 Reset the hero's screen position
 C $A4A7,2 Exit via select_room_and_plot
 ;
-c $A4A9 Set route: "go to yard".
+c $A4A9 Set route: "go to yard"
 D $A4A9 This sets the hero's and prisoners_and_guards's routes to "go to yard".
 D $A4A9 Used by the routine at #R$A206.
 @ $A4A9 label=set_route_go_to_yard
 C $A4A9,6 Set the hero's route to (routeindex_14_GO_TO_YARD, 0)
 C $A4AF,8 And set the routes of all characters in prisoners_and_guards to the same route (exit via)
 ;
-c $A4B7 Set route: "go to yard" reversed.
+c $A4B7 Set route: "go to yard" reversed
 D $A4B7 This sets the hero's and prisoners_and_guards's routes to "go to yard" reversed.
 D $A4B7 Used by the routine at #R$A215.
 @ $A4B7 label=set_route_go_to_yard_reversed
 C $A4B7,6 Set the hero's route to (REVERSED routeindex_14_GO_TO_YARD, 4)
 C $A4BD,8 And set the routes of all characters in prisoners_and_guards to the same route (exit via)
 ;
-c $A4C5 Set route: "go to breakfast".
+c $A4C5 Set route: "go to breakfast"
 D $A4C5 This sets the hero's and prisoners_and_guards's routes to "go to breakfast".
 D $A4C5 Used by the routine at #R$A1F9.
 @ $A4C5 label=set_route_go_to_breakfast
 C $A4C5,6 Set the hero's route to (routeindex_16_BREAKFAST_25, 0)
 C $A4CB,8 And set the routes of all characters in prisoners_and_guards to the same route (exit via)
 ;
-c $A4D3 Character event: breakfast (state).
+c $A4D3 Character event: breakfast (state)
 D $A4D3 This is the entry point for #R$A4E4 used when #R$A13E is non-zero.
 D $A4D3 Used by the routine at #R$C7C6.
 @ $A4D3 label=charevnt_breakfast_state
 C $A4D3,3 Get the current character index
 C $A4D6,2 Jump to charevnt_breakfast_common
 ;
-c $A4D8 Character event: breakfast (vischar).
+c $A4D8 Character event: breakfast (vischar)
 D $A4D8 This is the entry point for #R$A4E4 used when #R$A13E is zero.
 D $A4D8 Used by the routine at #R$C7C6.
 @ $A4D8 label=charevnt_breakfast_vischar
@@ -5845,7 +5845,7 @@ C $A4D8,3 Read the current vischar's character index
 C $A4DB,3 If it's not the commandant (0) then goto charevnt_breakfast_common
 C $A4DE,6 Otherwise set the commandant's route to ($2B,$00) and exit via
 ;
-c $A4E4 Character event: breakfast (common).
+c $A4E4 Character event: breakfast (common)
 D $A4E4 This is the common end of the above two routines. It sets routes for prisoners and guards.
 D $A4E4 Used by the routines at #R$A4D3 and #R$A4D8.
 R $A4E4 I:A Character index.
@@ -5863,7 +5863,7 @@ C $A4F9,1 Route index is 25 if odd
 C $A4FA,2 Store route index
 C $A4FC,1 Return
 ;
-c $A4FD Go to roll call.
+c $A4FD Go to roll call
 D $A4FD This sends all those enumerated in prisoners_and_guards and the hero to roll call.
 D $A4FD Used by the routine at #R$A1F0.
 @ $A4FD label=go_to_roll_call
@@ -5871,7 +5871,7 @@ C $A4FD,5 Set route to (routeindex_26_GUARD_12_ROLL_CALL, 0)
 C $A502,3 Set individual routes for prisoners_and_guards
 C $A505,6 Set the hero's route to (routeindex_45_HERO_ROLL_CALL, 0)
 ;
-c $A50B Screen reset.
+c $A50B Screen reset
 D $A50B This wipes and re-renders the visible tiles array into window_buf. It then zoomboxes the window_buf onto the screen and does a final plot after that.
 D $A50B Used by the routines at #R$9DE5 and #R$A51C.
 @ $A50B label=screen_reset
@@ -5882,7 +5882,7 @@ C $A514,3 Plot the game screen
 C $A517,2 Set #REGa to attribute_WHITE_OVER_BLACK
 C $A519,3 Set game window attributes (exit via)
 ;
-c $A51C Escaped.
+c $A51C Escaped
 D $A51C This is called when the hero has made an escape attempt. It prints the 'WELL DONE' message then tests to see if the correct objects were used in the escape attempt. It then prints an according sequence of messages. If the attempt was successful then on restart the game is reset, otherwise the hero is sent to solitary.
 D $A51C The items map to win-lose states as follows:
 D $A51C #TABLE(default) { =h,r2 Combination | =h,c4 Items | =h,r2 Message | =h,r2 Result } { =h Uniform | =h Purse | =h Papers | =h Compass } { 0 | . | . | . | . | "BUT WERE RECAPTURED TOTALLY UNPREPARED" | Lose } { 1 | . | . | . | X | "BUT WERE RECAPTURED DUE TO LACK OF PAPERS" | Lose } { 2 | . | . | X | . | "BUT WERE RECAPTURED TOTALLY LOST" | Lose } { 3 | . | . | X | X | (the game offers no extra message) | Win } { 4 | . | X | . | . | "BUT WERE RECAPTURED TOTALLY LOST" | Lose } { 5 | . | X | . | X | "AND WILL CROSS THE BORDER SUCCESSFULLY" | Win } { 6 | . | X | X | . | "BUT WERE RECAPTURED TOTALLY LOST" | Lose } { 8 | X | . | . | . | "BUT WERE RECAPTURED AND SHOT AS A SPY" | Lose } { 9 | X | . | . | X | "BUT WERE RECAPTURED AND SHOT AS A SPY" | Lose } { 10 | X | . | X | . | "BUT WERE RECAPTURED AND SHOT AS A SPY" | Lose } { 12 | X | X | . | . | "BUT WERE RECAPTURED AND SHOT AS A SPY" | Lose } TABLE#
@@ -5939,7 +5939,7 @@ C $A584,2 Are the flags greater or equal to escapeitem_UNIFORM?
 C $A586,3 Reset the game if so (exit via)
 C $A589,3 Otherwise send the hero to solitary (exit via)
 ;
-c $A58C Keyscan all.
+c $A58C Keyscan all
 D $A58C This tests for any key press.
 D $A58C Used by the routine at #R$A51C.
 R $A58C O:F NZ if a key was pressed, Z otherwise.
@@ -5954,7 +5954,7 @@ C $A595,2 Rotate the half-row selector ($FE -> $FD -> $FB -> .. -> $7F)
 C $A597,3 ...loop until the zero bit shifts out (eight iterations)
 C $A59A,2 No keys were pressed - return with Z set
 ;
-c $A59C Join item to escapeitem.
+c $A59C Join item to escapeitem
 D $A59C This calls #R$A5A3 then merges the result with a previous escapeitem.
 D $A59C Used by the routine at #R$A51C.
 R $A59C I:C Previous return value.
@@ -5966,7 +5966,7 @@ C $A59D,3 Turn the item into a flag
 C $A5A0,2 Merge the new flag with the previous
 C $A5A2,1 Return
 ;
-c $A5A3 Item to escapeitem.
+c $A5A3 Item to escapeitem
 D $A5A3 This returns a bitmask indicating the presence of the items required for escape.
 D $A5A3 Used by the routine at #R$A59C.
 R $A5A3 I:A Item.
@@ -5985,7 +5985,7 @@ C $A5B8,2 Is it item_UNIFORM?
 C $A5BA,3 Return escapeitem_UNIFORM if so
 C $A5BD,2 Otherwise return zero
 ;
-c $A5BF screenlocstring plot.
+c $A5BF screenlocstring plot
 D $A5BF This draws a screenlocstring to screen. A screenlocstring is a structure consisting of a screen address at which to start drawing, a count of glyph indices and an array of that number of glyph indices.
 D $A5BF Used by the routines at #R$A51C, #R$EFFC and #R$F1E0.
 R $A5BF I:HL Pointer to screenlocstring.
@@ -6028,7 +6028,7 @@ B $A676,24,24 #HTML[#CALL:decode_screenlocstring($A676)]
 N $A68E "PRESS ANY KEY"
 B $A68E,16,16 #HTML[#CALL:decode_screenlocstring($A68E)]
 ;
-b $A69E Bitmap font.
+b $A69E Bitmap font
 D $A69E This is the game's bitmap font. It contains 0..9, A..Z (omitting O, since the game reuses zero), space and full stop.
 D $A69E #UDGTABLE { #FONT$A69E,35,7,2{0,0,560,16}(font) } TABLE#
 @ $A69E label=bitmap_font
@@ -6070,17 +6070,17 @@ B $A7AE,8,8 Z
 B $A7B6,8,8 SPACE
 B $A7BE,8,8 FULL STOP
 ;
-g $A7C6 move_map Y.
+g $A7C6 move_map Y
 D $A7C6 This is an index used only by #R$AAB2.
 @ $A7C6 label=move_map_y
 B $A7C6,1,1
 ;
-g $A7C7 Game window offset.
+g $A7C7 Game window offset
 D $A7C7 This is the game window's scroll offset. It's (0,0) when displaying interior rooms, but varies when the exterior is shown.
 @ $A7C7 label=game_window_offset
 W $A7C7,2,2
 ;
-c $A7C9 Get supertiles.
+c $A7C9 Get supertiles
 D $A7C9 This uses the position in #R$81BB to choose which supertile indices to copy from #R$BCEE into the map_buf buffer at $FF58.
 D $A7C9 Used by the routines at #R$A9E4, #R$AA05, #R$AA26, #R$AA4B, #R$AA6C, #R$AA8D and #R$B2FC.
 N $A7C9 Get vertical offset.
@@ -6107,7 +6107,7 @@ C $A801,4 Move #REGhl forward by (stride - width of map_buf)
 C $A805,4 ...loop
 C $A809,1 Return
 ;
-c $A80A Plot bottommost tiles.
+c $A80A Plot bottommost tiles
 D $A80A This plots the complete bottommost row of tiles.
 D $A80A Used by the routines at #R$AA26 and #R$AA4B.
 @ $A80A label=plot_bottommost_tiles
@@ -6120,7 +6120,7 @@ C $A811,3 Get the map's Y coordinate
 C $A814,3 Point #REGde at the start of window_buf's final row (= window_buf + 24 * 16 * 8)
 C $A817,2 Jump to plot_horizontal_tiles_common
 ;
-c $A819 Plot topmost tiles.
+c $A819 Plot topmost tiles
 D $A819 This plots the complete topmost row of tiles.
 D $A819 Used by the routines at #R$AA6C and #R$AA8D.
 @ $A819 label=plot_topmost_tiles
@@ -6130,7 +6130,7 @@ C $A820,3 Get the map's Y coordinate
 C $A823,3 Point #REGde at the start of window_buf's first row
 E $A819 FALL THROUGH into plot_horizontal_tiles_common
 ;
-c $A826 Plot horizontal tiles (common).
+c $A826 Plot horizontal tiles (common)
 D $A826 This plots a single horizontal row of tiles to the screen buffer.
 D $A826 Simultaneously updates the visible tiles buffer.
 D $A826 Used by the routine at #R$A80A.
@@ -6203,7 +6203,7 @@ C $A89E,1 Advance the visible tiles pointer
 C $A89F,2 ...loop
 C $A8A1,1 Return
 ;
-c $A8A2 Plot all tiles.
+c $A8A2 Plot all tiles
 D $A8A2 This renders the complete screen by plotting all vertical columns in turn.
 D $A8A2 Used by the routines at #R$7B36 and #R$B2FC.
 D $A8A2 Note: Exits with banked registers active.
@@ -6237,7 +6237,7 @@ C $A8CB,1 Restore the loop counter
 C $A8CC,2 ...loop
 C $A8CE,1 Return
 ;
-c $A8CF Plot rightmost tiles.
+c $A8CF Plot rightmost tiles
 D $A8CF This plots the complete rightmost column of tiles.
 D $A8CF Used by the routines at #R$A9E4 and #R$AA8D.
 @ $A8CF label=plot_rightmost_tiles
@@ -6252,7 +6252,7 @@ C $A8E1,3 Get the map's X coordinate
 C $A8E4,1 Decrement it
 C $A8E5,2 Jump to plot_vertical_tiles_common
 ;
-c $A8E7 Plot leftmost tiles.
+c $A8E7 Plot leftmost tiles
 D $A8E7 This plots the complete leftmost column of tiles.
 D $A8E7 Used by the routines at #R$AA05 and #R$AA26.
 @ $A8E7 label=plot_leftmost_tiles
@@ -6263,7 +6263,7 @@ C $A8EE,3 Point #REGde' at the 24x17x8 screen buffer ("window_buf") leftmost col
 C $A8F1,3 Get the map's X coordinate
 E $A8E7 FALL THROUGH into plot_vertical_tiles_common
 ;
-c $A8F4 Plot vertical tiles (common).
+c $A8F4 Plot vertical tiles (common)
 D $A8F4 This plots a single vertical row of tiles to the screen buffer.
 D $A8F4 Simultaneously updates the visible tiles buffer.
 D $A8F4 Used by the routines at #R$A8A2 and #R$A8CF.
@@ -6347,7 +6347,7 @@ C $A99A,4 ...loop
 C $A99E,1 Transpose the tile_buf and map_buf pointers back
 C $A99F,1 Return
 ;
-c $A9A0 Plot tile, then advance.
+c $A9A0 Plot tile, then advance
 D $A9A0 This calls #R$A9AD then advances the screen buffer pointer in #REGde' by a row.
 D $A9A0 Used by the routine at #R$A8F4.
 R $A9A0 I:A Tile index
@@ -6360,7 +6360,7 @@ C $A9A4,7 Advance the screen buffer pointer #REGde' to the next row (add 24 * 8 
 C $A9AB,1 Unbank
 C $A9AC,1 Return
 ;
-c $A9AD Plot tile.
+c $A9AD Plot tile
 D $A9AD This plots an exterior tile then advances #REGde' to the next column.
 D $A9AD Used by the routines at #R$A826 and #R$A9A0.
 R $A9AD I:A Tile index
@@ -6398,7 +6398,7 @@ C $A9E1,1 Restore the supertile pointer
 C $A9E2,1 Re-bank input registers
 C $A9E3,1 Return
 ;
-c $A9E4 Shunt map left.
+c $A9E4 Shunt map left
 D $A9E4 This moves the map left.
 D $A9E4 Used by the routine at #R$AAB2.
 @ $A9E4 label=shunt_map_left
@@ -6410,7 +6410,7 @@ C $A9F6,11 Shunt the window_buf back by one byte
 C $AA01,3 Plot the complete rightmost column of tiles
 C $AA04,1 Return
 ;
-c $AA05 Shunt map right.
+c $AA05 Shunt map right
 D $AA05 This moves the map right.
 D $AA05 Used by the routine at #R$AAB2.
 @ $AA05 label=shunt_map_right
@@ -6423,7 +6423,7 @@ C $AA17,11 Shunt the window_buf forward by one byte
 C $AA22,3 Plot the complete leftmost column of tiles
 C $AA25,1 Return
 ;
-c $AA26 Shunt map up-right.
+c $AA26 Shunt map up-right
 D $AA26 This moves the map up-right.
 D $AA26 Used by the routine at #R$AAB2.
 R $AA26 I:HL Contents of #R$81BB map position
@@ -6438,7 +6438,7 @@ C $AA44,3 Plot the complete bottommost row of tiles
 C $AA47,3 Plot the complete leftmost column of tiles
 C $AA4A,1 Return
 ;
-c $AA4B Shunt map up.
+c $AA4B Shunt map up
 D $AA4B This moves the map up.
 D $AA4B Used by the routine at #R$AAB2.
 @ $AA4B label=shunt_map_up
@@ -6450,7 +6450,7 @@ C $AA5D,11 Shunt the window_buf up
 C $AA68,3 Plot the complete bottommost row of tiles
 C $AA6B,1 Return
 ;
-c $AA6C Shunt map down.
+c $AA6C Shunt map down
 D $AA6C This moves the map down.
 D $AA6C Used by the routine at #R$AAB2.
 @ $AA6C label=shunt_map_down
@@ -6462,7 +6462,7 @@ C $AA7E,11 Shunt the window_buf down
 C $AA89,3 Plot the complete topmost row of tiles
 C $AA8C,1 Return
 ;
-c $AA8D Shunt map down-left.
+c $AA8D Shunt map down-left
 D $AA8D This moves the map down-left.
 D $AA8D Used by the routine at #R$AAB2.
 @ $AA8D label=shunt_map_down_left
@@ -6476,7 +6476,7 @@ C $AAAB,3 Plot the complete topmost row of tiles
 C $AAAE,3 Plot the complete rightmost column of tiles
 C $AAB1,1 Return
 ;
-c $AAB2 Move map.
+c $AAB2 Move map
 D $AAB2 This moves the map when the hero walks around outdoors. The map is shunted around in the opposite direction to the apparent character motion.
 D $AAB2 Used by the routines at #R$6939 and #R$9D7B.
 @ $AAB2 label=move_map
@@ -6560,7 +6560,7 @@ C $AB5B,5 If move_map_y is 1 then jump to shunt_map_left
 C $AB60,5 If move_map_y is 3 then jump to shunt_map_down_left
 C $AB65,1 Otherwise move_map_y is 0 or 2 - return
 ;
-g $AB66 Zoombox parameters.
+g $AB66 Zoombox parameters
 @ $AB66 label=zoombox_x
 B $AB66,1,1 X coordinate of left zoombox fill, in game window area.
 @ $AB67 label=zoombox_width
@@ -6570,12 +6570,12 @@ B $AB68,1,1 Y coordinate of top zoombox fill, in game window area.
 @ $AB69 label=zoombox_height
 B $AB69,1,1 Maximum height (ish) of zoombox.
 ;
-g $AB6A Game window attribute.
+g $AB6A Game window attribute
 D $AB6A This is a copy of the game window's current attribute byte. Assigned by #R$AB85 and used by #R$AD21 to set the attribute of a zoombox border tile.
 @ $AB6A label=game_window_attribute
 B $AB6A,1,1
 ;
-c $AB6B Choose game window attributes.
+c $AB6B Choose game window attributes
 D $AB6B This uses the current room index and the night-time flag to decide which screen attributes should be used for the game window. Additionally, when in non-illuminated tunnel rooms it will wipe the visible tiles to obscure the tunnel's route.
 D $AB6B Used by the routines at #R$7B36, #R$7B8B, #R$A1D3, #R$ABA0, #R$B3F6 and #R$B83B.
 R $AB6B O:A Chosen attribute.
@@ -6613,7 +6613,7 @@ C $AB99,3 Render visible tiles array into the screen buffer
 C $AB9C,2 For a dark tunnel we use attribute_BLUE_OVER_BLACK
 C $AB9E,2 Jump to set_attribute_from_A
 ;
-c $ABA0 Zoombox.
+c $ABA0 Zoombox
 D $ABA0 This animates the window buffer onto the screen using a zooming box effect.
 D $ABA0 Used by the routines at #R$68F4, #R$A50B and #R$B2FC.
 @ $ABA0 label=zoombox
@@ -6663,7 +6663,7 @@ C $ABEC,7 Sum the width and height
 C $ABF3,5 If it's less than 35 then ...loop
 C $ABF8,1 Return
 ;
-c $ABF9 Zoombox: fill.
+c $ABF9 Zoombox: fill
 D $ABF9 This draws the zoombox contents.
 D $ABF9 Used by the routine at #R$ABA0.
 @ $ABF9 label=zoombox_fill
@@ -6719,7 +6719,7 @@ C $AC6B,1 Pop the outer loop counter
 C $AC6C,2 ...loop (outer)
 C $AC6E,1 Return
 ;
-c $AC6F Zoombox: draw border.
+c $AC6F Zoombox: draw border
 D $AC6F This draws the zoombox border.
 D $AC6F Used by the routine at #R$ABA0.
 @ $AC6F label=zoombox_draw_border
@@ -6775,7 +6775,7 @@ C $ACED,12 Inversion of similar code at #R$AC5F onwards
 C $ACF9,2 ...loop
 C $ACFB,1 Return
 ;
-c $ACFC Zoombox: draw tile.
+c $ACFC Zoombox: draw tile
 D $ACFC This draws a single zoombox border tile.
 D $ACFC Used by the routine at #R$AC6F.
 R $ACFC I:A Index of tile to draw.
@@ -6811,7 +6811,7 @@ C $AD26,1 Restore
 C $AD27,1 Restore
 C $AD28,1 Return
 ;
-w $AD29 Searchlight movements.
+w $AD29 Searchlight movements
 D $AD29 This is an array defining the movement patterns for the three different searchlights.
 @ $AD29 label=searchlight_movements
 B $AD29,5,5 x, y, counter, direction, index
@@ -6842,7 +6842,7 @@ B $AD54,2,2 (44, bottom right)
 B $AD56,2,2 (42, top right)
 B $AD58,1,1 Terminating byte.
 ;
-c $AD59 Searchlight movement.
+c $AD59 Searchlight movement
 D $AD59 This decides searchlight movement.
 D $AD59 Used by the routine at #R$ADBD.
 R $AD59 I:HL Pointer to a searchlight movement data.
@@ -6897,7 +6897,7 @@ C $ADB9,2 Store y
 C $ADBB,1 Store x
 C $ADBC,1 Return
 ;
-c $ADBD Night-time.
+c $ADBD Night-time
 D $ADBD This drives the searchlights. It is called when #R$A146 is non-zero.
 D $ADBD Used by the routine at #R$9D7B.
 @ $ADBD label=nighttime
@@ -6999,7 +6999,7 @@ C $AE6E,4 Step to the next searchlight_movement
 C $AE72,2 ...loop
 C $AE74,1 Return
 ;
-g $AE75 Searchlight state variables.
+g $AE75 Searchlight state variables
 N $AE75 Assigned by nighttime. Read by searchlight_plot.
 @ $AE75 label=searchlight_clip_left
 B $AE75,1,1
@@ -7007,7 +7007,7 @@ N $AE76 These are the coordinates of the searchlight when the hero is caught.
 @ $AE76 label=searchlight_caught_coord
 W $AE76,2,2
 ;
-c $AE78 Searchlight caught.
+c $AE78 Searchlight caught
 D $AE78 This detects when the hero gets caught in the searchlight.
 D $AE78 Used by the routine at #R$ADBD.
 R $AE78 I:HL Pointer to searchlight movement data.
@@ -7050,7 +7050,7 @@ C $AEAF,4 Make the bell ring perpetually
 C $AEB3,2 Decrease morale by 10
 C $AEB5,3 Exit via decrease_morale
 ;
-c $AEB8 Searchlight: plot.
+c $AEB8 Searchlight: plot
 D $AEB8 This draws the searchlight.
 D $AEB8 Note: The game window attributes are located at (7,2)-(29,17) inclusive.
 D $AEB8 Used by the routine at #R$ADBD.
@@ -7137,7 +7137,7 @@ N $AF3E Searchlight circle shape.
 @ $AF3E label=searchlight_shape
 B $AF3E,32,2
 ;
-b $AF5E Zoombox tiles.
+b $AF5E Zoombox tiles
 D $AF5E These are the barbed wire tiles used by the zoombox effect.
 @ $AF5E label=zoombox_tiles
 B $AF5E,8,8 top left tile, zoombox_tile_wire_tl #HTML[#UDG$AF5E]
@@ -7147,13 +7147,13 @@ B $AF76,8,8 vertical tile, zoombox_tile_wire_vt #HTML[#UDG$AF76]
 B $AF7E,8,8 bottom right tile, zoombox_tile_wire_br #HTML[#UDG$AF7E]
 B $AF86,8,8 bottom left tile, zoombox_tile_wire_bl #HTML[#UDG$AF86]
 ;
-g $AF8E Bribed character.
+g $AF8E Bribed character
 D $AF8E This is the current bribed character.
 D $AF8E Set by #R$B3BD. Read by #R$B05B, #R$C97E and #R$CA8D.
 @ $AF8E label=bribed_character
 B $AF8E,1,1
 ;
-c $AF8F Touch.
+c $AF8F Touch
 D $AF8F This tests for characters meeting obstacles like doors and map bounds.
 D $AF8F Also assigns saved_pos to specified vischar's pos and sets the sprite_index.
 D $AF8F Used by the routine at #R$B5CE.
@@ -7190,7 +7190,7 @@ C $AFDA,3 Set it in the vischar's sprite_index field
 C $AFDD,1 Set flags to Z
 C $AFDE,1 Return
 ;
-c $AFDF Collision.
+c $AFDF Collision
 D $AFDF This handles collisions, including items being pushed around.
 D $AFDF Used by the routines at #R$AF8F and #R$C4E0.
 R $AFDF O:F Z/NZ => no collision/collision.
@@ -7347,7 +7347,7 @@ C $B0FE,4 Step #REGhl to the next vischar
 C $B102,4 ...loop for each vischar
 C $B106,1 Return with Z set
 ;
-c $B107 Accept bribe.
+c $B107 Accept bribe
 D $B107 This is called when a character accepts the bribe.
 D $B107 Used by the routines at #R$AFDF and #R$CA81.
 R $B107 I:IY Pointer to visible character.
@@ -7384,7 +7384,7 @@ C $B142,5 Queue the message "HE TAKES THE BRIBE"
 C $B147,2 Then queue the messsage "AND ACTS AS DECOY"
 C $B149,3 Return
 ;
-c $B14C Bounds check.
+c $B14C Bounds check
 D $B14C This tests whether the position in #R$81A4 touches any wall or fence boundary.
 D $B14C A position (x,y,h) touches a wall if (minx + 2 >= x <= maxx + 3) and (miny >= y <= maxy + 3) and (minh >= h <= maxh + 1).
 D $B14C Used by the routines at #R$AF8F and #R$C4E0.
@@ -7462,7 +7462,7 @@ C $B1C1,4 ...loop
 C $B1C5,1 #REGb is zero, AND it with itself to set Z flag
 C $B1C6,1 Return with Z set
 ;
-c $B1C7 Multiply by 8.
+c $B1C7 Multiply by 8
 D $B1C7 This multiplies #REGa by 8, returning the result in #REGbc.
 D $B1C7 Used by the routines at #R$B14C, #R$C4E0, #R$CA11, #R$CA49 and #R$DBEB.
 R $B1C7 I:A Argument.
@@ -7504,7 +7504,7 @@ C $B1F1,2 ...loop
 C $B1F3,1 Set flags to Z - the door is open
 C $B1F4,1 Return
 ;
-c $B1F5 Door handling.
+c $B1F5 Door handling
 D $B1F5 This checks for and actions door transitions.
 D $B1F5 Used by the routine at #R$AF8F.
 R $B1F5 I:IY Pointer to visible character.
@@ -7596,7 +7596,7 @@ C $B291,2 Calculate saved_pos_y - (pos.y * 4 + 3)
 C $B293,1 Invert the carry flag
 C $B294,1 Return with result of final test
 ;
-c $B295 Multiply by 4.
+c $B295 Multiply by 4
 D $B295 Multiplies #REGa by 4, returning the result in #REGbc.
 D $B295 Used by the routines at #R$68A2 and #R$B252.
 R $B295 I:A Value to multiply.
@@ -7610,7 +7610,7 @@ C $B29B,2 Shift carry out into high byte
 C $B29D,1 #REGbc is the multiplied value
 C $B29E,1 Return
 ;
-c $B29F Interior bounds check.
+c $B29F Interior bounds check
 D $B29F This checks that the character is inside of bounds, when indoors.
 D $B29F Used by the routine at #R$B14C.
 R $B29F I:IY Pointer to visible character.
@@ -7686,7 +7686,7 @@ N $B2FA Not found.
 C $B2FA,1 #REGb is zero, AND it with itself to set Z flag
 C $B2FB,1 Return with Z set
 ;
-c $B2FC Reset outdoors.
+c $B2FC Reset outdoors
 D $B2FC This resets the hero's position, redraws the scene, then zoomboxes it onto the screen.
 D $B2FC Used by the routines at #R$68A2 and #R$9DE5.
 N $B2FC Reset hero's position.
@@ -7712,7 +7712,7 @@ C $B326,3 Setup movable items
 C $B329,3 Zoombox the scene onto the screen
 C $B32C,1 Return
 ;
-c $B32D Door handling: interior.
+c $B32D Door handling: interior
 D $B32D This is called from #R$B1F5 to handle doors when not outside.
 D $B32D Used by the routine at #R$B1F5.
 R $B32D I:IY Pointer to visible character.
@@ -7777,7 +7777,7 @@ C $B383,1 Unbank
 C $B384,1 Advance to the next door in interior_doors[]
 C $B385,2 ...loop
 ;
-c $B387 Action: Red cross parcel.
+c $B387 Action: Red cross parcel
 D $B387 This handles the hero opening the red cross parcel.
 @ $B387 label=action_red_cross_parcel
 C $B387,5 Clear the red cross parcel item's room field
@@ -7794,7 +7794,7 @@ C $B39D,3 Pass that into "drop item, tail part"
 C $B3A0,5 Queue the message "YOU OPEN THE BOX"
 C $B3A5,3 Increase morale by 10, score by 50 and exit via
 ;
-c $B3A8 Action: Bribe.
+c $B3A8 Action: Bribe
 D $B3A8 This handles the hero bribing a fellow prisoner. It searches through the visible, friendly characters only and returns the first found. The selected character will then pursue the hero. Once they've touched it will accept the bribe (see #R$CA8D).
 N $B3A8 Iterate over non-player visible characters.
 @ $B3A8 label=action_bribe
@@ -7816,7 +7816,7 @@ C $B3C0,1 Point #REGhl at vischar flags
 C $B3C1,2 Set flags to vischar_PURSUIT_PURSUE
 C $B3C3,1 Return
 ;
-c $B3C4 Action: Poison.
+c $B3C4 Action: Poison
 D $B3C4 This handles the hero poisoning the food.
 @ $B3C4 label=action_poison
 C $B3C4,3 Load both held items
@@ -7834,7 +7834,7 @@ C $B3D6,5 Set the screen attribute for the food item to bright-purple over black
 C $B3DB,3 Draw held items
 C $B3DE,3 Increase morale by 10, score by 50 and exit via
 ;
-c $B3E1 Action: Uniform.
+c $B3E1 Action: Uniform
 D $B3E1 This handles the hero donning the guard's uniform.
 @ $B3E1 label=action_uniform
 C $B3E1,3 Point #REGhl at the hero's vischar sprite set pointer
@@ -7847,7 +7847,7 @@ N $B3F0 Otherwise the uniform can be worn
 C $B3F0,3 Set the hero's sprite set to sprite_guard
 C $B3F3,3 Increase morale by 10, score by 50 and exit via
 ;
-c $B3F6 Action: Shovel.
+c $B3F6 Action: Shovel
 D $B3F6 This handles the hero using the shovel to clear the blockage in tunnel room number 50.
 @ $B3F6 label=action_shovel
 C $B3F6,6 If the global current room index isn't room_50_BLOCKED_TUNNEL bail out
@@ -7866,7 +7866,7 @@ C $B40E,3 Choose game window attributes
 C $B411,3 Render visible tiles array into the screen buffer
 C $B414,3 Increase morale by 10, score by 50 and exit via
 ;
-c $B417 Action: Wiresnips.
+c $B417 Action: Wiresnips
 D $B417 This handles the hero using the snips to cut through a wire fence.
 N $B417 Check the hero's position against the four vertically-oriented fences.
 @ $B417 label=action_wiresnips
@@ -7948,7 +7948,7 @@ C $B482,6 Set vischar.mi.sprite to the prisoner sprite set
 C $B488,8 Lock out the player until the game counter is now + 96
 C $B490,5 Queue the message "CUTTING THE WIRE" and exit via
 ;
-c $B495 Action: Lockpick.
+c $B495 Action: Lockpick
 D $B495 This handles the hero using the lockpick to enter a locked room.
 @ $B495 label=action_lockpick
 C $B495,3 Get the nearest door in range of the hero in #REGhl
@@ -7958,25 +7958,25 @@ C $B49C,8 Lock out player control until the game counter becomes now + 255
 C $B4A4,5 Set hero's vischar.flags to vischar_FLAGS_PICKING_LOCK
 C $B4A9,5 Queue the message "PICKING THE LOCK" and exit via
 ;
-c $B4AE Action: Red key.
+c $B4AE Action: Red key
 D $B4AE This handles the hero using the red key.
 @ $B4AE label=action_red_key
 C $B4AE,2 Set the room number in #REGa to room_22_REDKEY
 C $B4B0,2 Jump to action_key
 ;
-c $B4B2 Action: Yellow key.
+c $B4B2 Action: Yellow key
 D $B4B2 This handles the hero using the yellow key.
 @ $B4B2 label=action_yellow_key
 C $B4B2,2 Set the room number in #REGa to room_13_CORRIDOR
 C $B4B4,2 Jump to action_key
 ;
-c $B4B6 Action: Green key.
+c $B4B6 Action: Green key
 D $B4B6 This handles the hero using the green key.
 @ $B4B6 label=action_green_key
 C $B4B6,2 Set the room number in #REGa to room_14_TORCH
 E $B4B6 FALL THROUGH into action_key.
 ;
-c $B4B8 Action: Key.
+c $B4B8 Action: Key
 D $B4B8 This is the common end of the previous three routines.
 D $B4B8 Used by the routines at #R$B4AE and #R$B4B2.
 R $B4B8 I:A Room number to which the key applies.
@@ -7995,7 +7995,7 @@ C $B4C8,3 Increase morale by 10, score by 50
 C $B4CB,2 Set #REGb to message_IT_IS_OPEN
 C $B4CD,3 Queue the message identified by #REGb
 ;
-c $B4D0 Get nearest door.
+c $B4D0 Get nearest door
 D $B4D0 This returns the nearest door to the hero.
 D $B4D0 Used by the routines at #R$B495 and #R$B4B8.
 R $B4D0 O:HL Pointer to door in locked_doors.
@@ -8092,7 +8092,7 @@ C $B53A,1 Return
 C $B53B,1 Switch back
 C $B53C,2 ...loop
 ;
-b $B53E Walls.
+b $B53E Walls
 D $B53E These are all of the walls/boundaries in the exterior map. The coordinates are in map space.
 D $B53E #TABLE(default) { =h Field | =h Description } { minx | Minimum x } { maxx | Maximum x } { miny | Minimum y } { maxy | Maximum y } { minh | Minimum height } { maxh | Maximum height } TABLE#
 @ $B53E label=walls
@@ -8121,7 +8121,7 @@ B $B5BC,6,6 21: ( 70-72,   70-72,  0-8 ) Fence - watchtower (corner of main camp
 B $B5C2,6,6 22: ( 70-72,   94-96,  0-8 ) Fence - watchtower (top right of main camp)
 B $B5C8,6,6 23: (105-109,  70-73,  0-8 ) Fence - gate wall middle
 ;
-c $B5CE Animate.
+c $B5CE Animate
 D $B5CE This animates all visible characters.
 D $B5CE Used by the routines at #R$6939 and #R$9D7B.
 @ $B5CE label=animate
@@ -8259,7 +8259,7 @@ C $B716,1 Swap the sprite indices
 C $B717,1 Pop and swap?
 C $B718,3 Jump
 ;
-c $B71B Calculate vischar isometric position (from vischar).
+c $B71B Calculate vischar isometric position (from vischar)
 D $B71B This calculates the isometric screen position for the specified vischar from vischar.mi.pos.
 D $B71B Used by the routines at #R$68F4, #R$697D, #R$A491, #R$B2FC and #R$C4E0.
 R $B71B I:HL Pointer to visible character.
@@ -8273,7 +8273,7 @@ C $B726,2 Block copy
 C $B728,1 Restore vischar pointer
 E $B71B Now FALL THROUGH into calc_vischar_iso_pos_from_state which will read from saved_pos.
 ;
-c $B729 Calculate vischar isometric position (from state).
+c $B729 Calculate vischar isometric position (from state)
 D $B729 This calculates the isometric screen position for the specified vischar from saved_pos.
 D $B729 Used by the routine at #R$B5CE.
 D $B729 Similar to drop_item_tail_interior.
@@ -8302,7 +8302,7 @@ C $B755,1 Restore vischar pointer
 C $B756,3 Store result in vischar.iso_pos.y
 C $B759,1 Return
 ;
-c $B75A Reset game.
+c $B75A Reset game
 D $B75A This resets the game.
 D $B75A Used by the routines at #R$9DE5, #R$A51C and #R$F163.
 N $B75A Cause discovery of all items.
@@ -8339,7 +8339,7 @@ C $B794,3 The hero sleeps
 C $B797,3 The hero enters a room
 C $B79A,1 Return
 ;
-c $B79B Reset map and characters.
+c $B79B Reset map and characters
 D $B79B This resets all visible characters, the game clock, day_or_night flag, general flags, collapsed tunnel objects, locks the gates, resets all beds, clears the mess halls and resets characters.
 D $B79B Used by the routines at #R$B75A and #R$CB98.
 @ $B79B label=reset_map_and_characters
@@ -8419,14 +8419,14 @@ B $B82E,3,3 (room_NONE,        52,60) for character 23
 B $B831,3,3 (room_NONE,        52,44) for character 24
 B $B834,3,3 (room_NONE,        52,28) for character 25
 ;
-g $B837 render_mask_buffer variables.
+g $B837 render_mask_buffer variables
 @ $B837 label=mask_left_skip
 @ $B838 label=mask_top_skip
 @ $B839 label=mask_run_height
 @ $B83A label=mask_run_width
 B $B837,4,1
 ;
-c $B83B Searchlight mask test.
+c $B83B Searchlight mask test
 D $B83B This checks the mask buffer to see if the hero is hiding behind the scenery.
 D $B83B Used by the routine at #R$B866.
 R $B83B I:IY Pointer to visible character.
@@ -8457,7 +8457,7 @@ C $B85F,1 Return
 C $B860,5 Set searchlight_state to searchlight_STATE_CAUGHT
 C $B865,1 Return
 ;
-c $B866 Plot sprites.
+c $B866 Plot sprites
 D $B866 This plots all vischars and items in order.
 D $B866 Used by the routines at #R$6939 and #R$9D7B.
 N $B866 Start (infinite) loop
@@ -8491,7 +8491,7 @@ C $B894,3 Render the mask buffer
 C $B897,3 Call the sprite plotter for 16-pixel-wide sprites
 C $B89A,2 ...loop
 ;
-c $B89C Get next drawable.
+c $B89C Get next drawable
 D $B89C This finds the next vischar or item that should be drawn.
 D $B89C Used by the routine at #R$B866.
 R $B89C O:F Z set if a valid vischar or item was returned.
@@ -8571,7 +8571,7 @@ C $B912,2 Test the bit we've just cleared (odd!) - sets Z
 C $B914,1 Point #REGhl back at the base of the itemstruct. (Note that DEC HL doesn't alter the Z flag)
 C $B915,1 Return with Z set
 ;
-c $B916 Render mask buffer.
+c $B916 Render mask buffer
 D $B916 This renders the mask buffer. The game uses a series of RLE encoded masks on characters to cut away pixels belonging to foreground objects. This ensures that characters aren't drawn atop of walls, huts and fences. This routine works out which masks intersect with the current player position then overlays them into the mask buffer at $8100.
 D $B916 At 32x40 pixels the mask buffer is small: sized to fit a single character.
 D $B916 Used by the routine at #R$B866.
@@ -8837,7 +8837,7 @@ C $BAD8,1 Otherwise #REGhl += #REGde
 C $BAD9,2 ...loop
 C $BADB,1 Return
 ;
-c $BADC Mask against tile.
+c $BADC Mask against tile
 D $BADC This ANDs a tile in the mask buffer against the specified mask tile.
 D $BADC Used by the routine at #R$B916.
 R $BADC I:A Mask tile index.
@@ -8862,7 +8862,7 @@ C $BAF3,2 ...loop
 C $BAF5,1 Switch register banks back
 C $BAF6,1 Return
 ;
-c $BAF7 Vischar visible.
+c $BAF7 Vischar visible
 D $BAF7 This clips the given vischar's dimensions to the game window.
 D $BAF7 Used by the routines at #R$BB98 and #R$E420.
 R $BAF7 I:IY Pointer to visible character
@@ -8968,7 +8968,7 @@ C $BB94,2 Signal invisible
 C $BB96,1 Clear Z (vischar is not visible)
 C $BB97,1 Return
 ;
-c $BB98 Restore tiles.
+c $BB98 Restore tiles
 D $BB98 This paints any tiles occupied by visible characters with tiles from tile_buf.
 D $BB98 Used by the routine at #R$9D7B.
 @ $BB98 label=restore_tiles
@@ -9125,7 +9125,7 @@ C $BCA3,2 Advance #REGiy to the next vischar
 C $BCA5,4 ...loop
 C $BCA9,1 Return
 ;
-c $BCAA Select tile set.
+c $BCAA Select tile set
 D $BCAA This turns a map position (from #R$81BB), adds on the given (x,y) offset and turns that resulting coordinate into a tile set pointer.
 D $BCAA Used by the routine at #R$BB98.
 R $BCAA I:H X shift.
@@ -9172,7 +9172,7 @@ C $BCE9,3 Point #REGbc at exterior_tiles[145 + 220]
 C $BCEC,1 Restore #REGa
 C $BCED,1 Return
 ;
-b $BCEE Map tiles.
+b $BCEE Map tiles
 D $BCEE This 54x34 element array defines the exterior game map. Each byte is a super-tile reference, representing a 32x32 tile.
 D $BCEE The map, with blanks and grass replaced to show the outline more clearly:
 D $BCEE _______________________________________________________________________ 5F 33 3C 58 _____________________________________________________________________________
@@ -9211,13 +9211,13 @@ D $BCEE .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. 
 @ $BCEE label=map_tiles
 B $BCEE,1836,54
 ;
-g $C41A PRNG pointer.
+g $C41A PRNG pointer
 D $C41A This is a pointer to some bytes to output as pseudo-random data.
 D $C41A Initially set to $9000. Wraps around after $90FF.
 @ $C41A label=prng_pointer
 W $C41A,2,2
 ;
-c $C41C Spawn characters.
+c $C41C Spawn characters
 D $C41C This iterates over all of the character structs testing each one to see if it can be brought on-screen.
 D $C41C Used by the routines at #R$6939 and #R$9D7B.
 N $C41C Form a clamped map position in #REGde.
@@ -9297,7 +9297,7 @@ C $C474,7 Advance to the next characterstruct
 C $C47B,2 ...loop
 C $C47D,1 Return
 ;
-c $C47E Purge invisible characters.
+c $C47E Purge invisible characters
 D $C47E This iterates over all of the visible characters testing each one to see if it's off-screen. If so it can be purged.
 D $C47E This is the opposite of #R$C41C.
 D $C47E Used by the routine at #R$9D7B.
@@ -9369,7 +9369,7 @@ C $C4D9,4 Advance to the next vischar
 C $C4DD,2 ...loop
 C $C4DF,1 Return
 ;
-c $C4E0 Spawn character.
+c $C4E0 Spawn character
 D $C4E0 This adds a character to the visible character (vischar) list.
 D $C4E0 Used by the routine at #R$C41C.
 R $C4E0 I:HL Pointer to character to spawn.
@@ -9505,7 +9505,7 @@ C $C5CC,3 Calculate screen position for the specified vischar
 C $C5CF,1 Restore vischar pointer
 C $C5D0,3 Exit via character_behaviour
 ;
-c $C5D3 Reset visible character.
+c $C5D3 Reset visible character
 D $C5D3 This resets a visible character (vischar). It could be a person or a stove/crate object.
 D $C5D3 Used by the routines at #R$68A2, #R$69C9, #R$B79B and #R$C47E.
 R $C5D3 I:HL Pointer to visible character.
@@ -9587,7 +9587,7 @@ C $C64B,1 Point #REGhl at vischar.route
 C $C64C,4 Copy route into charstr
 C $C650,1 Return
 ;
-c $C651 Get target.
+c $C651 Get target
 D $C651 This returns the coordinates the character should move to, given a route_t pointer in #REGhl. Coordinates are returned as a tinypos_t when moving to a door or as an xy_t when moving to a numbered location.
 D $C651 If the route specifies 'wander' then one of eight random locations starting from route.step is chosen.
 D $C651 Used by the routines at #R$A3BB, #R$C4E0, #R$C6A0 and #R$CB23.
@@ -9640,7 +9640,7 @@ C $C69B,2 Return with #REGa set to zero
 @ $C69D label=gt_route_ends
 C $C69D,3 Return with #REGa set to 255
 ;
-c $C6A0 Move a character.
+c $C6A0 Move a character
 D $C6A0 This moves one (off-screen) character around at a time.
 D $C6A0 Used by the routine at #R$9D7B.
 @ $C6A0 label=move_a_character
@@ -9816,7 +9816,7 @@ C $C797,1 Return
 C $C798,1 Decrement route.step
 C $C799,1 Return
 ;
-c $C79A Move towards.
+c $C79A Move towards
 D $C79A This moves the first value toward the second.
 D $C79A Used by the routine at #R$C6A0.
 R $C79A I:A' Largest movement allowed. Either 2 or 6.
@@ -9842,7 +9842,7 @@ C $C7B0,4 Clamp the delta to the largest movement
 C $C7B4,4 Move the first value towards second
 C $C7B8,1 Return
 ;
-c $C7B9 Get character struct.
+c $C7B9 Get character struct
 D $C7B9 This returns the character struct indexed by #REGa.
 D $C7B9 Used by the routines at #R$A38C, #R$C5D3 and #R$C6A0.
 R $C7B9 I:A Character index.
@@ -9853,7 +9853,7 @@ C $C7BE,3 Point #REGhl at character_structs
 C $C7C1,4 Combine
 C $C7C5,1 Return
 ;
-c $C7C6 Character event.
+c $C7C6 Character event
 D $C7C6 This is called when a route has ended. It makes characters wander around, sit, sleep, etc.
 D $C7C6 Used by the routines at #R$C6A0 and #R$CB2D.
 R $C7C6 I:HL Points to character_struct.route or vischar.route.
@@ -9969,13 +9969,13 @@ N $C88D charevnt_hero_sleeps
 @ $C88D label=charevnt_hero_sleeps
 C $C88E,3 goto hero_sleeps;
 ;
-g $C891 Food discovered counter.
+g $C891 Food discovered counter
 D $C891 This is a countdown until any food item is discovered.
 D $C891 (<- automatics, target_reached)
 @ $C891 label=food_discovered_counter
 B $C891,1,1
 ;
-c $C892 Automatics.
+c $C892 Automatics
 D $C892 Drives automatic behaviour for NPCs and the hero when the player idles. Causes characters to follow the hero if he's being suspicious. Also: Food item discovery.
 D $C892 Used by the routine at #R$9D7B.
 @ $C892 label=automatics
@@ -10052,7 +10052,7 @@ C $C914,3 Run character behaviour
 @ $C917 label=auto_return
 C $C917,1 Return
 ;
-c $C918 Character behaviour.
+c $C918 Character behaviour
 D $C918 This handles the various different pursuit modes that vischars can be in (pursuing the hero, a dog moving towards food, etc.) and drives character movement.
 D $C918 Used by the routines at #R$C4E0 and #R$C892.
 R $C918 I:IY Pointer to visible character.
@@ -10216,7 +10216,7 @@ C $CA0B,2 If it could move, jump to cb_set_input
 C $CA0D,1 Rewind #REGhl to vischar.position.x
 C $CA0E,3 Exit via target_reached
 ;
-c $CA11 Vischar move X.
+c $CA11 Vischar move X
 D $CA11 This moves a character on the X axis.
 D $CA11 Used by the routine at #R$C918.
 R $CA11 I:HL Pointer to vischar.target.
@@ -10258,7 +10258,7 @@ C $CA3F,4 Point #REGhl at vischar->mi.pos.x
 C $CA43,4 Set vischar.counter_and_flags flag vischar_BYTE7_Y_DOMINANT so that next time we'll use #R$CA49 in preference
 C $CA47,2 Return input_NONE (0)
 ;
-c $CA49 Vischar move Y.
+c $CA49 Vischar move Y
 D $CA49 This moves a character on the Y axis.
 D $CA49 Used by the routine at #R$C918.
 D $CA49 Nearly identical to vischar_move_x above.
@@ -10301,7 +10301,7 @@ C $CA77,4 Point #REGhl at vischar->mi.pos.y
 C $CA7B,4 Clear vischar.counter_and_flags flag vischar_BYTE7_Y_DOMINANT so that next time we'll use #R$CA11 in preference
 C $CA7F,2 Return input_NONE (0)
 ;
-c $CA81 Target reached.
+c $CA81 Target reached
 D $CA81 This is called when a character reaches its target. It handles the various different pursuit modes that vischars can be in (getting caught, bribes, dogs being poisoned) and door transitions.
 D $CA81 Used by the routine at #R$C918.
 R $CA81 I:IY Pointer to a vischar
@@ -10407,7 +10407,7 @@ C $CB1B,7 If the route is reversed then step backwards, otherwise step forwards
 C $CB22,1 Rewind #REGhl to vischar.route.index
 E $CA81 FALL THROUGH to get_target_assign_pos.
 ;
-c $CB23 Get target, assign position.
+c $CB23 Get target, assign position
 D $CB23 This calls #R$C651 then puts the returned coordinates in vischar.target and sets flags.
 D $CB23 Used by the routines at #R$A3BB, #R$B107, #R$C918, #R$CA81 and #R$CB2D.
 R $CB23 I:HL Pointer to route
@@ -10419,7 +10419,7 @@ C $CB29,3 Jump if not
 C $CB2C,1 Restore the route pointer
 E $CB23 FALL THROUGH into route_ended.
 ;
-c $CB2D Route ended.
+c $CB2D Route ended
 D $CB2D This is called when #R$C651 has run out of targets on the current route.
 D $CB2D Used by the routine at #R$C4E0.
 N $CB2D If not the hero's vischar ...
@@ -10454,7 +10454,7 @@ C $CB55,8 If the route is reversed then step backwards, otherwise forwards
 C $CB5D,2 Return 0
 B $CB5F,2,2 Unreferenced bytes
 ;
-c $CB61 Handle target.
+c $CB61 Handle target
 D $CB61 This is the "didn't hit end of list" case from #R$CB23. It's not really a routine in its own right.
 D $CB61 Used by the routine at #R$CB23.
 @ $CB61 label=handle_target
@@ -10466,13 +10466,13 @@ C $CB6B,7 Copy #REGhl (ptr to doorpos or location) to vischar->target
 C $CB72,2 (This return value is never used)
 C $CB74,1 Return
 ;
-c $CB75 Multiply by 1.
+c $CB75 Multiply by 1
 D $CB75 Widen #REGa to #REGbc (multiply by 1).
 @ $CB75 label=multiply_by_1
 C $CB75,3 Widen #REGa into #REGbc
 C $CB78,1 Return
 ;
-c $CB79 Get route.
+c $CB79 Get route
 D $CB79 Returns the route with index #REGa in #REGde.
 D $CB79 Used by the routines at #R$C651 and #R$CA81.
 R $CB79 I:A Index.
@@ -10481,7 +10481,7 @@ R $CB79 O:DE Pointer to route data.
 C $CB79,11 Point #REGde at routes[#REGa]
 C $CB84,1 Return
 ;
-c $CB85 Random nibble.
+c $CB85 Random nibble
 D $CB85 This is a cheap pseudo-random number generator. It returns the bottom nibbles from the bytes at $9000..$90FF, in sequence.
 D $CB85 Used by the routine at #R$C651.
 R $CB85 O:A Pseudo-random number from 0..15.
@@ -10496,10 +10496,10 @@ C $CB8D,3 Save the incremented prng_pointer
 C $CB90,1 Restore #REGhl
 C $CB91,1 Return
 ;
-u $CB92 Unreferenced bytes.
+u $CB92 Unreferenced bytes
 B $CB92,6,6
 ;
-c $CB98 Solitary.
+c $CB98 Solitary
 D $CB98 This sends the hero to solitary.
 D $CB98 Used by the routines at #R$A51C, #R$AFDF, #R$CA81 and #R$EFCB.
 R $CB98 Silence the bell.
@@ -10574,7 +10574,7 @@ C $CC26,4 Set vischar.direction to direction_BOTTOM_LEFT
 C $CC2A,4 Set hero's route.index to routeindex_0_HALT
 C $CC2E,3 Exit via transition
 ;
-b $CC31 Solitary commandant data.
+b $CC31 Solitary commandant data
 D $CC31 This is used to set the commandant on a path which results in the hero being released.
 D $CC31 Used by the routine at #R$CB98.
 @ $CC31 label=solitary_commandant_data
@@ -10582,7 +10582,7 @@ B $CC31,1,1 room  = room_0_OUTDOORS
 B $CC32,3,3 pos   = 116, 100, 3
 B $CC35,2,2 route = 36, 0
 ;
-c $CC37 Guards follow suspicious character.
+c $CC37 Guards follow suspicious character
 D $CC37 This routine decides whether the given vischar should pursue the hero.
 D $CC37 The commandant can see through the hero's disguise if he's wearing the guard's uniform, but other guards do not. Bribed characters will ignore the hero. When outdoors, line of sight checking is used to determine if the hero will be pursued. If the red_flag is in effect the hero will be pursued, otherwise he will just be hassled.
 R $CC37 Used by the routine at #R$C892.
@@ -10659,7 +10659,7 @@ C $CCA3,4 Make the bell ring perpetually
 C $CCA7,3 Call hostiles_pursue
 C $CCAA,1 Return
 ;
-c $CCAB Hostiles pursue.
+c $CCAB Hostiles pursue
 D $CCAB This sets the pursue flag for all visible, hostile characters (who aren't in up in towers).
 D $CCAB Research: If I nop this out then guards don't spot the items I drop. Iterate non-player characters.
 D $CCAB Used by the routines at #R$C892, #R$CC37, #R$CCCD and #R$EF9A.
@@ -10723,7 +10723,7 @@ C $CCF5,2 Jump to next iteration if so
 C $CCF7,3 Otherwise, hostiles pursue prisoners
 C $CCFA,1 Return
 ;
-c $CCFB Is item discoverable (interior).
+c $CCFB Is item discoverable (interior)
 D $CCFB This searches through item_structs for items which have been moved away from their default room. The red cross parcel is ignored.
 D $CCFB Used by the routines at #R$C6A0 and #R$CCCD.
 R $CCFB I:A Room index to check against
@@ -10769,7 +10769,7 @@ C $CD2C,2 Jump to the next iteration
 C $CD2E,1 Return the item's index in #REGc
 C $CD2F,2 Return with Z set (found)
 ;
-c $CD31 Item discovered.
+c $CD31 Item discovered
 D $CD31 This resets an item which has been discovered.
 D $CD31 Used by the routines at #R$B75A, #R$C6A0, #R$C892 and #R$CB98.
 R $CD31 I:C Item index.
@@ -10803,7 +10803,7 @@ C $CD62,3 Exit via calc_exterior_item_iso_pos
 C $CD65,2 Set height to 5
 C $CD67,3 Exit via calc_interior_item_iso_pos
 ;
-b $CD6A Default item locations.
+b $CD6A Default item locations
 D $CD6A This is an array of 16 three-byte structures that define the default locations of the items available in the game.
 D $CD6A #TABLE(default) { =h Type | =h Bytes | =h Name | =h Meaning } { Byte | 1 | room_and_flags | Room index; bits 6,7 = flags (T.B.D.) } { Byte | 1 | x | X position } { Byte | 1 | y | Y position } TABLE#
 D $CD6A #define ITEM_ROOM(room_no, flags) ((room_no & 0x3F) | (flags << 6)) do the next flags mean that the wiresnips are always or /never/ found?
@@ -10825,7 +10825,7 @@ B $CD91,3,3 item_RADIO            { ITEM_ROOM(room_18, 0), ... }
 B $CD94,3,3 item_PURSE            { ITEM_ROOM(room_NONE, 0), ... }
 B $CD97,3,3 item_COMPASS          { ITEM_ROOM(room_NONE, 0), ... }
 ;
-w $CD9A Character meta data.
+w $CD9A Character meta data
 D $CD9A This is an array of four definitions (type: character_class_data_t), one for each of the character classes.
 D $CD9A Used by the routine at #R$C4E0.
 @ $CD9A label=character_meta_data_commandant
@@ -10841,7 +10841,7 @@ W $CDA4,2,2 sprite_dog
 W $CDA6,2,2 &animations[0]
 W $CDA8,2,2 sprite_prisoner
 ;
-b $CDAA Animation indices.
+b $CDAA Animation indices
 D $CDAA This maps a character's direction and user input to an animation index and reverse flag.
 D $CDAA The horizontal axis is input (U/D/L/R = Up/Down/Left/Right) and the vertical axis is direction (TL/TR/BR/BL + crawl flag).
 D $CDAA For example:
@@ -10859,7 +10859,7 @@ B $CDD7,9,9 TR + crawl
 B $CDE0,9,9 BR + crawl
 B $CDE9,9,9 BL + crawl
 ;
-w $CDF2 Animations.
+w $CDF2 Animations
 D $CDF2 This is an array, 24 long, of pointers to animation data.
 @ $CDF2 label=animations
 N $CDF2 Normal animations, move the map
@@ -10870,7 +10870,7 @@ N $CE0A Crawling
 N $CE12 Crawling + turning
 N $CE1A Crawling still
 ;
-b $CE22 Sprites.
+b $CE22 Sprites
 D $CE22 These are the objects which can move. This includes STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT.
 D $CE22 Structure:
 D $CE22 #TABLE(default) { =h Type | =h Description } { Byte | Width in bytes + 1 } { Byte | Height in rows } { Pointer | Data pointer } { Pointer | Mask pointer } TABLE#
@@ -10922,7 +10922,7 @@ B $CEF4,6,6 3, 28, { bitmap_commandant_facing_bottom_right_2, mask_various_facin
 B $CEFA,6,6 3, 27, { bitmap_commandant_facing_bottom_right_3, mask_various_facing_bottom_right_3 } // (16x27,$D17C,$D605)
 B $CF00,6,6 3, 28, { bitmap_commandant_facing_bottom_right_4, mask_various_facing_bottom_right_4 } // (16x28,$D1B2,$D63D)
 ;
-b $CF06 Animations.
+b $CF06 Animations
 D $CF06 This is a sequence of variably-sized entries (type: anim_t).
 D $CF06 If suffixed '_tl' the character faces top left of the screen, if suffixed '_br' the character faces bottom right of the screen, etc.
 D $CF06 Animations (type: anim_t) have the following format:
@@ -10956,7 +10956,7 @@ D $CF06 Used by the routine at #R$B5CE.
 @ $D01A label=anim_crawlturn_bl
 B $CF06,288,8*4,20*4,8*4,12
 ;
-b $D026 Sprite bitmaps and masks.
+b $D026 Sprite bitmaps and masks
 D $D026 This section contains the bitmaps and masks for all of the movable items in the game. This includes STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT. This section also contains the sprite for the waving morale flag.
 D $D026 The sprite definitions at #R$CE22 onwards point into the data in this section to create animatable sprites. In particular this allows the same masks to be re-used across multiple game characters, which saves space.
 N $D026 #UDGTABLE { #UDGARRAY2,7,4,2;$D026-$D05F-1-16{0,0,64,116}(bitmap-commandant-facing-top-left-1) } TABLE#
@@ -11122,7 +11122,7 @@ N $DB72 #UDGTABLE { #UDGARRAY2,7,4,2;$DB72-$DB9D-1-16(mask-stove) } TABLE#
 @ $DB72 label=mask_stove
 B $DB72,44,8*5,4 mask: STOVE
 ;
-c $DB9E Mark nearby items.
+c $DB9E Mark nearby items
 D $DB9E This iterates over itemstructs, testing to see if each item is within the range (-1..22, 0..15) of the current map position. If it is it sets the flags itemstruct_ROOM_FLAG_NEARBY_6 and itemstruct_ROOM_FLAG_NEARBY_7 on the item, otherwise it clears both of those flags.
 D $DB9E This is similar to #R$CCFB in that it iterates over all item_structs.
 D $DB9E Used by the routines at #R$6939 and #R$9D7B.
@@ -11179,7 +11179,7 @@ C $DBE1,7 Advance #REGhl by stride
 C $DBE8,2 ...loop
 C $DBEA,1 Return
 ;
-c $DBEB Get next drawable itemstruct.
+c $DBEB Get next drawable itemstruct
 D $DBEB This finds the next item to draw that is furthest behind (x,y).
 D $DBEB Used by the routine at #R$B89C.
 R $DBEB I:A' A value to leave in #REGa' when nothing is found (e.g. 255)
@@ -11249,7 +11249,7 @@ C $DC38,6 Advance by stride to next item
 C $DC3E,2 ...loop
 C $DC40,1 Return
 ;
-c $DC41 Set-up item plotting.
+c $DC41 Set-up item plotting
 D $DC41 This checks that the item is visible, and if so readies the sprite plotter for the given item. The clipped values from the visibility check are used to enable or disable portions of the inner loop to cause clipping. Note that item plotting only ever uses the 16 pixel plotter.
 D $DC41 Note: This is the counterpart of, and very similar to, the routine at #R$E420.
 D $DC41 Used by the routine at #R$B866.
@@ -11358,7 +11358,7 @@ N $DD00 This XOR A isn't strictly needed - the Z flag should still be set from #
 C $DD00,1 Set Z flag to signal "is visible" for return
 C $DD01,1 Return
 ;
-c $DD02 Item visible.
+c $DD02 Item visible
 D $DD02 This clips the given item's dimensions to the game window.
 D $DD02 Counterpart of #R$BAF7 see that for further comments.
 D $DD02 Used by the routine at #R$DC41.
@@ -11447,7 +11447,7 @@ C $DD65,1 Return
 C $DD66,2 Clear Z (item is not visible)
 C $DD68,1 Return
 ;
-b $DD69 Item attributes.
+b $DD69 Item attributes
 D $DD69 This defines the attribute byte to use for all sixteen items,
 D $DD69 This is an array of 20 bytes, the final four of which are unused.
 D $DD69 In the descriptions 'yellow/black' means yellow ink over black paper, for example.
@@ -11476,7 +11476,7 @@ B $DD7A,1,1 item_attribute: cyan/black
 B $DD7B,1,1 item_attribute: bright-red/black
 B $DD7C,1,1 item_attribute: bright-red/black
 ;
-b $DD7D Item definitions.
+b $DD7D Item definitions
 D $DD7D This is an array of 16 "sprite" structures.
 D $DD7D item_definition: WIRESNIPS
 @ $DD7D label=item_definitions
@@ -11560,7 +11560,7 @@ B $DDD8,1,1 height
 W $DDD9,2,2 bitmap pointer
 W $DDDB,2,2 mask pointer
 ;
-b $DDDD Item bitmaps and masks.
+b $DDDD Item bitmaps and masks
 D $DDDD This section contains the bitmaps and masks for all of the (non-movable) items in the game. This includes SHOVEL, KEY, LOCKPICK, COMPASS, PURSE, PAPERS and so on.
 D $DDDD The item definitions at #R$DD7D onwards point into the data in this section to create placable items. In particular this allows the same masks to be re-used across multiple game items, which saves space.
 D $DDDD #UDGTABLE { #UDGARRAY2,7,4,2;$DDDD-$DDF6-1-16{0,0,64,52}(item-shovel) } TABLE#
@@ -11645,7 +11645,7 @@ N $E0B7 #UDGTABLE { #UDGARRAY2,7,4,2;$E0B7-$E0D6-1-16{0,0,64,64}(item-mask-food)
 @ $E0B7 label=mask_food
 B $E0B7,32,2 item_mask: FOOD (16x16)
 ;
-u $E0D7 Unreferenced bytes.
+u $E0D7 Unreferenced bytes
 B $E0D7,9,8,1
 ;
 w $E0E0 Plot masked sprites (16px) enables
@@ -12166,7 +12166,7 @@ C $E41D,1 Load the flipped byte into #REGd
 C $E41E,1 Restore original bank
 C $E41F,1 Return
 ;
-c $E420 Set-up vischar plotting.
+c $E420 Set-up vischar plotting
 D $E420 This checks that the vischar is visible, and if so readies the sprite plotter for the given vischar. The clipped values from the visibility check are used to enable or disable portions of the inner loop to cause clipping.
 D $E420 Note: This is the counterpart of, and very similar to, the routine at #R$DC41.
 D $E420 Used by the routine at #R$B866.
@@ -12529,7 +12529,7 @@ D $EC01 Used by render_mask_buffer in outdoor mode only.
 @ $EC01 label=exterior_mask_data
 B $EC01,464,8
 ;
-g $EDD1 Saved stack pointer.
+g $EDD1 Saved stack pointer
 D $EDD1 Used by plot_game_window and wipe_game_window.
 @ $EDD1 label=saved_sp
 W $EDD1,2,2
@@ -12700,7 +12700,7 @@ B $F05D,2,2 gates
 B $F05F,7,7 doors
 B $F066,2,2 unused
 ;
-c $F068 Jump to main.
+c $F068 Jump to main
 D $F068 Used by the routine at #R$FDE1.
 @ $F068 label=jump_to_main
 ;
@@ -12881,7 +12881,7 @@ R $F209 I:HL Pointer to [count, tile indices, ...].
 C $F209,2 Set the plot direction flag to $FF (vertical)
 E $F209 FALL THROUGH into plot_static_tiles
 ;
-c $F20B Plot static tiles.
+c $F20B Plot static tiles
 D $F20B This draws static tiles to the screen - the tiles used by the morale flag, score, etc.
 D $F20B Used by the routine at #R$F206.
 R $F20B I:A Plot direction: 0 => horizontal, $FF => vertical.
@@ -13045,7 +13045,7 @@ D $F32B Used by the routine at #R$F350.
 @ $F32B label=key_name_screen_addrs
 W $F32B,10,2
 ;
-c $F335 Wipe the game screen.
+c $F335 Wipe game window
 D $F335 This wipes the area of the screen where the game window is plotted.
 D $F335 Used by the routine at #R$F350.
 @ $F335 label=wipe_game_window
@@ -13370,12 +13370,12 @@ C $F53C,2 Reset #REGl - this is the border+beeper value for OUT
 C $F53E,2 Return #REGde and #REGbc the same
 C $F540,1 Return
 ;
-g $F541 Music channel indices.
+g $F541 Music channel indices
 @ $F541 label=music_channel0_index
 @ $F543 label=music_channel1_index
 W $F541,4,2
 ;
-u $F545 Unreferenced byte.
+u $F545 Unreferenced byte
 B $F545,1,1
 ;
 b $F546 Music channel 0 data
@@ -13490,7 +13490,7 @@ C $FDE2,3 Point #REGsp at the topmost byte of RAM
 C $FDE5,11 Relocate the $9FE0 bytes at $5E00 down to $5B00
 C $FDF0,3 Exit via jump_to_main
 ;
-u $FDF3 Unreferenced bytes.
+u $FDF3 Unreferenced bytes
 B $FDF3,13,8,5
 ;
 c $FE00 Input routine: Keyboard
