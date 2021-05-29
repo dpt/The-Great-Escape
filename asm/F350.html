@@ -24,11 +24,14 @@ Next: <a href="F408.html">F408</a>
 </td>
 </tr>
 </table>
-<div class="description">F350: Choose keys.</div>
+<div class="description">F350: Choose keys</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This wipes the game window, sets its attributes, draws prompts, then sits in a loop waiting for the player to make their key choices. The chosen keys (defined by port and mask) are stored in the table at <a href="F06B.html">keydefs</a>. Finally the user is asked to confirm their key choices.
+</div>
 <div class="paragraph">
 Used by the routine at <a href="F271.html">check_menu_keys</a>.
 </div>
@@ -741,7 +744,7 @@ Skip entries until the mask carries out.
 <span id="f3dd"></span>
 <div class="comments">
 <div class="paragraph">
-If the top bit was set then it's a special key, like BREAK or ENTER.
+If the top bit was set then it's a special key, like SPACE or ENTER.
 </div>
 </div>
 </td>
@@ -963,7 +966,7 @@ Next: <a href="F408.html">F408</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

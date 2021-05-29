@@ -24,16 +24,19 @@ Next: <a href="7D2F.html">7D2F</a>
 </td>
 </tr>
 </table>
-<div class="description">7D15: Add a new message index to the pending messages queue.</div>
+<div class="description">7D15: Queue message</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
+This adds a new message index to the pending messages queue.
+</div>
+<div class="paragraph">
 Used by the routines at <a href="9DCF.html">check_morale</a>, <a href="9E98.html">picking_lock</a>, <a href="A1D3.html">event_another_day_dawns</a>, <a href="A1E7.html">event_wake_up</a>, <a href="A1F0.html">event_go_to_roll_call</a>, <a href="A1F9.html">event_go_to_breakfast_time</a>, <a href="A206.html">event_go_to_exercise_time</a>, <a href="A219.html">event_go_to_time_for_bed</a>, <a href="A228.html">event_new_red_cross_parcel</a>, <a href="B107.html">accept_bribe</a>, <a href="B1D4.html">is_door_locked</a>, <a href="B387.html">action_red_cross_parcel</a>, <a href="B417.html">action_wiresnips</a>, <a href="B495.html">action_lockpick</a>, <a href="B4B8.html">action_key</a>, <a href="CB98.html">solitary</a>, <a href="CD31.html">item_discovered</a> and <a href="EF9A.html">event_roll_call</a>.
 </div>
 <div class="paragraph">
-The use of <span class="register">C</span> on entry to this routine is puzzling. One routine (<a href="9DCF.html">check_morale</a>) explicitly sets it to zero before calling, but the other callers do not so we receive whatever was in <span class="register">C</span> previously.
+Commentary: The use of <span class="register">C</span> on entry to this routine is puzzling. One routine (<a href="9DCF.html">check_morale</a>) explicitly sets it to zero before calling, but the other callers do not so we receive whatever was in <span class="register">C</span> previously.
 </div>
 </div>
 <table class="input">
@@ -46,7 +49,7 @@ The use of <span class="register">C</span> on entry to this routine is puzzling.
 </tr>
 <tr>
 <td class="register">C</td>
-<td class="register-desc">Unknown: possibly a second message index.</td>
+<td class="register-desc">Unknown: Possibly intended as a second message index.</td>
 </tr>
 </table>
 </td>
@@ -192,7 +195,7 @@ Next: <a href="7D2F.html">7D2F</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

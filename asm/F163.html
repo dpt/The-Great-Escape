@@ -24,11 +24,14 @@ Next: <a href="F1E0.html">F1E0</a>
 </td>
 </tr>
 </table>
-<div class="description">F163: The game starts here.</div>
+<div class="description">F163: Main</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This is where the game starts.
+</div>
 <div class="paragraph">
 Used by the routine at <a href="F068.html">jump_to_main</a>.
 </div>
@@ -187,7 +190,7 @@ Start loop
 <td class="asm-label"></td>
 <td class="address-1"><span id="f181"></span>F181</td>
 <td class="instruction">LD C,$00</td>
-<td class="comment-1" rowspan="1">Zero <span class="register">C</span> (DPT: Could have used XOR C)</td>
+<td class="comment-1" rowspan="1">Zero <span class="register">C</span> (Commentary: Could have used XOR C)</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -366,7 +369,7 @@ Start loop
 <span id="f1a7"></span>
 <div class="comments">
 <div class="paragraph">
-Write $FF $FF at $8020 and every 32 bytes after. (DPT: Possibly easier to do the inverse and clear those bytes at $8000).
+Write $FF $FF at $8020 and every 32 bytes after. (Commentary: It could be easier to do the inverse and clear those bytes at $8000).
 </div>
 </div>
 </td>
@@ -450,7 +453,7 @@ Start loop
 <span id="f1b7"></span>
 <div class="comments">
 <div class="paragraph">
-Zero $118 bytes at HL ($8100 is mask_buffer) onwards.
+Zero $118 bytes at <span class="register">HL</span> ($8100 is mask_buffer) onwards.
 </div>
 <div class="paragraph">
 This wipes everything up until the start of tiles ($8218).
@@ -613,7 +616,7 @@ Next: <a href="F1E0.html">F1E0</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

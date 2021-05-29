@@ -24,16 +24,16 @@ Next: <a href="6B42.html">6B42</a>
 </td>
 </tr>
 </table>
-<div class="description">6AB5: Expands RLE-encoded objects to a full set of tile references.</div>
+<div class="description">6AB5: Expand object</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="6A35.html">setup_room</a>.
+This is only ever called by <a href="6A35.html">setup_room</a>. It expands the run length encoded object with the given index into indices in the visible tile array.
 </div>
 <div class="paragraph">
-Object format:
+Objects have the following format:
 </div>
 <div class="paragraph">
 <table class="default">
@@ -49,19 +49,19 @@ Object format:
 </tr>
 <tr>
 <td class="" colspan="1" rowspan="1">&lt;t&gt;</td>
-<td class="" colspan="1" rowspan="1">Literal: Emit tile &lt;t&gt;</td>
+<td class="" colspan="1" rowspan="1">Literal: Emit a single tile &lt;t&gt;</td>
 </tr>
 <tr>
 <td class="" colspan="1" rowspan="1">&lt;$FF&gt; &lt;$FF&gt;</td>
-<td class="" colspan="1" rowspan="1">Escape: Emit &lt;$FF&gt;</td>
+<td class="" colspan="1" rowspan="1">Escape: Emit a single tile $FF</td>
 </tr>
 <tr>
-<td class="" colspan="1" rowspan="1">&lt;$FF&gt; &lt;128..254&gt; &lt;t&gt;</td>
-<td class="" colspan="1" rowspan="1">Repetition: Emit tile &lt;t&gt; up to 126 times</td>
+<td class="" colspan="1" rowspan="1">&lt;$FF&gt; &lt;c=128..254&gt; &lt;t&gt;</td>
+<td class="" colspan="1" rowspan="1">Repetition: Emit tile &lt;t&gt; count (&lt;c&gt; AND 127) times</td>
 </tr>
 <tr>
-<td class="" colspan="1" rowspan="1">&lt;$FF&gt; &lt;64..79&gt; &lt;t&gt;</td>
-<td class="" colspan="1" rowspan="1">Range: Emit tile &lt;t&gt; &lt;t+1&gt; &lt;t+2&gt; .. up to &lt;t+15&gt;</td>
+<td class="" colspan="1" rowspan="1">&lt;$FF&gt; &lt;c=64..79&gt; &lt;t&gt;</td>
+<td class="" colspan="1" rowspan="1">Ascending range: Emit tile &lt;t&gt; then &lt;t+1&gt; then &lt;t+2&gt; and so on, up to &lt;t+(c AND 15)&gt;</td>
 </tr>
 <tr>
 <td class="" colspan="1" rowspan="1">&lt;$FF&gt; &lt;other&gt;</td>
@@ -71,6 +71,9 @@ Object format:
 </div>
 <div class="paragraph">
 Tile references of zero produce no output.
+</div>
+<div class="paragraph">
+Used by the routine at <a href="6A35.html">setup_room</a>.
 </div>
 </div>
 <table class="input">
@@ -83,7 +86,7 @@ Tile references of zero produce no output.
 </tr>
 <tr>
 <td class="register">DE</td>
-<td class="register-desc">Tile buffer location to expand to.</td>
+<td class="register-desc">Tile array location to expand to.</td>
 </tr>
 </table>
 </td>
@@ -553,7 +556,7 @@ Ran out of width / end of row
 Escape + 64..79 case: emit an ascending range of bytes
 </div>
 <div class="paragraph">
-Bug: This self-modifies the INC A at <a href="6AB5.html#6b28">expand_object_increment</a> at the end of the loop body, but nothing else in the code modifies it! Possible evidence that other encodings (e.g. 'DEC A') were attempted.
+Trivial bug: This self-modifies the INC A at <a href="6AB5.html#6b28">expand_object_increment</a> at the end of the loop body, but nothing else in the code modifies it! Possible evidence that other encodings (e.g. 'DEC A') were attempted.
 </div>
 </div>
 </td>
@@ -767,7 +770,7 @@ Next: <a href="6B42.html">6B42</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

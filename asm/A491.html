@@ -24,11 +24,14 @@ Next: <a href="A4A9.html">A4A9</a>
 </td>
 </tr>
 </table>
-<div class="description">A491: Common end of hero sits/sleeps.</div>
+<div class="description">A491: Hero sit/sleep (common)</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This is the common end of the above two routines. It sets the appropriate breakfast/bed flag, halts the hero, sets his position to (0,0), recalculates his isometric position then re-plots the room.
+</div>
 <div class="paragraph">
 Used by the routine at <a href="A47F.html">hero_sits</a>.
 </div>
@@ -80,7 +83,7 @@ Set hero position (x,y) to zero.
 <td class="asm-label"></td>
 <td class="address-1"><span id="a498"></span>A498</td>
 <td class="instruction">LD HL,$800F</td>
-<td class="comment-1" rowspan="5">Zero $800F..$8012</td>
+<td class="comment-1" rowspan="5">Zero $800F.$8012</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -132,7 +135,7 @@ Next: <a href="A4A9.html">A4A9</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

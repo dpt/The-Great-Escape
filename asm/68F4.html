@@ -24,11 +24,14 @@ Next: <a href="691A.html">691A</a>
 </td>
 </tr>
 </table>
-<div class="description">68F4: The hero enters a room.</div>
+<div class="description">68F4: Enter room</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This is called when the hero should enter a room. It resets the game window position, expands out the room definition into tile references then plots those tiles, centres the map position, sets an appropriate sprite for the hero (walk or crawl), sets up movable items then zoomboxes the scene onto the screen and boosts the score by one. Finally it squashes the stack and jumps to the main loop.
+</div>
 <div class="paragraph">
 Used by the routines at <a href="68A2.html">transition</a>, <a href="9D78.html">main_loop_setup</a>, <a href="9DE5.html">keyscan_break</a> and <a href="B75A.html">reset_game</a>.
 </div>
@@ -56,7 +59,7 @@ Used by the routines at <a href="68A2.html">transition</a>, <a href="9D78.html">
 <td class="asm-label"></td>
 <td class="address-1"><span id="68fd"></span>68FD</td>
 <td class="instruction">CALL <a href="6B42.html">plot_interior_tiles</a></td>
-<td class="comment-1" rowspan="1">Expand tile buffer into screen buffer</td>
+<td class="comment-1" rowspan="1">Render visible tiles array into the screen buffer</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -131,7 +134,7 @@ Next: <a href="691A.html">691A</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

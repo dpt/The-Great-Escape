@@ -24,13 +24,13 @@ Next: <a href="BACD.html">BACD</a>
 </td>
 </tr>
 </table>
-<div class="description">B916: Render the mask buffer.</div>
+<div class="description">B916: Render mask buffer</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-The game uses a series of RLE encoded masks to characters to cut away pixels belonging to foreground objects. This ensures that characters aren't drawn atop of walls, huts and fences. This routine works out which masks intersect with the current player position then overlays them into the mask buffer at $8100.
+This renders the mask buffer. The game uses a series of RLE encoded masks on characters to cut away pixels belonging to foreground objects. This ensures that characters aren't drawn atop of walls, huts and fences. This routine works out which masks intersect with the current player position then overlays them into the mask buffer at $8100.
 </div>
 <div class="paragraph">
 At 32x40 pixels the mask buffer is small: sized to fit a single character.
@@ -1532,7 +1532,7 @@ Start loop
 Start loop
 </div>
 <div class="paragraph">
-DPT: The banking of <span class="register">A</span> is hard to follow here. It's difficult to see if this section is entered with a skip value whether it will be handled correctly.
+Commentary: The banking of <span class="register">A</span> is hard to follow here. It's difficult to see if this section is entered with a skip value whether it will be handled correctly.
 </div>
 </div>
 </td>
@@ -1788,7 +1788,7 @@ It's a repeat.
 <td class="asm-label">rmb_trailskip_dive_in</td>
 <td class="address-2"><span id="baa3"></span>BAA3</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-1" rowspan="4">right_skip = A = (right_skip - A)</td>
+<td class="comment-1" rowspan="4">right_skip = <span class="register">A</span> = (right_skip - <span class="register">A</span>)</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1972,7 +1972,7 @@ Next: <a href="BACD.html">BACD</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

@@ -20,15 +20,18 @@ Prev: <a href="EFCB.html">EFCB</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#effc">Map</a></td>
 <td class="next">
-Next: <a href="F014.html">F014</a>
+Next: <a href="F026.html">F026</a>
 </td>
 </tr>
 </table>
-<div class="description">EFFC: Wait for the user to press 'Y' or 'N'.</div>
+<div class="description">EFFC: User confirm</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This waits until the user presses 'Y' or 'N', then returns an indication of which was pressed in the Z flag.
+</div>
 <div class="paragraph">
 Used by the routines at <a href="9DE5.html">keyscan_break</a> and <a href="F350.html">choose_keys</a>.
 </div>
@@ -48,7 +51,7 @@ Used by the routines at <a href="9DE5.html">keyscan_break</a> and <a href="F350.
 <td class="asm-label">user_confirm</td>
 <td class="address-2"><span id="effc"></span>EFFC</td>
 <td class="instruction">LD HL,$F014</td>
-<td class="comment-1" rowspan="2">Print "CONFIRM. Y OR N"</td>
+<td class="comment-1" rowspan="2">Print "CONFIRM Y OR N"</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -123,7 +126,13 @@ Start loop (infinite)
 <td class="asm-label"></td>
 <td class="address-1"><span id="f012"></span>F012</td>
 <td class="instruction">JR <a href="EFFC.html#f002">user_confirm_0</a></td>
-<td class="comment-1" rowspan="1">...loop</td>
+<td class="comment-1" rowspan="1">..loop</td>
+</tr>
+<tr>
+<td class="asm-label">confirm_query</td>
+<td class="address-1"><span id="f014"></span>F014</td>
+<td class="instruction">DEFB $0B,$50,$0F,$0C,$00,$17,$0F,$12,$1A,$16,$24,$23,$21,$23,$00,$1A,$23,$17</td>
+<td class="comment-1" rowspan="1">"CONFIRM Y OR N" / screen address $500B, length $F, string='C0NFIRM. Y 0R N'</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -133,12 +142,12 @@ Prev: <a href="EFCB.html">EFCB</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#effc">Map</a></td>
 <td class="next">
-Next: <a href="F014.html">F014</a>
+Next: <a href="F026.html">F026</a>
 </td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

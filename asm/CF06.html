@@ -24,13 +24,99 @@ Next: <a href="D026.html">D026</a>
 </td>
 </tr>
 </table>
-<div class="description">CF06: Animations.</div>
+<div class="description">CF06: Animations</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Read by routine around $B64F (animate)
+This is a sequence of variably-sized entries (type: anim_t).
+</div>
+<div class="paragraph">
+If suffixed '_tl' the character faces top left of the screen, if suffixed '_br' the character faces bottom right of the screen, etc.
+</div>
+<div class="paragraph">
+Animations (type: anim_t) have the following format:
+</div>
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Type</th>
+<th colspan="1" rowspan="1">Bytes</th>
+<th colspan="1" rowspan="1">Name</th>
+<th colspan="1" rowspan="1">Meaning</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">Byte</td>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">nframes</td>
+<td class="" colspan="1" rowspan="1">Number of frames in this animation</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">direction_t</td>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">from</td>
+<td class="" colspan="1" rowspan="1">Which direction to turn to when animation starts (when reversed)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">direction_t</td>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">to</td>
+<td class="" colspan="1" rowspan="1">Which direction to turn to when animation starts (when not reversed)</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">direction_t</td>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">map_direction</td>
+<td class="" colspan="1" rowspan="1">Direction to move the map, or 255 to not move it</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">animframe_t</td>
+<td class="" colspan="1" rowspan="1">nframes * 4</td>
+<td class="" colspan="1" rowspan="1">frames</td>
+<td class="" colspan="1" rowspan="1">Animation frames</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+Animation frames (type: animframe_t) have the following format:
+</div>
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Type</th>
+<th colspan="1" rowspan="1">Bytes</th>
+<th colspan="1" rowspan="1">Name</th>
+<th colspan="1" rowspan="1">Meaning</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">Byte</td>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">dx</td>
+<td class="" colspan="1" rowspan="1">How much this frame moves the character by on the X axis. Signed delta</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">Byte</td>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">dy</td>
+<td class="" colspan="1" rowspan="1">How much this frame moves the character by on the Y axis. Signed delta</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">Byte</td>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">dh</td>
+<td class="" colspan="1" rowspan="1">How much this frame moves the character by on the height axis. Signed delta</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">Byte</td>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">spriteindex</td>
+<td class="" colspan="1" rowspan="1">Sprite index (relative to vischar's sprite base) + flip flag in top bit</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+Used by the routine at <a href="B5CE.html">animate</a>.
 </div>
 </div>
 </td>
@@ -192,7 +278,7 @@ Next: <a href="D026.html">D026</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

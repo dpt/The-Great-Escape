@@ -24,19 +24,19 @@ Next: <a href="DBEB.html">DBEB</a>
 </td>
 </tr>
 </table>
-<div class="description">DB9E: Mark nearby items.</div>
+<div class="description">DB9E: Mark nearby items</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Iterates over itemstructs, testing to see if each item is within the range (-1..22, 0..15) of the current map position. If it is it sets the flags itemstruct_ROOM_FLAG_NEARBY_6 and itemstruct_ROOM_FLAG_NEARBY_7 on the item, otherwise it clears both of those flags.
+This iterates over itemstructs, testing to see if each item is within the range (-1..22, 0..15) of the current map position. If it is it sets the flags itemstruct_ROOM_FLAG_NEARBY_6 and itemstruct_ROOM_FLAG_NEARBY_7 on the item, otherwise it clears both of those flags.
+</div>
+<div class="paragraph">
+This is similar to <a href="CCFB.html">is_item_discoverable_interior</a> in that it iterates over all <a href="76C8.html">item_structs</a>.
 </div>
 <div class="paragraph">
 Used by the routines at <a href="6939.html">setup_movable_items</a> and <a href="9D7B.html">main_loop</a>.
-</div>
-<div class="paragraph">
-This is similar to is_item_discoverable_interior in that it iterates over all item_structs.
 </div>
 </div>
 </td>
@@ -378,7 +378,7 @@ Next: <a href="DBEB.html">DBEB</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

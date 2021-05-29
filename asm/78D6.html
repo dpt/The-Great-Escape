@@ -24,13 +24,13 @@ Next: <a href="7AC6.html">7AC6</a>
 </td>
 </tr>
 </table>
-<div class="description">78D6: Door positions.</div>
+<div class="description">78D6: Doors</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-62 pairs of four-byte structs laid out as follows:
+This is an array of 62 pairs of four-byte structs laid out as follows:
 </div>
 <div class="paragraph">
 <table class="default">
@@ -44,7 +44,7 @@ Next: <a href="7AC6.html">7AC6</a>
 <td class="" colspan="1" rowspan="1">Byte</td>
 <td class="" colspan="1" rowspan="1">1</td>
 <td class="" colspan="1" rowspan="1">room_and_direction</td>
-<td class="" colspan="1" rowspan="1">Top six bits are a room index. Bottom two bits are a direction_t</td>
+<td class="" colspan="1" rowspan="1">bits 0..1 = direction door faces (direction_t); bits 2..7 = target room of door (room_t)</td>
 </tr>
 <tr>
 <td class="" colspan="1" rowspan="1">TinyPos</td>
@@ -817,7 +817,7 @@ Next: <a href="7AC6.html">7AC6</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

@@ -24,11 +24,14 @@ Next: <a href="6A27.html">6A27</a>
 </td>
 </tr>
 </table>
-<div class="description">6A12: Turn a door index into a door_t pointer.</div>
+<div class="description">6A12: Get door</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This is called by a few routines to turn a door index into a pointer to a door structure (a door_t). The doors[] array contains pairs of door structures. If the door_REVERSE flag is set in bit 7, the first of the pair is returned, otherwise the second is.
+</div>
 <div class="paragraph">
 Used by the routines at <a href="B32D.html">door_handling_interior</a>, <a href="B4D0.html">get_nearest_door</a>, <a href="C651.html">get_target</a> and <a href="CA81.html">target_reached</a>.
 </div>
@@ -39,7 +42,7 @@ Used by the routines at <a href="B32D.html">door_handling_interior</a>, <a href=
 </tr>
 <tr>
 <td class="register">A</td>
-<td class="register-desc">Index of door + reverse flag in bit 7.</td>
+<td class="register-desc">Index of door + door_REVERSE flag in bit 7.</td>
 </tr>
 </table>
 <table class="output">
@@ -63,7 +66,7 @@ Used by the routines at <a href="B32D.html">door_handling_interior</a>, <a href=
 <td class="asm-label"></td>
 <td class="address-1"><span id="6a13"></span>6A13</td>
 <td class="instruction">ADD A,A</td>
-<td class="comment-1" rowspan="1">First double <span class="register">A</span> since doors[] contains pairs of doors. This also discards the flag in bit 7</td>
+<td class="comment-1" rowspan="1">First double <span class="register">A</span> since doors[] contains pairs of doors. This also discards the door_REVERSE flag in bit 7</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -100,7 +103,7 @@ Used by the routines at <a href="B32D.html">door_handling_interior</a>, <a href=
 <td class="asm-label"></td>
 <td class="address-1"><span id="6a1d"></span>6A1D</td>
 <td class="instruction">BIT 7,C</td>
-<td class="comment-1" rowspan="1">Was the door_REVERSE flag bit set on entry?</td>
+<td class="comment-1" rowspan="1">Was the door_REVERSE flag (bit 7) set on entry?</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -153,7 +156,7 @@ Next: <a href="6A27.html">6A27</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

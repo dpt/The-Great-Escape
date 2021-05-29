@@ -24,11 +24,21 @@ Next: <a href="FAE0.html">FAE0</a>
 </td>
 </tr>
 </table>
-<div class="description">F546: High music channel notes (semitones).</div>
+<div class="description">F546: Music channel 0 data</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This is the music data for the "high" channel. Each byte is an index into the semitone table.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="f546"></span>
+<div class="comments">
 <div class="paragraph">
 Start of The Great Escape theme.
 </div>
@@ -568,7 +578,7 @@ End of song marker
 <span id="f7c7"></span>
 <div class="comments">
 <div class="paragraph">
-Low music channel notes (semitones).
+This is the music data for the "low" channel. Each byte is an index into the semitone table.
 </div>
 <div class="paragraph">
 Start of The Great Escape theme.
@@ -1109,10 +1119,7 @@ End of song marker
 <span id="fa48"></span>
 <div class="comments">
 <div class="paragraph">
-The frequency to use to produce the given semitone.
-</div>
-<div class="paragraph">
-Covers full octaves from C2 to B6 and C7 only.
+The frequency to use to produce the given semitone. It covers full octaves from C2 to B6 and C7 only.
 </div>
 <div class="paragraph">
 Used by <a href="F52C.html">frequency_for_semitone</a>
@@ -1659,7 +1666,7 @@ Next: <a href="FAE0.html">FAE0</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

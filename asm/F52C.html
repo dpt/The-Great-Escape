@@ -24,13 +24,13 @@ Next: <a href="F541.html">F541</a>
 </td>
 </tr>
 </table>
-<div class="description">F52C: Return the frequency to play at to generate the given semitone.</div>
+<div class="description">F52C: Frequency for semitone</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-The frequency returned is the number of iterations that the music routine should count for before flipping the speaker output bit.
+This returns the frequency that the beeper should be played at to generate the given semitone. The frequency returned is the number of iterations that the music routine should count for before flipping the speaker output bit.
 </div>
 <div class="paragraph">
 Used by the routine at <a href="F4B7.html">menu_screen</a>.
@@ -114,7 +114,7 @@ Used by the routine at <a href="F4B7.html">menu_screen</a>.
 <span id="f537"></span>
 <div class="comments">
 <div class="paragraph">
-DPT: This increment could be baked into the table itself.
+Commentary: This increment could be baked into the table itself.
 </div>
 </div>
 </td>
@@ -135,7 +135,7 @@ DPT: This increment could be baked into the table itself.
 <td class="asm-label"></td>
 <td class="address-1"><span id="f539"></span>F539</td>
 <td class="instruction">JR NZ,<a href="F52C.html#f53c">frequency_for_semitone_0</a></td>
-<td class="comment-1" rowspan="2">If B rolled over, increment C (big endian?)</td>
+<td class="comment-1" rowspan="2">If <span class="register">B</span> rolled over, increment <span class="register">C</span> (big endian?)</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -178,7 +178,7 @@ Next: <a href="F541.html">F541</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

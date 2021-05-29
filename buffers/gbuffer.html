@@ -24,8 +24,342 @@
 <td class="map-g"><span id="68a0"></span><a href="../asm/68A0.html">68A0</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/68A0.html">Index of the current room, or 0 when outside.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/68A0.html">Room index</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This holds the index of the room that the hero is presently in, or 0 when he's outside.
+</div>
+<div class="paragraph">
+The possible room numbers are as follows:
+</div>
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Room</th>
+<th colspan="1" rowspan="1">Description</th>
+<th colspan="1" rowspan="1">Movable Object</th>
+<th colspan="1" rowspan="1">Items</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">0</td>
+<td class="" colspan="1" rowspan="1">Outdoors / exterior / main map</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Green key</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">Lowest hut, right hand side</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Poison</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">2</td>
+<td class="" colspan="1" rowspan="1">Middle hut, left hand side (Hero's start room)</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Stove</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">3</td>
+<td class="" colspan="1" rowspan="1">Middle hut, right hand side</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">4</td>
+<td class="" colspan="1" rowspan="1">Highest hut, left hand side</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">5</td>
+<td class="" colspan="1" rowspan="1">Highest hut, right hand side</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">6</td>
+<td class="" colspan="1" rowspan="1">(unused index)</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">7</td>
+<td class="" colspan="1" rowspan="1">Corridor</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">8</td>
+<td class="" colspan="1" rowspan="1">Corridor</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">9</td>
+<td class="" colspan="1" rowspan="1">"Crate"</td>
+<td class="" colspan="1" rowspan="1">Crate</td>
+<td class="" colspan="1" rowspan="1">Shovel</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">10</td>
+<td class="" colspan="1" rowspan="1">"Lockpick"</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Lockpick</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">11</td>
+<td class="" colspan="1" rowspan="1">Commandant's office</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Papers</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">12</td>
+<td class="" colspan="1" rowspan="1">Corridor</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">13</td>
+<td class="" colspan="1" rowspan="1">Corridor</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">14</td>
+<td class="" colspan="1" rowspan="1">Guard’s quarters 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Torch</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">15</td>
+<td class="" colspan="1" rowspan="1">Guard’s quarters 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Uniform, Yellow key</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">16</td>
+<td class="" colspan="1" rowspan="1">Corridor</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">17</td>
+<td class="" colspan="1" rowspan="1">Corridor</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">18</td>
+<td class="" colspan="1" rowspan="1">“Radio”</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Radio</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">19</td>
+<td class="" colspan="1" rowspan="1">“Food”</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Food</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">20</td>
+<td class="" colspan="1" rowspan="1">"Red Cross parcel"</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">From parcel: Purse, Wire snips, Bribe, Compass</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">21</td>
+<td class="" colspan="1" rowspan="1">Corridor</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">22</td>
+<td class="" colspan="1" rowspan="1">Corridor to solitary</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Red key</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">23</td>
+<td class="" colspan="1" rowspan="1">Mess hall, right room</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">24</td>
+<td class="" colspan="1" rowspan="1">Solitary confinement</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">25</td>
+<td class="" colspan="1" rowspan="1">Mess hall, left room</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">26</td>
+<td class="" colspan="1" rowspan="1">(unused index)</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">27</td>
+<td class="" colspan="1" rowspan="1">(unused index)</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">28</td>
+<td class="" colspan="1" rowspan="1">Lowest hut, left hand side</td>
+<td class="" colspan="1" rowspan="1">Stove</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">29</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2, start of</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">30</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">31</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">32</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">33</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">34</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2, end of</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">35</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">36</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">37</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1, start of</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">38</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">39</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">40</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">41</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">42</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">43</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">44</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">45</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">46</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">47</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">48</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1, end of</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">49</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">50</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1 (initially blocked)</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">51</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">52</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+</table>
+</div>
 </div>
 </td>
 </tr>
@@ -33,8 +367,14 @@
 <td class="map-g"><span id="68a1"></span><a href="../asm/68A1.html">68A1</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/68A1.html">The current door id.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/68A1.html">Current door</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is the current door id. Bit 7 is the door_REVERSE flag.
+</div>
+<div class="paragraph">
+Used by the routines at <a href="../asm/B1D4.html">is_door_locked</a>, <a href="../asm/B1F5.html">door_handling</a>, <a href="../asm/B32D.html">door_handling_interior</a> and <a href="../asm/CB98.html">solitary</a>.
+</div>
 </div>
 </td>
 </tr>
@@ -42,8 +382,11 @@
 <td class="map-g"><span id="7cfc"></span><a href="../asm/7CFC.html">7CFC</a></td>
 <td class="map-length">19</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/7CFC.html">The pending message queue.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/7CFC.html">Message queue</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is a queue of pending message indexes. Each is a two-byte value. Terminated by a single message_QUEUE_END byte ($FF).
+</div>
 </div>
 </td>
 </tr>
@@ -51,8 +394,11 @@
 <td class="map-g"><span id="7d0f"></span><a href="../asm/7D0F.html">7D0F</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/7D0F.html">Countdown to the next message.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/7D0F.html">Message display delay</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is a decrementing counter. When it reaches zero it shows the next message.
+</div>
 </div>
 </td>
 </tr>
@@ -60,8 +406,14 @@
 <td class="map-g"><span id="7d10"></span><a href="../asm/7D10.html">7D10</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/7D10.html">Index into the message we're displaying or wiping.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/7D10.html">Message display index</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is an index into the message that we're displaying or wiping.
+</div>
+<div class="paragraph">
+<a href="../asm/7D48.html">message_display</a> uses this. If it's 128 then we call <a href="../asm/7D99.html">next_message</a>. If it exceeds 128 then we call <a href="../asm/7D87.html">wipe_message</a>. Otherwise we proceed with displaying the next character.
+</div>
 </div>
 </td>
 </tr>
@@ -69,8 +421,11 @@
 <td class="map-g"><span id="7d11"></span><a href="../asm/7D11.html">7D11</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/7D11.html">Pointer to the next available slot in the message queue.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/7D11.html">Message queue pointer</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is a pointer to the next available slot in the message queue.
+</div>
 </div>
 </td>
 </tr>
@@ -78,8 +433,11 @@
 <td class="map-g"><span id="7d13"></span><a href="../asm/7D13.html">7D13</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/7D13.html">Pointer to the next message character to be displayed.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/7D13.html">Current message character</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is a pointer to the next message character to be displayed.
+</div>
 </div>
 </td>
 </tr>
@@ -87,10 +445,10 @@
 <td class="map-g"><span id="81a4"></span><a href="../asm/81A4.html">81A4</a></td>
 <td class="map-length">6</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81A4.html">Saved/stashed position.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81A4.html">Saved position</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Structure type: pos_t.
+This holds a position (type: pos_t OR tinypos_t, depending on the code). It is used all over the code either for scratch space or for argument passing.
 </div>
 </div>
 </td>
@@ -99,8 +457,11 @@ Structure type: pos_t.
 <td class="map-g"><span id="81aa"></span><a href="../asm/81AA.html">81AA</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81AA.html">Used by touch() only.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81AA.html">Touch's stash for register A</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+The only user of this is <a href="../asm/AF8F.html">touch</a> which stashes a copy of <span class="register">A</span> here.
+</div>
 </div>
 </td>
 </tr>
@@ -108,8 +469,11 @@ Structure type: pos_t.
 <td class="map-g"><span id="81ac"></span><a href="../asm/81AC.html">81AC</a></td>
 <td class="map-length">6</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81AC.html">Bitmap and mask pointers.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81AC.html">Bitmap and mask pointers</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+These are used by the vischar and item plotting code.
+</div>
 </div>
 </td>
 </tr>
@@ -117,16 +481,13 @@ Structure type: pos_t.
 <td class="map-g"><span id="81b2"></span><a href="../asm/81B2.html">81B2</a></td>
 <td class="map-length">3</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81B2.html">Saved/stashed position.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81B2.html">Saved (tiny) position</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Structure type: tinypos_t.
+This holds a position (type: tinypos_t). This is populated when a vischar or item is readied for plotting. It's then used to control the rendering of masks into the mask buffer.
 </div>
 <div class="paragraph">
-Written by setup_item_plotting, setup_vischar_plotting.
-</div>
-<div class="paragraph">
-Read by render_mask_buffer, guards_follow_suspicious_character.
+<a href="../asm/CC37.html">guards_follow_suspicious_character</a> also uses it as a scratch space.
 </div>
 </div>
 </td>
@@ -135,8 +496,11 @@ Read by render_mask_buffer, guards_follow_suspicious_character.
 <td class="map-g"><span id="81b5"></span><a href="../asm/81B5.html">81B5</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81B5.html">Current vischar's isometric projected map position.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81B5.html">Isometric position</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This holds the current vischar's isometric projected map position.
+</div>
 </div>
 </td>
 </tr>
@@ -144,8 +508,11 @@ Read by render_mask_buffer, guards_follow_suspicious_character.
 <td class="map-g"><span id="81b7"></span><a href="../asm/81B7.html">81B7</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81B7.html">Controls character left/right flipping.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81B7.html">Flip sprite</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is set by <a href="../asm/E420.html">setup_vischar_plotting</a>. When set, the top bit causes the character to be drawn flipped horizontally.
+</div>
 </div>
 </td>
 </tr>
@@ -153,10 +520,10 @@ Read by render_mask_buffer, guards_follow_suspicious_character.
 <td class="map-g"><span id="81b8"></span><a href="../asm/81B8.html">81B8</a></td>
 <td class="map-length">3</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81B8.html">Hero's map position.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81B8.html">Hero's map position</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Structure type: tinypos_t.
+This holds the hero's map position (type: tinypos_t). <a href="../asm/EF9A.html">event_roll_call</a>, for example, uses this to test that the hero is within the roll call area.
 </div>
 </div>
 </td>
@@ -165,10 +532,10 @@ Structure type: tinypos_t.
 <td class="map-g"><span id="81bb"></span><a href="../asm/81BB.html">81BB</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81BB.html">Map position.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81BB.html">Map position</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Used when drawing tiles.
+This is used when drawing tiles and is also used to decide whether to permit the map to scroll.
 </div>
 </div>
 </td>
@@ -177,10 +544,10 @@ Used when drawing tiles.
 <td class="map-g"><span id="81bd"></span><a href="../asm/81BD.html">81BD</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81BD.html">Searchlight state.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81BD.html">Searchlight state</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Suspect that this is a 'hero has been found in searchlight' flag. (possible states: 0, 31, 255)
+This is set to searchlight_STATE_SEARCHING ($FF) when the hero is being searched for. It's set to searchlight_STATE_CAUGHT ($1F) when the hero is caught in the searchlight. Otherwise it's set to ($00..$1E) when the hero has evaded the searchlight.
 </div>
 <div class="paragraph">
 Used by the routines at <a href="../asm/ADBD.html">nighttime</a>, <a href="../asm/B866.html">plot_sprites</a>.
@@ -192,16 +559,16 @@ Used by the routines at <a href="../asm/ADBD.html">nighttime</a>, <a href="../as
 <th colspan="1" rowspan="1">Meaning</th>
 </tr>
 <tr>
-<td class="centre" colspan="1" rowspan="1">0</td>
-<td class="" colspan="1" rowspan="1">Searchlight is sweeping</td>
+<td class="centre" colspan="1" rowspan="1">255</td>
+<td class="" colspan="1" rowspan="1">Searching</td>
 </tr>
 <tr>
 <td class="centre" colspan="1" rowspan="1">31</td>
-<td class="" colspan="1" rowspan="1">Searchlight is tracking the hero</td>
+<td class="" colspan="1" rowspan="1">Caught the hero</td>
 </tr>
 <tr>
-<td class="centre" colspan="1" rowspan="1">255</td>
-<td class="" colspan="1" rowspan="1">Searchlight is off</td>
+<td class="centre" colspan="1" rowspan="1">0..30</td>
+<td class="" colspan="1" rowspan="1">Tracking the hero</td>
 </tr>
 </table>
 </div>
@@ -212,10 +579,10 @@ Used by the routines at <a href="../asm/ADBD.html">nighttime</a>, <a href="../as
 <td class="map-g"><span id="81be"></span><a href="../asm/81BE.html">81BE</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81BE.html">Copy of first byte of current room def.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81BE.html">Room definition bounds index</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Indexes roomdef_dimensions[].
+This is a copy of the first byte of the current room definition. It indexes <a href="../asm/6B85.html">roomdef_dimensions</a> allowing <a href="../asm/B29F.html">interior_bounds_check</a> to perform a bounds check.
 </div>
 </div>
 </td>
@@ -224,8 +591,11 @@ Indexes roomdef_dimensions[].
 <td class="map-g"><span id="81bf"></span><a href="../asm/81BF.html">81BF</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81BF.html">Count of object bounds.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81BF.html">Room definition object bounds count</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is the count of object bounds (places where the hero cannot move to) held in <a href="../asm/81C0.html">roomdef_object_bounds</a>.
+</div>
 </div>
 </td>
 </tr>
@@ -233,8 +603,11 @@ Indexes roomdef_dimensions[].
 <td class="map-g"><span id="81c0"></span><a href="../asm/81C0.html">81C0</a></td>
 <td class="map-length">16</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81C0.html">Copy of current room def's additional bounds (allows for four room objects).</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81C0.html">Room definition object bounds</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This holds up to four object bounds (places where the hero cannot move to) copied from the current room definition.
+</div>
 </div>
 </td>
 </tr>
@@ -242,11 +615,8 @@ Indexes roomdef_dimensions[].
 <td class="map-g"><span id="81d0"></span><a href="../asm/81D0.html">81D0</a></td>
 <td class="map-length">6</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81D0.html">Unreferenced bytes.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81D0.html">Unreferenced bytes</a></div>
 <div class="map-entry-desc">
-<div class="paragraph">
-These are possibly spare object bounds bytes, but not ever used.
-</div>
 </div>
 </td>
 </tr>
@@ -254,8 +624,11 @@ These are possibly spare object bounds bytes, but not ever used.
 <td class="map-g"><span id="81d6"></span><a href="../asm/81D6.html">81D6</a></td>
 <td class="map-length">4</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81D6.html">Indices of interior doors.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81D6.html">Interior doors</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This holds up to four interior doors indices.
+</div>
 <div class="paragraph">
 Used by the routines at <a href="../asm/69DC.html">setup_doors</a>, <a href="../asm/B32D.html">door_handling_interior</a>, <a href="../asm/B4D0.html">get_nearest_door</a>.
 </div>
@@ -266,13 +639,16 @@ Used by the routines at <a href="../asm/69DC.html">setup_doors</a>, <a href="../
 <td class="map-g"><span id="81da"></span><a href="../asm/81DA.html">81DA</a></td>
 <td class="map-length">57</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81DA.html">Interior mask data.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/81DA.html">Interior mask data</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This holds a count byte followed by up to seven mask structures for the current room definition.
+</div>
 <div class="paragraph">
 Used by the routines at <a href="../asm/6A35.html">setup_room</a> and <a href="../asm/B916.html">render_mask_buffer</a>.
 </div>
 <div class="paragraph">
-The first byte is a count, followed by 'count' mask_t's:
+The first byte is a count, followed by &lt;count&gt; mask_t's, with the following format:
 </div>
 <div class="paragraph">
 <table class="default">
@@ -286,11 +662,11 @@ The first byte is a count, followed by 'count' mask_t's:
 <td class="" colspan="1" rowspan="1">Byte</td>
 <td class="" colspan="1" rowspan="1">1</td>
 <td class="" colspan="1" rowspan="1">index</td>
-<td class="" colspan="1" rowspan="1">Index into mask_pointers</td>
+<td class="" colspan="1" rowspan="1">An index into mask_pointers (the RLE mask data pointer)</td>
 </tr>
 <tr>
 <td class="" colspan="1" rowspan="1">bounds_t</td>
-<td class="" colspan="1" rowspan="1">4</td>
+<td class="" colspan="1" rowspan="1">5</td>
 <td class="" colspan="1" rowspan="1">bounds</td>
 <td class="" colspan="1" rowspan="1">Isometric projected bounds of the mask. Used for culling.</td>
 </tr>
@@ -298,7 +674,7 @@ The first byte is a count, followed by 'count' mask_t's:
 <td class="" colspan="1" rowspan="1">tinypos_t</td>
 <td class="" colspan="1" rowspan="1">3</td>
 <td class="" colspan="1" rowspan="1">pos</td>
-<td class="" colspan="1" rowspan="1">If a character is behind this point then the mask is enabled. ("Behind" here means when character coord x is greater and y is greater-or-equal).</td>
+<td class="" colspan="1" rowspan="1">If a character is behind this point then the mask is enabled. ("Behind" here means when the character's x-coord is greater and y-coord is greater-or-equal).</td>
 </tr>
 </table>
 </div>
@@ -309,8 +685,11 @@ The first byte is a count, followed by 'count' mask_t's:
 <td class="map-g"><span id="8213"></span><a href="../asm/8213.html">8213</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/8213.html">Written to by <a href="../asm/DC41.html">setup_item_plotting</a> setup_item_plotting but never read.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/8213.html">Saved item</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+Written to by <a href="../asm/DC41.html">setup_item_plotting</a> but never read.
+</div>
 </div>
 </td>
 </tr>
@@ -318,8 +697,11 @@ The first byte is a count, followed by 'count' mask_t's:
 <td class="map-g"><span id="8214"></span><a href="../asm/8214.html">8214</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/8214.html">A copy of item_definition height.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/8214.html">Item height</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is a copy of item_definition height.
+</div>
 <div class="paragraph">
 Used by the routines at <a href="../asm/DC41.html">setup_item_plotting</a>, <a href="../asm/DD02.html">item_visible</a>.
 </div>
@@ -330,10 +712,10 @@ Used by the routines at <a href="../asm/DC41.html">setup_item_plotting</a>, <a h
 <td class="map-g"><span id="8215"></span><a href="../asm/8215.html">8215</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/8215.html">The items which the hero is holding.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/8215.html">Items held</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Each byte holds one item. Initialised to 0xFFFF meaning no item in either slot.
+The two items which the hero is holding. Each byte holds one item. Initialised to ($FF,$FF) meaning no item in either slot.
 </div>
 </div>
 </td>
@@ -342,8 +724,11 @@ Each byte holds one item. Initialised to 0xFFFF meaning no item in either slot.
 <td class="map-g"><span id="8217"></span><a href="../asm/8217.html">8217</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/8217.html">The current character index.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/8217.html">Character index</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+The current character index.
+</div>
 </div>
 </td>
 </tr>
@@ -351,16 +736,16 @@ Each byte holds one item. Initialised to 0xFFFF meaning no item in either slot.
 <td class="map-g"><span id="a12f"></span><a href="../asm/A12F.html">A12F</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A12F.html">Game counter.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A12F.html">Game counter</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Counts 00..FF then wraps.
+This counts $00..$FF then wraps around.
 </div>
 <div class="paragraph">
-Read-only by main_loop, picking_lock, cutting_wire, action_wiresnips, action_lockpick.
+Read-only by <a href="../asm/9D7B.html">main_loop</a>, <a href="../asm/9E98.html">picking_lock</a>, <a href="../asm/9EB2.html">cutting_wire</a>, <a href="../asm/B417.html">action_wiresnips</a>, <a href="../asm/B495.html">action_lockpick</a>.
 </div>
 <div class="paragraph">
-Write/read-write by wave_morale_flag.
+Write/read-write by <a href="../asm/A035.html">wave_morale_flag</a>.
 </div>
 </div>
 </td>
@@ -369,8 +754,11 @@ Write/read-write by wave_morale_flag.
 <td class="map-g"><span id="a130"></span><a href="../asm/A130.html">A130</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A130.html">Bell.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A130.html">Bell</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is the state of the bell.
+</div>
 <div class="paragraph">
 <table class="default">
 <tr>
@@ -404,7 +792,7 @@ Write/read-write by in_permitted_area, ring_bell, event_wake_up, event_go_to_rol
 <td class="map-g"><span id="a132"></span><a href="../asm/A132.html">A132</a></td>
 <td class="map-length">5</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A132.html">Score digits.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A132.html">Score digits</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
 Read-only by plot_score.
@@ -419,8 +807,11 @@ Write/read-write by increase_score, reset_game.
 <td class="map-g"><span id="a137"></span><a href="../asm/A137.html">A137</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A137.html">'Hero is at breakfast' flag.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A137.html">Hero in breakfast</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is the 'hero is at breakfast' flag.
+</div>
 <div class="paragraph">
 Write/read-write by process_player_input, end_of_breakfast, hero_sit_sleep_common.
 </div>
@@ -431,8 +822,11 @@ Write/read-write by process_player_input, end_of_breakfast, hero_sit_sleep_commo
 <td class="map-g"><span id="a138"></span><a href="../asm/A138.html">A138</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A138.html">'Red morale flag' flag.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A138.html">Red flag</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is the 'red morale flag' flag.
+</div>
 <div class="paragraph">
 <table class="default">
 <tr>
@@ -462,10 +856,10 @@ Write/read-write by in_permitted_area.
 <td class="map-g"><span id="a139"></span><a href="../asm/A139.html">A139</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A139.html">Automatic player counter.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A139.html">Automatic player counter</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Counts down until zero at which point CPU control of the player is assumed. It's usually set to 31 by input events.
+This counts down while there are no input events. An input event will reset it to 31. When it reaches zero the CPU will assume control of the hero.
 </div>
 <div class="paragraph">
 Read-only by touch, automatics, character_behaviour.
@@ -480,13 +874,10 @@ Write/read-write by check_morale, process_player_input, charevnt_hero_release, s
 <td class="map-g"><span id="a13a"></span><a href="../asm/A13A.html">A13A</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A13A.html">'In solitary' flag.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A13A.html">In solitary</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Stops set_hero_route working.
-</div>
-<div class="paragraph">
-Used to set flag colour.
+This is the 'in solitary' flag. When set ($FF) it stops <a href="../asm/A33F.html">set_hero_route</a> working, stops <a href="../asm/C892.html">automatics</a> from running, stops <a href="../asm/9E07.html">process_player_input</a> from running and <a href="../asm/9F21.html">in_permitted_area</a> too.
 </div>
 <div class="paragraph">
 Read-only by process_player_input, in_permitted_area, set_hero_route, automatics.
@@ -501,10 +892,10 @@ Write/read-write by charevnt_solitary_ends, solitary.
 <td class="map-g"><span id="a13b"></span><a href="../asm/A13B.html">A13B</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A13B.html">'Morale exhausted' flag.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A13B.html">Morale exhausted</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Inhibits user input when non-zero.
+This is the 'morale exhausted' flag. It inhibits user input when non-zero.
 </div>
 <div class="paragraph">
 Set by check_morale.
@@ -525,10 +916,10 @@ Write/read-write by check_morale.
 <td class="map-g"><span id="a13c"></span><a href="../asm/A13C.html">A13C</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A13C.html">Remaining morale.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A13C.html">Remaining morale</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Ranges morale_MIN..morale_MAX.
+This is the hero's current morale level. It ranges from morale_MIN (0) to morale_MAX (112).
 </div>
 <div class="paragraph">
 Read-only by check_morale, wave_morale_flag.
@@ -543,10 +934,10 @@ Write/read-write by increase_morale, decrease_morale, reset_game.
 <td class="map-g"><span id="a13d"></span><a href="../asm/A13D.html">A13D</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A13D.html">Game clock.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A13D.html">Clock</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Ranges 0..139.
+This is the game clock. It ranges from 0 to 139.
 </div>
 <div class="paragraph">
 Read-only by in_permitted_area.
@@ -561,10 +952,10 @@ Write/read-write by dispatch_timed_event, reset_map_and_characters.
 <td class="map-g"><span id="a13e"></span><a href="../asm/A13E.html">A13E</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A13E.html">'Character index is valid' flag.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A13E.html">Entered move_a_character</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-In character_bed_state etc.: when non-zero, character_index is valid, otherwise IY points to character_struct.
+This flag is set when <a href="../asm/8217.html">character_index</a> is valid. In <a href="../asm/A3F3.html">character_bed_state</a> etc.: when non-zero, character_index is valid, otherwise <span class="register">IY</span> points to a character_struct.
 </div>
 <div class="paragraph">
 Read-only by charevnt_bed, charevnt_breakfast.
@@ -579,8 +970,11 @@ Write/read-write by set_route, spawn_character, move_character, automatics, set_
 <td class="map-g"><span id="a13f"></span><a href="../asm/A13F.html">A13F</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A13F.html">'Hero in bed' flag.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A13F.html">Hero in bed</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is the 'hero in bed' flag.
+</div>
 <div class="paragraph">
 Read-only by event_night_time,
 </div>
@@ -594,10 +988,10 @@ Write/read-write by process_player_input, wake_up, hero_sit_sleep_common.
 <td class="map-g"><span id="a140"></span><a href="../asm/A140.html">A140</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A140.html">Currently displayed morale.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A140.html">Displayed morale</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-This lags behind actual morale while the flag moves steadily to its target.
+This is the currently-displayed morale. It lags behind the actual morale at <a href="../asm/A13C.html">morale</a> while the flag drifts to its target level.
 </div>
 <div class="paragraph">
 Write/read-write by wave_morale_flag.
@@ -609,8 +1003,11 @@ Write/read-write by wave_morale_flag.
 <td class="map-g"><span id="a141"></span><a href="../asm/A141.html">A141</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A141.html">Pointer to the screen address where the morale flag was last plotted.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A141.html">Morale flag screen address</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is a pointer to the screen address where the morale flag was most recently plotted.
+</div>
 <div class="paragraph">
 Write/read-write by wave_morale_flag.
 </div>
@@ -621,8 +1018,11 @@ Write/read-write by wave_morale_flag.
 <td class="map-g"><span id="a143"></span><a href="../asm/A143.html">A143</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A143.html">Address of door (in locked_doors[]) in which bit 7 is cleared when picked.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A143.html">Pointer to door being lockpicked</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is the address of a door (in <a href="../asm/F05D.html">locked_doors</a>) in which bit 7 is cleared when successfully picked.
+</div>
 <div class="paragraph">
 Read-only by picking_lock.
 </div>
@@ -636,10 +1036,10 @@ Write/read-write by action_lockpick.
 <td class="map-g"><span id="a145"></span><a href="../asm/A145.html">A145</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A145.html">The game time when player control will be restored.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A145.html">Player locked out until</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-e.g. when picking a lock or cutting wire.
+This is the game time at which player control will be restored, e.g. when picking a lock or cutting though a wire fence.
 </div>
 <div class="paragraph">
 Read-only by picking_lock, cutting_wire.
@@ -654,7 +1054,7 @@ Write/read-write by action_wiresnips, action_lockpick.
 <td class="map-g"><span id="a146"></span><a href="../asm/A146.html">A146</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A146.html">'Night-time' flag.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A146.html">This is the 'night-time' flag</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
 <table class="default">
@@ -685,8 +1085,11 @@ Write/read-write by set_day_or_night, reset_map_and_characters.
 <td class="map-g"><span id="a263"></span><a href="../asm/A263.html">A263</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A263.html">Current contents of red cross parcel.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A263.html">Red cross parcel current contents</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This holds the current contents of the red cross parcel.
+</div>
 </div>
 </td>
 </tr>
@@ -694,8 +1097,11 @@ Write/read-write by set_day_or_night, reset_map_and_characters.
 <td class="map-g"><span id="a7c6"></span><a href="../asm/A7C6.html">A7C6</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A7C6.html">An index used only by move_map().</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A7C6.html">move_map Y</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is an index used only by <a href="../asm/AAB2.html">move_map</a>.
+</div>
 </div>
 </td>
 </tr>
@@ -703,8 +1109,11 @@ Write/read-write by set_day_or_night, reset_map_and_characters.
 <td class="map-g"><span id="a7c7"></span><a href="../asm/A7C7.html">A7C7</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A7C7.html">Game window plotting offset.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/A7C7.html">Game window offset</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is the game window's scroll offset. It's (0,0) when displaying interior rooms, but varies when the exterior is shown.
+</div>
 </div>
 </td>
 </tr>
@@ -712,7 +1121,7 @@ Write/read-write by set_day_or_night, reset_map_and_characters.
 <td class="map-g"><span id="ab66"></span><a href="../asm/AB66.html">AB66</a></td>
 <td class="map-length">4</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/AB66.html">Zoombox parameters.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/AB66.html">Zoombox parameters</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -721,8 +1130,11 @@ Write/read-write by set_day_or_night, reset_map_and_characters.
 <td class="map-g"><span id="ab6a"></span><a href="../asm/AB6A.html">AB6A</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/AB6A.html">Game window current attribute byte.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/AB6A.html">Game window attribute</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is a copy of the game window's current attribute byte. Assigned by <a href="../asm/AB6B.html#ab85">set_attribute_from_A</a> and used by <a href="../asm/ACFC.html#ad21">zoombox_draw_tile_1</a> to set the attribute of a zoombox border tile.
+</div>
 </div>
 </td>
 </tr>
@@ -732,9 +1144,6 @@ Write/read-write by set_day_or_night, reset_map_and_characters.
 <td class="map-g-desc">
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/AE75.html">Searchlight state variables</a></div>
 <div class="map-entry-desc">
-<div class="paragraph">
-(Assigned by nighttime. Read by searchlight_plot.)
-</div>
 </div>
 </td>
 </tr>
@@ -742,8 +1151,14 @@ Write/read-write by set_day_or_night, reset_map_and_characters.
 <td class="map-g"><span id="af8e"></span><a href="../asm/AF8E.html">AF8E</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/AF8E.html">Bribed character.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/AF8E.html">Bribed character</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is the current bribed character.
+</div>
+<div class="paragraph">
+Set by <a href="../asm/B3A8.html#b3bd">bribe_found</a>. Read by <a href="../asm/AFDF.html#b05b">B05B</a>, <a href="../asm/C918.html#c97e">C97E</a> and <a href="../asm/CA81.html#ca8d">tr_pursue</a>.
+</div>
 </div>
 </td>
 </tr>
@@ -751,7 +1166,7 @@ Write/read-write by set_day_or_night, reset_map_and_characters.
 <td class="map-g"><span id="b837"></span><a href="../asm/B837.html">B837</a></td>
 <td class="map-length">4</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/B837.html">render_mask_buffer stuff.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/B837.html">render_mask_buffer variables</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
@@ -760,8 +1175,11 @@ Write/read-write by set_day_or_night, reset_map_and_characters.
 <td class="map-g"><span id="c41a"></span><a href="../asm/C41A.html">C41A</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/C41A.html">Pointer to bytes to output as pseudo-random data.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/C41A.html">PRNG pointer</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is a pointer to some bytes to output as pseudo-random data.
+</div>
 <div class="paragraph">
 Initially set to $9000. Wraps around after $90FF.
 </div>
@@ -772,10 +1190,13 @@ Initially set to $9000. Wraps around after $90FF.
 <td class="map-g"><span id="c891"></span><a href="../asm/C891.html">C891</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/C891.html">A countdown until any food item is discovered.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/C891.html">Food discovered counter</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-(&lt;- automatics, target_reached)
+This is a countdown until any food item is discovered.
+</div>
+<div class="paragraph">
+Used by <a href="../asm/C892.html">automatics</a> and <a href="../asm/CA81.html">target_reached</a>.
 </div>
 </div>
 </td>
@@ -784,10 +1205,10 @@ Initially set to $9000. Wraps around after $90FF.
 <td class="map-g"><span id="edd1"></span><a href="../asm/EDD1.html">EDD1</a></td>
 <td class="map-length">2</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/EDD1.html">Saved stack pointer.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/EDD1.html">Saved stack pointer</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Used by plot_game_window and wipe_game_window.
+Used by <a href="../asm/EED3.html">plot_game_window</a> and <a href="../asm/F335.html">wipe_game_window</a>.
 </div>
 </div>
 </td>
@@ -796,10 +1217,10 @@ Used by plot_game_window and wipe_game_window.
 <td class="map-g"><span id="f06b"></span><a href="../asm/F06B.html">F06B</a></td>
 <td class="map-length">10</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/F06B.html">User-defined keys.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/F06B.html">Key definitions</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Pairs of (port, key mask).
+These are the user-defined keys. It's pairs of (port, key mask).
 </div>
 </div>
 </td>
@@ -808,8 +1229,11 @@ Pairs of (port, key mask).
 <td class="map-g"><span id="f075"></span><a href="../asm/F075.html">F075</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/F075.html">Static tiles plot direction.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/F075.html">Static tiles plot direction</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This is a stash location used by <a href="../asm/F20B.html">plot_static_tiles</a>.
+</div>
 <div class="paragraph">
 <table class="default">
 <tr>
@@ -833,8 +1257,11 @@ Pairs of (port, key mask).
 <td class="map-g"><span id="f445"></span><a href="../asm/F445.html">F445</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/F445.html">Chosen input device.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/F445.html">Chosen input device</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+This records which input device was chosen.
+</div>
 <div class="paragraph">
 <table class="default">
 <tr>
@@ -866,14 +1293,14 @@ Pairs of (port, key mask).
 <td class="map-g"><span id="f541"></span><a href="../asm/F541.html">F541</a></td>
 <td class="map-length">4</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/F541.html">Music channel indices.</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/F541.html">Music channel indices</a></div>
 <div class="map-entry-desc">
 </div>
 </td>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

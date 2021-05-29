@@ -24,11 +24,17 @@ Next: <a href="7D11.html">7D11</a>
 </td>
 </tr>
 </table>
-<div class="description">7D10: Index into the message we're displaying or wiping.</div>
+<div class="description">7D10: Message display index</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This is an index into the message that we're displaying or wiping.
+</div>
+<div class="paragraph">
+<a href="7D48.html">message_display</a> uses this. If it's 128 then we call <a href="7D99.html">next_message</a>. If it exceeds 128 then we call <a href="7D87.html">wipe_message</a>. Otherwise we proceed with displaying the next character.
+</div>
 </div>
 </td>
 </tr>
@@ -36,7 +42,7 @@ Next: <a href="7D11.html">7D11</a>
 <td class="asm-label">message_display_index</td>
 <td class="address-1"><span id="7d10"></span>7D10</td>
 <td class="instruction">DEFB $80</td>
-<td class="comment-1" rowspan="1">If 128 then next_message. If &gt; 128 then wipe_message. Else display.</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -51,7 +57,7 @@ Next: <a href="7D11.html">7D11</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

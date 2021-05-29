@@ -24,11 +24,345 @@ Next: <a href="68A1.html">68A1</a>
 </td>
 </tr>
 </table>
-<div class="description">68A0: Index of the current room, or 0 when outside.</div>
+<div class="description">68A0: Room index</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This holds the index of the room that the hero is presently in, or 0 when he's outside.
+</div>
+<div class="paragraph">
+The possible room numbers are as follows:
+</div>
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="1">Room</th>
+<th colspan="1" rowspan="1">Description</th>
+<th colspan="1" rowspan="1">Movable Object</th>
+<th colspan="1" rowspan="1">Items</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">0</td>
+<td class="" colspan="1" rowspan="1">Outdoors / exterior / main map</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Green key</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">Lowest hut, right hand side</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Poison</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">2</td>
+<td class="" colspan="1" rowspan="1">Middle hut, left hand side (Hero's start room)</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Stove</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">3</td>
+<td class="" colspan="1" rowspan="1">Middle hut, right hand side</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">4</td>
+<td class="" colspan="1" rowspan="1">Highest hut, left hand side</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">5</td>
+<td class="" colspan="1" rowspan="1">Highest hut, right hand side</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">6</td>
+<td class="" colspan="1" rowspan="1">(unused index)</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">7</td>
+<td class="" colspan="1" rowspan="1">Corridor</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">8</td>
+<td class="" colspan="1" rowspan="1">Corridor</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">9</td>
+<td class="" colspan="1" rowspan="1">"Crate"</td>
+<td class="" colspan="1" rowspan="1">Crate</td>
+<td class="" colspan="1" rowspan="1">Shovel</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">10</td>
+<td class="" colspan="1" rowspan="1">"Lockpick"</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Lockpick</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">11</td>
+<td class="" colspan="1" rowspan="1">Commandant's office</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Papers</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">12</td>
+<td class="" colspan="1" rowspan="1">Corridor</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">13</td>
+<td class="" colspan="1" rowspan="1">Corridor</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">14</td>
+<td class="" colspan="1" rowspan="1">Guard’s quarters 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Torch</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">15</td>
+<td class="" colspan="1" rowspan="1">Guard’s quarters 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Uniform, Yellow key</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">16</td>
+<td class="" colspan="1" rowspan="1">Corridor</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">17</td>
+<td class="" colspan="1" rowspan="1">Corridor</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">18</td>
+<td class="" colspan="1" rowspan="1">“Radio”</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Radio</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">19</td>
+<td class="" colspan="1" rowspan="1">“Food”</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Food</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">20</td>
+<td class="" colspan="1" rowspan="1">"Red Cross parcel"</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">From parcel: Purse, Wire snips, Bribe, Compass</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">21</td>
+<td class="" colspan="1" rowspan="1">Corridor</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">22</td>
+<td class="" colspan="1" rowspan="1">Corridor to solitary</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">Red key</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">23</td>
+<td class="" colspan="1" rowspan="1">Mess hall, right room</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">24</td>
+<td class="" colspan="1" rowspan="1">Solitary confinement</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">25</td>
+<td class="" colspan="1" rowspan="1">Mess hall, left room</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">26</td>
+<td class="" colspan="1" rowspan="1">(unused index)</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">27</td>
+<td class="" colspan="1" rowspan="1">(unused index)</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">28</td>
+<td class="" colspan="1" rowspan="1">Lowest hut, left hand side</td>
+<td class="" colspan="1" rowspan="1">Stove</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">29</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2, start of</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">30</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">31</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">32</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">33</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">34</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2, end of</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">35</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">36</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">37</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1, start of</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">38</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">39</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">40</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">41</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">42</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">43</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">44</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">45</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">46</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">47</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">48</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1, end of</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">49</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">50</td>
+<td class="" colspan="1" rowspan="1">Tunnel 1 (initially blocked)</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">51</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">52</td>
+<td class="" colspan="1" rowspan="1">Tunnel 2</td>
+<td class="" colspan="1" rowspan="1">-</td>
+<td class="" colspan="1" rowspan="1">-</td>
+</tr>
+</table>
+</div>
 </div>
 </td>
 </tr>
@@ -51,7 +385,7 @@ Next: <a href="68A1.html">68A1</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

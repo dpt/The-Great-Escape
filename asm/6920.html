@@ -24,16 +24,19 @@ Next: <a href="6939.html">6939</a>
 </td>
 </tr>
 </table>
-<div class="description">6920: Set appropriate hero sprite for room.</div>
+<div class="description">6920: Set hero sprite for room</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="68F4.html">enter_room</a>.
+This is called by <a href="68F4.html">enter_room</a> to select an appropriate hero sprite for the current room. This forces the use of the prisoner sprite set with the crawl flag enabled, when the hero is in a tunnel room.
 </div>
 <div class="paragraph">
-Called when changing rooms.
+This routine doesn't remember the hero's uniform state, so if he enters a tunnel while wearing a guard's uniform you will find it removed when he exits from the tunnel.
+</div>
+<div class="paragraph">
+Used by the routine at <a href="68F4.html">enter_room</a>.
 </div>
 </div>
 </td>
@@ -152,7 +155,7 @@ Next: <a href="6939.html">6939</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

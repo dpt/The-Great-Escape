@@ -24,11 +24,14 @@ Next: <a href="BCAA.html">BCAA</a>
 </td>
 </tr>
 </table>
-<div class="description">BB98: Paint any tiles occupied by visible characters with tiles from tile_buf.</div>
+<div class="description">BB98: Restore tiles</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This paints any tiles occupied by visible characters with tiles from tile_buf.
+</div>
 <div class="paragraph">
 Used by the routine at <a href="9D7B.html">main_loop</a>.
 </div>
@@ -282,7 +285,7 @@ Compute scaled clipped height = (clipped height / 8) + 2
 <span id="bbdc"></span>
 <div class="comments">
 <div class="paragraph">
-DPT: It seems that the following sequence (from $BBDC to $BC01) duplicates the work done by vischar_visible. I can't see any benefit to it.
+Commentary: It seems that the following sequence (from $BBDC to $BC01) duplicates the work done by vischar_visible. I can't see any benefit to it.
 </div>
 <div class="paragraph">
 Compute bottom = height + iso_pos_y - map_position_y. This is the distance of the (clipped) bottom edge of the vischar from the top of the window.
@@ -716,7 +719,7 @@ Calculate the offset into the window buffer.
 Calculate the offset into the tile buffer.
 </div>
 <div class="paragraph">
-Compute pointer = C * 24 + A + $F0F8
+Compute pointer = <span class="register">C</span> * 24 + <span class="register">A</span> + $F0F8
 </div>
 </div>
 </td>
@@ -1229,7 +1232,7 @@ Next: <a href="BCAA.html">BCAA</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

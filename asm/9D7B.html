@@ -24,11 +24,17 @@ Next: <a href="9DCF.html">9DCF</a>
 </td>
 </tr>
 </table>
-<div class="description">9D7B: Main game loop.</div>
+<div class="description">9D7B: Main loop</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This is the main game loop.
+</div>
+<div class="paragraph">
+Unlike in higher-level languages The Great Escape's calling convention is not always strictly hierarchical. At points in the game where a reset or transition is required (see <a href="68A2.html">transition</a>, <a href="68F4.html">enter_room</a>) the game will "give up" and call <a href="691A.html">squash_stack_goto_main</a>. It will reset the stack pointer and jump to this main loop.
+</div>
 <div class="paragraph">
 Used by the routine at <a href="691A.html">squash_stack_goto_main</a>.
 </div>
@@ -222,7 +228,7 @@ Next: <a href="9DCF.html">9DCF</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

@@ -30,13 +30,10 @@ Next: <a href="CCFB.html">CCFB</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
+This searches through item_structs for items dropped nearby. If items are found then hostiles are made to pursue the hero, but the green key and food items are ignored.
+</div>
+<div class="paragraph">
 Used by the routine at <a href="C892.html">automatics</a>.
-</div>
-<div class="paragraph">
-Searches item_structs for items dropped nearby. If items are found the hostiles are made to pursue the hero.
-</div>
-<div class="paragraph">
-Green key and food items are ignored.
 </div>
 </div>
 </td>
@@ -176,7 +173,7 @@ Start loop
 <span id="cceb"></span>
 <div class="comments">
 <div class="paragraph">
-Suspected bug: HL is decremented, but not re-incremented before 'goto next'. So it must be reading a byte early when iteration is resumed. Consequences? I think it'll screw up when multiple items are in range.
+Suspected bug: <span class="register">HL</span> is decremented, but not re-incremented before 'goto next'. So it must be reading a byte early when iteration is resumed. Consequences? I think it'll screw up when multiple items are in range.
 </div>
 </div>
 </td>
@@ -191,7 +188,7 @@ Suspected bug: HL is decremented, but not re-incremented before 'goto next'. So 
 <td class="asm-label"></td>
 <td class="address-1"><span id="ccec"></span>CCEC</td>
 <td class="instruction">LD A,(HL)</td>
-<td class="comment-1" rowspan="2">A = *HL &amp; itemstruct_ITEM_MASK; // sampled HL=$772A (&amp;item_structs[item_PURSE].item)</td>
+<td class="comment-1" rowspan="2"><span class="register">A</span> = *<span class="register">HL</span> &amp; itemstruct_ITEM_MASK; // sampled HL=$772A (&amp;item_structs[item_PURSE].item)</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -257,7 +254,7 @@ Next: <a href="CCFB.html">CCFB</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

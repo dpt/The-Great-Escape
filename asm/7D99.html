@@ -24,11 +24,14 @@ Next: <a href="7DCD.html">7DCD</a>
 </td>
 </tr>
 </table>
-<div class="description">7D99: Change to displaying the next queued game message.</div>
+<div class="description">7D99: Next message</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This causes the next queued game message to get displayed.
+</div>
 <div class="paragraph">
 Used by the routine at <a href="7D48.html">message_display</a>.
 </div>
@@ -88,7 +91,7 @@ Called when messages.display_index == 128.
 <td class="asm-label"></td>
 <td class="address-1"><span id="7da5"></span>7DA5</td>
 <td class="instruction">LD C,(HL)</td>
-<td class="comment-1" rowspan="1">Bug: C is loaded here but not used. This could be a hangover from 16-bit message IDs</td>
+<td class="comment-1" rowspan="1">Bug: <span class="register">C</span> is loaded here but not used. This could be a hangover from 16-bit message IDs</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -213,7 +216,7 @@ Next: <a href="7DCD.html">7DCD</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

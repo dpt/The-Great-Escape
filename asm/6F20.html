@@ -24,7 +24,7 @@ Next: <a href="6F32.html">6F32</a>
 </td>
 </tr>
 </table>
-<div class="description">6F20: Room 24: Solitary confinement cell.</div>
+<div class="description">6F20: Room 24: Solitary confinement cell</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -36,55 +36,55 @@ Next: <a href="6F32.html">6F32</a>
 <td class="asm-label">roomdef_24_solitary</td>
 <td class="address-1"><span id="6f20"></span>6F20</td>
 <td class="instruction">DEFB $03</td>
-<td class="comment-1" rowspan="1">3</td>
+<td class="comment-1" rowspan="1">3 -- Room dimensions index</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6f21"></span>6F21</td>
 <td class="instruction">DEFB $01</td>
-<td class="comment-1" rowspan="1">1 // count of boundaries</td>
+<td class="comment-1" rowspan="1">1 -- Number of boundaries</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6f22"></span>6F22</td>
 <td class="instruction">DEFB $30,$36,$26,$2E</td>
-<td class="comment-1" rowspan="1">48, 54, 38, 46 }, // boundary</td>
+<td class="comment-1" rowspan="1">{ 48, 54, 38, 46 } -- Boundary</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6f26"></span>6F26</td>
 <td class="instruction">DEFB $01</td>
-<td class="comment-1" rowspan="1">1 // count of mask bytes</td>
+<td class="comment-1" rowspan="1">1 -- Number of mask bytes</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6f27"></span>6F27</td>
 <td class="instruction">DEFB $1A</td>
-<td class="comment-1" rowspan="1">[26] // data mask bytes</td>
+<td class="comment-1" rowspan="1">[26] -- Mask bytes</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6f28"></span>6F28</td>
 <td class="instruction">DEFB $03</td>
-<td class="comment-1" rowspan="1">3 // count of objects</td>
+<td class="comment-1" rowspan="1">3 -- Number of objects</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6f29"></span>6F29</td>
 <td class="instruction">DEFB $29,$05,$06</td>
-<td class="comment-1" rowspan="1">interiorobject_ROOM_OUTLINE_15x8,            5, 6 },</td>
+<td class="comment-1" rowspan="1">{ interiorobject_ROOM_OUTLINE_15x8, 5, 6 }</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6f2c"></span>6F2C</td>
 <td class="instruction">DEFB $28,$0E,$04</td>
-<td class="comment-1" rowspan="1">interiorobject_END_DOOR_FRAME_NW_SE,        14, 4 },</td>
+<td class="comment-1" rowspan="1">{ interiorobject_END_DOOR_FRAME_NW_SE, 14, 4 }</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6f2f"></span>6F2F</td>
 <td class="instruction">DEFB $30,$0A,$09</td>
-<td class="comment-1" rowspan="1">interiorobject_TINY_TABLE,                  10, 9 },</td>
+<td class="comment-1" rowspan="1">{ interiorobject_TINY_TABLE, 10, 9 }</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -99,7 +99,7 @@ Next: <a href="6F32.html">6F32</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

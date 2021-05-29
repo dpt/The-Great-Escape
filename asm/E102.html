@@ -16,7 +16,7 @@
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="E100.html">E100</a>
+Prev: <a href="E0FC.html">E0FC</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#e102">Map</a></td>
 <td class="next">
@@ -24,13 +24,13 @@ Next: <a href="E29F.html">E29F</a>
 </td>
 </tr>
 </table>
-<div class="description">E102: Sprite plotter for 24 pixel-wide masked sprites.</div>
+<div class="description">E102: Plot masked sprite (24px)</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-This is used for characters and objects.
+This is the sprite plotter for 24 pixel-wide masked sprites. It's used for both characters and objects.
 </div>
 <div class="paragraph">
 Used by the routine at <a href="B866.html">plot_sprites</a>.
@@ -88,7 +88,7 @@ Mask off the bottom three bits of the vischar's (isometric projected) x position
 Right shifting case.
 </div>
 <div class="paragraph">
-<span class="register">A</span> is 0..3 here: the amount by which we want to shift the sprite right. The following op turns that into a jump table distance. e.g. it turns (0,1,2,3) into (3,2,1,0) then scales it by the length of each rotate sequence (8 bytes) to obtain the jump offset.
+<span class="register">A</span> is 0..3 here: the amount by which we want to shift the sprite right. The following op turns that into a jump table distance. e.g. It turns (0,1,2,3) into (3,2,1,0) then scales it by the length of each rotate sequence (8 bytes) to obtain the jump offset.
 </div>
 </div>
 </td>
@@ -1932,7 +1932,7 @@ Plot, using the foreground mask.
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="E100.html">E100</a>
+Prev: <a href="E0FC.html">E0FC</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#e102">Map</a></td>
 <td class="next">
@@ -1941,7 +1941,7 @@ Next: <a href="E29F.html">E29F</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

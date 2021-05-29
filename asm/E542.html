@@ -24,16 +24,16 @@ Next: <a href="E550.html">E550</a>
 </td>
 </tr>
 </table>
-<div class="description">E542: Scale down a pos_t and assign result to a tinypos_t.</div>
+<div class="description">E542: Position to tinypos</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="7BB5.html">drop_item_tail</a>, <a href="9F21.html">in_permitted_area</a>, <a href="C5D3.html">reset_visible_character</a>, <a href="C918.html">character_behaviour</a> and <a href="CC37.html">guards_follow_suspicious_character</a>.
+This divides the three input 16-bit words (type: pos_t) by 8, with rounding to nearest, storing the result as bytes (type: tinypos_t).
 </div>
 <div class="paragraph">
-Divides the three input 16-bit words by 8, with rounding to nearest, storing the result as bytes.
+Used by the routines at <a href="7BB5.html">drop_item_tail</a>, <a href="9F21.html">in_permitted_area</a>, <a href="C5D3.html">reset_visible_character</a>, <a href="C918.html">character_behaviour</a> and <a href="CC37.html">guards_follow_suspicious_character</a>.
 </div>
 </div>
 <table class="input">
@@ -145,7 +145,7 @@ Next: <a href="E550.html">E550</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

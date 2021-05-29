@@ -24,16 +24,134 @@ Next: <a href="A58C.html">A58C</a>
 </td>
 </tr>
 </table>
-<div class="description">A51C: Hero has escaped.</div>
+<div class="description">A51C: Escaped</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="9F21.html">in_permitted_area</a>.
+This is called when the hero has made an escape attempt. It prints the 'WELL DONE' message then tests to see if the correct objects were used in the escape attempt. It then prints an according sequence of messages. If the attempt was successful then on restart the game is reset, otherwise the hero is sent to solitary.
 </div>
 <div class="paragraph">
-Print 'well done' message then test to see if the correct objects were used in the escape attempt.
+The items map to win-lose states as follows:
+</div>
+<div class="paragraph">
+<table class="default">
+<tr>
+<th colspan="1" rowspan="2">Combination</th>
+<th colspan="4" rowspan="1">Items</th>
+<th colspan="1" rowspan="2">Message</th>
+<th colspan="1" rowspan="2">Result</th>
+</tr>
+<tr>
+<th colspan="1" rowspan="1">Uniform</th>
+<th colspan="1" rowspan="1">Purse</th>
+<th colspan="1" rowspan="1">Papers</th>
+<th colspan="1" rowspan="1">Compass</th>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">0</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">"BUT WERE RECAPTURED TOTALLY UNPREPARED"</td>
+<td class="" colspan="1" rowspan="1">Lose</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">1</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">X</td>
+<td class="" colspan="1" rowspan="1">"BUT WERE RECAPTURED DUE TO LACK OF PAPERS"</td>
+<td class="" colspan="1" rowspan="1">Lose</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">2</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">X</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">"BUT WERE RECAPTURED TOTALLY LOST"</td>
+<td class="" colspan="1" rowspan="1">Lose</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">3</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">X</td>
+<td class="" colspan="1" rowspan="1">X</td>
+<td class="" colspan="1" rowspan="1">(the game offers no extra message)</td>
+<td class="" colspan="1" rowspan="1">Win</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">4</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">X</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">"BUT WERE RECAPTURED TOTALLY LOST"</td>
+<td class="" colspan="1" rowspan="1">Lose</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">5</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">X</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">X</td>
+<td class="" colspan="1" rowspan="1">"AND WILL CROSS THE BORDER SUCCESSFULLY"</td>
+<td class="" colspan="1" rowspan="1">Win</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">6</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">X</td>
+<td class="" colspan="1" rowspan="1">X</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">"BUT WERE RECAPTURED TOTALLY LOST"</td>
+<td class="" colspan="1" rowspan="1">Lose</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">8</td>
+<td class="" colspan="1" rowspan="1">X</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">"BUT WERE RECAPTURED AND SHOT AS A SPY"</td>
+<td class="" colspan="1" rowspan="1">Lose</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">9</td>
+<td class="" colspan="1" rowspan="1">X</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">X</td>
+<td class="" colspan="1" rowspan="1">"BUT WERE RECAPTURED AND SHOT AS A SPY"</td>
+<td class="" colspan="1" rowspan="1">Lose</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">10</td>
+<td class="" colspan="1" rowspan="1">X</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">X</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">"BUT WERE RECAPTURED AND SHOT AS A SPY"</td>
+<td class="" colspan="1" rowspan="1">Lose</td>
+</tr>
+<tr>
+<td class="" colspan="1" rowspan="1">12</td>
+<td class="" colspan="1" rowspan="1">X</td>
+<td class="" colspan="1" rowspan="1">X</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">.</td>
+<td class="" colspan="1" rowspan="1">"BUT WERE RECAPTURED AND SHOT AS A SPY"</td>
+<td class="" colspan="1" rowspan="1">Lose</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+Used by the routine at <a href="9F21.html">in_permitted_area</a>.
 </div>
 </div>
 </td>
@@ -376,7 +494,7 @@ Next: <a href="A58C.html">A58C</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

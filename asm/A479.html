@@ -24,11 +24,14 @@ Next: <a href="A47F.html">A47F</a>
 </td>
 </tr>
 </table>
-<div class="description">A479: Select room and plot.</div>
+<div class="description">A479: Select room and plot</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This expands out the current room definition into the visible tiles array then repaints those tiles to the screen.
+</div>
 <div class="paragraph">
 Used by the routine at <a href="A491.html">hero_sit_sleep_common</a>.
 </div>
@@ -45,7 +48,7 @@ Used by the routine at <a href="A491.html">hero_sit_sleep_common</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="a47c"></span>A47C</td>
 <td class="instruction">JP <a href="6B42.html">plot_interior_tiles</a></td>
-<td class="comment-1" rowspan="1">Expand tile buffer into screen buffer, exit via</td>
+<td class="comment-1" rowspan="1">Render visible tiles array into the screen buffer, exit via</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -60,7 +63,7 @@ Next: <a href="A47F.html">A47F</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

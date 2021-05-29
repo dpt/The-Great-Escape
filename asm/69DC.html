@@ -24,11 +24,14 @@ Next: <a href="6A12.html">6A12</a>
 </td>
 </tr>
 </table>
-<div class="description">69DC: Setup interior doors.</div>
+<div class="description">69DC: Set-up doors</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This is called by <a href="6A35.html">setup_room</a> to setup the <a href="81D6.html">interior_doors</a> array. It walks through the <a href="78D6.html">doors</a> array, extracting the indices of doors relevant to the current room and stores those indices into <a href="81D6.html">interior_doors</a>.
+</div>
 <div class="paragraph">
 Used by the routine at <a href="6A35.html">setup_room</a> only.
 </div>
@@ -294,7 +297,7 @@ Next: <a href="6A12.html">6A12</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

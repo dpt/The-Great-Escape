@@ -24,16 +24,19 @@ Next: <a href="8213.html">8213</a>
 </td>
 </tr>
 </table>
-<div class="description">81DA: Interior mask data.</div>
+<div class="description">81DA: Interior mask data</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
+This holds a count byte followed by up to seven mask structures for the current room definition.
+</div>
+<div class="paragraph">
 Used by the routines at <a href="6A35.html">setup_room</a> and <a href="B916.html">render_mask_buffer</a>.
 </div>
 <div class="paragraph">
-The first byte is a count, followed by 'count' mask_t's:
+The first byte is a count, followed by &lt;count&gt; mask_t's, with the following format:
 </div>
 <div class="paragraph">
 <table class="default">
@@ -47,11 +50,11 @@ The first byte is a count, followed by 'count' mask_t's:
 <td class="" colspan="1" rowspan="1">Byte</td>
 <td class="" colspan="1" rowspan="1">1</td>
 <td class="" colspan="1" rowspan="1">index</td>
-<td class="" colspan="1" rowspan="1">Index into mask_pointers</td>
+<td class="" colspan="1" rowspan="1">An index into mask_pointers (the RLE mask data pointer)</td>
 </tr>
 <tr>
 <td class="" colspan="1" rowspan="1">bounds_t</td>
-<td class="" colspan="1" rowspan="1">4</td>
+<td class="" colspan="1" rowspan="1">5</td>
 <td class="" colspan="1" rowspan="1">bounds</td>
 <td class="" colspan="1" rowspan="1">Isometric projected bounds of the mask. Used for culling.</td>
 </tr>
@@ -59,7 +62,7 @@ The first byte is a count, followed by 'count' mask_t's:
 <td class="" colspan="1" rowspan="1">tinypos_t</td>
 <td class="" colspan="1" rowspan="1">3</td>
 <td class="" colspan="1" rowspan="1">pos</td>
-<td class="" colspan="1" rowspan="1">If a character is behind this point then the mask is enabled. ("Behind" here means when character coord x is greater and y is greater-or-equal).</td>
+<td class="" colspan="1" rowspan="1">If a character is behind this point then the mask is enabled. ("Behind" here means when the character's x-coord is greater and y-coord is greater-or-equal).</td>
 </tr>
 </table>
 </div>
@@ -127,7 +130,7 @@ Next: <a href="8213.html">8213</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

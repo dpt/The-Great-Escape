@@ -24,11 +24,14 @@ Next: <a href="E40F.html">E40F</a>
 </td>
 </tr>
 </table>
-<div class="description">E3FA: Horizontally flips the 24 pixels in E,C,B and counterpart masks in E',C',B'.</div>
+<div class="description">E3FA: Flip 24 masked pixels</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This horizontally flips the 24 pixels in <span class="register">E</span>,<span class="register">C</span>,<span class="register">B</span> and counterpart masks in <span class="register">E'</span>,<span class="register">C'</span>,<span class="register">B'</span>.
+</div>
 <div class="paragraph">
 Used by the routine at <a href="E102.html">plot_masked_sprite_24px</a>.
 </div>
@@ -39,15 +42,27 @@ Used by the routine at <a href="E102.html">plot_masked_sprite_24px</a>.
 </tr>
 <tr>
 <td class="register">B</td>
-<td class="register-desc">Left 8 pixels.</td>
+<td class="register-desc">Left eight pixels.</td>
 </tr>
 <tr>
 <td class="register">C</td>
-<td class="register-desc">Middle 8 pixels.</td>
+<td class="register-desc">Middle eight pixels.</td>
 </tr>
 <tr>
 <td class="register">E</td>
-<td class="register-desc">Right 8 pixels.</td>
+<td class="register-desc">Right eight pixels.</td>
+</tr>
+<tr>
+<td class="register">B'</td>
+<td class="register-desc">Left eight mask pixels.</td>
+</tr>
+<tr>
+<td class="register">C'</td>
+<td class="register-desc">Middle eight mask pixels.</td>
+</tr>
+<tr>
+<td class="register">E'</td>
+<td class="register-desc">Right eight mask pixels.</td>
 </tr>
 </table>
 <table class="output">
@@ -56,15 +71,27 @@ Used by the routine at <a href="E102.html">plot_masked_sprite_24px</a>.
 </tr>
 <tr>
 <td class="register">B</td>
-<td class="register-desc">Flipped left 8 pixels.</td>
+<td class="register-desc">Flipped left eight pixels.</td>
 </tr>
 <tr>
 <td class="register">C</td>
-<td class="register-desc">Flipped middle 8 pixels.</td>
+<td class="register-desc">Flipped middle eight pixels.</td>
 </tr>
 <tr>
 <td class="register">E</td>
-<td class="register-desc">Flipped right 8 pixels.</td>
+<td class="register-desc">Flipped right eight pixels.</td>
+</tr>
+<tr>
+<td class="register">B'</td>
+<td class="register-desc">Flipped left eight mask pixels.</td>
+</tr>
+<tr>
+<td class="register">C'</td>
+<td class="register-desc">Flipped middle eight mask pixels.</td>
+</tr>
+<tr>
+<td class="register">E'</td>
+<td class="register-desc">Flipped right eight mask pixels.</td>
 </tr>
 </table>
 </td>
@@ -216,7 +243,7 @@ Next: <a href="E40F.html">E40F</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

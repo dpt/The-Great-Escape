@@ -24,11 +24,14 @@ Next: <a href="7C33.html">7C33</a>
 </td>
 </tr>
 </table>
-<div class="description">7C26: Convert an item to an itemstruct pointer.</div>
+<div class="description">7C26: Item to itemstruct</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This turns an item index to an itemstruct pointer.
+</div>
 <div class="paragraph">
 Used by the routines at <a href="7BB5.html">drop_item_tail</a>, <a href="A228.html">event_new_red_cross_parcel</a> and <a href="CD31.html">item_discovered</a>.
 </div>
@@ -39,7 +42,7 @@ Used by the routines at <a href="7BB5.html">drop_item_tail</a>, <a href="A228.ht
 </tr>
 <tr>
 <td class="register">A</td>
-<td class="register-desc">Item index.</td>
+<td class="register-desc">Item index (type: item_t).</td>
 </tr>
 </table>
 <table class="output">
@@ -48,7 +51,7 @@ Used by the routines at <a href="7BB5.html">drop_item_tail</a>, <a href="A228.ht
 </tr>
 <tr>
 <td class="register">HL</td>
-<td class="register-desc">Pointer to itemstruct.</td>
+<td class="register-desc">Pointer to itemstruct (type: itemstruct_t).</td>
 </tr>
 </table>
 </td>
@@ -125,7 +128,7 @@ Next: <a href="7C33.html">7C33</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

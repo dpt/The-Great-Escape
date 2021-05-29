@@ -24,11 +24,14 @@ Next: <a href="9E98.html">9E98</a>
 </td>
 </tr>
 </table>
-<div class="description">9E07: Process player input.</div>
+<div class="description">9E07: Process player input</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This first checks for reasons to not handle the player's input, such as the hero being in solitary, the 'game over' state of his morale being exhausted, or the hero being busy picking a lock or cutting through a wire fence. If none of those are the case we fetch the current player input into <span class="register">A</span>. If the player's input is non-zero (ie. the player is pressing a button) we reset the <a href="A139.html">automatic_player_counter</a> and check for the hero being in bed, or at breakfast. If the hero was in bed, or at breakfast, we make him stand up, then update the scenery and refresh the screen. We then check for 'pick up', 'drop' and 'use' input events which are handled by <a href="7AC9.html">process_player_input_fire</a>. Finally assign the new input value to the hero's vischar then set the kick flag to make it update.
+</div>
 <div class="paragraph">
 Used by the routine at <a href="9D7B.html">main_loop</a>.
 </div>
@@ -419,7 +422,7 @@ Hero was in bed: make him get up
 <td class="asm-label"></td>
 <td class="address-1"><span id="9e82"></span>9E82</td>
 <td class="instruction">CALL <a href="6B42.html">plot_interior_tiles</a></td>
-<td class="comment-1" rowspan="1">Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer</td>
+<td class="comment-1" rowspan="1">Render visible tiles array into the screen buffer</td>
 </tr>
 <tr>
 <td class="asm-label">process_player_input_check_fire</td>
@@ -508,7 +511,7 @@ Next: <a href="9E98.html">9E98</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

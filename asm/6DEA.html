@@ -24,7 +24,7 @@ Next: <a href="6E20.html">6E20</a>
 </td>
 </tr>
 </table>
-<div class="description">6DEA: Room 15: Room with uniform.</div>
+<div class="description">6DEA: Room 15: Room with uniform</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
@@ -36,115 +36,115 @@ Next: <a href="6E20.html">6E20</a>
 <td class="asm-label">roomdef_15_uniform</td>
 <td class="address-1"><span id="6dea"></span>6DEA</td>
 <td class="instruction">DEFB $00</td>
-<td class="comment-1" rowspan="1">0</td>
+<td class="comment-1" rowspan="1">0 -- Room dimensions index</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6deb"></span>6DEB</td>
 <td class="instruction">DEFB $04</td>
-<td class="comment-1" rowspan="1">4 // count of boundaries</td>
+<td class="comment-1" rowspan="1">4 -- Number of boundaries</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6dec"></span>6DEC</td>
 <td class="instruction">DEFB $36,$44,$16,$20</td>
-<td class="comment-1" rowspan="1">54, 68, 22, 32 }, // boundary</td>
+<td class="comment-1" rowspan="1">{ 54, 68, 22, 32 } -- Boundary</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6df0"></span>6DF0</td>
 <td class="instruction">DEFB $36,$44,$36,$44</td>
-<td class="comment-1" rowspan="1">54, 68, 54, 68 }, // boundary</td>
+<td class="comment-1" rowspan="1">{ 54, 68, 54, 68 } -- Boundary</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6df4"></span>6DF4</td>
 <td class="instruction">DEFB $3E,$44,$28,$3A</td>
-<td class="comment-1" rowspan="1">62, 68, 40, 58 }, // boundary</td>
+<td class="comment-1" rowspan="1">{ 62, 68, 40, 58 } -- Boundary</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6df8"></span>6DF8</td>
 <td class="instruction">DEFB $1E,$28,$38,$43</td>
-<td class="comment-1" rowspan="1">30, 40, 56, 67 }, // boundary</td>
+<td class="comment-1" rowspan="1">{ 30, 40, 56, 67 } -- Boundary</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6dfc"></span>6DFC</td>
 <td class="instruction">DEFB $04</td>
-<td class="comment-1" rowspan="1">4 // count of mask bytes</td>
+<td class="comment-1" rowspan="1">4 -- Number of mask bytes</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6dfd"></span>6DFD</td>
 <td class="instruction">DEFB $01,$05,$0A,$0F</td>
-<td class="comment-1" rowspan="1">[1, 5, 10, 15] // data mask bytes</td>
+<td class="comment-1" rowspan="1">[1, 5, 10, 15] -- Mask bytes</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6e01"></span>6E01</td>
 <td class="instruction">DEFB $0A</td>
-<td class="comment-1" rowspan="1">10 // count of objects</td>
+<td class="comment-1" rowspan="1">10 -- Number of objects</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6e02"></span>6E02</td>
 <td class="instruction">DEFB $02,$01,$04</td>
-<td class="comment-1" rowspan="1">interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },</td>
+<td class="comment-1" rowspan="1">{ interiorobject_ROOM_OUTLINE_22x12_A, 1, 4 }</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6e05"></span>6E05</td>
 <td class="instruction">DEFB $0A,$10,$04</td>
-<td class="comment-1" rowspan="1">interiorobject_SHORT_WARDROBE,              16, 4 },</td>
+<td class="comment-1" rowspan="1">{ interiorobject_SHORT_WARDROBE, 16, 4 }</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6e08"></span>6E08</td>
 <td class="instruction">DEFB $09,$0A,$05</td>
-<td class="comment-1" rowspan="1">interiorobject_EMPTY_BED,                   10, 5 },</td>
+<td class="comment-1" rowspan="1">{ interiorobject_EMPTY_BED, 10, 5 }</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6e0b"></span>6E0B</td>
 <td class="instruction">DEFB $31,$08,$05</td>
-<td class="comment-1" rowspan="1">interiorobject_TINY_DRAWERS,                 8, 5 },</td>
+<td class="comment-1" rowspan="1">{ interiorobject_TINY_DRAWERS, 8, 5 }</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6e0e"></span>6E0E</td>
 <td class="instruction">DEFB $31,$06,$06</td>
-<td class="comment-1" rowspan="1">interiorobject_TINY_DRAWERS,                 6, 6 },</td>
+<td class="comment-1" rowspan="1">{ interiorobject_TINY_DRAWERS, 6, 6 }</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6e11"></span>6E11</td>
 <td class="instruction">DEFB $21,$02,$07</td>
-<td class="comment-1" rowspan="1">interiorobject_SMALL_SHELF,                  2, 7 },</td>
+<td class="comment-1" rowspan="1">{ interiorobject_SMALL_SHELF, 2, 7 }</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6e14"></span>6E14</td>
 <td class="instruction">DEFB $09,$02,$09</td>
-<td class="comment-1" rowspan="1">interiorobject_EMPTY_BED,                    2, 9 },</td>
+<td class="comment-1" rowspan="1">{ interiorobject_EMPTY_BED, 2, 9 }</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6e17"></span>6E17</td>
 <td class="instruction">DEFB $10,$07,$0A</td>
-<td class="comment-1" rowspan="1">interiorobject_DOOR_FRAME_NW_SE,             7, 10 },</td>
+<td class="comment-1" rowspan="1">{ interiorobject_DOOR_FRAME_NW_SE, 7, 10 }</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6e1a"></span>6E1A</td>
 <td class="instruction">DEFB $0F,$0D,$09</td>
-<td class="comment-1" rowspan="1">interiorobject_DOOR_FRAME_SW_NE,            13, 9 },</td>
+<td class="comment-1" rowspan="1">{ interiorobject_DOOR_FRAME_SW_NE, 13, 9 }</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="6e1d"></span>6E1D</td>
 <td class="instruction">DEFB $1D,$12,$08</td>
-<td class="comment-1" rowspan="1">interiorobject_TABLE,                       18, 8 },</td>
+<td class="comment-1" rowspan="1">{ interiorobject_TABLE, 18, 8 }</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -159,7 +159,7 @@ Next: <a href="6E20.html">6E20</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

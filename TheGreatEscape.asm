@@ -734,9 +734,9 @@
 ; Hut 3 | Always empty  | 25           | 24            | 23            |
 ;
 
-; Loading screen.
+; Loading screen
 screen:
-  DEFB $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00 ; Pixels.
+  DEFB $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00 ; Pixel data.
   DEFB $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$06,$CC,$67,$18,$D9,$9C,$1B,$31,$B6,$E6,$CE,$D8 ;
   DEFB $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$0D,$B5,$B6,$36,$DB,$60 ;
   DEFB $FF,$00,$00,$04,$10,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00 ;
@@ -928,7 +928,7 @@ screen:
   DEFB $FA,$40,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$1E,$00,$00,$00,$00,$00,$00,$00,$00,$20,$FF,$EF,$FE,$FF,$EF,$FF,$FC,$10 ;
   DEFB $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$01,$80,$00,$3C,$00,$00,$00,$00,$20,$FF,$EF,$FE,$FF,$EF,$FF,$0E,$10 ;
   DEFB $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$20,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00 ;
-  DEFB $06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07 ; Attributes.
+  DEFB $06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07 ; Attribute data.
   DEFB $06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07 ;
   DEFB $06,$06,$06,$04,$04,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07 ;
   DEFB $04,$04,$04,$04,$04,$04,$04,$04,$04,$04,$06,$06,$06,$04,$06,$06,$06,$06,$06,$06,$06,$06,$07,$07,$07,$07,$07,$07,$07,$07,$07,$07 ;
@@ -953,9 +953,10 @@ screen:
   DEFB $05,$05,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$41,$41,$41,$41,$41,$01,$01,$01,$01,$01,$01,$01,$01,$01 ;
   DEFB $06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$06,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01,$01 ;
 
-; Super tiles.
+; Super tiles
 ;
-; The game's exterior map (at map_tiles) is constructed of references to these "super tiles" which are in turn a 4x4 array of tile indices.
+; These are the 32x32 pixel "super tiles" that the game's exterior map (defined by map_tiles) is built of. Each super tile holds a 4x4 array of tile indices. select_tile_set is used to turn the super tile index into a tileset pointer
+; (pointing within exterior_tiles). The tileset pointer in combination with the tile indices in the super tile can then be used to fetch the tile data.
 super_tiles:
   DEFB $94,$93,$92,$94    ; super_tile $00
   DEFB $92,$92,$94,$93    ;
@@ -1830,25 +1831,98 @@ super_tiles:
   DEFB $E4,$E5,$E7,$E5    ;
   DEFB $E4,$E5,$E7,$E5    ;
 
-; Index of the current room, or 0 when outside.
+; Room index
+;
+; This holds the index of the room that the hero is presently in, or 0 when he's outside.
+;
+; The possible room numbers are as follows:
+;
+; +------+------------------------------------------------+----------------+------------------------------------------------+
+; | Room | Description                                    | Movable Object | Items                                          |
+; +------+------------------------------------------------+----------------+------------------------------------------------+
+; | 0    | Outdoors / exterior / main map                 | -              | Green key                                      |
+; | 1    | Lowest hut, right hand side                    | -              | Poison                                         |
+; | 2    | Middle hut, left hand side (Hero's start room) | -              | Stove                                          |
+; | 3    | Middle hut, right hand side                    | -              | -                                              |
+; | 4    | Highest hut, left hand side                    | -              | -                                              |
+; | 5    | Highest hut, right hand side                   | -              | -                                              |
+; | 6    | (unused index)                                 | -              | -                                              |
+; | 7    | Corridor                                       | -              | -                                              |
+; | 8    | Corridor                                       | -              | -                                              |
+; | 9    | "Crate"                                        | Crate          | Shovel                                         |
+; | 10   | "Lockpick"                                     | -              | Lockpick                                       |
+; | 11   | Commandant's office                            | -              | Papers                                         |
+; | 12   | Corridor                                       | -              | -                                              |
+; | 13   | Corridor                                       | -              | -                                              |
+; | 14   | Guard’s quarters 1                             | -              | Torch                                          |
+; | 15   | Guard’s quarters 2                             | -              | Uniform, Yellow key                            |
+; | 16   | Corridor                                       | -              | -                                              |
+; | 17   | Corridor                                       | -              | -                                              |
+; | 18   | “Radio”                                        | -              | Radio                                          |
+; | 19   | “Food”                                         | -              | Food                                           |
+; | 20   | "Red Cross parcel"                             | -              | From parcel: Purse, Wire snips, Bribe, Compass |
+; | 21   | Corridor                                       | -              | -                                              |
+; | 22   | Corridor to solitary                           | -              | Red key                                        |
+; | 23   | Mess hall, right room                          | -              | -                                              |
+; | 24   | Solitary confinement                           | -              | -                                              |
+; | 25   | Mess hall, left room                           | -              | -                                              |
+; | 26   | (unused index)                                 | -              | -                                              |
+; | 27   | (unused index)                                 | -              | -                                              |
+; | 28   | Lowest hut, left hand side                     | Stove          | -                                              |
+; | 29   | Tunnel 2, start of                             | -              | -                                              |
+; | 30   | Tunnel 2                                       | -              | -                                              |
+; | 31   | Tunnel 2                                       | -              | -                                              |
+; | 32   | Tunnel 2                                       | -              | -                                              |
+; | 33   | Tunnel 2                                       | -              | -                                              |
+; | 34   | Tunnel 2, end of                               | -              | -                                              |
+; | 35   | Tunnel 2                                       | -              | -                                              |
+; | 36   | Tunnel 2                                       | -              | -                                              |
+; | 37   | Tunnel 1, start of                             | -              | -                                              |
+; | 38   | Tunnel 1                                       | -              | -                                              |
+; | 39   | Tunnel 1                                       | -              | -                                              |
+; | 40   | Tunnel 1                                       | -              | -                                              |
+; | 41   | Tunnel 1                                       | -              | -                                              |
+; | 42   | Tunnel 1                                       | -              | -                                              |
+; | 43   | Tunnel 1                                       | -              | -                                              |
+; | 44   | Tunnel 1                                       | -              | -                                              |
+; | 45   | Tunnel 1                                       | -              | -                                              |
+; | 46   | Tunnel 1                                       | -              | -                                              |
+; | 47   | Tunnel 1                                       | -              | -                                              |
+; | 48   | Tunnel 1, end of                               | -              | -                                              |
+; | 49   | Tunnel 1                                       | -              | -                                              |
+; | 50   | Tunnel 1 (initially blocked)                   | -              | -                                              |
+; | 51   | Tunnel 2                                       | -              | -                                              |
+; | 52   | Tunnel 2                                       | -              | -                                              |
+; +------+------------------------------------------------+----------------+------------------------------------------------+
 room_index:
   DEFB $00
 
-; The current door id.
+; Current door
+;
+; This is the current door id. Bit 7 is the door_REVERSE flag.
+;
+; Used by the routines at is_door_locked, door_handling, door_handling_interior and solitary.
 current_door:
   DEFB $00
 
-; The current visible character is made to change room.
+; Transition
+;
+; This is called when a visible character (a vischar, pointed to by IY) needs to change room, or to change position on the exterior map, e.g. when the hero moves outside of the main gate.
+;
+; vischar.room is expected to already be set to the new room index. If the character is outdoors we take the given map position, (a tinypos, pointed to by HL) scale it up, multiplying the values by 4, then store those as vischar.mi.mappos.
+; Otherwise we just copy them across without scaling.
+;
+; If the current vischar is not the hero then we reset the character. Otherwise we're handling the hero so we either reset the visible scene for outdoors, or for the new room.
 ;
 ; Used by the routines at door_handling, door_handling_interior, target_reached, solitary and action_papers.
 ;
-; !I:HL Pointer to position. FIXME: Specify type.
-;  I:IY Pointer to current visible character.
+; I:HL Pointer to map position (type: tinypos_t).
+; I:IY Pointer to current visible character.
 transition:
   EX DE,HL                ; Save position into DE
   PUSH IY                 ; Copy the current visible character pointer into HL
   POP HL                  ;
-  LD A,L                  ; Extract the visible character's offset
+  LD A,L                  ; Extract the visible character's index/offset
   PUSH AF                 ; Save it for later
   ADD A,$0F               ; Point HL at the visible character's position
   LD L,A                  ;
@@ -1870,7 +1944,7 @@ transition_0:
   INC DE                  ;
   POP BC                  ; Restore
   DJNZ transition_0       ; Loop
-  JR transition_3         ; !Jump over indoors case (ELSE part)
+  JR transition_3         ; Jump over indoors case
 ; We're indoors.
 ;
 ; Set position on X, Y axis and height by copying.
@@ -1891,7 +1965,7 @@ transition_3:
   JP Z,transition_4       ; Jump if so
 ; Not the hero.
 ;
-; This is an unusual construct. Why did the author not use JP NZ,$C5D3 above and fallthrough otherwise?
+; Commentary: This is an unusual construct. Why did the author not use JP NZ,$C5D3 above and fallthrough otherwise?
   JP reset_visible_character ; If not, exit via reset_visible_character resetting the visible character
 ; Hero only.
 ;
@@ -1915,14 +1989,17 @@ transition_4:
   CALL reset_outdoors     ; Reset the hero's position, redraw the scene then zoombox it onto the screen
   JR squash_stack_goto_main ; Restart from main loop
 
-; The hero enters a room.
+; Enter room
+;
+; This is called when the hero should enter a room. It resets the game window position, expands out the room definition into tile references then plots those tiles, centres the map position, sets an appropriate sprite for the hero (walk or
+; crawl), sets up movable items then zoomboxes the scene onto the screen and boosts the score by one. Finally it squashes the stack and jumps to the main loop.
 ;
 ; Used by the routines at transition, main_loop_setup, keyscan_break and reset_game.
 enter_room:
   LD HL,$0000                ; Reset the game_window_offset X and Y coordinates to zero
   LD (game_window_offset),HL ;
   CALL setup_room         ; Setup the room
-  CALL plot_interior_tiles ; Expand tile buffer into screen buffer
+  CALL plot_interior_tiles ; Render visible tiles array into the screen buffer
   LD HL,$EA74             ; Set the map_position to (116,234)
   LD (map_position),HL    ;
   CALL set_hero_sprite_for_room ; Set appropriate sprite for the room (standing or crawl)
@@ -1934,18 +2011,22 @@ enter_room:
   CALL increase_score     ;
 ; FALL THROUGH into squash_stack_goto_main.
 
-; Squash the stack then jump into the game's main loop.
+; Squash stack, goto main
+;
+; This is called by transition or enter_room to restart the game's main loop, after they have performed a scene change.
 ;
 ; Used by the routines at transition and enter_room (a fall through).
 squash_stack_goto_main:
   LD SP,$FFFF             ; Set stack to the very top of RAM
   JP main_loop            ; Jump to the start of the game's main loop
 
-; Set appropriate hero sprite for room.
+; Set hero sprite for room
+;
+; This is called by enter_room to select an appropriate hero sprite for the current room. This forces the use of the prisoner sprite set with the crawl flag enabled, when the hero is in a tunnel room.
+;
+; This routine doesn't remember the hero's uniform state, so if he enters a tunnel while wearing a guard's uniform you will find it removed when he exits from the tunnel.
 ;
 ; Used by the routine at enter_room.
-;
-; Called when changing rooms.
 set_hero_sprite_for_room:
   LD HL,$800D             ; Set the hero's visible character input field to input_KICK
   LD (HL),$80             ;
@@ -1966,10 +2047,10 @@ set_hero_sprite_for_room_0:
   RES 2,(HL)              ; Clear the vischar_DIRECTION_CRAWL bit from vischar.direction
   RET                     ; Return
 
-; Setup movable items.
+; Set-up movable items
 ;
-; "Movable items" are the stoves and the crate which appear in three rooms in the game. Unlike ordinary items such as keys and the radio the movable items can be pushed around by the hero character walking into them. Internally they use the
-; second visible character slot.
+; "Movable items" are the stove and crate objects which appear in three rooms in the game. Unlike ordinary items such as keys and the radio the movable items can be pushed around (on one axis) by the hero character walking into them.
+; Internally they use the second visible character slot.
 ;
 ; Used by the routines at enter_room and reset_outdoors.
 setup_movable_items:
@@ -2047,9 +2128,11 @@ movable_item_stove2:
   DEFW sprite_stove       ; Sprite: sprite_stove
   DEFB $00                ; Index: 0
 
-; Reset all seven non-player visible characters.
+; Reset non-player visible characters
 ;
-; Used by the routine at setup_movable_items only. (!could merge into the above)
+; This is called by setup_movable_items to reset all seven non-player visible characters.
+;
+; Used by the routine at setup_movable_items only.
 reset_nonplayer_visible_characters:
   LD HL,$8020             ; Start at the second visible character
   LD BC,$0720             ; Set B for seven iterations and set C for a 32 byte stride simultaneously
@@ -2066,7 +2149,9 @@ reset_nonplayer_visible_characters_0:
   DJNZ reset_nonplayer_visible_characters_0 ; ...loop
   RET                     ; Return
 
-; Setup interior doors.
+; Set-up doors
+;
+; This is called by setup_room to setup the interior_doors array. It walks through the doors array, extracting the indices of doors relevant to the current room and stores those indices into interior_doors.
 ;
 ; Used by the routine at setup_room only.
 ;
@@ -2117,22 +2202,25 @@ setup_doors_3:
   DJNZ setup_doors_1      ; ...loop
   RET                     ; Return
 
-; Turn a door index into a door_t pointer.
+; Get door
+;
+; This is called by a few routines to turn a door index into a pointer to a door structure (a door_t). The doors[] array contains pairs of door structures. If the door_REVERSE flag is set in bit 7, the first of the pair is returned,
+; otherwise the second is.
 ;
 ; Used by the routines at door_handling_interior, get_nearest_door, get_target and target_reached.
 ;
-; I:A Index of door + reverse flag in bit 7.
+; I:A Index of door + door_REVERSE flag in bit 7.
 ; O:HL Pointer to door_t.
 get_door:
   LD C,A                  ; Save the original A so we can test its flag bit in a moment
-  ADD A,A                 ; First double A since doors[] contains pairs of doors. This also discards the flag in bit 7
+  ADD A,A                 ; First double A since doors[] contains pairs of doors. This also discards the door_REVERSE flag in bit 7
   LD L,A                  ; Form the address of doors[A] in HL
   LD H,$00                ;
   ADD HL,HL               ;
   ADD HL,HL               ;
   LD DE,doors             ;
   ADD HL,DE               ;
-  BIT 7,C                 ; Was the door_REVERSE flag bit set on entry?
+  BIT 7,C                 ; Was the door_REVERSE flag (bit 7) set on entry?
   RET Z                   ; If not, return with HL pointing to the entry
   LD A,L                  ; Otherwise, point to the next entry along
   ADD A,$04               ;
@@ -2141,7 +2229,9 @@ get_door:
   INC H                   ;
   RET                     ; Return
 
-; Wipe the visible tiles array.
+; Wipe visible tiles
+;
+; The visible tiles array is a 24x17 grid of tile references. The game uses it to render room interiors and the exterior map. This routine clears all of the tiles all to zero.
 ;
 ; Used by the routines at setup_room, screen_reset and choose_game_window_attributes.
 wipe_visible_tiles:
@@ -2152,7 +2242,9 @@ wipe_visible_tiles:
   LDIR                    ;
   RET                     ; Return
 
-; Expand out the room definition for room_index.
+; Set-up room
+;
+; This first wipes the visible tiles array then sets up interior doors, gets the room definition pointer then uses that to setup boundaries, set up interior masks and finally plot all objects into the visible tile array.
 ;
 ; Used by the routines at enter_room, pick_up_item, process_player_input, wake_up, end_of_breakfast, select_room_and_plot and action_shovel.
 setup_room:
@@ -2269,27 +2361,29 @@ setup_room_6:
   DJNZ setup_room_5       ; ...loop
   RET                     ; Return
 
-; Expands RLE-encoded objects to a full set of tile references.
+; Expand object
 ;
-; Used by the routine at setup_room.
+; This is only ever called by setup_room. It expands the run length encoded object with the given index into indices in the visible tile array.
 ;
-; Object format:
+; Objects have the following format:
 ;
-; +-------------------------------------------------------------------------+
-; | Each object starts with two bytes which specify its dimensions:         |
-; | <w> <h>              | Width in tiles, Height in tiles                  |
-; | Which are then followed by a repetition of the following bytes:         |
-; | <t>                  | Literal: Emit tile <t>                           |
-; | <$FF> <$FF>          | Escape: Emit <$FF>                               |
-; | <$FF> <128..254> <t> | Repetition: Emit tile <t> up to 126 times        |
-; | <$FF> <64..79> <t>   | Range: Emit tile <t> <t+1> <t+2> .. up to <t+15> |
-; | <$FF> <other>        | Other encodings are not used                     |
-; +----------------------+--------------------------------------------------+
+; +---------------------------------------------------------------------------------------------------------------+
+; | Each object starts with two bytes which specify its dimensions:                                               |
+; | <w> <h>                | Width in tiles, Height in tiles                                                      |
+; | Which are then followed by a repetition of the following bytes:                                               |
+; | <t>                    | Literal: Emit a single tile <t>                                                      |
+; | <$FF> <$FF>            | Escape: Emit a single tile $FF                                                       |
+; | <$FF> <c=128..254> <t> | Repetition: Emit tile <t> count (<c> AND 127) times                                  |
+; | <$FF> <c=64..79> <t>   | Ascending range: Emit tile <t> then <t+1> then <t+2> and so on, up to <t+(c AND 15)> |
+; | <$FF> <other>          | Other encodings are not used                                                         |
+; +------------------------+--------------------------------------------------------------------------------------+
 ;
 ; Tile references of zero produce no output.
 ;
+; Used by the routine at setup_room.
+;
 ; I:A Object index.
-; I:DE Tile buffer location to expand to.
+; I:DE Tile array location to expand to.
 expand_object:
   ADD A,A                    ; Fetch the object pointer from interior_object_defs[A] into HL
   LD HL,interior_object_defs ;
@@ -2379,7 +2473,7 @@ repetition_end:
   JR expand               ; Jump to main expand loop
 ; Escape + 64..79 case: emit an ascending range of bytes
 ;
-; Bug: This self-modifies the INC A at expand_object_increment at the end of the loop body, but nothing else in the code modifies it! Possible evidence that other encodings (e.g. 'DEC A') were attempted.
+; Trivial bug: This self-modifies the INC A at expand_object_increment at the end of the loop body, but nothing else in the code modifies it! Possible evidence that other encodings (e.g. 'DEC A') were attempted.
 range:
   LD A,$3C                       ; Make the instruction at expand_object_increment an 'INC A'
   LD (expand_object_increment),A ;
@@ -2418,7 +2512,9 @@ range_end:
   INC HL                  ; Advance the data pointer
   JR expand               ; Jump to main expand loop
 
-; Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer.
+; Plot interior tiles
+;
+; This routine expands all of the tile indices in the visible tiles array to the screen buffer. It's only ever used when drawing interior scenes (rooms).
 ;
 ; Used by the routines at enter_room, pick_up_item, process_player_input, wake_up, end_of_breakfast, select_room_and_plot, screen_reset, choose_game_window_attributes and action_shovel.
 plot_interior_tiles:
@@ -2470,20 +2566,20 @@ plot_interior_tiles_1:
 ; End
   RET                     ; Return
 
-; Table of pointers to prisoner bed objects in room definition data.
+; Beds
 ;
-; Six pointers to bed objects in room definition data. These are the beds of the active prisoners (characters 20 to 25).
+; This is an array of six pointers to room definition bed objects. These are the beds of the active prisoners (characters 20 to 25).
 ;
-; Note that the topmost hut has three prisoners permanently in bed and one permanently empty bed.
+; Note that the topmost hut does not feature in this list. It has three prisoners permanently in bed and one permanently empty bed.
 beds:
-  DEFW roomdef_3_hut2_right_bed_A ; roomdef_3_hut2_right byte 29 - rightmost bed in hut 2 right - used by char route 7
-  DEFW roomdef_3_hut2_right_bed_B ; roomdef_3_hut2_right byte 32 - middle bed in hut 2 right - used by char route 8
-  DEFW roomdef_3_hut2_right_bed_C ; roomdef_3_hut2_right byte 35 - leftmost bed in hut 2 right - used by char route 9
-  DEFW roomdef_5_hut2_right_bed_D ; roomdef_5_hut3_right byte 29 - rightmost in hut 3 right - used by char route 10
-  DEFW roomdef_5_hut2_right_bed_E ; roomdef_5_hut3_right byte 32 - middle in hut 3 right - used by char route 11
-  DEFW roomdef_5_hut2_right_bed_F ; roomdef_5_hut3_right byte 35 - leftmost in hut 3 right - used by char route 12
+  DEFW roomdef_3_hut2_right_bed_A ; roomdef_3_hut2_right byte 29. The rightmost bed in hut 2 right. This is used by route 7.
+  DEFW roomdef_3_hut2_right_bed_B ; roomdef_3_hut2_right byte 32. The middle bed in hut 2 right. This is used by route 8.
+  DEFW roomdef_3_hut2_right_bed_C ; roomdef_3_hut2_right byte 35. The leftmost bed in hut 2 right. This is used by route 9.
+  DEFW roomdef_5_hut2_right_bed_D ; roomdef_5_hut3_right byte 29. The rightmost in hut 3 right. This is used by route 10.
+  DEFW roomdef_5_hut2_right_bed_E ; roomdef_5_hut3_right byte 32. The middle in hut 3 right. This is used by route 11.
+  DEFW roomdef_5_hut2_right_bed_F ; roomdef_5_hut3_right byte 35. The leftmost in hut 3 right. This is used by route 12.
 
-; Room dimensions.
+; Room definition dimensions
 ;
 ; The room definitions specify their dimensions via an index into this table. Note that it looks like a bounds_t but has a different order.
 ;
@@ -2509,7 +2605,9 @@ roomdef_dimensions:
   DEFB $68,$1C,$38,$32    ; (104, 28,  56, 50)
   DEFB $38,$32,$58,$0A    ; ( 56, 50,  88, 10)
 
-; Array of pointers to room and tunnel definitions.
+; Rooms and tunnels
+;
+; This is an array of pointers to room and tunnel definitions.
 ;
 ; Room definition format:
 ;
@@ -2586,26 +2684,26 @@ rooms_and_tunnels:
   DEFW roomdef_32         ; Room 51 uses the same definition as room 32
   DEFW roomdef_40         ; Room 52 uses the same definition as room 40
 
-; Room 1: Hut 1, far side.
+; Room 1: Hut 1, far side
 roomdef_1_hut1_right:
-  DEFB $00                ; 0
-  DEFB $03                ; 3 // count of boundaries
-  DEFB $36,$44,$17,$22    ; 54, 68, 23, 34 }, // boundary
-  DEFB $36,$44,$27,$32    ; 54, 68, 39, 50 }, // boundary
-  DEFB $36,$44,$37,$44    ; 54, 68, 55, 68 }, // boundary
-  DEFB $04                ; 4 // count of mask bytes
-  DEFB $00,$01,$03,$0A    ; [0, 1, 3, 10] // data mask bytes
-  DEFB $0A                ; 10 // count of objects
-  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
-  DEFB $08,$08,$00        ; interiorobject_WIDE_WINDOW,                  8, 0 },
-  DEFB $08,$02,$03        ; interiorobject_WIDE_WINDOW,                  2, 3 },
-  DEFB $17,$0A,$05        ; interiorobject_OCCUPIED_BED,                10, 5 },
-  DEFB $17,$06,$07        ; interiorobject_OCCUPIED_BED,                 6, 7 },
-  DEFB $0F,$0F,$08        ; interiorobject_DOOR_FRAME_SW_NE,            15, 8 },
-  DEFB $18,$12,$05        ; interiorobject_ORNATE_WARDROBE_FACING_SW,   18, 5 },
-  DEFB $18,$14,$06        ; interiorobject_ORNATE_WARDROBE_FACING_SW,   20, 6 },
-  DEFB $09,$02,$09        ; interiorobject_EMPTY_BED,                    2, 9 },
-  DEFB $10,$07,$0A        ; interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
+  DEFB $00                ; 0 -- Room dimensions index
+  DEFB $03                ; 3 -- Number of boundaries
+  DEFB $36,$44,$17,$22    ; { 54, 68, 23, 34 } -- Boundary
+  DEFB $36,$44,$27,$32    ; { 54, 68, 39, 50 } -- Boundary
+  DEFB $36,$44,$37,$44    ; { 54, 68, 55, 68 } -- Boundary
+  DEFB $04                ; 4 -- Number of mask bytes
+  DEFB $00,$01,$03,$0A    ; [0, 1, 3, 10] -- Mask bytes
+  DEFB $0A                ; 10 -- Number of objects
+  DEFB $02,$01,$04        ; { interiorobject_ROOM_OUTLINE_22x12_A, 1, 4 }
+  DEFB $08,$08,$00        ; { interiorobject_WIDE_WINDOW, 8, 0 }
+  DEFB $08,$02,$03        ; { interiorobject_WIDE_WINDOW, 2, 3 }
+  DEFB $17,$0A,$05        ; { interiorobject_OCCUPIED_BED, 10, 5 }
+  DEFB $17,$06,$07        ; { interiorobject_OCCUPIED_BED, 6, 7 }
+  DEFB $0F,$0F,$08        ; { interiorobject_DOOR_FRAME_SW_NE, 15, 8 }
+  DEFB $18,$12,$05        ; { interiorobject_ORNATE_WARDROBE_FACING_SW, 18, 5 }
+  DEFB $18,$14,$06        ; { interiorobject_ORNATE_WARDROBE_FACING_SW, 20, 6 }
+  DEFB $09,$02,$09        ; { interiorobject_EMPTY_BED, 2, 9 }
+  DEFB $10,$07,$0A        ; { interiorobject_DOOR_FRAME_NW_SE, 7, 10 }
 
 ; Illustration
 ;
@@ -2637,610 +2735,612 @@ roomdef_1_hut1_right:
 ;
 ; (Not necessarily to scale.)
 
-; Room 2: Hut 2, near side.
+; Room 2: Hut 2, near side
 roomdef_2_hut2_left:
-  DEFB $01                ; 1
-  DEFB $02                ; 2 // count of boundaries
-  DEFB $30,$40,$2B,$38    ; 48, 64, 43, 56 }, // boundary (bed)
-  DEFB $18,$26,$1A,$28    ; 24, 38, 26, 40 }, // boundary (table)
-  DEFB $02                ; 2 // count of mask bytes
-  DEFB $0D,$08            ; [13, 8] // data mask bytes
-  DEFB $08                ; 8 // count of objects
-  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
-  DEFB $08,$06,$02        ; interiorobject_WIDE_WINDOW,                  6, 2 },
-  DEFB $28,$10,$05        ; interiorobject_END_DOOR_FRAME_NW_SE,        16, 5 },
-  DEFB $1E,$04,$05        ; interiorobject_STOVE_PIPE,                   4, 5 },
+  DEFB $01                ; 1 -- Room dimensions index
+  DEFB $02                ; 2 -- Number of boundaries
+  DEFB $30,$40,$2B,$38    ; { 48, 64, 43, 56 } -- Boundary (bed)
+  DEFB $18,$26,$1A,$28    ; { 24, 38, 26, 40 } -- Boundary (table)
+  DEFB $02                ; 2 -- Number of mask bytes
+  DEFB $0D,$08            ; [13, 8] -- Mask bytes
+  DEFB $08                ; 8 -- Number of objects
+  DEFB $1B,$03,$06        ; { interiorobject_ROOM_OUTLINE_18x10_A, 3, 6 }
+  DEFB $08,$06,$02        ; { interiorobject_WIDE_WINDOW, 6, 2 }
+  DEFB $28,$10,$05        ; { interiorobject_END_DOOR_FRAME_NW_SE, 16, 5 }
+  DEFB $1E,$04,$05        ; { interiorobject_STOVE_PIPE, 4, 5 }
 roomdef_2_hut2_left_heros_bed:
-  DEFB $17,$08,$07        ; interiorobject_OCCUPIED_BED,                 8, 7 },
-  DEFB $10,$07,$09        ; interiorobject_DOOR_FRAME_NW_SE,             7, 9 },
-  DEFB $1D,$0B,$0C        ; interiorobject_TABLE,                       11, 12 },
-  DEFB $01,$05,$09        ; interiorobject_SMALL_TUNNEL_ENTRANCE,        5, 9 },
+  DEFB $17,$08,$07        ; { interiorobject_OCCUPIED_BED, 8, 7 }
+  DEFB $10,$07,$09        ; { interiorobject_DOOR_FRAME_NW_SE, 7, 9 }
+  DEFB $1D,$0B,$0C        ; { interiorobject_TABLE, 11, 12 }
+  DEFB $01,$05,$09        ; { interiorobject_SMALL_TUNNEL_ENTRANCE, 5, 9 }
 
-; Room 3: Hut 2, far side.
+; Room 3: Hut 2, far side
 roomdef_3_hut2_right:
-  DEFB $00                ; 0
-  DEFB $03                ; 3 // count of boundaries
-  DEFB $36,$44,$17,$22    ; 54, 68, 23, 34 }, // boundary
-  DEFB $36,$44,$27,$32    ; 54, 68, 39, 50 }, // boundary
-  DEFB $36,$44,$37,$44    ; 54, 68, 55, 68 }, // boundary
-  DEFB $04                ; 4 // count of mask bytes
-  DEFB $00,$01,$03,$0A    ; [0, 1, 3, 10] // data mask bytes
-  DEFB $0A                ; 10 // count of objects
-  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
-  DEFB $08,$08,$00        ; interiorobject_WIDE_WINDOW,                  8, 0 },
-  DEFB $08,$02,$03        ; interiorobject_WIDE_WINDOW,                  2, 3 },
+  DEFB $00                ; 0 -- Room dimensions index
+  DEFB $03                ; 3 -- Number of boundaries
+  DEFB $36,$44,$17,$22    ; { 54, 68, 23, 34 } -- Boundary
+  DEFB $36,$44,$27,$32    ; { 54, 68, 39, 50 } -- Boundary
+  DEFB $36,$44,$37,$44    ; { 54, 68, 55, 68 } -- Boundary
+  DEFB $04                ; 4 -- Number of mask bytes
+  DEFB $00,$01,$03,$0A    ; [0, 1, 3, 10] -- Mask bytes
+  DEFB $0A                ; 10 -- Number of objects
+  DEFB $02,$01,$04        ; { interiorobject_ROOM_OUTLINE_22x12_A, 1, 4 }
+  DEFB $08,$08,$00        ; { interiorobject_WIDE_WINDOW, 8, 0 }
+  DEFB $08,$02,$03        ; { interiorobject_WIDE_WINDOW, 2, 3 }
 roomdef_3_hut2_right_bed_A:
-  DEFB $17,$0A,$05        ; interiorobject_OCCUPIED_BED,                10, 5 },
+  DEFB $17,$0A,$05        ; { interiorobject_OCCUPIED_BED, 10, 5 }
 roomdef_3_hut2_right_bed_B:
-  DEFB $17,$06,$07        ; interiorobject_OCCUPIED_BED,                 6, 7 },
+  DEFB $17,$06,$07        ; { interiorobject_OCCUPIED_BED, 6, 7 }
 roomdef_3_hut2_right_bed_C:
-  DEFB $17,$02,$09        ; interiorobject_OCCUPIED_BED,                 2, 9 },
-  DEFB $0B,$10,$05        ; interiorobject_CHEST_OF_DRAWERS,            16, 5 },
-  DEFB $0F,$0F,$08        ; interiorobject_DOOR_FRAME_SW_NE,            15, 8 },
-  DEFB $0A,$12,$05        ; interiorobject_SHORT_WARDROBE,              18, 5 },
-  DEFB $10,$07,$0A        ; interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
+  DEFB $17,$02,$09        ; { interiorobject_OCCUPIED_BED, 2, 9 }
+  DEFB $0B,$10,$05        ; { interiorobject_CHEST_OF_DRAWERS, 16, 5 }
+  DEFB $0F,$0F,$08        ; { interiorobject_DOOR_FRAME_SW_NE, 15, 8 }
+  DEFB $0A,$12,$05        ; { interiorobject_SHORT_WARDROBE, 18, 5 }
+  DEFB $10,$07,$0A        ; { interiorobject_DOOR_FRAME_NW_SE, 7, 10 }
 
-; Room 4: Hut 3, near side.
+; Room 4: Hut 3, near side
 roomdef_4_hut3_left:
-  DEFB $01                ; 1
-  DEFB $02                ; 2 // count of boundaries
-  DEFB $18,$28,$18,$2A    ; 24, 40, 24, 42 }, // boundary
-  DEFB $30,$40,$2B,$38    ; 48, 64, 43, 56 }, // boundary
-  DEFB $03                ; 3 // count of mask bytes
-  DEFB $12,$14,$08        ; [18, 20, 8] // data mask bytes
-  DEFB $09                ; 9 // count of objects
-  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
-  DEFB $28,$10,$05        ; interiorobject_END_DOOR_FRAME_NW_SE,        16, 5 },
-  DEFB $08,$06,$02        ; interiorobject_WIDE_WINDOW,                  6, 2 },
-  DEFB $1E,$04,$05        ; interiorobject_STOVE_PIPE,                   4, 5 },
-  DEFB $09,$08,$07        ; interiorobject_EMPTY_BED,                    8, 7 },
-  DEFB $10,$07,$09        ; interiorobject_DOOR_FRAME_NW_SE,             7, 9 },
-  DEFB $16,$0B,$0B        ; interiorobject_CHAIR_FACING_SE,             11, 11 },
-  DEFB $19,$0D,$0A        ; interiorobject_CHAIR_FACING_SW,             13, 10 },
-  DEFB $1F,$0E,$0E        ; interiorobject_STUFF,                       14, 14 },
+  DEFB $01                ; 1 -- Room dimensions index
+  DEFB $02                ; 2 -- Number of boundaries
+  DEFB $18,$28,$18,$2A    ; { 24, 40, 24, 42 } -- Boundary
+  DEFB $30,$40,$2B,$38    ; { 48, 64, 43, 56 } -- Boundary
+  DEFB $03                ; 3 -- Number of mask bytes
+  DEFB $12,$14,$08        ; [18, 20, 8] -- Mask bytes
+  DEFB $09                ; 9 -- Number of objects
+  DEFB $1B,$03,$06        ; { interiorobject_ROOM_OUTLINE_18x10_A, 3, 6 }
+  DEFB $28,$10,$05        ; { interiorobject_END_DOOR_FRAME_NW_SE, 16, 5 }
+  DEFB $08,$06,$02        ; { interiorobject_WIDE_WINDOW, 6, 2 }
+  DEFB $1E,$04,$05        ; { interiorobject_STOVE_PIPE, 4, 5 }
+  DEFB $09,$08,$07        ; { interiorobject_EMPTY_BED, 8, 7 }
+  DEFB $10,$07,$09        ; { interiorobject_DOOR_FRAME_NW_SE, 7, 9 }
+  DEFB $16,$0B,$0B        ; { interiorobject_CHAIR_FACING_SE, 11, 11 }
+  DEFB $19,$0D,$0A        ; { interiorobject_CHAIR_FACING_SW, 13, 10 }
+  DEFB $1F,$0E,$0E        ; { interiorobject_STUFF, 14, 14 }
 
-; Room 5: Hut 3, far side.
+; Room 5: Hut 3, far side
 roomdef_5_hut3_right:
-  DEFB $00                ; 0
-  DEFB $03                ; 3 // count of boundaries
-  DEFB $36,$44,$17,$22    ; 54, 68, 23, 34 }, // boundary
-  DEFB $36,$44,$27,$32    ; 54, 68, 39, 50 }, // boundary
-  DEFB $36,$44,$37,$44    ; 54, 68, 55, 68 }, // boundary
-  DEFB $04                ; 4 // count of mask bytes
-  DEFB $00,$01,$03,$0A    ; [0, 1, 3, 10] // data mask bytes
-  DEFB $0A                ; 10 // count of objects
-  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
-  DEFB $08,$08,$00        ; interiorobject_WIDE_WINDOW,                  8, 0 },
-  DEFB $08,$02,$03        ; interiorobject_WIDE_WINDOW,                  2, 3 },
+  DEFB $00                ; 0 -- Room dimensions index
+  DEFB $03                ; 3 -- Number of boundaries
+  DEFB $36,$44,$17,$22    ; { 54, 68, 23, 34 } -- Boundary
+  DEFB $36,$44,$27,$32    ; { 54, 68, 39, 50 } -- Boundary
+  DEFB $36,$44,$37,$44    ; { 54, 68, 55, 68 } -- Boundary
+  DEFB $04                ; 4 -- Number of mask bytes
+  DEFB $00,$01,$03,$0A    ; [0, 1, 3, 10] -- Mask bytes
+  DEFB $0A                ; 10 -- Number of objects
+  DEFB $02,$01,$04        ; { interiorobject_ROOM_OUTLINE_22x12_A, 1, 4 }
+  DEFB $08,$08,$00        ; { interiorobject_WIDE_WINDOW, 8, 0 }
+  DEFB $08,$02,$03        ; { interiorobject_WIDE_WINDOW, 2, 3 }
 roomdef_5_hut2_right_bed_D:
-  DEFB $17,$0A,$05        ; interiorobject_OCCUPIED_BED,                10, 5 },
+  DEFB $17,$0A,$05        ; { interiorobject_OCCUPIED_BED, 10, 5 }
 roomdef_5_hut2_right_bed_E:
-  DEFB $17,$06,$07        ; interiorobject_OCCUPIED_BED,                 6, 7 },
+  DEFB $17,$06,$07        ; { interiorobject_OCCUPIED_BED, 6, 7 }
 roomdef_5_hut2_right_bed_F:
-  DEFB $17,$02,$09        ; interiorobject_OCCUPIED_BED,                 2, 9 },
-  DEFB $0F,$0F,$08        ; interiorobject_DOOR_FRAME_SW_NE,            15, 8 },
-  DEFB $0B,$10,$05        ; interiorobject_CHEST_OF_DRAWERS,            16, 5 },
-  DEFB $0B,$14,$07        ; interiorobject_CHEST_OF_DRAWERS,            20, 7 },
-  DEFB $10,$07,$0A        ; interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
+  DEFB $17,$02,$09        ; { interiorobject_OCCUPIED_BED, 2, 9 }
+  DEFB $0F,$0F,$08        ; { interiorobject_DOOR_FRAME_SW_NE, 15, 8 }
+  DEFB $0B,$10,$05        ; { interiorobject_CHEST_OF_DRAWERS, 16, 5 }
+  DEFB $0B,$14,$07        ; { interiorobject_CHEST_OF_DRAWERS, 20, 7 }
+  DEFB $10,$07,$0A        ; { interiorobject_DOOR_FRAME_NW_SE, 7, 10 }
 
-; Room 8: Corridor.
+; Room 8: Corridor
 roomdef_8_corridor:
-  DEFB $02                ; 2
-  DEFB $00                ; 0 // count of boundaries
-  DEFB $01                ; 1 // count of mask bytes
-  DEFB $09                ; [9] // data mask bytes
-  DEFB $05                ; 5 // count of objects
-  DEFB $2E,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_B,         3,  6 },
-  DEFB $26,$0A,$03        ; interiorobject_END_DOOR_FRAME_SW_NE,        10,  3 },
-  DEFB $26,$04,$06        ; interiorobject_END_DOOR_FRAME_SW_NE,         4,  6 },
-  DEFB $10,$05,$0A        ; interiorobject_DOOR_FRAME_NW_SE,             5, 10 },
-  DEFB $0A,$12,$06        ; interiorobject_SHORT_WARDROBE,              18,  6 },
+  DEFB $02                ; 2 -- Room dimensions index
+  DEFB $00                ; 0 -- Number of boundaries
+  DEFB $01                ; 1 -- Number of mask bytes
+  DEFB $09                ; [9] -- Mask bytes
+  DEFB $05                ; 5 -- Number of objects
+  DEFB $2E,$03,$06        ; { interiorobject_ROOM_OUTLINE_18x10_B, 3, 6 }
+  DEFB $26,$0A,$03        ; { interiorobject_END_DOOR_FRAME_SW_NE, 10, 3 }
+  DEFB $26,$04,$06        ; { interiorobject_END_DOOR_FRAME_SW_NE, 4, 6 }
+  DEFB $10,$05,$0A        ; { interiorobject_DOOR_FRAME_NW_SE, 5, 10 }
+  DEFB $0A,$12,$06        ; { interiorobject_SHORT_WARDROBE, 18, 6 }
 
-; Room 9: Room with crate.
+; Room 9: Room with crate
 roomdef_9_crate:
-  DEFB $01                ; 1
-  DEFB $01                ; 1 // count of boundaries
-  DEFB $3A,$40,$1C,$2A    ; 58, 64, 28, 42 }, // boundary
-  DEFB $02                ; 2 // count of mask bytes
-  DEFB $04,$15            ; [4, 21] // data mask bytes
-  DEFB $0A                ; 10 // count of objects
-  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
-  DEFB $23,$06,$03        ; interiorobject_SMALL_WINDOW,                 6, 3 },
-  DEFB $21,$09,$04        ; interiorobject_SMALL_SHELF,                  9, 4 },
-  DEFB $24,$0C,$06        ; interiorobject_TINY_DOOR_FRAME_NW_SE,       12, 6 },
-  DEFB $0F,$0D,$0A        ; interiorobject_DOOR_FRAME_SW_NE,            13, 10 },
-  DEFB $20,$10,$06        ; interiorobject_TALL_WARDROBE,               16, 6 },
-  DEFB $0A,$12,$08        ; interiorobject_SHORT_WARDROBE,              18, 8 },
-  DEFB $1A,$03,$06        ; interiorobject_CUPBOARD,                     3, 6 },
-  DEFB $22,$06,$08        ; interiorobject_SMALL_CRATE,                  6, 8 },
-  DEFB $22,$04,$09        ; interiorobject_SMALL_CRATE,                  4, 9 },
+  DEFB $01                ; 1 -- Room dimensions index
+  DEFB $01                ; 1 -- Number of boundaries
+  DEFB $3A,$40,$1C,$2A    ; { 58, 64, 28, 42 } -- Boundary
+  DEFB $02                ; 2 -- Number of mask bytes
+  DEFB $04,$15            ; [4, 21] -- Mask bytes
+  DEFB $0A                ; 10 -- Number of objects
+  DEFB $1B,$03,$06        ; { interiorobject_ROOM_OUTLINE_18x10_A, 3, 6 }
+  DEFB $23,$06,$03        ; { interiorobject_SMALL_WINDOW, 6, 3 }
+  DEFB $21,$09,$04        ; { interiorobject_SMALL_SHELF, 9, 4 }
+  DEFB $24,$0C,$06        ; { interiorobject_TINY_DOOR_FRAME_NW_SE, 12, 6 }
+  DEFB $0F,$0D,$0A        ; { interiorobject_DOOR_FRAME_SW_NE, 13, 10 }
+  DEFB $20,$10,$06        ; { interiorobject_TALL_WARDROBE, 16, 6 }
+  DEFB $0A,$12,$08        ; { interiorobject_SHORT_WARDROBE, 18, 8 }
+  DEFB $1A,$03,$06        ; { interiorobject_CUPBOARD, 3, 6 }
+  DEFB $22,$06,$08        ; { interiorobject_SMALL_CRATE, 6, 8 }
+  DEFB $22,$04,$09        ; { interiorobject_SMALL_CRATE, 4, 9 }
 
-; Room 10: Room with lockpick.
+; Room 10: Room with lockpick
 roomdef_10_lockpick:
-  DEFB $04                ; 4
-  DEFB $02                ; 2 // count of boundaries
-  DEFB $45,$4B,$20,$36    ; 69, 75, 32, 54 }, // boundary
-  DEFB $24,$2F,$30,$3C    ; 36, 47, 48, 60 }, // boundary
-  DEFB $03                ; 3 // count of mask bytes
-  DEFB $06,$0E,$16        ; [6, 14, 22] // data mask bytes
-  DEFB $0E                ; 14 // count of objects
-  DEFB $2F,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_B,         1, 4 },
-  DEFB $0F,$0F,$0A        ; interiorobject_DOOR_FRAME_SW_NE,            15, 10 },
-  DEFB $23,$04,$01        ; interiorobject_SMALL_WINDOW,                 4, 1 },
-  DEFB $35,$02,$03        ; interiorobject_KEY_RACK,                     2, 3 },
-  DEFB $35,$07,$02        ; interiorobject_KEY_RACK,                     7, 2 },
-  DEFB $20,$0A,$02        ; interiorobject_TALL_WARDROBE,               10, 2 },
-  DEFB $2A,$0D,$03        ; interiorobject_CUPBOARD_42,                 13, 3 },
-  DEFB $2A,$0F,$04        ; interiorobject_CUPBOARD_42,                 15, 4 },
-  DEFB $2A,$11,$05        ; interiorobject_CUPBOARD_42,                 17, 5 },
-  DEFB $1D,$0E,$08        ; interiorobject_TABLE,                       14, 8 },
-  DEFB $0B,$12,$08        ; interiorobject_CHEST_OF_DRAWERS,            18, 8 },
-  DEFB $0B,$14,$09        ; interiorobject_CHEST_OF_DRAWERS,            20, 9 },
-  DEFB $22,$06,$05        ; interiorobject_SMALL_CRATE,                  6, 5 },
-  DEFB $1D,$02,$06        ; interiorobject_TABLE,                        2, 6 },
+  DEFB $04                ; 4 -- Room dimensions index
+  DEFB $02                ; 2 -- Number of boundaries
+  DEFB $45,$4B,$20,$36    ; { 69, 75, 32, 54 } -- Boundary
+  DEFB $24,$2F,$30,$3C    ; { 36, 47, 48, 60 } -- Boundary
+  DEFB $03                ; 3 -- Number of mask bytes
+  DEFB $06,$0E,$16        ; [6, 14, 22] -- Mask bytes
+  DEFB $0E                ; 14 -- Number of objects
+  DEFB $2F,$01,$04        ; { interiorobject_ROOM_OUTLINE_22x12_B, 1, 4 }
+  DEFB $0F,$0F,$0A        ; { interiorobject_DOOR_FRAME_SW_NE, 15, 10 }
+  DEFB $23,$04,$01        ; { interiorobject_SMALL_WINDOW, 4, 1 }
+  DEFB $35,$02,$03        ; { interiorobject_KEY_RACK, 2, 3 }
+  DEFB $35,$07,$02        ; { interiorobject_KEY_RACK, 7, 2 }
+  DEFB $20,$0A,$02        ; { interiorobject_TALL_WARDROBE, 10, 2 }
+  DEFB $2A,$0D,$03        ; { interiorobject_CUPBOARD_42, 13, 3 }
+  DEFB $2A,$0F,$04        ; { interiorobject_CUPBOARD_42, 15, 4 }
+  DEFB $2A,$11,$05        ; { interiorobject_CUPBOARD_42, 17, 5 }
+  DEFB $1D,$0E,$08        ; { interiorobject_TABLE, 14, 8 }
+  DEFB $0B,$12,$08        ; { interiorobject_CHEST_OF_DRAWERS, 18, 8 }
+  DEFB $0B,$14,$09        ; { interiorobject_CHEST_OF_DRAWERS, 20, 9 }
+  DEFB $22,$06,$05        ; { interiorobject_SMALL_CRATE, 6, 5 }
+  DEFB $1D,$02,$06        ; { interiorobject_TABLE, 2, 6 }
 
-; Room 11: Room with papers.
+; Room 11: Room with papers
 roomdef_11_papers:
-  DEFB $04                ; 4
-  DEFB $01                ; 1 // count of boundaries
-  DEFB $1B,$2C,$24,$30    ; 27, 44, 36, 48 }, // boundary
-  DEFB $01                ; 1 // count of mask bytes
-  DEFB $17                ; [23] // data mask bytes
-  DEFB $09                ; 9 // count of objects
-  DEFB $2F,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_B,         1, 4 },
-  DEFB $21,$06,$03        ; interiorobject_SMALL_SHELF,                  6, 3 },
-  DEFB $20,$0C,$03        ; interiorobject_TALL_WARDROBE,               12, 3 },
-  DEFB $32,$0A,$03        ; interiorobject_TALL_DRAWERS,                10, 3 },
-  DEFB $0A,$0E,$05        ; interiorobject_SHORT_WARDROBE,              14, 5 },
-  DEFB $26,$02,$02        ; interiorobject_END_DOOR_FRAME_SW_NE,         2, 2 },
-  DEFB $32,$12,$07        ; interiorobject_TALL_DRAWERS,                18, 7 },
-  DEFB $32,$14,$08        ; interiorobject_TALL_DRAWERS,                20, 8 },
-  DEFB $33,$0C,$0A        ; interiorobject_DESK,                        12, 10 },
+  DEFB $04                ; 4 -- Room dimensions index
+  DEFB $01                ; 1 -- Number of boundaries
+  DEFB $1B,$2C,$24,$30    ; { 27, 44, 36, 48 } -- Boundary
+  DEFB $01                ; 1 -- Number of mask bytes
+  DEFB $17                ; [23] -- Mask bytes
+  DEFB $09                ; 9 -- Number of objects
+  DEFB $2F,$01,$04        ; { interiorobject_ROOM_OUTLINE_22x12_B, 1, 4 }
+  DEFB $21,$06,$03        ; { interiorobject_SMALL_SHELF, 6, 3 }
+  DEFB $20,$0C,$03        ; { interiorobject_TALL_WARDROBE, 12, 3 }
+  DEFB $32,$0A,$03        ; { interiorobject_TALL_DRAWERS, 10, 3 }
+  DEFB $0A,$0E,$05        ; { interiorobject_SHORT_WARDROBE, 14, 5 }
+  DEFB $26,$02,$02        ; { interiorobject_END_DOOR_FRAME_SW_NE, 2, 2 }
+  DEFB $32,$12,$07        ; { interiorobject_TALL_DRAWERS, 18, 7 }
+  DEFB $32,$14,$08        ; { interiorobject_TALL_DRAWERS, 20, 8 }
+  DEFB $33,$0C,$0A        ; { interiorobject_DESK, 12, 10 }
 
-; Room 12: Corridor.
+; Room 12: Corridor
 roomdef_12_corridor:
-  DEFB $01                ; 1
-  DEFB $00                ; 0 // count of boundaries
-  DEFB $02                ; 2 // count of mask bytes
-  DEFB $04,$07            ; [4, 7] // data mask bytes
-  DEFB $04                ; 4 // count of objects
-  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
-  DEFB $23,$06,$03        ; interiorobject_SMALL_WINDOW,                 6,  3 },
-  DEFB $10,$09,$0A        ; interiorobject_DOOR_FRAME_NW_SE,             9, 10 },
-  DEFB $0F,$0D,$0A        ; interiorobject_DOOR_FRAME_SW_NE,            13, 10 },
+  DEFB $01                ; 1 -- Room dimensions index
+  DEFB $00                ; 0 -- Number of boundaries
+  DEFB $02                ; 2 -- Number of mask bytes
+  DEFB $04,$07            ; [4, 7] -- Mask bytes
+  DEFB $04                ; 4 -- Number of objects
+  DEFB $1B,$03,$06        ; { interiorobject_ROOM_OUTLINE_18x10_A, 3, 6 }
+  DEFB $23,$06,$03        ; { interiorobject_SMALL_WINDOW, 6, 3 }
+  DEFB $10,$09,$0A        ; { interiorobject_DOOR_FRAME_NW_SE, 9, 10 }
+  DEFB $0F,$0D,$0A        ; { interiorobject_DOOR_FRAME_SW_NE, 13, 10 }
 
-; Room 13: Corridor.
+; Room 13: Corridor
 roomdef_13_corridor:
-  DEFB $01                ; 1
-  DEFB $00                ; 0 // count of boundaries
-  DEFB $02                ; 2 // count of mask bytes
-  DEFB $04,$08            ; [4, 8] // data mask bytes
-  DEFB $06                ; 6 // count of objects
-  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
-  DEFB $26,$06,$03        ; interiorobject_END_DOOR_FRAME_SW_NE,         6,  3 },
-  DEFB $10,$07,$09        ; interiorobject_DOOR_FRAME_NW_SE,             7,  9 },
-  DEFB $0F,$0D,$0A        ; interiorobject_DOOR_FRAME_SW_NE,            13, 10 },
-  DEFB $32,$0C,$05        ; interiorobject_TALL_DRAWERS,                12,  5 },
-  DEFB $0B,$0E,$07        ; interiorobject_CHEST_OF_DRAWERS,            14,  7 },
+  DEFB $01                ; 1 -- Room dimensions index
+  DEFB $00                ; 0 -- Number of boundaries
+  DEFB $02                ; 2 -- Number of mask bytes
+  DEFB $04,$08            ; [4, 8] -- Mask bytes
+  DEFB $06                ; 6 -- Number of objects
+  DEFB $1B,$03,$06        ; { interiorobject_ROOM_OUTLINE_18x10_A, 3, 6 }
+  DEFB $26,$06,$03        ; { interiorobject_END_DOOR_FRAME_SW_NE, 6, 3 }
+  DEFB $10,$07,$09        ; { interiorobject_DOOR_FRAME_NW_SE, 7, 9 }
+  DEFB $0F,$0D,$0A        ; { interiorobject_DOOR_FRAME_SW_NE, 13, 10 }
+  DEFB $32,$0C,$05        ; { interiorobject_TALL_DRAWERS, 12, 5 }
+  DEFB $0B,$0E,$07        ; { interiorobject_CHEST_OF_DRAWERS, 14, 7 }
 
-; Room 14: Room with torch.
+; Room 14: Room with torch
 roomdef_14_torch:
-  DEFB $00                ; 0
-  DEFB $03                ; 3 // count of boundaries
-  DEFB $36,$44,$16,$20    ; 54, 68, 22, 32 }, // boundary
-  DEFB $3E,$44,$30,$3A    ; 62, 68, 48, 58 }, // boundary
-  DEFB $36,$44,$36,$44    ; 54, 68, 54, 68 }, // boundary
-  DEFB $01                ; 1 // count of mask bytes
-  DEFB $01                ; [1] // data mask bytes
-  DEFB $09                ; 9 // count of objects
-  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
-  DEFB $26,$04,$03        ; interiorobject_END_DOOR_FRAME_SW_NE,         4, 3 },
-  DEFB $31,$08,$05        ; interiorobject_TINY_DRAWERS,                 8, 5 },
-  DEFB $09,$0A,$05        ; interiorobject_EMPTY_BED,                   10, 5 },
-  DEFB $0B,$10,$05        ; interiorobject_CHEST_OF_DRAWERS,            16, 5 },
-  DEFB $0A,$12,$05        ; interiorobject_SHORT_WARDROBE,              18, 5 },
-  DEFB $28,$14,$04        ; interiorobject_END_DOOR_FRAME_NW_SE,        20, 4 },
-  DEFB $21,$02,$07        ; interiorobject_SMALL_SHELF,                  2, 7 },
-  DEFB $09,$02,$09        ; interiorobject_EMPTY_BED,                    2, 9 },
+  DEFB $00                ; 0 -- Room dimensions index
+  DEFB $03                ; 3 -- Number of boundaries
+  DEFB $36,$44,$16,$20    ; { 54, 68, 22, 32 } -- Boundary
+  DEFB $3E,$44,$30,$3A    ; { 62, 68, 48, 58 } -- Boundary
+  DEFB $36,$44,$36,$44    ; { 54, 68, 54, 68 } -- Boundary
+  DEFB $01                ; 1 -- Number of mask bytes
+  DEFB $01                ; [1] -- Mask bytes
+  DEFB $09                ; 9 -- Number of objects
+  DEFB $02,$01,$04        ; { interiorobject_ROOM_OUTLINE_22x12_A, 1, 4 }
+  DEFB $26,$04,$03        ; { interiorobject_END_DOOR_FRAME_SW_NE, 4, 3 }
+  DEFB $31,$08,$05        ; { interiorobject_TINY_DRAWERS, 8, 5 }
+  DEFB $09,$0A,$05        ; { interiorobject_EMPTY_BED, 10, 5 }
+  DEFB $0B,$10,$05        ; { interiorobject_CHEST_OF_DRAWERS, 16, 5 }
+  DEFB $0A,$12,$05        ; { interiorobject_SHORT_WARDROBE, 18, 5 }
+  DEFB $28,$14,$04        ; { interiorobject_END_DOOR_FRAME_NW_SE, 20, 4 }
+  DEFB $21,$02,$07        ; { interiorobject_SMALL_SHELF, 2, 7 }
+  DEFB $09,$02,$09        ; { interiorobject_EMPTY_BED, 2, 9 }
 
-; Room 15: Room with uniform.
+; Room 15: Room with uniform
 roomdef_15_uniform:
-  DEFB $00                ; 0
-  DEFB $04                ; 4 // count of boundaries
-  DEFB $36,$44,$16,$20    ; 54, 68, 22, 32 }, // boundary
-  DEFB $36,$44,$36,$44    ; 54, 68, 54, 68 }, // boundary
-  DEFB $3E,$44,$28,$3A    ; 62, 68, 40, 58 }, // boundary
-  DEFB $1E,$28,$38,$43    ; 30, 40, 56, 67 }, // boundary
-  DEFB $04                ; 4 // count of mask bytes
-  DEFB $01,$05,$0A,$0F    ; [1, 5, 10, 15] // data mask bytes
-  DEFB $0A                ; 10 // count of objects
-  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
-  DEFB $0A,$10,$04        ; interiorobject_SHORT_WARDROBE,              16, 4 },
-  DEFB $09,$0A,$05        ; interiorobject_EMPTY_BED,                   10, 5 },
-  DEFB $31,$08,$05        ; interiorobject_TINY_DRAWERS,                 8, 5 },
-  DEFB $31,$06,$06        ; interiorobject_TINY_DRAWERS,                 6, 6 },
-  DEFB $21,$02,$07        ; interiorobject_SMALL_SHELF,                  2, 7 },
-  DEFB $09,$02,$09        ; interiorobject_EMPTY_BED,                    2, 9 },
-  DEFB $10,$07,$0A        ; interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
-  DEFB $0F,$0D,$09        ; interiorobject_DOOR_FRAME_SW_NE,            13, 9 },
-  DEFB $1D,$12,$08        ; interiorobject_TABLE,                       18, 8 },
+  DEFB $00                ; 0 -- Room dimensions index
+  DEFB $04                ; 4 -- Number of boundaries
+  DEFB $36,$44,$16,$20    ; { 54, 68, 22, 32 } -- Boundary
+  DEFB $36,$44,$36,$44    ; { 54, 68, 54, 68 } -- Boundary
+  DEFB $3E,$44,$28,$3A    ; { 62, 68, 40, 58 } -- Boundary
+  DEFB $1E,$28,$38,$43    ; { 30, 40, 56, 67 } -- Boundary
+  DEFB $04                ; 4 -- Number of mask bytes
+  DEFB $01,$05,$0A,$0F    ; [1, 5, 10, 15] -- Mask bytes
+  DEFB $0A                ; 10 -- Number of objects
+  DEFB $02,$01,$04        ; { interiorobject_ROOM_OUTLINE_22x12_A, 1, 4 }
+  DEFB $0A,$10,$04        ; { interiorobject_SHORT_WARDROBE, 16, 4 }
+  DEFB $09,$0A,$05        ; { interiorobject_EMPTY_BED, 10, 5 }
+  DEFB $31,$08,$05        ; { interiorobject_TINY_DRAWERS, 8, 5 }
+  DEFB $31,$06,$06        ; { interiorobject_TINY_DRAWERS, 6, 6 }
+  DEFB $21,$02,$07        ; { interiorobject_SMALL_SHELF, 2, 7 }
+  DEFB $09,$02,$09        ; { interiorobject_EMPTY_BED, 2, 9 }
+  DEFB $10,$07,$0A        ; { interiorobject_DOOR_FRAME_NW_SE, 7, 10 }
+  DEFB $0F,$0D,$09        ; { interiorobject_DOOR_FRAME_SW_NE, 13, 9 }
+  DEFB $1D,$12,$08        ; { interiorobject_TABLE, 18, 8 }
 
-; Room 16: Corridor.
+; Room 16: Corridor
 roomdef_16_corridor:
-  DEFB $01                ; 1
-  DEFB $00                ; 0 // count of boundaries
-  DEFB $02                ; 2 // count of mask bytes
-  DEFB $04,$07            ; [4, 7] // data mask bytes
-  DEFB $04                ; 4 // count of objects
-  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
-  DEFB $26,$04,$04        ; interiorobject_END_DOOR_FRAME_SW_NE,         4,  4 },
-  DEFB $10,$09,$0A        ; interiorobject_DOOR_FRAME_NW_SE,             9, 10 },
-  DEFB $0F,$0D,$0A        ; interiorobject_DOOR_FRAME_SW_NE,            13, 10 },
+  DEFB $01                ; 1 -- Room dimensions index
+  DEFB $00                ; 0 -- Number of boundaries
+  DEFB $02                ; 2 -- Number of mask bytes
+  DEFB $04,$07            ; [4, 7] -- Mask bytes
+  DEFB $04                ; 4 -- Number of objects
+  DEFB $1B,$03,$06        ; { interiorobject_ROOM_OUTLINE_18x10_A, 3, 6 }
+  DEFB $26,$04,$04        ; { interiorobject_END_DOOR_FRAME_SW_NE, 4, 4 }
+  DEFB $10,$09,$0A        ; { interiorobject_DOOR_FRAME_NW_SE, 9, 10 }
+  DEFB $0F,$0D,$0A        ; { interiorobject_DOOR_FRAME_SW_NE, 13, 10 }
 
-; Room 7: Corridor.
+; Room 7: Corridor
 roomdef_7_corridor:
-  DEFB $01                ; 1
-  DEFB $00                ; 0 // count of boundaries
-  DEFB $01                ; 1 // count of mask bytes
-  DEFB $04                ; [4] // data mask bytes
-  DEFB $04                ; 4 // count of objects
-  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3,  6 },
-  DEFB $26,$04,$04        ; interiorobject_END_DOOR_FRAME_SW_NE,         4,  4 },
-  DEFB $0F,$0D,$0A        ; interiorobject_DOOR_FRAME_SW_NE,            13, 10 },
-  DEFB $20,$0C,$04        ; interiorobject_TALL_WARDROBE,               12,  4 },
+  DEFB $01                ; 1 -- Room dimensions index
+  DEFB $00                ; 0 -- Number of boundaries
+  DEFB $01                ; 1 -- Number of mask bytes
+  DEFB $04                ; [4] -- Mask bytes
+  DEFB $04                ; 4 -- Number of objects
+  DEFB $1B,$03,$06        ; { interiorobject_ROOM_OUTLINE_18x10_A, 3, 6 }
+  DEFB $26,$04,$04        ; { interiorobject_END_DOOR_FRAME_SW_NE, 4, 4 }
+  DEFB $0F,$0D,$0A        ; { interiorobject_DOOR_FRAME_SW_NE, 13, 10 }
+  DEFB $20,$0C,$04        ; { interiorobject_TALL_WARDROBE, 12, 4 }
 
-; Room 18: Room with radio.
+; Room 18: Room with radio
 roomdef_18_radio:
-  DEFB $04                ; 4
-  DEFB $03                ; 3 // count of boundaries
-  DEFB $26,$38,$30,$3C    ; 38, 56, 48, 60 }, // boundary
-  DEFB $26,$2E,$27,$3C    ; 38, 46, 39, 60 }, // boundary
-  DEFB $16,$20,$30,$3C    ; 22, 32, 48, 60 }, // boundary
-  DEFB $05                ; 5 // count of mask bytes
-  DEFB $0B,$11,$10,$18,$19 ; [11, 17, 16, 24, 25] // data mask bytes
-  DEFB $0A                ; 10 // count of objects
-  DEFB $2F,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_B, 1,  4 },
-  DEFB $1A,$01,$04        ; interiorobject_CUPBOARD, 1,  4 },
-  DEFB $23,$04,$01        ; interiorobject_SMALL_WINDOW, 4,  1 },
-  DEFB $21,$07,$02        ; interiorobject_SMALL_SHELF, 7,  2 },
-  DEFB $28,$0A,$01        ; interiorobject_END_DOOR_FRAME_NW_SE, 10,  1 },
-  DEFB $1D,$0C,$07        ; interiorobject_TABLE, 12,  7 },
-  DEFB $2D,$0C,$09        ; interiorobject_MESS_BENCH_SHORT, 12,  9 },
-  DEFB $1D,$12,$0A        ; interiorobject_TABLE, 18, 10 },
-  DEFB $30,$10,$0C        ; interiorobject_TINY_TABLE, 16, 12 },
-  DEFB $10,$05,$07        ; interiorobject_DOOR_FRAME_NW_SE, 5,  7 },
+  DEFB $04                ; 4 -- Room dimensions index
+  DEFB $03                ; 3 -- Number of boundaries
+  DEFB $26,$38,$30,$3C    ; { 38, 56, 48, 60 } -- Boundary
+  DEFB $26,$2E,$27,$3C    ; { 38, 46, 39, 60 } -- Boundary
+  DEFB $16,$20,$30,$3C    ; { 22, 32, 48, 60 } -- Boundary
+  DEFB $05                ; 5 -- Number of mask bytes
+  DEFB $0B,$11,$10,$18,$19 ; [11, 17, 16, 24, 25] -- Mask bytes
+  DEFB $0A                ; 10 -- Number of objects
+  DEFB $2F,$01,$04        ; { interiorobject_ROOM_OUTLINE_22x12_B, 1, 4 }
+  DEFB $1A,$01,$04        ; { interiorobject_CUPBOARD, 1, 4 }
+  DEFB $23,$04,$01        ; { interiorobject_SMALL_WINDOW, 4, 1 }
+  DEFB $21,$07,$02        ; { interiorobject_SMALL_SHELF, 7, 2 }
+  DEFB $28,$0A,$01        ; { interiorobject_END_DOOR_FRAME_NW_SE, 10, 1 }
+  DEFB $1D,$0C,$07        ; { interiorobject_TABLE, 12, 7 }
+  DEFB $2D,$0C,$09        ; { interiorobject_MESS_BENCH_SHORT, 12, 9 }
+  DEFB $1D,$12,$0A        ; { interiorobject_TABLE, 18, 10 }
+  DEFB $30,$10,$0C        ; { interiorobject_TINY_TABLE, 16, 12 }
+  DEFB $10,$05,$07        ; { interiorobject_DOOR_FRAME_NW_SE, 5, 7 }
 
-; Room 19: Room with food.
+; Room 19: Room with food
 roomdef_19_food:
-  DEFB $01                ; 1
-  DEFB $01                ; 1 // count of boundaries
-  DEFB $34,$40,$2F,$38    ; 52, 64, 47, 56 }, // boundary
-  DEFB $01                ; 1 // count of mask bytes
-  DEFB $07                ; [7] // data mask bytes
-  DEFB $0B                ; 11 // count of objects
-  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
-  DEFB $23,$06,$03        ; interiorobject_SMALL_WINDOW,                 6, 3 },
-  DEFB $1A,$09,$03        ; interiorobject_CUPBOARD,                     9, 3 },
-  DEFB $2A,$0C,$03        ; interiorobject_CUPBOARD_42,                 12, 3 },
-  DEFB $2A,$0E,$04        ; interiorobject_CUPBOARD_42,                 14, 4 },
-  DEFB $1D,$09,$06        ; interiorobject_TABLE,                        9, 6 },
-  DEFB $21,$03,$05        ; interiorobject_SMALL_SHELF,                  3, 5 },
-  DEFB $34,$03,$07        ; interiorobject_SINK,                         3, 7 },
-  DEFB $0B,$0E,$07        ; interiorobject_CHEST_OF_DRAWERS,            14, 7 },
-  DEFB $28,$10,$05        ; interiorobject_END_DOOR_FRAME_NW_SE,        16, 5 },
-  DEFB $10,$09,$0A        ; interiorobject_DOOR_FRAME_NW_SE,             9, 10 },
+  DEFB $01                ; 1 -- Room dimensions index
+  DEFB $01                ; 1 -- Number of boundaries
+  DEFB $34,$40,$2F,$38    ; { 52, 64, 47, 56 } -- Boundary
+  DEFB $01                ; 1 -- Number of mask bytes
+  DEFB $07                ; [7] -- Mask bytes
+  DEFB $0B                ; 11 -- Number of objects
+  DEFB $1B,$03,$06        ; { interiorobject_ROOM_OUTLINE_18x10_A, 3, 6 }
+  DEFB $23,$06,$03        ; { interiorobject_SMALL_WINDOW, 6, 3 }
+  DEFB $1A,$09,$03        ; { interiorobject_CUPBOARD, 9, 3 }
+  DEFB $2A,$0C,$03        ; { interiorobject_CUPBOARD_42, 12, 3 }
+  DEFB $2A,$0E,$04        ; { interiorobject_CUPBOARD_42, 14, 4 }
+  DEFB $1D,$09,$06        ; { interiorobject_TABLE, 9, 6 }
+  DEFB $21,$03,$05        ; { interiorobject_SMALL_SHELF, 3, 5 }
+  DEFB $34,$03,$07        ; { interiorobject_SINK, 3, 7 }
+  DEFB $0B,$0E,$07        ; { interiorobject_CHEST_OF_DRAWERS, 14, 7 }
+  DEFB $28,$10,$05        ; { interiorobject_END_DOOR_FRAME_NW_SE, 16, 5 }
+  DEFB $10,$09,$0A        ; { interiorobject_DOOR_FRAME_NW_SE, 9, 10 }
 
-; Room 20: Room with red cross parcel.
+; Room 20: Room with red cross parcel
 roomdef_20_redcross:
-  DEFB $01                ; 1
-  DEFB $02                ; 2 // count of boundaries
-  DEFB $3A,$40,$1A,$2A    ; 58, 64, 26, 42 }, // boundary
-  DEFB $32,$40,$2E,$36    ; 50, 64, 46, 54 }, // boundary
-  DEFB $02                ; 2 // count of mask bytes
-  DEFB $15,$04            ; [21, 4] // data mask bytes
-  DEFB $0B                ; 11 // count of objects
-  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
-  DEFB $0F,$0D,$0A        ; interiorobject_DOOR_FRAME_SW_NE,            13, 10 },
-  DEFB $21,$09,$04        ; interiorobject_SMALL_SHELF,                  9, 4 },
-  DEFB $1A,$03,$06        ; interiorobject_CUPBOARD,                     3, 6 },
-  DEFB $22,$06,$08        ; interiorobject_SMALL_CRATE,                  6, 8 },
-  DEFB $22,$04,$09        ; interiorobject_SMALL_CRATE,                  4, 9 },
-  DEFB $1D,$09,$06        ; interiorobject_TABLE,                        9, 6 },
-  DEFB $20,$0E,$05        ; interiorobject_TALL_WARDROBE,               14, 5 },
-  DEFB $20,$10,$06        ; interiorobject_TALL_WARDROBE,               16, 6 },
-  DEFB $18,$12,$08        ; interiorobject_ORNATE_WARDROBE_FACING_SW,   18, 8 },
-  DEFB $30,$0B,$08        ; interiorobject_TINY_TABLE,                  11, 8 },
+  DEFB $01                ; 1 -- Room dimensions index
+  DEFB $02                ; 2 -- Number of boundaries
+  DEFB $3A,$40,$1A,$2A    ; { 58, 64, 26, 42 } -- Boundary
+  DEFB $32,$40,$2E,$36    ; { 50, 64, 46, 54 } -- Boundary
+  DEFB $02                ; 2 -- Number of mask bytes
+  DEFB $15,$04            ; [21, 4] -- Mask bytes
+  DEFB $0B                ; 11 -- Number of objects
+  DEFB $1B,$03,$06        ; { interiorobject_ROOM_OUTLINE_18x10_A, 3, 6 }
+  DEFB $0F,$0D,$0A        ; { interiorobject_DOOR_FRAME_SW_NE, 13, 10 }
+  DEFB $21,$09,$04        ; { interiorobject_SMALL_SHELF, 9, 4 }
+  DEFB $1A,$03,$06        ; { interiorobject_CUPBOARD, 3, 6 }
+  DEFB $22,$06,$08        ; { interiorobject_SMALL_CRATE, 6, 8 }
+  DEFB $22,$04,$09        ; { interiorobject_SMALL_CRATE, 4, 9 }
+  DEFB $1D,$09,$06        ; { interiorobject_TABLE, 9, 6 }
+  DEFB $20,$0E,$05        ; { interiorobject_TALL_WARDROBE, 14, 5 }
+  DEFB $20,$10,$06        ; { interiorobject_TALL_WARDROBE, 16, 6 }
+  DEFB $18,$12,$08        ; { interiorobject_ORNATE_WARDROBE_FACING_SW, 18, 8 }
+  DEFB $30,$0B,$08        ; { interiorobject_TINY_TABLE, 11, 8 }
 
-; Room 22: Room with red key.
+; Room 22: Room with red key
 roomdef_22_red_key:
-  DEFB $03                ; 3
-  DEFB $02                ; 2 // count of boundaries
-  DEFB $36,$40,$2E,$38    ; 54, 64, 46, 56 }, // boundary
-  DEFB $3A,$40,$24,$2C    ; 58, 64, 36, 44 }, // boundary
-  DEFB $02                ; 2 // count of mask bytes
-  DEFB $0C,$15            ; [12, 21] // data mask bytes
-  DEFB $07                ; 7 // count of objects
-  DEFB $29,$05,$06        ; interiorobject_ROOM_OUTLINE_15x8,            5, 6 },
-  DEFB $25,$04,$04        ; interiorobject_NOTICEBOARD,                  4, 4 },
-  DEFB $21,$09,$04        ; interiorobject_SMALL_SHELF,                  9, 4 },
-  DEFB $22,$06,$08        ; interiorobject_SMALL_CRATE,                  6, 8 },
-  DEFB $10,$09,$08        ; interiorobject_DOOR_FRAME_NW_SE,             9, 8 },
-  DEFB $1D,$09,$06        ; interiorobject_TABLE,                        9, 6 },
-  DEFB $28,$0E,$04        ; interiorobject_END_DOOR_FRAME_NW_SE,        14, 4 },
+  DEFB $03                ; 3 -- Room dimensions index
+  DEFB $02                ; 2 -- Number of boundaries
+  DEFB $36,$40,$2E,$38    ; { 54, 64, 46, 56 } -- Boundary
+  DEFB $3A,$40,$24,$2C    ; { 58, 64, 36, 44 } -- Boundary
+  DEFB $02                ; 2 -- Number of mask bytes
+  DEFB $0C,$15            ; [12, 21] -- Mask bytes
+  DEFB $07                ; 7 -- Number of objects
+  DEFB $29,$05,$06        ; { interiorobject_ROOM_OUTLINE_15x8, 5, 6 }
+  DEFB $25,$04,$04        ; { interiorobject_NOTICEBOARD, 4, 4 }
+  DEFB $21,$09,$04        ; { interiorobject_SMALL_SHELF, 9, 4 }
+  DEFB $22,$06,$08        ; { interiorobject_SMALL_CRATE, 6, 8 }
+  DEFB $10,$09,$08        ; { interiorobject_DOOR_FRAME_NW_SE, 9, 8 }
+  DEFB $1D,$09,$06        ; { interiorobject_TABLE, 9, 6 }
+  DEFB $28,$0E,$04        ; { interiorobject_END_DOOR_FRAME_NW_SE, 14, 4 }
 
-; Room 23: Breakfast room.
+; Room 23: Breakfast room
 roomdef_23_breakfast:
-  DEFB $00                ; 0
-  DEFB $01                ; 1 // count of boundaries
-  DEFB $36,$44,$22,$44    ; 54, 68, 34, 68 }, // boundary
-  DEFB $02                ; 2 // count of mask bytes
-  DEFB $0A,$03            ; [10, 3] // data mask bytes
-  DEFB $0C                ; 12 // count of objects
-  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
-  DEFB $23,$08,$00        ; interiorobject_SMALL_WINDOW,                 8, 0 },
-  DEFB $23,$02,$03        ; interiorobject_SMALL_WINDOW,                 2, 3 },
-  DEFB $10,$07,$0A        ; interiorobject_DOOR_FRAME_NW_SE,             7, 10 },
-  DEFB $2C,$05,$04        ; interiorobject_MESS_TABLE,                   5, 4 },
-  DEFB $2A,$12,$04        ; interiorobject_CUPBOARD_42,                 18, 4 },
-  DEFB $28,$14,$04        ; interiorobject_END_DOOR_FRAME_NW_SE,        20, 4 },
-  DEFB $0F,$0F,$08        ; interiorobject_DOOR_FRAME_SW_NE,            15, 8 },
-  DEFB $2B,$07,$06        ; interiorobject_MESS_BENCH,                   7, 6 },
+  DEFB $00                ; 0 -- Room dimensions index
+  DEFB $01                ; 1 -- Number of boundaries
+  DEFB $36,$44,$22,$44    ; { 54, 68, 34, 68 } -- Boundary
+  DEFB $02                ; 2 -- Number of mask bytes
+  DEFB $0A,$03            ; [10, 3] -- Mask bytes
+  DEFB $0C                ; 12 -- Number of objects
+  DEFB $02,$01,$04        ; { interiorobject_ROOM_OUTLINE_22x12_A, 1, 4 }
+  DEFB $23,$08,$00        ; { interiorobject_SMALL_WINDOW, 8, 0 }
+  DEFB $23,$02,$03        ; { interiorobject_SMALL_WINDOW, 2, 3 }
+  DEFB $10,$07,$0A        ; { interiorobject_DOOR_FRAME_NW_SE, 7, 10 }
+  DEFB $2C,$05,$04        ; { interiorobject_MESS_TABLE, 5, 4 }
+  DEFB $2A,$12,$04        ; { interiorobject_CUPBOARD_42, 18, 4 }
+  DEFB $28,$14,$04        ; { interiorobject_END_DOOR_FRAME_NW_SE, 20, 4 }
+  DEFB $0F,$0F,$08        ; { interiorobject_DOOR_FRAME_SW_NE, 15, 8 }
+  DEFB $2B,$07,$06        ; { interiorobject_MESS_BENCH, 7, 6 }
 roomdef_23_breakfast_bench_A:
-  DEFB $0D,$0C,$05        ; interiorobject_EMPTY_BENCH,                 12, 5 },
+  DEFB $0D,$0C,$05        ; { interiorobject_EMPTY_BENCH, 12, 5 }
 roomdef_23_breakfast_bench_B:
-  DEFB $0D,$0A,$06        ; interiorobject_EMPTY_BENCH,                 10, 6 },
+  DEFB $0D,$0A,$06        ; { interiorobject_EMPTY_BENCH, 10, 6 }
 roomdef_23_breakfast_bench_C:
-  DEFB $0D,$08,$07        ; interiorobject_EMPTY_BENCH,                  8, 7 },
+  DEFB $0D,$08,$07        ; { interiorobject_EMPTY_BENCH, 8, 7 }
 
-; Room 24: Solitary confinement cell.
+; Room 24: Solitary confinement cell
 roomdef_24_solitary:
-  DEFB $03                ; 3
-  DEFB $01                ; 1 // count of boundaries
-  DEFB $30,$36,$26,$2E    ; 48, 54, 38, 46 }, // boundary
-  DEFB $01                ; 1 // count of mask bytes
-  DEFB $1A                ; [26] // data mask bytes
-  DEFB $03                ; 3 // count of objects
-  DEFB $29,$05,$06        ; interiorobject_ROOM_OUTLINE_15x8,            5, 6 },
-  DEFB $28,$0E,$04        ; interiorobject_END_DOOR_FRAME_NW_SE,        14, 4 },
-  DEFB $30,$0A,$09        ; interiorobject_TINY_TABLE,                  10, 9 },
+  DEFB $03                ; 3 -- Room dimensions index
+  DEFB $01                ; 1 -- Number of boundaries
+  DEFB $30,$36,$26,$2E    ; { 48, 54, 38, 46 } -- Boundary
+  DEFB $01                ; 1 -- Number of mask bytes
+  DEFB $1A                ; [26] -- Mask bytes
+  DEFB $03                ; 3 -- Number of objects
+  DEFB $29,$05,$06        ; { interiorobject_ROOM_OUTLINE_15x8, 5, 6 }
+  DEFB $28,$0E,$04        ; { interiorobject_END_DOOR_FRAME_NW_SE, 14, 4 }
+  DEFB $30,$0A,$09        ; { interiorobject_TINY_TABLE, 10, 9 }
 
-; Room 25: Breakfast room.
+; Room 25: Breakfast room
 roomdef_25_breakfast:
-  DEFB $00                ; 0
-  DEFB $01                ; 1 // count of boundaries
-  DEFB $36,$44,$22,$44    ; 54, 68, 34, 68 }, // boundary
-  DEFB $00                ; 0 // count of mask bytes
-  DEFB $0B                ; 11 // count of objects
-  DEFB $02,$01,$04        ; interiorobject_ROOM_OUTLINE_22x12_A,         1, 4 },
-  DEFB $23,$08,$00        ; interiorobject_SMALL_WINDOW,                 8, 0 },
-  DEFB $1A,$05,$03        ; interiorobject_CUPBOARD,                     5, 3 },
-  DEFB $23,$02,$03        ; interiorobject_SMALL_WINDOW,                 2, 3 },
-  DEFB $28,$12,$03        ; interiorobject_END_DOOR_FRAME_NW_SE,        18, 3 },
-  DEFB $2C,$05,$04        ; interiorobject_MESS_TABLE,                   5, 4 },
-  DEFB $2B,$07,$06        ; interiorobject_MESS_BENCH,                   7, 6 },
+  DEFB $00                ; 0 -- Room dimensions index
+  DEFB $01                ; 1 -- Number of boundaries
+  DEFB $36,$44,$22,$44    ; { 54, 68, 34, 68 } -- Boundary
+  DEFB $00                ; 0 -- Number of mask bytes
+  DEFB $0B                ; 11 -- Number of objects
+  DEFB $02,$01,$04        ; { interiorobject_ROOM_OUTLINE_22x12_A, 1, 4 }
+  DEFB $23,$08,$00        ; { interiorobject_SMALL_WINDOW, 8, 0 }
+  DEFB $1A,$05,$03        ; { interiorobject_CUPBOARD, 5, 3 }
+  DEFB $23,$02,$03        ; { interiorobject_SMALL_WINDOW, 2, 3 }
+  DEFB $28,$12,$03        ; { interiorobject_END_DOOR_FRAME_NW_SE, 18, 3 }
+  DEFB $2C,$05,$04        ; { interiorobject_MESS_TABLE, 5, 4 }
+  DEFB $2B,$07,$06        ; { interiorobject_MESS_BENCH, 7, 6 }
 roomdef_25_breakfast_bench_D:
-  DEFB $0D,$0C,$05        ; interiorobject_EMPTY_BENCH,                 12, 5 },
+  DEFB $0D,$0C,$05        ; { interiorobject_EMPTY_BENCH, 12, 5 }
 roomdef_25_breakfast_bench_E:
-  DEFB $0D,$0A,$06        ; interiorobject_EMPTY_BENCH,                 10, 6 },
+  DEFB $0D,$0A,$06        ; { interiorobject_EMPTY_BENCH, 10, 6 }
 roomdef_25_breakfast_bench_F:
-  DEFB $0D,$08,$07        ; interiorobject_EMPTY_BENCH,                  8, 7 },
+  DEFB $0D,$08,$07        ; { interiorobject_EMPTY_BENCH, 8, 7 }
 roomdef_25_breakfast_bench_G:
-  DEFB $0D,$0E,$04        ; interiorobject_EMPTY_BENCH,                 14, 4 },
+  DEFB $0D,$0E,$04        ; { interiorobject_EMPTY_BENCH, 14, 4 }
 
-; Room 28: Hut 1, near side.
+; Room 28: Hut 1, near side
 roomdef_28_hut1_left:
-  DEFB $01                ; 1
-  DEFB $02                ; 2 // count of boundaries
-  DEFB $1C,$28,$1C,$34    ; 28, 40, 28, 52 }, // boundary
-  DEFB $30,$3F,$2C,$38    ; 48, 63, 44, 56 }, // boundary
-  DEFB $03                ; 3 // count of mask bytes
-  DEFB $08,$0D,$13        ; [8, 13, 19] // data mask bytes
-  DEFB $08                ; 8 // count of objects
-  DEFB $1B,$03,$06        ; interiorobject_ROOM_OUTLINE_18x10_A,         3, 6 },
-  DEFB $08,$06,$02        ; interiorobject_WIDE_WINDOW,                  6, 2 },
-  DEFB $28,$0E,$04        ; interiorobject_END_DOOR_FRAME_NW_SE,        14, 4 },
-  DEFB $1A,$03,$06        ; interiorobject_CUPBOARD,                     3, 6 },
-  DEFB $17,$08,$07        ; interiorobject_OCCUPIED_BED,                 8, 7 },
-  DEFB $10,$07,$09        ; interiorobject_DOOR_FRAME_NW_SE,             7, 9 },
-  DEFB $19,$0F,$0A        ; interiorobject_CHAIR_FACING_SW,             15, 10 },
-  DEFB $1D,$0B,$0C        ; interiorobject_TABLE,                       11, 12 },
+  DEFB $01                ; 1 -- Room dimensions index
+  DEFB $02                ; 2 -- Number of boundaries
+  DEFB $1C,$28,$1C,$34    ; { 28, 40, 28, 52 } -- Boundary
+  DEFB $30,$3F,$2C,$38    ; { 48, 63, 44, 56 } -- Boundary
+  DEFB $03                ; 3 -- Number of mask bytes
+  DEFB $08,$0D,$13        ; [8, 13, 19] -- Mask bytes
+  DEFB $08                ; 8 -- Number of objects
+  DEFB $1B,$03,$06        ; { interiorobject_ROOM_OUTLINE_18x10_A, 3, 6 }
+  DEFB $08,$06,$02        ; { interiorobject_WIDE_WINDOW, 6, 2 }
+  DEFB $28,$0E,$04        ; { interiorobject_END_DOOR_FRAME_NW_SE, 14, 4 }
+  DEFB $1A,$03,$06        ; { interiorobject_CUPBOARD, 3, 6 }
+  DEFB $17,$08,$07        ; { interiorobject_OCCUPIED_BED, 8, 7 }
+  DEFB $10,$07,$09        ; { interiorobject_DOOR_FRAME_NW_SE, 7, 9 }
+  DEFB $19,$0F,$0A        ; { interiorobject_CHAIR_FACING_SW, 15, 10 }
+  DEFB $1D,$0B,$0C        ; { interiorobject_TABLE, 11, 12 }
 
-; Room 29: Start of second tunnel.
+; Room 29: Start of second tunnel
 roomdef_29_second_tunnel_start:
-  DEFB $05                ; 5
-  DEFB $00                ; 0 // count of boundaries
-  DEFB $06                ; 6 // count of mask bytes
-  DEFB $1E,$1F,$20,$21,$22,$23 ; [30, 31, 32, 33, 34, 35] // data mask bytes
-  DEFB $06                ; 6 // count of objects
-  DEFB $00,$14,$00        ; interiorobject_TUNNEL_SW_NE, 20,  0 },
-  DEFB $00,$10,$02        ; interiorobject_TUNNEL_SW_NE, 16,  2 },
-  DEFB $00,$0C,$04        ; interiorobject_TUNNEL_SW_NE, 12,  4 },
-  DEFB $00,$08,$06        ; interiorobject_TUNNEL_SW_NE, 8,  6 },
-  DEFB $00,$04,$08        ; interiorobject_TUNNEL_SW_NE, 4,  8 },
-  DEFB $00,$00,$0A        ; interiorobject_TUNNEL_SW_NE, 0, 10 },
+  DEFB $05                ; 5 -- Room dimensions index
+  DEFB $00                ; 0 -- Number of boundaries
+  DEFB $06                ; 6 -- Number of mask bytes
+  DEFB $1E,$1F,$20,$21,$22,$23 ; [30, 31, 32, 33, 34, 35] -- Mask bytes
+  DEFB $06                ; 6 -- Number of objects
+  DEFB $00,$14,$00        ; { interiorobject_TUNNEL_SW_NE, 20, 0 }
+  DEFB $00,$10,$02        ; { interiorobject_TUNNEL_SW_NE, 16, 2 }
+  DEFB $00,$0C,$04        ; { interiorobject_TUNNEL_SW_NE, 12, 4 }
+  DEFB $00,$08,$06        ; { interiorobject_TUNNEL_SW_NE, 8, 6 }
+  DEFB $00,$04,$08        ; { interiorobject_TUNNEL_SW_NE, 4, 8 }
+  DEFB $00,$00,$0A        ; { interiorobject_TUNNEL_SW_NE, 0, 10 }
 
-; Room 31.
+; Room 31
 roomdef_31:
-  DEFB $06                ; 6
-  DEFB $00                ; 0 // count of boundaries
-  DEFB $06                ; 6 // count of mask bytes
-  DEFB $24,$25,$26,$27,$28,$29 ; [36, 37, 38, 39, 40, 41] // data mask bytes
-  DEFB $06                ; 6 // count of objects
-  DEFB $03,$00,$00        ; interiorobject_TUNNEL_NW_SE, 0,  0 },
-  DEFB $03,$04,$02        ; interiorobject_TUNNEL_NW_SE, 4,  2 },
-  DEFB $03,$08,$04        ; interiorobject_TUNNEL_NW_SE, 8,  4 },
-  DEFB $03,$0C,$06        ; interiorobject_TUNNEL_NW_SE, 12,  6 },
-  DEFB $03,$10,$08        ; interiorobject_TUNNEL_NW_SE, 16,  8 },
-  DEFB $03,$14,$0A        ; interiorobject_TUNNEL_NW_SE, 20, 10 },
+  DEFB $06                ; 6 -- Room dimensions index
+  DEFB $00                ; 0 -- Number of boundaries
+  DEFB $06                ; 6 -- Number of mask bytes
+  DEFB $24,$25,$26,$27,$28,$29 ; [36, 37, 38, 39, 40, 41] -- Mask bytes
+  DEFB $06                ; 6 -- Number of objects
+  DEFB $03,$00,$00        ; { interiorobject_TUNNEL_NW_SE, 0, 0 }
+  DEFB $03,$04,$02        ; { interiorobject_TUNNEL_NW_SE, 4, 2 }
+  DEFB $03,$08,$04        ; { interiorobject_TUNNEL_NW_SE, 8, 4 }
+  DEFB $03,$0C,$06        ; { interiorobject_TUNNEL_NW_SE, 12, 6 }
+  DEFB $03,$10,$08        ; { interiorobject_TUNNEL_NW_SE, 16, 8 }
+  DEFB $03,$14,$0A        ; { interiorobject_TUNNEL_NW_SE, 20, 10 }
 
-; Room 36.
+; Room 36
 roomdef_36:
-  DEFB $07                ; 7
-  DEFB $00                ; 0 // count of boundaries
-  DEFB $06                ; 6 // count of mask bytes
-  DEFB $1F,$20,$21,$22,$23,$2D ; [31, 32, 33, 34, 35, 45] // data mask bytes
-  DEFB $05                ; 5 // count of objects
-  DEFB $00,$14,$00        ; interiorobject_TUNNEL_SW_NE, 20,  0 },
-  DEFB $00,$10,$02        ; interiorobject_TUNNEL_SW_NE, 16,  2 },
-  DEFB $00,$0C,$04        ; interiorobject_TUNNEL_SW_NE, 12,  4 },
-  DEFB $00,$08,$06        ; interiorobject_TUNNEL_SW_NE, 8,  6 },
-  DEFB $0E,$04,$08        ; interiorobject_TUNNEL_14, 4,  8 },
+  DEFB $07                ; 7 -- Room dimensions index
+  DEFB $00                ; 0 -- Number of boundaries
+  DEFB $06                ; 6 -- Number of mask bytes
+  DEFB $1F,$20,$21,$22,$23,$2D ; [31, 32, 33, 34, 35, 45] -- Mask bytes
+  DEFB $05                ; 5 -- Number of objects
+  DEFB $00,$14,$00        ; { interiorobject_TUNNEL_SW_NE, 20, 0 }
+  DEFB $00,$10,$02        ; { interiorobject_TUNNEL_SW_NE, 16, 2 }
+  DEFB $00,$0C,$04        ; { interiorobject_TUNNEL_SW_NE, 12, 4 }
+  DEFB $00,$08,$06        ; { interiorobject_TUNNEL_SW_NE, 8, 6 }
+  DEFB $0E,$04,$08        ; { interiorobject_TUNNEL_14, 4, 8 }
 
-; Room 32.
+; Room 32
 roomdef_32:
-  DEFB $08                ; 8
-  DEFB $00                ; 0 // count of boundaries
-  DEFB $06                ; 6 // count of mask bytes
-  DEFB $24,$25,$26,$27,$28,$2A ; [36, 37, 38, 39, 40, 42] // data mask bytes
-  DEFB $05                ; 5 // count of objects
-  DEFB $03,$00,$00        ; interiorobject_TUNNEL_NW_SE, 0,  0 },
-  DEFB $03,$04,$02        ; interiorobject_TUNNEL_NW_SE, 4,  2 },
-  DEFB $03,$08,$04        ; interiorobject_TUNNEL_NW_SE, 8,  4 },
-  DEFB $03,$0C,$06        ; interiorobject_TUNNEL_NW_SE, 12,  6 },
-  DEFB $11,$10,$08        ; interiorobject_TUNNEL_17, 16,  8 },
+  DEFB $08                ; 8 -- Room dimensions index
+  DEFB $00                ; 0 -- Number of boundaries
+  DEFB $06                ; 6 -- Number of mask bytes
+  DEFB $24,$25,$26,$27,$28,$2A ; [36, 37, 38, 39, 40, 42] -- Mask bytes
+  DEFB $05                ; 5 -- Number of objects
+  DEFB $03,$00,$00        ; { interiorobject_TUNNEL_NW_SE, 0, 0 }
+  DEFB $03,$04,$02        ; { interiorobject_TUNNEL_NW_SE, 4, 2 }
+  DEFB $03,$08,$04        ; { interiorobject_TUNNEL_NW_SE, 8, 4 }
+  DEFB $03,$0C,$06        ; { interiorobject_TUNNEL_NW_SE, 12, 6 }
+  DEFB $11,$10,$08        ; { interiorobject_TUNNEL_17, 16, 8 }
 
-; Room 34.
+; Room 34
 roomdef_34:
-  DEFB $06                ; 6
-  DEFB $00                ; 0 // count of boundaries
-  DEFB $06                ; 6 // count of mask bytes
-  DEFB $24,$25,$26,$27,$28,$2E ; [36, 37, 38, 39, 40, 46] // data mask bytes
-  DEFB $06                ; 6 // count of objects
-  DEFB $03,$00,$00        ; interiorobject_TUNNEL_NW_SE, 0,  0 },
-  DEFB $03,$04,$02        ; interiorobject_TUNNEL_NW_SE, 4,  2 },
-  DEFB $03,$08,$04        ; interiorobject_TUNNEL_NW_SE, 8,  4 },
-  DEFB $03,$0C,$06        ; interiorobject_TUNNEL_NW_SE, 12,  6 },
-  DEFB $03,$10,$08        ; interiorobject_TUNNEL_NW_SE, 16,  8 },
-  DEFB $12,$14,$0A        ; interiorobject_TUNNEL_JOIN_18, 20, 10 },
+  DEFB $06                ; 6 -- Room dimensions index
+  DEFB $00                ; 0 -- Number of boundaries
+  DEFB $06                ; 6 -- Number of mask bytes
+  DEFB $24,$25,$26,$27,$28,$2E ; [36, 37, 38, 39, 40, 46] -- Mask bytes
+  DEFB $06                ; 6 -- Number of objects
+  DEFB $03,$00,$00        ; { interiorobject_TUNNEL_NW_SE, 0, 0 }
+  DEFB $03,$04,$02        ; { interiorobject_TUNNEL_NW_SE, 4, 2 }
+  DEFB $03,$08,$04        ; { interiorobject_TUNNEL_NW_SE, 8, 4 }
+  DEFB $03,$0C,$06        ; { interiorobject_TUNNEL_NW_SE, 12, 6 }
+  DEFB $03,$10,$08        ; { interiorobject_TUNNEL_NW_SE, 16, 8 }
+  DEFB $12,$14,$0A        ; { interiorobject_TUNNEL_JOIN_18, 20, 10 }
 
-; Room 35.
+; Room 35
 roomdef_35:
-  DEFB $06                ; 6
-  DEFB $00                ; 0 // count of boundaries
-  DEFB $06                ; 6 // count of mask bytes
-  DEFB $24,$25,$26,$27,$28,$29 ; [36, 37, 38, 39, 40, 41] // data mask bytes
-  DEFB $06                ; 6 // count of objects
-  DEFB $03,$00,$00        ; interiorobject_TUNNEL_NW_SE, 0,  0 },
-  DEFB $03,$04,$02        ; interiorobject_TUNNEL_NW_SE, 4,  2 },
-  DEFB $04,$08,$04        ; interiorobject_TUNNEL_T_JOIN_NW_SE, 8,  4 },
-  DEFB $03,$0C,$06        ; interiorobject_TUNNEL_NW_SE, 12,  6 },
-  DEFB $03,$10,$08        ; interiorobject_TUNNEL_NW_SE, 16,  8 },
-  DEFB $03,$14,$0A        ; interiorobject_TUNNEL_NW_SE, 20, 10 },
+  DEFB $06                ; 6 -- Room dimensions index
+  DEFB $00                ; 0 -- Number of boundaries
+  DEFB $06                ; 6 -- Number of mask bytes
+  DEFB $24,$25,$26,$27,$28,$29 ; [36, 37, 38, 39, 40, 41] -- Mask bytes
+  DEFB $06                ; 6 -- Number of objects
+  DEFB $03,$00,$00        ; { interiorobject_TUNNEL_NW_SE, 0, 0 }
+  DEFB $03,$04,$02        ; { interiorobject_TUNNEL_NW_SE, 4, 2 }
+  DEFB $04,$08,$04        ; { interiorobject_TUNNEL_T_JOIN_NW_SE, 8, 4 }
+  DEFB $03,$0C,$06        ; { interiorobject_TUNNEL_NW_SE, 12, 6 }
+  DEFB $03,$10,$08        ; { interiorobject_TUNNEL_NW_SE, 16, 8 }
+  DEFB $03,$14,$0A        ; { interiorobject_TUNNEL_NW_SE, 20, 10 }
 
-; Room 30.
+; Room 30
 roomdef_30:
-  DEFB $05                ; 5
-  DEFB $00                ; 0 // count of boundaries
-  DEFB $07                ; 7 // count of mask bytes
-  DEFB $1E,$1F,$20,$21,$22,$23,$2C ; [30, 31, 32, 33, 34, 35, 44] // data mask bytes
-  DEFB $06                ; 6 // count of objects
-  DEFB $00,$14,$00        ; interiorobject_TUNNEL_SW_NE, 20,  0 },
-  DEFB $00,$10,$02        ; interiorobject_TUNNEL_SW_NE, 16,  2 },
-  DEFB $00,$0C,$04        ; interiorobject_TUNNEL_SW_NE, 12,  4 },
-  DEFB $06,$08,$06        ; interiorobject_TUNNEL_CORNER_6, 8,  6 },
-  DEFB $00,$04,$08        ; interiorobject_TUNNEL_SW_NE, 4,  8 },
-  DEFB $00,$00,$0A        ; interiorobject_TUNNEL_SW_NE, 0, 10 },
+  DEFB $05                ; 5 -- Room dimensions index
+  DEFB $00                ; 0 -- Number of boundaries
+  DEFB $07                ; 7 -- Number of mask bytes
+  DEFB $1E,$1F,$20,$21,$22,$23,$2C ; [30, 31, 32, 33, 34, 35, 44] -- Mask bytes
+  DEFB $06                ; 6 -- Number of objects
+  DEFB $00,$14,$00        ; { interiorobject_TUNNEL_SW_NE, 20, 0 }
+  DEFB $00,$10,$02        ; { interiorobject_TUNNEL_SW_NE, 16, 2 }
+  DEFB $00,$0C,$04        ; { interiorobject_TUNNEL_SW_NE, 12, 4 }
+  DEFB $06,$08,$06        ; { interiorobject_TUNNEL_CORNER_6, 8, 6 }
+  DEFB $00,$04,$08        ; { interiorobject_TUNNEL_SW_NE, 4, 8 }
+  DEFB $00,$00,$0A        ; { interiorobject_TUNNEL_SW_NE, 0, 10 }
 
-; Room 40.
+; Room 40
 roomdef_40:
-  DEFB $09                ; 9
-  DEFB $00                ; 0 // count of boundaries
-  DEFB $06                ; 6 // count of mask bytes
-  DEFB $1E,$1F,$20,$21,$22,$2B ; [30, 31, 32, 33, 34, 43] // data mask bytes
-  DEFB $06                ; 6 // count of objects
-  DEFB $07,$14,$00        ; interiorobject_TUNNEL_CORNER_7, 20,  0 },
-  DEFB $00,$10,$02        ; interiorobject_TUNNEL_SW_NE, 16,  2 },
-  DEFB $00,$0C,$04        ; interiorobject_TUNNEL_SW_NE, 12,  4 },
-  DEFB $00,$08,$06        ; interiorobject_TUNNEL_SW_NE, 8,  6 },
-  DEFB $00,$04,$08        ; interiorobject_TUNNEL_SW_NE, 4,  8 },
-  DEFB $00,$00,$0A        ; interiorobject_TUNNEL_SW_NE, 0, 10 },
+  DEFB $09                ; 9 -- Room dimensions index
+  DEFB $00                ; 0 -- Number of boundaries
+  DEFB $06                ; 6 -- Number of mask bytes
+  DEFB $1E,$1F,$20,$21,$22,$2B ; [30, 31, 32, 33, 34, 43] -- Mask bytes
+  DEFB $06                ; 6 -- Number of objects
+  DEFB $07,$14,$00        ; { interiorobject_TUNNEL_CORNER_7, 20, 0 }
+  DEFB $00,$10,$02        ; { interiorobject_TUNNEL_SW_NE, 16, 2 }
+  DEFB $00,$0C,$04        ; { interiorobject_TUNNEL_SW_NE, 12, 4 }
+  DEFB $00,$08,$06        ; { interiorobject_TUNNEL_SW_NE, 8, 6 }
+  DEFB $00,$04,$08        ; { interiorobject_TUNNEL_SW_NE, 4, 8 }
+  DEFB $00,$00,$0A        ; { interiorobject_TUNNEL_SW_NE, 0, 10 }
 
-; Room 44.
+; Room 44
 roomdef_44:
-  DEFB $08                ; 8
-  DEFB $00                ; 0 // count of boundaries
-  DEFB $05                ; 5 // count of mask bytes
-  DEFB $24,$25,$26,$27,$28 ; [36, 37, 38, 39, 40] // data mask bytes
-  DEFB $05                ; 5 // count of objects
-  DEFB $03,$00,$00        ; interiorobject_TUNNEL_NW_SE, 0,  0 },
-  DEFB $03,$04,$02        ; interiorobject_TUNNEL_NW_SE, 4,  2 },
-  DEFB $03,$08,$04        ; interiorobject_TUNNEL_NW_SE, 8,  4 },
-  DEFB $03,$0C,$06        ; interiorobject_TUNNEL_NW_SE, 12,  6 },
-  DEFB $0C,$10,$08        ; interiorobject_TUNNEL_CORNER_NW_NE, 16,  8 },
+  DEFB $08                ; 8 -- Room dimensions index
+  DEFB $00                ; 0 -- Number of boundaries
+  DEFB $05                ; 5 -- Number of mask bytes
+  DEFB $24,$25,$26,$27,$28 ; [36, 37, 38, 39, 40] -- Mask bytes
+  DEFB $05                ; 5 -- Number of objects
+  DEFB $03,$00,$00        ; { interiorobject_TUNNEL_NW_SE, 0, 0 }
+  DEFB $03,$04,$02        ; { interiorobject_TUNNEL_NW_SE, 4, 2 }
+  DEFB $03,$08,$04        ; { interiorobject_TUNNEL_NW_SE, 8, 4 }
+  DEFB $03,$0C,$06        ; { interiorobject_TUNNEL_NW_SE, 12, 6 }
+  DEFB $0C,$10,$08        ; { interiorobject_TUNNEL_CORNER_NW_NE, 16, 8 }
 
-; Room 50: Blocked tunnel.
+; Room 50: Blocked tunnel
 roomdef_50_blocked_tunnel:
-  DEFB $05                ; 5
-  DEFB $01                ; 1 // count of boundaries
+  DEFB $05                ; 5 -- Room dimensions index
+  DEFB $01                ; 1 -- Number of boundaries
 roomdef_50_blocked_tunnel_boundary:
-  DEFB $34,$3A,$20,$36    ; 52, 58, 32, 54 }, // boundary
-  DEFB $06                ; 6 // count of mask bytes
-  DEFB $1E,$1F,$20,$21,$22,$2B ; [30, 31, 32, 33, 34, 43] // data mask bytes
-  DEFB $06                ; 6 // count of objects
-  DEFB $07,$14,$00        ; interiorobject_TUNNEL_CORNER_7, 20,  0 },
-  DEFB $00,$10,$02        ; interiorobject_TUNNEL_SW_NE, 16,  2 },
-  DEFB $00,$0C,$04        ; interiorobject_TUNNEL_SW_NE, 12,  4 },
+  DEFB $34,$3A,$20,$36    ; { 52, 58, 32, 54 } -- Boundary
+  DEFB $06                ; 6 -- Number of mask bytes
+  DEFB $1E,$1F,$20,$21,$22,$2B ; [30, 31, 32, 33, 34, 43] -- Mask bytes
+  DEFB $06                ; 6 -- Number of objects
+  DEFB $07,$14,$00        ; { interiorobject_TUNNEL_CORNER_7, 20, 0 }
+  DEFB $00,$10,$02        ; { interiorobject_TUNNEL_SW_NE, 16, 2 }
+  DEFB $00,$0C,$04        ; { interiorobject_TUNNEL_SW_NE, 12, 4 }
 roomdef_50_blocked_tunnel_collapsed_tunnel:
-  DEFB $14,$08,$06        ; interiorobject_COLLAPSED_TUNNEL_SW_NE, 8, 6 },
-  DEFB $00,$04,$08        ; interiorobject_TUNNEL_SW_NE, 4,  8 },
-  DEFB $00,$00,$0A        ; interiorobject_TUNNEL_SW_NE, 0, 10 },
+  DEFB $14,$08,$06        ; { interiorobject_COLLAPSED_TUNNEL_SW_NE, 8, 6 }
+  DEFB $00,$04,$08        ; { interiorobject_TUNNEL_SW_NE, 4, 8 }
+  DEFB $00,$00,$0A        ; { interiorobject_TUNNEL_SW_NE, 0, 10 }
 
-; Interior object definitions.
+; Interior object definitions
+;
+; This is an array of pointers to interior object definitions. It's 54 entries long.
 interior_object_defs:
-  DEFW interior_object_tile_refs_0  ; Array of pointer to interior object definitions, 54 entries long (== number of interior objects).
-  DEFW interior_object_tile_refs_1  ;
-  DEFW interior_object_tile_refs_2  ;
-  DEFW interior_object_tile_refs_3  ;
-  DEFW interior_object_tile_refs_4  ;
-  DEFW interior_object_tile_refs_5  ;
-  DEFW interior_object_tile_refs_6  ;
-  DEFW interior_object_tile_refs_7  ;
-  DEFW interior_object_tile_refs_8  ;
-  DEFW interior_object_tile_refs_9  ;
-  DEFW interior_object_tile_refs_10 ;
-  DEFW interior_object_tile_refs_11 ;
-  DEFW interior_object_tile_refs_12 ;
-  DEFW interior_object_tile_refs_13 ;
-  DEFW interior_object_tile_refs_14 ;
-  DEFW interior_object_tile_refs_15 ;
-  DEFW interior_object_tile_refs_16 ;
-  DEFW interior_object_tile_refs_17 ;
-  DEFW interior_object_tile_refs_18 ;
-  DEFW interior_object_tile_refs_19 ;
-  DEFW interior_object_tile_refs_20 ;
-  DEFW interior_object_tile_refs_2  ;
-  DEFW interior_object_tile_refs_22 ;
-  DEFW interior_object_tile_refs_23 ;
-  DEFW interior_object_tile_refs_24 ;
-  DEFW interior_object_tile_refs_25 ;
-  DEFW interior_object_tile_refs_26 ;
-  DEFW interior_object_tile_refs_27 ;
-  DEFW interior_object_tile_refs_29 ;
-  DEFW interior_object_tile_refs_29 ;
-  DEFW interior_object_tile_refs_30 ;
-  DEFW interior_object_tile_refs_31 ;
-  DEFW interior_object_tile_refs_32 ;
-  DEFW interior_object_tile_refs_33 ;
-  DEFW interior_object_tile_refs_34 ;
-  DEFW interior_object_tile_refs_35 ;
-  DEFW interior_object_tile_refs_36 ;
-  DEFW interior_object_tile_refs_37 ;
-  DEFW interior_object_tile_refs_38 ;
-  DEFW interior_object_tile_refs_40 ;
-  DEFW interior_object_tile_refs_40 ;
-  DEFW interior_object_tile_refs_41 ;
-  DEFW interior_object_tile_refs_42 ;
-  DEFW interior_object_tile_refs_43 ;
-  DEFW interior_object_tile_refs_44 ;
-  DEFW interior_object_tile_refs_45 ;
-  DEFW interior_object_tile_refs_46 ;
-  DEFW interior_object_tile_refs_47 ;
-  DEFW interior_object_tile_refs_48 ;
-  DEFW interior_object_tile_refs_49 ;
-  DEFW interior_object_tile_refs_50 ;
-  DEFW interior_object_tile_refs_51 ;
-  DEFW interior_object_tile_refs_52 ;
-  DEFW interior_object_tile_refs_53 ;
+  DEFW interior_object_tile_refs_0
+  DEFW interior_object_tile_refs_1
+  DEFW interior_object_tile_refs_2
+  DEFW interior_object_tile_refs_3
+  DEFW interior_object_tile_refs_4
+  DEFW interior_object_tile_refs_5
+  DEFW interior_object_tile_refs_6
+  DEFW interior_object_tile_refs_7
+  DEFW interior_object_tile_refs_8
+  DEFW interior_object_tile_refs_9
+  DEFW interior_object_tile_refs_10
+  DEFW interior_object_tile_refs_11
+  DEFW interior_object_tile_refs_12
+  DEFW interior_object_tile_refs_13
+  DEFW interior_object_tile_refs_14
+  DEFW interior_object_tile_refs_15
+  DEFW interior_object_tile_refs_16
+  DEFW interior_object_tile_refs_17
+  DEFW interior_object_tile_refs_18
+  DEFW interior_object_tile_refs_19
+  DEFW interior_object_tile_refs_20
+  DEFW interior_object_tile_refs_2
+  DEFW interior_object_tile_refs_22
+  DEFW interior_object_tile_refs_23
+  DEFW interior_object_tile_refs_24
+  DEFW interior_object_tile_refs_25
+  DEFW interior_object_tile_refs_26
+  DEFW interior_object_tile_refs_27
+  DEFW interior_object_tile_refs_29
+  DEFW interior_object_tile_refs_29
+  DEFW interior_object_tile_refs_30
+  DEFW interior_object_tile_refs_31
+  DEFW interior_object_tile_refs_32
+  DEFW interior_object_tile_refs_33
+  DEFW interior_object_tile_refs_34
+  DEFW interior_object_tile_refs_35
+  DEFW interior_object_tile_refs_36
+  DEFW interior_object_tile_refs_37
+  DEFW interior_object_tile_refs_38
+  DEFW interior_object_tile_refs_40
+  DEFW interior_object_tile_refs_40
+  DEFW interior_object_tile_refs_41
+  DEFW interior_object_tile_refs_42
+  DEFW interior_object_tile_refs_43
+  DEFW interior_object_tile_refs_44
+  DEFW interior_object_tile_refs_45
+  DEFW interior_object_tile_refs_46
+  DEFW interior_object_tile_refs_47
+  DEFW interior_object_tile_refs_48
+  DEFW interior_object_tile_refs_49
+  DEFW interior_object_tile_refs_50
+  DEFW interior_object_tile_refs_51
+  DEFW interior_object_tile_refs_52
+  DEFW interior_object_tile_refs_53
 
 ; Room object 0: Straight tunnel section SW-NE
 interior_object_tile_refs_0:
@@ -3717,50 +3817,50 @@ interior_object_tile_refs_27:
   DEFB $3A,$FF,$84,$00,$39,$0D,$FF,$8C ;
   DEFB $00,$13,$3A,$39,$0D,$FF,$86,$00 ;
 
-; Character structures.
+; Character structures
 ;
-; This array contains one of these 7-byte structures for each of the 26 game characters:
+; This array contains one of the following seven-byte structures for each of the 26 game characters.
 ;
-; +-----------+-------+---------------------+-----------------------------------------+
-; | Type      | Bytes | Name                | Meaning                                 |
-; +-----------+-------+---------------------+-----------------------------------------+
-; | Character | 1     | character_and_flags | Character index; bit 6 = on-screen flag |
-; | Room      | 1     | room                | The room the character's in, and flags  |
-; | TinyPos   | 3     | pos                 | Map position of the character           |
-; | Route     | 2     | route               | The route the character's on            |
-; +-----------+-------+---------------------+-----------------------------------------+
+; +-----------+-------+---------------------+---------------------------------------------------+
+; | Type      | Bytes | Name                | Meaning                                           |
+; +-----------+-------+---------------------+---------------------------------------------------+
+; | Character | 1     | character_and_flags | Character index. Bit 6 set => on-screen           |
+; | Room      | 1     | room                | Index of the room this character is in, and flags |
+; | TinyPos   | 3     | pos                 | Map position of the character                     |
+; | Route     | 2     | route               | The route the character's on                      |
+; +-----------+-------+---------------------+---------------------------------------------------+
 character_structs:
-  DEFB $00,$0B,$2E,$2E,$18,$03,$00 ; character_0_COMMANDANT, room_11_PAPERS,   ( 46,  46, 24), (0x03, 0x00)
-  DEFB $01,$00,$66,$44,$03,$01,$00 ; character_1_GUARD_1, room_0_OUTDOORS, (102,  68,  3), (0x01, 0x00)
-  DEFB $02,$00,$44,$68,$03,$01,$02 ; character_2_GUARD_2, room_0_OUTDOORS, ( 68, 104,  3), (0x01, 0x02)
-  DEFB $03,$10,$2E,$2E,$18,$03,$13 ; character_3_GUARD_3, room_16_CORRIDOR, ( 46,  46, 24), (0x03, 0x13)
-  DEFB $04,$00,$3D,$67,$03,$02,$04 ; character_4_GUARD_4, room_0_OUTDOORS, ( 61, 103,  3), (0x02, 0x04)
-  DEFB $05,$00,$6A,$38,$0D,$00,$00 ; character_5_GUARD_5, room_0_OUTDOORS, (106,  56, 13), (0x00, 0x00)
-  DEFB $06,$00,$48,$5E,$0D,$00,$00 ; character_6_GUARD_6, room_0_OUTDOORS, ( 72,  94, 13), (0x00, 0x00)
-  DEFB $07,$00,$48,$46,$0D,$00,$00 ; character_7_GUARD_7, room_0_OUTDOORS, ( 72,  70, 13), (0x00, 0x00)
-  DEFB $08,$00,$50,$2E,$0D,$00,$00 ; character_8_GUARD_8, room_0_OUTDOORS, ( 80,  46, 13), (0x00, 0x00)
-  DEFB $09,$00,$6C,$47,$15,$04,$00 ; character_9_GUARD_9, room_0_OUTDOORS, (108,  71, 21), (0x04, 0x00)
-  DEFB $0A,$00,$5C,$34,$03,$FF,$38 ; character_10_GUARD_10, room_0_OUTDOORS,  ( 92,  52,  3), (0xFF, 0x38)
-  DEFB $0B,$00,$6D,$45,$03,$00,$00 ; character_11_GUARD_11, room_0_OUTDOORS,  (109,  69,  3), (0x00, 0x00)
-  DEFB $0C,$03,$28,$3C,$18,$00,$08 ; character_12_GUARD_12, room_3_HUT2RIGHT, ( 40,  60, 24), (0x00, 0x08)
+  DEFB $00,$0B,$2E,$2E,$18,$03,$00 ; { character_0_COMMANDANT, room_11_PAPERS, ( 46, 46, 24), (0x03, 0x00) }
+  DEFB $01,$00,$66,$44,$03,$01,$00 ; { character_1_GUARD_1, room_0_OUTDOORS, (102, 68, 3), (0x01, 0x00) }
+  DEFB $02,$00,$44,$68,$03,$01,$02 ; { character_2_GUARD_2, room_0_OUTDOORS, ( 68, 104, 3), (0x01, 0x02) }
+  DEFB $03,$10,$2E,$2E,$18,$03,$13 ; { character_3_GUARD_3, room_16_CORRIDOR, ( 46, 46, 24), (0x03, 0x13) }
+  DEFB $04,$00,$3D,$67,$03,$02,$04 ; { character_4_GUARD_4, room_0_OUTDOORS, ( 61, 103, 3), (0x02, 0x04) }
+  DEFB $05,$00,$6A,$38,$0D,$00,$00 ; { character_5_GUARD_5, room_0_OUTDOORS, (106, 56, 13), (0x00, 0x00) }
+  DEFB $06,$00,$48,$5E,$0D,$00,$00 ; { character_6_GUARD_6, room_0_OUTDOORS, ( 72, 94, 13), (0x00, 0x00) }
+  DEFB $07,$00,$48,$46,$0D,$00,$00 ; { character_7_GUARD_7, room_0_OUTDOORS, ( 72, 70, 13), (0x00, 0x00) }
+  DEFB $08,$00,$50,$2E,$0D,$00,$00 ; { character_8_GUARD_8, room_0_OUTDOORS, ( 80, 46, 13), (0x00, 0x00) }
+  DEFB $09,$00,$6C,$47,$15,$04,$00 ; { character_9_GUARD_9, room_0_OUTDOORS, (108, 71, 21), (0x04, 0x00) }
+  DEFB $0A,$00,$5C,$34,$03,$FF,$38 ; { character_10_GUARD_10, room_0_OUTDOORS, ( 92, 52, 3), (0xFF, 0x38) }
+  DEFB $0B,$00,$6D,$45,$03,$00,$00 ; { character_11_GUARD_11, room_0_OUTDOORS, (109, 69, 3), (0x00, 0x00) }
+  DEFB $0C,$03,$28,$3C,$18,$00,$08 ; { character_12_GUARD_12, room_3_HUT2RIGHT, ( 40, 60, 24), (0x00, 0x08) }
 ; Bug: The room field here is 2 but reset_map_and_characters will reset it to 3.
-  DEFB $0D,$02,$24,$30,$18,$00,$08 ; character_13_GUARD_13, room_2_HUT2LEFT,  ( 36,  48, 24), (0x00, 0x08)
-  DEFB $0E,$05,$28,$3C,$18,$00,$10 ; character_14_GUARD_14, room_5_HUT3RIGHT, ( 40,  60, 24), (0x00, 0x10)
-  DEFB $0F,$05,$24,$22,$18,$00,$10 ; character_15_GUARD_15, room_5_HUT3RIGHT, ( 36,  34, 24), (0x00, 0x10)
-  DEFB $10,$00,$44,$54,$01,$FF,$00 ; character_16_GUARD_DOG_1, room_0_OUTDOORS,  ( 68,  84,  1), (0xFF, 0x00)
-  DEFB $11,$00,$44,$68,$01,$FF,$00 ; character_17_GUARD_DOG_2, room_0_OUTDOORS,  ( 68, 104,  1), (0xFF, 0x00)
-  DEFB $12,$00,$66,$44,$01,$FF,$18 ; character_18_GUARD_DOG_3, room_0_OUTDOORS,  (102,  68,  1), (0xFF, 0x18)
-  DEFB $13,$00,$58,$44,$01,$FF,$18 ; character_19_GUARD_DOG_4, room_0_OUTDOORS,  ( 88,  68,  1), (0xFF, 0x18)
-  DEFB $14,$FF,$34,$3C,$18,$00,$08 ; character_20_PRISONER_1,  room_NONE, ( 52,  60, 24), (0x00, 0x08)
-  DEFB $15,$FF,$34,$2C,$18,$00,$08 ; character_21_PRISONER_2,  room_NONE, ( 52,  44, 24), (0x00, 0x08)
-  DEFB $16,$FF,$34,$1C,$18,$00,$08 ; character_22_PRISONER_3,  room_NONE, ( 52,  28, 24), (0x00, 0x08)
-  DEFB $17,$FF,$34,$3C,$18,$00,$10 ; character_23_PRISONER_4,  room_NONE, ( 52,  60, 24), (0x00, 0x10)
-  DEFB $18,$FF,$34,$2C,$18,$00,$10 ; character_24_PRISONER_5,  room_NONE, ( 52,  44, 24), (0x00, 0x10)
-  DEFB $19,$FF,$34,$1C,$18,$00,$10 ; character_25_PRISONER_6,  room_NONE, ( 52,  28, 24), (0x00, 0x10)
+  DEFB $0D,$02,$24,$30,$18,$00,$08 ; { character_13_GUARD_13, room_2_HUT2LEFT, ( 36, 48, 24), (0x00, 0x08) }
+  DEFB $0E,$05,$28,$3C,$18,$00,$10 ; { character_14_GUARD_14, room_5_HUT3RIGHT, ( 40, 60, 24), (0x00, 0x10) }
+  DEFB $0F,$05,$24,$22,$18,$00,$10 ; { character_15_GUARD_15, room_5_HUT3RIGHT, ( 36, 34, 24), (0x00, 0x10) }
+  DEFB $10,$00,$44,$54,$01,$FF,$00 ; { character_16_GUARD_DOG_1, room_0_OUTDOORS, ( 68, 84, 1), (0xFF, 0x00) }
+  DEFB $11,$00,$44,$68,$01,$FF,$00 ; { character_17_GUARD_DOG_2, room_0_OUTDOORS, ( 68, 104, 1), (0xFF, 0x00) }
+  DEFB $12,$00,$66,$44,$01,$FF,$18 ; { character_18_GUARD_DOG_3, room_0_OUTDOORS, (102, 68, 1), (0xFF, 0x18) }
+  DEFB $13,$00,$58,$44,$01,$FF,$18 ; { character_19_GUARD_DOG_4, room_0_OUTDOORS, ( 88, 68, 1), (0xFF, 0x18) }
+  DEFB $14,$FF,$34,$3C,$18,$00,$08 ; { character_20_PRISONER_1, room_NONE, ( 52, 60, 24), (0x00, 0x08) }
+  DEFB $15,$FF,$34,$2C,$18,$00,$08 ; { character_21_PRISONER_2, room_NONE, ( 52, 44, 24), (0x00, 0x08) }
+  DEFB $16,$FF,$34,$1C,$18,$00,$08 ; { character_22_PRISONER_3, room_NONE, ( 52, 28, 24), (0x00, 0x08) }
+  DEFB $17,$FF,$34,$3C,$18,$00,$10 ; { character_23_PRISONER_4, room_NONE, ( 52, 60, 24), (0x00, 0x10) }
+  DEFB $18,$FF,$34,$2C,$18,$00,$10 ; { character_24_PRISONER_5, room_NONE, ( 52, 44, 24), (0x00, 0x10) }
+  DEFB $19,$FF,$34,$1C,$18,$00,$10 ; { character_25_PRISONER_6, room_NONE, ( 52, 28, 24), (0x00, 0x10) }
 
-; Item structures (a.k.a. itemstructs).
+; Item structures
 ;
-; This array contains one of these 7-byte structures for each of the 16 game items:
+; This array contains one of the following seven-byte structures for each of the 16 game items.
 ;
 ; +---------+-------+----------------+------------------------------------------+
 ; | Type    | Bytes | Name           | Meaning                                  |
@@ -3770,159 +3870,166 @@ character_structs:
 ; | TinyPos | 3     | pos            | Map position of the item                 |
 ; | IsoPos  | 2     | iso_pos        | Isometric projected position of the item |
 ; +---------+-------+----------------+------------------------------------------+
+;
+; The first entry is used by item_to_itemstruct, find_nearby_item.
 item_structs:
-  DEFB $00,$FF,$40,$20,$02,$78,$F4 ; item_WIRESNIPS,        room_NONE, (64, 32,  2), (0x78, 0xF4) // <- item_to_itemstruct, find_nearby_item
-  DEFB $01,$09,$3E,$30,$00,$7C,$F2 ; item_SHOVEL,           room_9_CRATE, (62, 48,  0), (0x7C, 0xF2)
-  DEFB $02,$0A,$49,$24,$10,$77,$F0 ; item_LOCKPICK, room_10_LOCKPICK, (73, 36, 16), (0x77, 0xF0)
-  DEFB $03,$0B,$2A,$3A,$04,$84,$F3 ; item_PAPERS, room_11_PAPERS,   (42, 58,  4), (0x84, 0xF3)
-  DEFB $04,$0E,$32,$18,$02,$7A,$F6 ; item_TORCH,            room_14_TORCH, (34, 24,  2), (0x7A, 0xF6)
-  DEFB $05,$FF,$24,$2C,$04,$7E,$F4 ; item_BRIBE,            room_NONE, (36, 44,  4), (0x7E, 0xF4) // <- accept_bribe
-  DEFB $06,$0F,$2C,$41,$10,$87,$F1 ; item_UNIFORM, room_15_UNIFORM,  (44, 65, 16), (0x87, 0xF1)
+  DEFB $00,$FF,$40,$20,$02,$78,$F4 ; { item_WIRESNIPS, room_NONE, (64, 32, 2), (0x78, 0xF4) }
+  DEFB $01,$09,$3E,$30,$00,$7C,$F2 ; { item_SHOVEL, room_9_CRATE, (62, 48, 0), (0x7C, 0xF2) }
+  DEFB $02,$0A,$49,$24,$10,$77,$F0 ; { item_LOCKPICK, room_10_LOCKPICK, (73, 36, 16), (0x77, 0xF0) }
+  DEFB $03,$0B,$2A,$3A,$04,$84,$F3 ; { item_PAPERS, room_11_PAPERS, (42, 58, 4), (0x84, 0xF3) }
+  DEFB $04,$0E,$32,$18,$02,$7A,$F6 ; { item_TORCH, room_14_TORCH, (34, 24, 2), (0x7A, 0xF6) }
+; The bribe item is used by accept_bribe.
+  DEFB $05,$FF,$24,$2C,$04,$7E,$F4 ; { item_BRIBE, room_NONE, (36, 44, 4), (0x7E, 0xF4) }
+  DEFB $06,$0F,$2C,$41,$10,$87,$F1 ; { item_UNIFORM, room_15_UNIFORM, (44, 65, 16), (0x87, 0xF1) }
+; The food item is used by action_poison, automatics.
 item_structs_food:
-  DEFB $07,$13,$40,$30,$10,$7E,$F0 ; item_FOOD,             room_19_FOOD, (64, 48, 16), (0x7E, 0xF0) // <- action_poison, called_from_main_loop
-  DEFB $08,$01,$42,$34,$04,$7C,$F1 ; item_POISON, room_1_HUT1RIGHT, (66, 52,  4), (0x7C, 0xF1)
-  DEFB $09,$16,$3C,$2A,$00,$7B,$F2 ; item_RED_KEY, room_22_REDKEY,   (60, 42,  0), (0x7B, 0xF2)
-  DEFB $0A,$0B,$1C,$22,$00,$81,$F8 ; item_YELLOW_KEY, room_11_PAPERS, (28, 34,  0), (0x81, 0xF8)
-  DEFB $0B,$00,$4A,$48,$00,$7A,$6E ; item_GREEN_KEY, room_0_OUTDOORS, (74, 72,  0), (0x7A, 0x6E)
-  DEFB $0C,$FF,$1C,$32,$0C,$85,$F6 ; item_RED_CROSS_PARCEL, room_NONE, (28, 50, 12), (0x85, 0xF6) // <- event_new_red_cross_parcel, new_red_cross_parcel
-  DEFB $0D,$12,$24,$3A,$08,$85,$F4 ; item_RADIO,            room_18_RADIO, (36, 58,  8), (0x85, 0xF4)
-  DEFB $0E,$FF,$24,$2C,$04,$7E,$F4 ; item_PURSE,            room_NONE, (36, 44,  4), (0x7E, 0xF4)
-  DEFB $0F,$FF,$34,$1C,$04,$7E,$F4 ; item_COMPASS,          room_NONE, (52, 28,  4), (0x7E, 0xF4)
+  DEFB $07,$13,$40,$30,$10,$7E,$F0 ; { item_FOOD, room_19_FOOD, (64, 48, 16), (0x7E, 0xF0) }
+  DEFB $08,$01,$42,$34,$04,$7C,$F1 ; { item_POISON, room_1_HUT1RIGHT, (66, 52, 4), (0x7C, 0xF1) }
+  DEFB $09,$16,$3C,$2A,$00,$7B,$F2 ; { item_RED_KEY, room_22_REDKEY, (60, 42, 0), (0x7B, 0xF2) }
+  DEFB $0A,$0B,$1C,$22,$00,$81,$F8 ; { item_YELLOW_KEY, room_11_PAPERS, (28, 34, 0), (0x81, 0xF8) }
+  DEFB $0B,$00,$4A,$48,$00,$7A,$6E ; { item_GREEN_KEY, room_0_OUTDOORS, (74, 72, 0), (0x7A, 0x6E) }
+; The red cross parcel is used by event_new_red_cross_parcel, action_red_cross_parcel.
+  DEFB $0C,$FF,$1C,$32,$0C,$85,$F6 ; { item_RED_CROSS_PARCEL, room_NONE, (28, 50, 12), (0x85, 0xF6) }
+  DEFB $0D,$12,$24,$3A,$08,$85,$F4 ; { item_RADIO, room_18_RADIO, (36, 58, 8), (0x85, 0xF4) }
+  DEFB $0E,$FF,$24,$2C,$04,$7E,$F4 ; { item_PURSE, room_NONE, (36, 44, 4), (0x7E, 0xF4) }
+  DEFB $0F,$FF,$34,$1C,$04,$7E,$F4 ; { item_COMPASS, room_NONE, (52, 28, 4), (0x7E, 0xF4) }
 
-; Table of pointers to routes.
+; Routes
+;
+; This is an array, 46 long, of pointers to $FF-terminated runs.
 routes:
-  DEFW $0000                      ; Array, 46 long, of pointers to $FF-terminated runs.
-  DEFW route_7795                 ;
-  DEFW route_7799                 ;
-  DEFW route_commandant           ;
-  DEFW route_77CD                 ;
-  DEFW route_exit_hut2            ;
-  DEFW route_exit_hut3            ;
-  DEFW route_prisoner_sleeps_1    ;
-  DEFW route_prisoner_sleeps_2    ;
-  DEFW route_prisoner_sleeps_3    ;
-  DEFW route_prisoner_sleeps_1    ;
-  DEFW route_prisoner_sleeps_2    ;
-  DEFW route_prisoner_sleeps_3    ;
-  DEFW route_77DE                 ;
-  DEFW route_77E1                 ;
-  DEFW route_77E1                 ;
-  DEFW route_77E7                 ;
-  DEFW route_77EC                 ;
-  DEFW route_prisoner_sits_1      ;
-  DEFW route_prisoner_sits_2      ;
-  DEFW route_prisoner_sits_3      ;
-  DEFW route_prisoner_sits_1      ;
-  DEFW route_prisoner_sits_2      ;
-  DEFW route_prisoner_sits_3      ;
-  DEFW route_guardA_breakfast     ;
-  DEFW route_guardB_breakfast     ;
-  DEFW route_guard_12_roll_call   ;
-  DEFW route_guard_13_roll_call   ;
-  DEFW route_prisoner_1_roll_call ;
-  DEFW route_prisoner_2_roll_call ;
-  DEFW route_prisoner_3_roll_call ;
-  DEFW route_guard_14_roll_call   ;
-  DEFW route_guard_15_roll_call   ;
-  DEFW route_prisoner_4_roll_call ;
-  DEFW route_prisoner_5_roll_call ;
-  DEFW route_prisoner_6_roll_call ;
-  DEFW route_go_to_solitary       ;
-  DEFW route_hero_leave_solitary  ;
-  DEFW route_guard_12_bed         ;
-  DEFW route_guard_13_bed         ;
-  DEFW route_guard_14_bed         ;
-  DEFW route_guard_15_bed         ;
-  DEFW route_hut2_left_to_right   ;
-  DEFW route_7833                 ;
-  DEFW route_hut2_right_to_left   ;
-  DEFW route_hero_roll_call       ;
-  DEFB $FF                ; Fake terminator used by get_target
+  DEFW $0000
+  DEFW route_7795
+  DEFW route_7799
+  DEFW route_commandant
+  DEFW route_77CD
+  DEFW route_exit_hut2
+  DEFW route_exit_hut3
+  DEFW route_prisoner_sleeps_1
+  DEFW route_prisoner_sleeps_2
+  DEFW route_prisoner_sleeps_3
+  DEFW route_prisoner_sleeps_1
+  DEFW route_prisoner_sleeps_2
+  DEFW route_prisoner_sleeps_3
+  DEFW route_77DE
+  DEFW route_77E1
+  DEFW route_77E1
+  DEFW route_77E7
+  DEFW route_77EC
+  DEFW route_prisoner_sits_1
+  DEFW route_prisoner_sits_2
+  DEFW route_prisoner_sits_3
+  DEFW route_prisoner_sits_1
+  DEFW route_prisoner_sits_2
+  DEFW route_prisoner_sits_3
+  DEFW route_guardA_breakfast
+  DEFW route_guardB_breakfast
+  DEFW route_guard_12_roll_call
+  DEFW route_guard_13_roll_call
+  DEFW route_prisoner_1_roll_call
+  DEFW route_prisoner_2_roll_call
+  DEFW route_prisoner_3_roll_call
+  DEFW route_guard_14_roll_call
+  DEFW route_guard_15_roll_call
+  DEFW route_prisoner_4_roll_call
+  DEFW route_prisoner_5_roll_call
+  DEFW route_prisoner_6_roll_call
+  DEFW route_go_to_solitary
+  DEFW route_hero_leave_solitary
+  DEFW route_guard_12_bed
+  DEFW route_guard_13_bed
+  DEFW route_guard_14_bed
+  DEFW route_guard_15_bed
+  DEFW route_hut2_left_to_right
+  DEFW route_7833
+  DEFW route_hut2_right_to_left
+  DEFW route_hero_roll_call
+  DEFB $FF                ; Fake terminator used by get_target.
 route_7795:
-  DEFB $48,$49,$4A,$FF    ; L-shaped route in the fenced area [ location(32), location(33), location(34), (end) ]
+  DEFB $48,$49,$4A,$FF    ; L-shaped route in the fenced area. [ location(32), location(33), location(34), (end) ]
 route_7799:
-  DEFB $4B,$4C,$4D,$4E,$4F,$50,$FF ; guard's route around the front perimeter wall  [ location(35), location(36), location(37), location(38), location(39), location(40), (end) ]
+  DEFB $4B,$4C,$4D,$4E,$4F,$50,$FF ; The guard's route around the front perimeter wall. [ location(35), location(36), location(37), location(38), location(39), location(40), (end) ]
 route_commandant:
-  DEFB $56,$1F,$1D,$20,$1A,$23,$99,$96 ; the commandant's route - the longest of all the routes [ location(46), door(31), door(29), door(32), door(26), door(35), door(25 reversed), door(22 reversed), door(21 reversed), door(20 reversed),
-  DEFB $95,$94,$97,$52,$17,$8A,$0B,$8B ; door(23 reversed), location(42), door(23), door(10 reversed), door(11), door(11 reversed), door(12), door(27 reversed), door(28), door(29 reversed), door(13 reversed), location(11), location(55),
-  DEFB $0C,$9B,$1C,$9D,$8D,$33,$5F,$80 ; door(0 reversed), door(1 reversed), location(60), door(1), door(0), door(4), door(16), door(5 reversed), location(11), door(7), door(17 reversed), door(6 reversed), door(8), door(18), door(9
-  DEFB $81,$64,$01,$00,$04,$10,$85,$33 ; reversed), location(45), door(14), door(34), door(34 reversed), door(33), door(33 reversed), (end) ]
+  DEFB $56,$1F,$1D,$20,$1A,$23,$99,$96 ; The commandant's route. This is the longest of all the routes. [ location(46), door(31), door(29), door(32), door(26), door(35), door(25 reversed), door(22 reversed), door(21 reversed), door(20
+  DEFB $95,$94,$97,$52,$17,$8A,$0B,$8B ; reversed), door(23 reversed), location(42), door(23), door(10 reversed), door(11), door(11 reversed), door(12), door(27 reversed), door(28), door(29 reversed), door(13 reversed), location(11),
+  DEFB $0C,$9B,$1C,$9D,$8D,$33,$5F,$80 ; location(55), door(0 reversed), door(1 reversed), location(60), door(1), door(0), door(4), door(16), door(5 reversed), location(11), door(7), door(17 reversed), door(6 reversed), door(8), door(18),
+  DEFB $81,$64,$01,$00,$04,$10,$85,$33 ; door(9 reversed), location(45), door(14), door(34), door(34 reversed), door(33), door(33 reversed), (end) ]
   DEFB $07,$91,$86,$08,$12,$89,$55,$0E ;
   DEFB $22,$A2,$21,$A1,$FF             ;
 route_77CD:
-  DEFB $53,$54,$FF        ; guard's route marching over the front gate  [ location(43), location(44), (end) ]
+  DEFB $53,$54,$FF        ; The route of the guard marching over the front gate. [ location(43), location(44), (end) ]
 route_exit_hut2:
-  DEFB $87,$33,$34,$FF    ; route_exit_hut2  [ door(7 reversed), location(11), location(12), (end) ]
+  DEFB $87,$33,$34,$FF    ; route_exit_hut2. [ door(7 reversed), location(11), location(12), (end) ]
 route_exit_hut3:
-  DEFB $89,$55,$36,$FF    ; route_exit_hut3  [ door(9 reversed), location(45), location(14), (end) ]
+  DEFB $89,$55,$36,$FF    ; route_exit_hut3. [ door(9 reversed), location(45), location(14), (end) ]
 route_prisoner_sleeps_1:
-  DEFB $56,$FF            ; route_prisoner_sleeps_1 [ location(46), (end) ]
+  DEFB $56,$FF            ; route_prisoner_sleeps_1. [ location(46), (end) ]
 route_prisoner_sleeps_2:
-  DEFB $57,$FF            ; route_prisoner_sleeps_2 [ location(47), (end) ]
+  DEFB $57,$FF            ; route_prisoner_sleeps_2. [ location(47), (end) ]
 route_prisoner_sleeps_3:
-  DEFB $58,$FF            ; route_prisoner_sleeps_3 [ location(48), (end) ]
+  DEFB $58,$FF            ; route_prisoner_sleeps_3. [ location(48), (end) ]
 route_77DE:
-  DEFB $5C,$5D,$FF        ; route_77DE  [ location(52), location(53), (end) ]
+  DEFB $5C,$5D,$FF        ; route_77DE. [ location(52), location(53), (end) ]
 route_77E1:
-  DEFB $33,$5F,$80,$81,$60,$FF ; route_77E1  [ location(11), location(55), door(0 reversed), door(1 reversed), location(56), (end) ]
+  DEFB $33,$5F,$80,$81,$60,$FF ; route_77E1. [ location(11), location(55), door(0 reversed), door(1 reversed), location(56), (end) ]
 route_77E7:
-  DEFB $34,$0A,$14,$93,$FF ; route_77E7  [ location(12), door(10), door(20), door(19 reversed), (end) ]
+  DEFB $34,$0A,$14,$93,$FF ; route_77E7. [ location(12), door(10), door(20), door(19 reversed), (end) ]
 route_77EC:
-  DEFB $38,$34,$0A,$14,$FF ; route_77EC  [ location(16), location(12), door(10), door(20), (end) ]
+  DEFB $38,$34,$0A,$14,$FF ; route_77EC. [ location(16), location(12), door(10), door(20), (end) ]
 route_prisoner_sits_1:
-  DEFB $68,$FF            ; route_prisoner_sits_1 [ location(64), (end) ]
+  DEFB $68,$FF            ; route_prisoner_sits_1. [ location(64), (end) ]
 route_prisoner_sits_2:
-  DEFB $69,$FF            ; route_prisoner_sits_2 [ location(65), (end) ]
+  DEFB $69,$FF            ; route_prisoner_sits_2. [ location(65), (end) ]
 route_prisoner_sits_3:
-  DEFB $6A,$FF            ; route_prisoner_sits_3 [ location(66), (end) ]
+  DEFB $6A,$FF            ; route_prisoner_sits_3. [ location(66), (end) ]
 route_guardA_breakfast:
-  DEFB $6C,$FF            ; route_guardA_breakfast [ location(68), (end) ]
+  DEFB $6C,$FF            ; route_guardA_breakfast. [ location(68), (end) ]
 route_guardB_breakfast:
-  DEFB $6D,$FF            ; route_guardB_breakfast [ location(69), (end) ]
+  DEFB $6D,$FF            ; route_guardB_breakfast. [ location(69), (end) ]
 route_guard_12_roll_call:
-  DEFB $31,$FF            ; route_guard_12_roll_call [ location(9), (end) ]
+  DEFB $31,$FF            ; route_guard_12_roll_call. [ location(9), (end) ]
 route_guard_13_roll_call:
-  DEFB $33,$FF            ; route_guard_13_roll_call [ location(11), (end) ]
+  DEFB $33,$FF            ; route_guard_13_roll_call. [ location(11), (end) ]
 route_guard_14_roll_call:
-  DEFB $39,$FF            ; route_guard_14_roll_call [ location(17), (end) ]
+  DEFB $39,$FF            ; route_guard_14_roll_call. [ location(17), (end) ]
 route_guard_15_roll_call:
-  DEFB $59,$FF            ; route_guard_15_roll_call [ location(49), (end) ]
+  DEFB $59,$FF            ; route_guard_15_roll_call. [ location(49), (end) ]
 route_prisoner_1_roll_call:
-  DEFB $70,$FF            ; route_prisoner_1_roll_call [ location(72), (end) ]
+  DEFB $70,$FF            ; route_prisoner_1_roll_call. [ location(72), (end) ]
 route_prisoner_2_roll_call:
-  DEFB $71,$FF            ; route_prisoner_2_roll_call [ location(73), (end) ]
+  DEFB $71,$FF            ; route_prisoner_2_roll_call. [ location(73), (end) ]
 route_prisoner_3_roll_call:
-  DEFB $72,$FF            ; route_prisoner_3_roll_call [ location(74), (end) ]
+  DEFB $72,$FF            ; route_prisoner_3_roll_call. [ location(74), (end) ]
 route_prisoner_4_roll_call:
-  DEFB $73,$FF            ; route_prisoner_4_roll_call [ location(75), (end) ]
+  DEFB $73,$FF            ; route_prisoner_4_roll_call. [ location(75), (end) ]
 route_prisoner_5_roll_call:
-  DEFB $74,$FF            ; route_prisoner_5_roll_call [ location(76), (end) ]
+  DEFB $74,$FF            ; route_prisoner_5_roll_call. [ location(76), (end) ]
 route_prisoner_6_roll_call:
-  DEFB $75,$FF            ; route_prisoner_6_roll_call [ location(77), (end) ]
+  DEFB $75,$FF            ; route_prisoner_6_roll_call. [ location(77), (end) ]
 route_go_to_solitary:
-  DEFB $36,$0A,$97,$98,$52,$FF ; route_go_to_solitary [ location(14), door(10), door(23 reversed), door(24 reversed), location(42), (end) ]
+  DEFB $36,$0A,$97,$98,$52,$FF ; route_go_to_solitary. [ location(14), door(10), door(23 reversed), door(24 reversed), location(42), (end) ]
 route_hero_leave_solitary:
-  DEFB $18,$17,$8A,$36,$FF ; route_hero_leave_solitary [ door(24), door(23), door(10 reversed), location(14), (end) ]
+  DEFB $18,$17,$8A,$36,$FF ; route_hero_leave_solitary. [ door(24), door(23), door(10 reversed), location(14), (end) ]
 route_guard_12_bed:
-  DEFB $34,$33,$07,$5C,$FF ; route_guard_12_bed  [ location(12), location(11), door(7), location(52), (end) ]
+  DEFB $34,$33,$07,$5C,$FF ; route_guard_12_bed. [ location(12), location(11), door(7), location(52), (end) ]
 route_guard_13_bed:
-  DEFB $34,$33,$07,$91,$5D,$FF ; route_guard_13_bed  [ location(12), location(11), door(7), door(17 reversed), location(53), (end) ]
+  DEFB $34,$33,$07,$91,$5D,$FF ; route_guard_13_bed. [ location(12), location(11), door(7), door(17 reversed), location(53), (end) ]
 route_guard_14_bed:
-  DEFB $34,$33,$55,$09,$5C,$FF ; route_guard_14_bed  [ location(12), location(11), location(45), door(9), location(52), (end) ]
+  DEFB $34,$33,$55,$09,$5C,$FF ; route_guard_14_bed. [ location(12), location(11), location(45), door(9), location(52), (end) ]
 route_guard_15_bed:
-  DEFB $34,$33,$55,$09,$5D,$FF ; route_guard_15_bed  [ location(12), location(11), location(45), door(9), location(53), (end) ]
+  DEFB $34,$33,$55,$09,$5D,$FF ; route_guard_15_bed. [ location(12), location(11), location(45), door(9), location(53), (end) ]
 route_hut2_left_to_right:
-  DEFB $11,$FF            ; route_hut2_left_to_right [ door(17), (end) ]
+  DEFB $11,$FF            ; route_hut2_left_to_right. [ door(17), (end) ]
 route_7833:
-  DEFB $6B,$FF            ; route_7833  [ location(67), (end) ]
+  DEFB $6B,$FF            ; route_7833. [ location(67), (end) ]
 route_hut2_right_to_left:
-  DEFB $91,$6E,$FF        ; route_hut2_right_to_left [ door(17 reversed), location(70), (end) ]
+  DEFB $91,$6E,$FF        ; route_hut2_right_to_left. [ door(17 reversed), location(70), (end) ]
 route_hero_roll_call:
-  DEFB $5A,$FF            ; route_hero_roll_call [ location(50), (end) ]
+  DEFB $5A,$FF            ; route_hero_roll_call. [ location(50), (end) ]
 
-; Table of map locations used in routes.
+; Locations
 ;
-; Array, 78 long, of two-byte locations (x,y)
+; This is an array, 78 long, of locations (index, step) used by routes.
 locations:
   DEFW $6844              ; ( 68, 104)
   DEFW $5444              ; ( 68,  84)
@@ -4003,16 +4110,16 @@ locations:
   DEFW $6D77              ; (119, 109)
   DEFW $6D75              ; (117, 109)
 
-; Door positions.
+; Doors
 ;
-; 62 pairs of four-byte structs laid out as follows:
+; This is an array of 62 pairs of four-byte structs laid out as follows:
 ;
-; +---------+-------+--------------------+------------------------------------------------------------------+
-; | Type    | Bytes | Name               | Meaning                                                          |
-; +---------+-------+--------------------+------------------------------------------------------------------+
-; | Byte    | 1     | room_and_direction | Top six bits are a room index. Bottom two bits are a direction_t |
-; | TinyPos | 3     | pos                | Map position of the door                                         |
-; +---------+-------+--------------------+------------------------------------------------------------------+
+; +---------+-------+--------------------+------------------------------------------------------------------------------------------+
+; | Type    | Bytes | Name               | Meaning                                                                                  |
+; +---------+-------+--------------------+------------------------------------------------------------------------------------------+
+; | Byte    | 1     | room_and_direction | bits 0..1 = direction door faces (direction_t); bits 2..7 = target room of door (room_t) |
+; | TinyPos | 3     | pos                | Map position of the door                                                                 |
+; +---------+-------+--------------------+------------------------------------------------------------------------------------------+
 ;
 ; Each door is stored as a pair of two "half doors". Each half of the pair contains (room, direction, position) where the room is the *target* room index, the direction is the direction in which the door faces and the position is the
 ; coordinates of the door. Outdoor coordinates are divided by four.
@@ -4146,17 +4253,21 @@ doors_home_to_tunnel:
   DEFB $D0,$64,$34,$0C    ; BYTE(room_52,                     0), 0x64, 0x34, 12 },
   DEFB $CE,$38,$54,$0C    ; BYTE(room_51,                     2), 0x38, 0x54, 12 },
 
-; Solitary map position.
+; Solitary position
+;
+; This is the coordinates (type: tinypos_t) of where our hero stands when he's in solitary.
 ;
 ; Used by solitary.
 solitary_pos:
-  DEFB $3A,$2A,$18        ; 0x3A, 0x2A, 24 // tinypos_t
+  DEFB $3A,$2A,$18
 
-; Check for 'pick up', 'drop' and 'use' input events.
+; Process player input - fire
+;
+; This checks for the input events triggered by the fire button: 'pick up', 'drop' and 'use'.
 ;
 ; Used by the routine at process_player_input.
 ;
-; I:A Input event.
+; I:A Input event (type: input_t).
 process_player_input_fire:
   CP $0A                  ; Is the input event fire + up?
   JP NZ,process_player_input_fire_0 ; Test for the next input event if not
@@ -4225,7 +4336,9 @@ item_actions_jump_table:
   DEFW check_for_pick_up_keypress_exit ; Return
   DEFW check_for_pick_up_keypress_exit ; Return
 
-; Pick up an item.
+; Pick up item
+;
+; This handles picking up items.
 ;
 ; Used by the routine at process_player_input_fire.
 pick_up_item:
@@ -4257,7 +4370,7 @@ pick_up_outdoors:
   JR pick_up_item_1       ; Jump over indoor handling
 pick_up_indoors:
   CALL setup_room         ; Expand out the room definition for room_index
-  CALL plot_interior_tiles ; Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer
+  CALL plot_interior_tiles ; Render visible tiles array into the screen buffer.
   CALL choose_game_window_attributes ; Choose game window attributes
   CALL set_game_window_attributes ; Set game window attributes
 pick_up_item_1:
@@ -4282,21 +4395,23 @@ pick_up_item_2:
   LD (HL),A               ; Zero itemstruct->iso_pos.screen_x and screen_y
   INC HL                  ;
   LD (HL),A               ;
-  CALL draw_all_items     ; Draw both held items
+  CALL draw_all_items     ; Draw held items
   LD BC,$3030             ; Play the "pick up item" sound
   CALL play_speaker       ;
   RET                     ; Return
 
-; Drop the first held item then shuffle the second into the first slot.
+; Drop item
+;
+; This drops the hero's first held item then moves the second item into the first slot.
 ;
 ; Used by the routine at process_player_input_fire.
 ;
-; Return if no items held.
+; Return if no items are held.
 drop_item:
   LD A,(items_held)       ; Fetch the first held item
   CP $FF                  ; Is the item item_NONE? ($FF)
   RET Z                   ; Return if so - there are no items to drop
-; When dropping the uniform reset the hero's sprite.
+; If dropping the uniform reset the hero's sprite.
   CP $06                  ; Does A contain item_UNIFORM? (6)
   JP NZ,drop_item_0       ; Jump if not
   LD HL,sprite_prisoner   ; Set the hero's sprite definition pointer to sprite_prisoner to remove the guard's uniform
@@ -4309,8 +4424,8 @@ drop_item_0:
   LD (HL),$FF             ; Set it to item_NONE
   DEC HL                  ; Now point to the first held item
   LD (HL),A               ; Store the fetched item there
-; Redraw
-  CALL draw_all_items     ; Draw both held items
+; Redraw the items.
+  CALL draw_all_items     ; Draw held items
   LD BC,$3040             ; Play the "drop item" sound
   CALL play_speaker       ;
   CALL choose_game_window_attributes ; Choose game window attributes
@@ -4318,7 +4433,9 @@ drop_item_0:
   POP AF                  ; Restore item
 ; FALL THROUGH into drop_item_tail.
 
-; Drop item, tail part.
+; Drop item, tail part
+;
+; This updates the itemstruct with the dropped item. It is its own function so that action_red_cross_parcel can make use of it.
 ;
 ; Used by the routine at action_red_cross_parcel.
 ;
@@ -4344,7 +4461,9 @@ drop_item_tail:
   EX DE,HL                ; Move itemstruct pointer into HL
 ; FALL THROUGH into calc_exterior_item_iso_pos.
 
-; Calculate isometric screen position for dropped exterior items.
+; Calculate exterior item isometric position
+;
+; Calculate isometric screen position for exterior item.
 ;
 ; Used by the routine at item_discovered.
 ;
@@ -4374,7 +4493,7 @@ calc_exterior_item_iso_pos:
   LD (HL),B               ;
   RET                     ; Return
 
-; Drop item, interior part.
+; Drop item, interior
 ;
 ; Used by the routine at drop_item_tail.
 ;
@@ -4393,14 +4512,15 @@ drop_item_interior:
   LD (HL),$05             ; Set height to five
 ; FALL THROUGH into calc_interior_item_iso_pos.
 
-; Calculate isometric screen position for dropped interior items.
+; Calculate interior item isometric position
 ;
-; TODO: Describe why this has to scale things whereas the above exterior variant doesn't.
+; This calculates the isometric screen position for the given interior item. Unlike the exterior version of this routine at calc_exterior_item_iso_pos, this version scales the result down with rounding to nearest.
 ;
 ; Used by the routine at item_discovered.
 ;
 ; I:HL Pointer to itemstruct's pos.height field.
-;   Set A' to ($200 + y - x) * 2
+;
+; Set A' to ($200 + y - x) * 2
 calc_interior_item_iso_pos:
   DEC HL                  ; Step HL back to itemstruct.pos.y
   LD D,$02                ; Start with $200 + pos.y
@@ -4444,12 +4564,14 @@ calc_interior_item_iso_pos:
   LD (DE),A               ; Store A (x result)
   RET                     ; Return
 
-; Convert an item to an itemstruct pointer.
+; Item to itemstruct
+;
+; This turns an item index to an itemstruct pointer.
 ;
 ; Used by the routines at drop_item_tail, event_new_red_cross_parcel and item_discovered.
 ;
-; I:A Item index.
-; O:HL Pointer to itemstruct.
+; I:A Item index (type: item_t).
+; O:HL Pointer to itemstruct (type: itemstruct_t).
 item_to_itemstruct:
   LD L,A                  ; Multiply item index by seven
   ADD A,A                 ;
@@ -4463,7 +4585,9 @@ item_to_itemstruct:
   INC H                   ;
   RET                     ; Return i'th element of item_structs in HL
 
-; Draw both held items.
+; Draw all items
+;
+; This draws both held items.
 ;
 ; Used by the routines at pick_up_item, drop_item, accept_bribe, action_red_cross_parcel, action_poison, reset_game and solitary.
 draw_all_items:
@@ -4475,11 +4599,13 @@ draw_all_items:
   CALL draw_item          ; Draw the item
   RET                     ; Return
 
-; Draw a single held item.
+; Draw item
+;
+; This draws the required item at the specified screen address.
 ;
 ; Used by the routine at draw_all_items.
 ;
-; I:A Item index.
+; I:A Item index (type: item_t).
 ; I:HL Screen address of item.
 draw_item:
   PUSH HL                 ; Save screen address of item
@@ -4534,7 +4660,9 @@ draw_item_0:
   CALL plot_bitmap        ; Plot the bitmap without masking
   RET                     ; Return
 
-; Returns an item within range of the hero.
+; Find nearby item
+;
+; This returns the first item within range of the hero not by distance but by item order. A radius of one is used when outdoors, otherwise a radius of six is used.
 ;
 ; Used by the routine at pick_up_item.
 ;
@@ -4593,7 +4721,9 @@ find_nearby_item_1:
   OR $01                  ; Ran out of items: set NZ (not found)
   RET                     ; Return
 
-; Plot a bitmap without masking.
+; Plot bitmap
+;
+; This plots a bitmap without masking.
 ;
 ; Used by the routines at draw_item, wave_morale_flag and plot_ringer.
 ;
@@ -4618,6 +4748,8 @@ plot_bitmap_column:
   JP NZ,plot_bitmap_row   ; ...loop for every row
   RET                     ; Return
 
+; Screen wipe
+;
 ; Wipe an area of the screen.
 ;
 ; Used by the routine at draw_item.
@@ -4640,7 +4772,11 @@ screen_wipe_column:
   JP NZ,screen_wipe_row   ; ...loop for every row
   RET                     ; Return
 
-; Given a screen address, return the same position on the next scanline down.
+; Next scanline down
+;
+; This returns the same position on the next scanline down.
+;
+; Given a screen address, this returns the same horizontal position but on the next scanline down.
 ;
 ; Used by the routines at plot_bitmap, screen_wipe, wave_morale_flag and plot_static_tiles.
 ;
@@ -4662,37 +4798,51 @@ next_scanline_down_0:
   POP DE                  ; Restore
   RET                     ; Return
 
-; The pending message queue.
+; Message queue
+;
+; This is a queue of pending message indexes. Each is a two-byte value. Terminated by a single message_QUEUE_END byte ($FF).
 message_queue:
-  DEFB $FF,$FF,$00,$00,$00,$00,$00,$00 ; Queue of message indexes. Pairs of bytes + 0xFF terminator.
-  DEFB $00,$00,$00,$00,$00,$00,$00,$00 ;
-  DEFB $00,$00,$FF                     ;
+  DEFB $FF,$FF,$00,$00,$00,$00,$00,$00
+  DEFB $00,$00,$00,$00,$00,$00,$00,$00
+  DEFB $00,$00,$FF
 
-; Countdown to the next message.
+; Message display delay
+;
+; This is a decrementing counter. When it reaches zero it shows the next message.
 message_display_delay:
-  DEFB $00                ; Decrementing counter which shows the next message when it reaches zero.
+  DEFB $00
 
-; Index into the message we're displaying or wiping.
+; Message display index
+;
+; This is an index into the message that we're displaying or wiping.
+;
+; message_display uses this. If it's 128 then we call next_message. If it exceeds 128 then we call wipe_message. Otherwise we proceed with displaying the next character.
 message_display_index:
-  DEFB $80                ; If 128 then next_message. If > 128 then wipe_message. Else display.
+  DEFB $80
 
-; Pointer to the next available slot in the message queue.
+; Message queue pointer
+;
+; This is a pointer to the next available slot in the message queue.
 message_queue_pointer:
   DEFW $7CFE
 
-; Pointer to the next message character to be displayed.
+; Current message character
+;
+; This is a pointer to the next message character to be displayed.
 current_message_character:
   DEFW $0000
 
-; Add a new message index to the pending messages queue.
+; Queue message
+;
+; This adds a new message index to the pending messages queue.
 ;
 ; Used by the routines at check_morale, picking_lock, event_another_day_dawns, event_wake_up, event_go_to_roll_call, event_go_to_breakfast_time, event_go_to_exercise_time, event_go_to_time_for_bed, event_new_red_cross_parcel, accept_bribe,
 ; is_door_locked, action_red_cross_parcel, action_wiresnips, action_lockpick, action_key, solitary, item_discovered and event_roll_call.
 ;
-; The use of C on entry to this routine is puzzling. One routine (check_morale) explicitly sets it to zero before calling, but the other callers do not so we receive whatever was in C previously.
+; Commentary: The use of C on entry to this routine is puzzling. One routine (check_morale) explicitly sets it to zero before calling, but the other callers do not so we receive whatever was in C previously.
 ;
 ; I:B Message index.
-; I:C Unknown: possibly a second message index.
+; I:C Unknown: Possibly intended as a second message index.
 queue_message:
   LD HL,(message_queue_pointer) ; Fetch the message queue pointer
   LD A,$FF                ; Is the currently pointed-to index message_QUEUE_END? ($FF)
@@ -4718,7 +4868,9 @@ queue_message_0:
   LD (message_queue_pointer),HL ; Update the message queue pointer
   RET                     ; Return
 
-; Plot a single glyph (indirectly).
+; Plot glyph
+;
+; This plots a single glyph (indirectly).
 ;
 ; Used by the routines at message_display, plot_score, screenlocstring_plot and choose_keys.
 ;
@@ -4730,11 +4882,13 @@ plot_glyph:
   LD A,(HL)               ; Fetch the glyph index
 ; FALL THROUGH into plot_single_glyph,
 
-; Plot a single glyph.
+; Plot single glyph
+;
+; This plots the specified glyph at the given screen address.
 ;
 ; Used by the routine at wipe_message.
 ;
-; Note: This won't work for arbitrary screen locations.
+; Note: This will only work for screen addresses that stay within their respective third of the screen.
 ;
 ; I:HL Glyph index.
 ; I:DE Pointer to screen destination.
@@ -4762,7 +4916,9 @@ glyph_loop:
   POP HL                  ; Restore HL
   RET                     ; Return
 
-; Incrementally wipe and display queued game messages.
+; Message display
+;
+; This incrementally wipes and displays queued game messages.
 ;
 ; Used by the routine at main_loop.
 ;
@@ -4804,7 +4960,9 @@ not_end_of_string:
   LD (current_message_character),HL ; If it wasn't the end of the string set current message character to HL
   RET                     ; Return
 
-; Incrementally wipe away any on-screen game message.
+; Wipe message
+;
+; This incrementally wipes away any on-screen game message.
 ;
 ; Used by the routine at message_display.
 wipe_message:
@@ -4819,7 +4977,9 @@ wipe_message:
   CALL plot_single_glyph  ; Plot the single space glyph
   RET                     ; Return
 
-; Change to displaying the next queued game message.
+; Next message
+;
+; This causes the next queued game message to get displayed.
 ;
 ; Used by the routine at message_display.
 ;
@@ -4856,7 +5016,9 @@ next_message:
   LD (message_display_index),A ;
   RET                     ; Return
 
-; Array of pointers to game messages.
+; Messages table
+;
+; This is an array of 19 pointers to game messages. The game messages aren't ASCII: they're encoded to match the game font and are $FF terminated.
 messages_table:
   DEFW messages_missed_roll_call
   DEFW messages_time_to_wake_up
@@ -4878,10 +5040,6 @@ messages_table:
   DEFW more_messages_he_takes_the_bribe
   DEFW more_messages_and_acts_as_decoy
   DEFW more_messages_another_day_dawns
-
-; Game messages.
-;
-; Non-ASCII: encoded to match the font; $FF terminated.
 messages_missed_roll_call:
   DEFB $16,$12,$1B,$1B,$0E,$0D,$23,$1A,$00,$15,$15,$23,$0C,$0A,$15,$15,$FF ; "MISSED ROLL CALL"
 messages_time_to_wake_up:
@@ -4917,13 +5075,13 @@ messages_morale_is_zero:
 messages_item_discovered:
   DEFB $12,$1C,$0E,$16,$23,$0D,$12,$1B,$0C,$00,$1E,$0E,$1A,$0E,$0D,$FF ; "ITEM DISCOVERED"
 
-; Unreferenced bytes.
+; Unreferenced bytes
 ;
 ; Two alignment bytes to make static_tiles start at $7F00.
 L7EFE:
   DEFB $00,$00
 
-; Static tiles.
+; Static tiles
 ;
 ; These tiles are used to draw fixed screen elements such as medals.
 ;
@@ -5005,13 +5163,13 @@ static_tiles:
   DEFB $06,$E7,$E7,$87,$83,$43,$41,$20,$06 ; bell_middle_left
   DEFB $E7,$E7,$FF,$FF,$FE,$F9,$FF,$7E,$06 ; bell_middle_middle
 
-; Unreferenced byte.
+; Unreferenced byte
 L81A3:
   DEFB $E0
 
-; Saved/stashed position.
+; Saved position
 ;
-; Structure type: pos_t.
+; This holds a position (type: pos_t OR tinypos_t, depending on the code). It is used all over the code either for scratch space or for argument passing.
 saved_pos_x:
   DEFW $60E0
 saved_pos_y:
@@ -5019,15 +5177,19 @@ saved_pos_y:
 saved_height:
   DEFW $80C0
 
-; Used by touch() only.
+; Touch's stash for register A
+;
+; The only user of this is touch which stashes a copy of A here.
 touch_stashed_A:
   DEFB $00
 
-; Unreferenced byte.
+; Unreferenced byte
 L81AB:
   DEFB $06
 
-; Bitmap and mask pointers.
+; Bitmap and mask pointers
+;
+; These are used by the vischar and item plotting code.
 bitmap_pointer:
   DEFW $0810
 mask_pointer:
@@ -5035,13 +5197,11 @@ mask_pointer:
 foreground_mask_pointer:
   DEFW $0102
 
-; Saved/stashed position.
+; Saved (tiny) position
 ;
-; Structure type: tinypos_t.
+; This holds a position (type: tinypos_t). This is populated when a vischar or item is readied for plotting. It's then used to control the rendering of masks into the mask buffer.
 ;
-; Written by setup_item_plotting, setup_vischar_plotting.
-;
-; Read by render_mask_buffer, guards_follow_suspicious_character.
+; guards_follow_suspicious_character also uses it as a scratch space.
 tinypos_stash_x:
   DEFB $01
 tinypos_stash_y:
@@ -5049,19 +5209,23 @@ tinypos_stash_y:
 tinypos_stash_height:
   DEFB $06
 
-; Current vischar's isometric projected map position.
+; Isometric position
+;
+; This holds the current vischar's isometric projected map position.
 iso_pos_x:
   DEFB $81
 iso_pos_y:
   DEFB $FF
 
-; Controls character left/right flipping.
+; Flip sprite
+;
+; This is set by setup_vischar_plotting. When set, the top bit causes the character to be drawn flipped horizontally.
 flip_sprite:
   DEFB $E7
 
-; Hero's map position.
+; Hero's map position
 ;
-; Structure type: tinypos_t.
+; This holds the hero's map position (type: tinypos_t). event_roll_call, for example, uses this to test that the hero is within the roll call area.
 hero_map_position_x:
   DEFB $DB
 hero_map_position_y:
@@ -5069,70 +5233,77 @@ hero_map_position_y:
 hero_map_position_height:
   DEFB $FF
 
-; Map position.
+; Map position
 ;
-; Used when drawing tiles.
+; This is used when drawing tiles and is also used to decide whether to permit the map to scroll.
 map_position:
   DEFW $FF81
 
-; Searchlight state.
+; Searchlight state
 ;
-; Suspect that this is a 'hero has been found in searchlight' flag. (possible states: 0, 31, 255)
+; This is set to searchlight_STATE_SEARCHING ($FF) when the hero is being searched for. It's set to searchlight_STATE_CAUGHT ($1F) when the hero is caught in the searchlight. Otherwise it's set to ($00..$1E) when the hero has evaded the
+; searchlight.
 ;
 ; Used by the routines at nighttime, plot_sprites.
 ;
-; +-------+----------------------------------+
-; | Value | Meaning                          |
-; +-------+----------------------------------+
-; | 0     | Searchlight is sweeping          |
-; | 31    | Searchlight is tracking the hero |
-; | 255   | Searchlight is off               |
-; +-------+----------------------------------+
+; +-------+-------------------+
+; | Value | Meaning           |
+; +-------+-------------------+
+; | 255   | Searching         |
+; | 31    | Caught the hero   |
+; | 0..30 | Tracking the hero |
+; +-------+-------------------+
 searchlight_state:
   DEFB $04
 
-; Copy of first byte of current room def.
+; Room definition bounds index
 ;
-; Indexes roomdef_dimensions[].
+; This is a copy of the first byte of the current room definition. It indexes roomdef_dimensions allowing interior_bounds_check to perform a bounds check.
 roomdef_bounds_index:
   DEFB $00
 
-; Count of object bounds.
+; Room definition object bounds count
+;
+; This is the count of object bounds (places where the hero cannot move to) held in roomdef_object_bounds.
 roomdef_object_bounds_count:
   DEFB $38
 
-; Copy of current room def's additional bounds (allows for four room objects).
+; Room definition object bounds
+;
+; This holds up to four object bounds (places where the hero cannot move to) copied from the current room definition.
 roomdef_object_bounds:
   DEFB $44,$CA,$D2,$E2
   DEFB $7C,$38,$47,$00
   DEFB $00,$00,$00,$00
   DEFB $00,$00,$00,$00
 
-; Unreferenced bytes.
-;
-; These are possibly spare object bounds bytes, but not ever used.
+; Unreferenced bytes
 L81D0:
   DEFB $00,$00,$00,$00,$00,$00
 
-; Indices of interior doors.
+; Interior doors
+;
+; This holds up to four interior doors indices.
 ;
 ; Used by the routines at setup_doors, door_handling_interior, get_nearest_door.
 interior_doors:
   DEFB $FF,$FF,$FF,$FF
 
-; Interior mask data.
+; Interior mask data
+;
+; This holds a count byte followed by up to seven mask structures for the current room definition.
 ;
 ; Used by the routines at setup_room and render_mask_buffer.
 ;
-; The first byte is a count, followed by 'count' mask_t's:
+; The first byte is a count, followed by <count> mask_t's, with the following format:
 ;
-; +-----------+-------+--------+--------------------------------------------------------------------------------------------------------------------------------------------------+
-; | Type      | Bytes | Name   | Meaning                                                                                                                                          |
-; +-----------+-------+--------+--------------------------------------------------------------------------------------------------------------------------------------------------+
-; | Byte      | 1     | index  | Index into mask_pointers                                                                                                                         |
-; | bounds_t  | 4     | bounds | Isometric projected bounds of the mask. Used for culling.                                                                                        |
-; | tinypos_t | 3     | pos    | If a character is behind this point then the mask is enabled. ("Behind" here means when character coord x is greater and y is greater-or-equal). |
-; +-----------+-------+--------+--------------------------------------------------------------------------------------------------------------------------------------------------+
+; +-----------+-------+--------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; | Type      | Bytes | Name   | Meaning                                                                                                                                                      |
+; +-----------+-------+--------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; | Byte      | 1     | index  | An index into mask_pointers (the RLE mask data pointer)                                                                                                      |
+; | bounds_t  | 5     | bounds | Isometric projected bounds of the mask. Used for culling.                                                                                                    |
+; | tinypos_t | 3     | pos    | If a character is behind this point then the mask is enabled. ("Behind" here means when the character's x-coord is greater and y-coord is greater-or-equal). |
+; +-----------+-------+--------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 interior_mask_data:
   DEFB $00,$00,$00,$00,$00,$00,$00,$00
   DEFB $00,$00,$00,$00,$00,$00,$00,$00
@@ -5143,22 +5314,28 @@ interior_mask_data:
   DEFB $00,$00,$00,$00,$00,$00,$00,$00
   DEFB $00
 
-; Written to by setup_item_plotting setup_item_plotting but never read.
+; Saved item
+;
+; Written to by setup_item_plotting but never read.
 saved_item:
   DEFB $00
 
-; A copy of item_definition height.
+; Item height
+;
+; This is a copy of item_definition height.
 ;
 ; Used by the routines at setup_item_plotting, item_visible.
 item_height:
   DEFB $00
 
-; The items which the hero is holding.
+; Items held
 ;
-; Each byte holds one item. Initialised to 0xFFFF meaning no item in either slot.
+; The two items which the hero is holding. Each byte holds one item. Initialised to ($FF,$FF) meaning no item in either slot.
 items_held:
   DEFW $FF05
 
+; Character index
+;
 ; The current character index.
 character_index:
   DEFB $00
@@ -6048,15 +6225,20 @@ interior_tiles:
   DEFB $00,$F0,$F8,$E8,$E8,$D8,$D0,$C0
   DEFB $20,$EC,$EF,$DF,$33,$CD,$31,$C1
 
-; Main loop setup.
+; Main loop set-up
 ;
 ; Used by the routine at main.
 ;
-; There seems to be litle point in this: enter_room terminates with 'goto main_loop' so it never returns. In fact, the single calling routine (main) might just as well goto enter_room instead of goto main_loop_setup.
+; Commentary: There seems to be litle point in this: enter_room terminates with 'goto main_loop' so it never returns. In fact, the single calling routine (main) might just as well goto enter_room instead of goto main_loop_setup.
 main_loop_setup:
   CALL enter_room         ; The hero enters a room - returns via squash_stack_goto_main
 
-; Main game loop.
+; Main loop
+;
+; This is the main game loop.
+;
+; Unlike in higher-level languages The Great Escape's calling convention is not always strictly hierarchical. At points in the game where a reset or transition is required (see transition, enter_room) the game will "give up" and call
+; squash_stack_goto_main. It will reset the stack pointer and jump to this main loop.
 ;
 ; Used by the routine at squash_stack_goto_main.
 main_loop:
@@ -6091,7 +6273,9 @@ main_loop:
   CALL Z,dispatch_timed_event ;
   JR main_loop            ; ...loop forever
 
-; Check morale level, report if (near) zero and inhibit player control if exhausted.
+; Check morale
+;
+; This routine checks the morale level and reports if it's (near) zero and inhibits player control if exhausted.
 ;
 ; Used by the routine at main_loop.
 check_morale:
@@ -6106,6 +6290,8 @@ check_morale:
   LD (automatic_player_counter),A ;
   RET                     ; Return
 
+; Keyscan BREAK
+;
 ; Check for a BREAK keypress.
 ;
 ; Used by the routine at main_loop.
@@ -6128,7 +6314,12 @@ keyscan_break:
   JP Z,reset_outdoors     ;
   JP enter_room           ; The hero enters a room - returns via squash_stack_goto_main
 
-; Process player input.
+; Process player input
+;
+; This first checks for reasons to not handle the player's input, such as the hero being in solitary, the 'game over' state of his morale being exhausted, or the hero being busy picking a lock or cutting through a wire fence. If none of
+; those are the case we fetch the current player input into A. If the player's input is non-zero (ie. the player is pressing a button) we reset the automatic_player_counter and check for the hero being in bed, or at breakfast. If the hero
+; was in bed, or at breakfast, we make him stand up, then update the scenery and refresh the screen. We then check for 'pick up', 'drop' and 'use' input events which are handled by process_player_input_fire. Finally assign the new input
+; value to the hero's vischar then set the kick flag to make it update.
 ;
 ; Used by the routine at main_loop.
 ;
@@ -6201,7 +6392,7 @@ process_player_input_in_bed:
 process_player_input_common:
   LD (HL),$00             ; Clear the hero at breakfast / hero in bed flag
   CALL setup_room         ; Expand out the room definition for room_index
-  CALL plot_interior_tiles ; Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer
+  CALL plot_interior_tiles ; Render visible tiles array into the screen buffer
 process_player_input_check_fire:
   POP AF                  ; Unbank input routine result
   CP $09                  ; Was fire pressed?
@@ -6217,7 +6408,9 @@ process_player_input_set_kick:
   LD (HL),A               ;
   RET                     ; Return
 
-; Locks the player out until the lock is picked.
+; Picking lock
+;
+; This locks out player controls while the lock is being picked.
 ;
 ; Used by the routine at process_player_input.
 picking_lock:
@@ -6238,7 +6431,9 @@ clear_lockpick_wirecut_flags_and_return:
   LD (HL),A               ;
   RET                     ; Return
 
-; Locks the player out until the wire is snipped.
+; Cutting wire
+;
+; This locks out player controls while the wire fence is being cut open.
 ;
 ; Used by the routine at process_player_input.
 cutting_wire:
@@ -6278,22 +6473,22 @@ cutting_wire_new_inputs:
   DEFB $88                ; input_DOWN + input_RIGHT + input_KICK
   DEFB $85                ; input_DOWN + input_LEFT  + input_KICK
 
-; Maps route indices to arrays of valid rooms or areas.
+; Route to permitted
 ;
-; in_permitted_area uses this to check if the hero is in an area permitted for the current route.
+; This table maps a route index to a list of valid rooms and areas. in_permitted_area uses this to check if the hero is in an area permitted by the current route.
 route_to_permitted:
-  DEFB $2A,$F9,$9E        ; (Route 42: 9EF9)
-  DEFB $05,$FC,$9E        ; (Route  5: 9EFC)
-  DEFB $0E,$01,$9F        ; (Route 14: 9F01)
-  DEFB $10,$08,$9F        ; (Route 16: 9F08)
-  DEFB $2C,$0E,$9F        ; (Route 44: 9F0E)
-  DEFB $2B,$11,$9F        ; (Route 43: 9F11)
-  DEFB $2D,$13,$9F        ; (Route 45: 9F13)
-; Seven variable-length arrays which encode a list of valid rooms (if top bit is set) or permitted areas (0, 1 or 2) for a given route and step within the route. Terminated with $FF.
+  DEFB $2A,$F9,$9E        ; Route 42: 9EF9
+  DEFB $05,$FC,$9E        ; Route  5: 9EFC
+  DEFB $0E,$01,$9F        ; Route 14: 9F01
+  DEFB $10,$08,$9F        ; Route 16: 9F08
+  DEFB $2C,$0E,$9F        ; Route 44: 9F0E
+  DEFB $2B,$11,$9F        ; Route 43: 9F11
+  DEFB $2D,$13,$9F        ; Route 45: 9F13
+; This is followed by seven lists which encode a list of valid rooms (if top bit is set) or permitted areas (0, 1 or 2) for a given route and step within the route. Each list is terminated by $FF.
 ;
-; Note that while routes encode transitions _between_ rooms this table encodes individual rooms or areas, so each list here will be one entry longer than the corresponding route.
+; Note that while routes encode the transitions _between_ rooms, this table encodes individual rooms or areas, so each list here will be one entry longer than the corresponding route.
 ;
-; In the table: R => Room, A => Area
+; In the comments below: R<n> => Room n, A<m> => Area m.
   DEFB $82,$82,$FF        ; ( R2, R2,                    $FF)
   DEFB $83,$01,$01,$01,$FF ; ( R3, A1,  A1,  A1,          $FF)
   DEFB $01,$01,$01,$00,$02,$02,$FF ; ( A1, A1,  A1,  A0,  A2, A2, $FF)
@@ -6302,13 +6497,19 @@ route_to_permitted:
   DEFB $99,$FF            ; (R25,                        $FF)
   DEFB $01,$FF            ; ( A1,                        $FF)
 
-; Boundings of the three main exterior areas.
+; Permitted bounds
+;
+; This is an array (type: bounds_t) of the three main exterior areas.
+;
+; Used by the routine at within_camp_bounds.
 permitted_bounds:
   DEFB $56,$5E,$3D,$48    ; Corridor to exercise yard
   DEFB $4E,$84,$47,$74    ; Hut area
   DEFB $4F,$69,$2F,$3F    ; Exercise yard area
 
-; Check the hero's map position, check for escape and colour the flag accordingly.
+; In permitted area
+;
+; This checks the hero's map position and colours the flag accordingly. It also detects escapes.
 ;
 ; This also sets the main (hero's) map position in hero_map_position_x to that of the hero's vischar position.
 ;
@@ -6467,7 +6668,9 @@ ipa_set_flag_red:
   LD A,$FF                ; Set the red flag flag
   JR ipa_flag_select      ; Jump to flag_select
 
-; Check that the hero is in the specified room or camp bounds.
+; In permitted area (end bit)
+;
+; This checks that the hero is in the specified room or camp bounds.
 ;
 ; Used by the routine at in_permitted_area.
 ;
@@ -6489,12 +6692,14 @@ end_bit_area:
   EX AF,AF'               ; Unbank A - restoring original A
 ; FALL THROUGH to within_camp_bounds.
 
-; Is the specified position within the bounds of the indexed area?
+; Within camp bounds
+;
+; This returns whether the given position is within the indexed area's bounds.
 ;
 ; Used by the routine at solitary.
 ;
 ; I:A Index (0..2) into permitted_bounds[] table.
-; I:DE Pointer to position (a TinyPos).
+; I:DE Pointer to position (type: tinypos_t).
 ; O:F Z set if position is within the area specified.
 ;   Point HL at permitted_bounds[A]
 within_camp_bounds:
@@ -6523,7 +6728,9 @@ within_camp_bounds_1:
   AND B                   ; Return with flags Z (within area)
   RET                     ;
 
-; Wave the morale flag.
+; Wave morale flag
+;
+; This waves the morale flag up and down.
 ;
 ; Used by the routines at main_loop and menu_screen.
 wave_morale_flag:
@@ -6564,7 +6771,9 @@ wave_morale_flag_3:
   LD BC,$0319             ; Plot the flag always at 24x25 pixels in size
   JP plot_bitmap          ; Exit via plot_bitmap
 
-; Set the screen attributes of the morale flag.
+; Set morale flag screen attributes
+;
+; This sets the screen attributes for the morale flag.
 ;
 ; Used by the routines at in_permitted_area and main.
 ;
@@ -6584,7 +6793,9 @@ set_morale_flag_screen_attributes_0:
   DJNZ set_morale_flag_screen_attributes_0 ; ...loop
   RET                     ; Return
 
-; Given a screen address, returns the same position on the next scanline up.
+; Next scanline up
+;
+; This, given a screen address, returns the same position on the scanline above.
 ;
 ; Spectrum screen memory addresses have the form:
 ;
@@ -6624,7 +6835,9 @@ next_scanline_up_1:
   ADD HL,DE               ; Add
   RET                     ; Return
 
-; Delay loop called only when the hero is indoors.
+; Interior delay loop
+;
+; This slows down the game to stop it becoming unplayable when showing indoor scenes.
 ;
 ; Used by the routine at main_loop.
 interior_delay_loop:
@@ -6636,11 +6849,11 @@ interior_delay_loop_0:
   JR NZ,interior_delay_loop_0 ;
   RET                     ; Return
 
-; Ring the alarm bell.
+; Ring bell
+;
+; This rings the alarm bell. It is called three times from main_loop.
 ;
 ; Used by the routine at main_loop.
-;
-; Called three times from main_loop.
 ring_bell:
   LD HL,bell              ; Point HL at bell ring counter/flag
   LD A,(HL)               ; Fetch its value
@@ -6673,7 +6886,9 @@ ring_bell_2:
   LD DE,bell_ringer_bitmap_off ; Point DE at bell_ringer_bitmap_on
 ; FALL THROUGH to plot_ringer.
 
-; Plot ringer.
+; Plot ringer
+;
+; This draws the bell ringer.
 ;
 ; Used by the routine at ring_bell.
 ;
@@ -6683,7 +6898,9 @@ plot_ringer:
   LD BC,$010C             ; Plot the bell always at 8x12 pixels in size, exiting via it
   JP plot_bitmap          ;
 
-; Increase morale level.
+; Increase morale
+;
+; This increases the morale level by the amount specified in B.
 ;
 ; Used by the routines at increase_morale_by_10_score_by_50 and increase_morale_by_5_score_by_5.
 ;
@@ -6696,7 +6913,9 @@ increase_morale:
   LD A,$70                ;
 ; FALL THROUGH into set_morale.
 
-; Set morale level.
+; Set morale
+;
+; This sets the morale level to the amount specified in A.
 ;
 ; Used by the routines at increase_morale and decrease_morale.
 ;
@@ -6705,7 +6924,9 @@ set_morale:
   LD (morale),A           ; Set morale level to A
   RET                     ; Return
 
-; Decrease morale level.
+; Decrease morale
+;
+; This decreases the morale level by the amount specified in B.
 ;
 ; Used by the routines at event_another_day_dawns, searchlight_caught, solitary and item_discovered.
 ;
@@ -6717,7 +6938,7 @@ decrease_morale:
   XOR A                   ;
   JR set_morale           ; Jump to set_morale
 
-; Increase morale by 10, score by 50.
+; Increase morale by 10, score by 50
 ;
 ; Used by the routines at accept_bribe, action_red_cross_parcel, action_poison, action_uniform, action_shovel, action_key and action_papers.
 increase_morale_by_10_score_by_50:
@@ -6726,7 +6947,7 @@ increase_morale_by_10_score_by_50:
   LD B,$32                ; Increase score by 50, exiting via it
   JR increase_score       ;
 
-; Increase morale by 5, score by 5.
+; Increase morale by 5, score by 5
 ;
 ; Used by the routine at pick_up_item.
 increase_morale_by_5_score_by_5:
@@ -6734,7 +6955,9 @@ increase_morale_by_5_score_by_5:
   CALL increase_morale    ;
   JR increase_score       ; Increase score by 5, exiting via it
 
-; Increases the score then plots it.
+; Increase score
+;
+; This increases the score by the amount specified in B then plots it.
 ;
 ; Used by the routines at enter_room, increase_morale_by_10_score_by_50 and increase_morale_by_5_score_by_5.
 ;
@@ -6759,7 +6982,9 @@ increase_score_1:
   DJNZ increase_score_0   ; ...loop until the (score specified on entry) turns have been had
 ; FALL THROUGH into plot_score.
 
-; Draws the current score to screen.
+; Plot score
+;
+; This draws the current score to the screen.
 ;
 ; Used by the routines at reset_game and main.
 plot_score:
@@ -6776,7 +7001,9 @@ plot_score_0:
   DJNZ plot_score_0       ; ...loop until all digits plotted
   RET                     ; Return
 
-; Plays a sound.
+; Play speaker
+;
+; This plays the speaker for B iterations with a delay C.
 ;
 ; Used by the routines at pick_up_item, drop_item, ring_bell, spawn_character and target_reached.
 ;
@@ -6797,9 +7024,9 @@ play_speaker_1:
   DJNZ play_speaker_0     ; ...loop
   RET                     ; Return
 
-; Game counter.
+; Game counter
 ;
-; Counts 00..FF then wraps.
+; This counts $00..$FF then wraps around.
 ;
 ; Read-only by main_loop, picking_lock, cutting_wire, action_wiresnips, action_lockpick.
 ;
@@ -6807,7 +7034,9 @@ play_speaker_1:
 game_counter:
   DEFB $00
 
-; Bell.
+; Bell
+;
+; This is the state of the bell.
 ;
 ; +-------+-------------------+
 ; | Value | Meaning           |
@@ -6824,11 +7053,11 @@ game_counter:
 bell:
   DEFB $FF
 
-; Unreferenced byte.
+; Unreferenced byte
 LA131:
   DEFB $0A
 
-; Score digits.
+; Score digits
 ;
 ; Read-only by plot_score.
 ;
@@ -6836,13 +7065,17 @@ LA131:
 score_digits:
   DEFB $00,$00,$00,$00,$00
 
-; 'Hero is at breakfast' flag.
+; Hero in breakfast
+;
+; This is the 'hero is at breakfast' flag.
 ;
 ; Write/read-write by process_player_input, end_of_breakfast, hero_sit_sleep_common.
 hero_in_breakfast:
   DEFB $00
 
-; 'Red morale flag' flag.
+; Red flag
+;
+; This is the 'red morale flag' flag.
 ;
 ; +-------+-------------------------------------+
 ; | Value | Meaning                             |
@@ -6857,9 +7090,9 @@ hero_in_breakfast:
 red_flag:
   DEFB $00
 
-; Automatic player counter.
+; Automatic player counter
 ;
-; Counts down until zero at which point CPU control of the player is assumed. It's usually set to 31 by input events.
+; This counts down while there are no input events. An input event will reset it to 31. When it reaches zero the CPU will assume control of the hero.
 ;
 ; Read-only by touch, automatics, character_behaviour.
 ;
@@ -6867,11 +7100,9 @@ red_flag:
 automatic_player_counter:
   DEFB $00
 
-; 'In solitary' flag.
+; In solitary
 ;
-; Stops set_hero_route working.
-;
-; Used to set flag colour.
+; This is the 'in solitary' flag. When set ($FF) it stops set_hero_route working, stops automatics from running, stops process_player_input from running and in_permitted_area too.
 ;
 ; Read-only by process_player_input, in_permitted_area, set_hero_route, automatics.
 ;
@@ -6879,9 +7110,9 @@ automatic_player_counter:
 in_solitary:
   DEFB $00
 
-; 'Morale exhausted' flag.
+; Morale exhausted
 ;
-; Inhibits user input when non-zero.
+; This is the 'morale exhausted' flag. It inhibits user input when non-zero.
 ;
 ; Set by check_morale.
 ;
@@ -6893,9 +7124,9 @@ in_solitary:
 morale_exhausted:
   DEFB $00
 
-; Remaining morale.
+; Remaining morale
 ;
-; Ranges morale_MIN..morale_MAX.
+; This is the hero's current morale level. It ranges from morale_MIN (0) to morale_MAX (112).
 ;
 ; Read-only by check_morale, wave_morale_flag.
 ;
@@ -6903,9 +7134,9 @@ morale_exhausted:
 morale:
   DEFB $70
 
-; Game clock.
+; Clock
 ;
-; Ranges 0..139.
+; This is the game clock. It ranges from 0 to 139.
 ;
 ; Read-only by in_permitted_area.
 ;
@@ -6913,9 +7144,9 @@ morale:
 clock:
   DEFB $07
 
-; 'Character index is valid' flag.
+; Entered move_a_character
 ;
-; In character_bed_state etc.: when non-zero, character_index is valid, otherwise IY points to character_struct.
+; This flag is set when character_index is valid. In character_bed_state etc.: when non-zero, character_index is valid, otherwise IY points to a character_struct.
 ;
 ; Read-only by charevnt_bed, charevnt_breakfast.
 ;
@@ -6923,7 +7154,9 @@ clock:
 entered_move_a_character:
   DEFB $00
 
-; 'Hero in bed' flag.
+; Hero in bed
+;
+; This is the 'hero in bed' flag.
 ;
 ; Read-only by event_night_time,
 ;
@@ -6931,21 +7164,25 @@ entered_move_a_character:
 hero_in_bed:
   DEFB $FF
 
-; Currently displayed morale.
+; Displayed morale
 ;
-; This lags behind actual morale while the flag moves steadily to its target.
+; This is the currently-displayed morale. It lags behind the actual morale at morale while the flag drifts to its target level.
 ;
 ; Write/read-write by wave_morale_flag.
 displayed_morale:
   DEFB $00
 
-; Pointer to the screen address where the morale flag was last plotted.
+; Morale flag screen address
+;
+; This is a pointer to the screen address where the morale flag was most recently plotted.
 ;
 ; Write/read-write by wave_morale_flag.
 moraleflag_screen_address:
   DEFW $5002
 
-; Address of door (in locked_doors[]) in which bit 7 is cleared when picked.
+; Pointer to door being lockpicked
+;
+; This is the address of a door (in locked_doors) in which bit 7 is cleared when successfully picked.
 ;
 ; Read-only by picking_lock.
 ;
@@ -6953,9 +7190,9 @@ moraleflag_screen_address:
 ptr_to_door_being_lockpicked:
   DEFW $0000
 
-; The game time when player control will be restored.
+; Player locked out until
 ;
-; e.g. when picking a lock or cutting wire.
+; This is the game time at which player control will be restored, e.g. when picking a lock or cutting though a wire fence.
 ;
 ; Read-only by picking_lock, cutting_wire.
 ;
@@ -6963,7 +7200,7 @@ ptr_to_door_being_lockpicked:
 player_locked_out_until:
   DEFB $00
 
-; 'Night-time' flag.
+; This is the 'night-time' flag
 ;
 ; +-------+------------+
 ; | Value | Meaning    |
@@ -6978,9 +7215,9 @@ player_locked_out_until:
 day_or_night:
   DEFB $00
 
-; Bell ringer bitmaps.
+; Bell ringer bitmaps
 ;
-; These are the bitmaps for the left hand side of the bell graphic which animates when the bell rings.
+; These are the graphics for the ringer on the left hand side of the bell which animates while the bell rings.
 ;
 ; 8x12 pixels.
 bell_ringer_bitmap_off:
@@ -7010,11 +7247,11 @@ bell_ringer_bitmap_on:
   DEFB $02
   DEFB $01
 
-; Set game window attributes.
+; Set game window attributes
+;
+; This, starting at $5847, sets 23 columns of 16 rows to the specified attribute byte.
 ;
 ; Used by the routines at pick_up_item, drop_item, event_another_day_dawns, screen_reset, searchlight_mask_test and choose_keys.
-;
-; Starting at $5847, set 23 columns of 16 rows to the specified attribute byte.
 ;
 ; I:A Attribute byte.
 set_game_window_attributes:
@@ -7034,31 +7271,31 @@ set_game_window_attributes_1:
   JP NZ,set_game_window_attributes_0 ; ...loop
   RET                     ; Return
 
-; Timed events.
+; Timed events
 ;
-; Array of 15 structures which map game times to event handlers.
+; This is an array of fifteen structures which maps the time of in-game events to their event handlers.
 timed_events:
-  DEFB $00,$D3,$A1        ; (   0, event_another_day_dawns ),
-  DEFB $08,$E7,$A1        ; (   8, event_wake_up ),
-  DEFB $0C,$28,$A2        ; (  12, event_new_red_cross_parcel ),
-  DEFB $10,$F0,$A1        ; (  16, event_go_to_roll_call ),
-  DEFB $14,$9A,$EF        ; (  20, event_roll_call ),
-  DEFB $15,$F9,$A1        ; (  21, event_go_to_breakfast_time ),
-  DEFB $24,$02,$A2        ; (  36, event_breakfast_time ),
-  DEFB $2E,$06,$A2        ; (  46, event_go_to_exercise_time ),
-  DEFB $40,$15,$A2        ; (  64, event_exercise_time ),
-  DEFB $4A,$F0,$A1        ; (  74, event_go_to_roll_call ),
-  DEFB $4E,$9A,$EF        ; (  78, event_roll_call ),
-  DEFB $4F,$19,$A2        ; (  79, event_go_to_time_for_bed ),
-  DEFB $62,$64,$A2        ; (  98, event_time_for_bed ),
-  DEFB $64,$C3,$A1        ; ( 100, event_night_time ),
-  DEFB $82,$6A,$A2        ; ( 130, event_search_light ),
+  DEFB $00,$D3,$A1        ; (  0, event_another_day_dawns),
+  DEFB $08,$E7,$A1        ; (  8, event_wake_up),
+  DEFB $0C,$28,$A2        ; ( 12, event_new_red_cross_parcel),
+  DEFB $10,$F0,$A1        ; ( 16, event_go_to_roll_call),
+  DEFB $14,$9A,$EF        ; ( 20, event_roll_call),
+  DEFB $15,$F9,$A1        ; ( 21, event_go_to_breakfast_time),
+  DEFB $24,$02,$A2        ; ( 36, event_breakfast_time),
+  DEFB $2E,$06,$A2        ; ( 46, event_go_to_exercise_time),
+  DEFB $40,$15,$A2        ; ( 64, event_exercise_time),
+  DEFB $4A,$F0,$A1        ; ( 74, event_go_to_roll_call),
+  DEFB $4E,$9A,$EF        ; ( 78, event_roll_call),
+  DEFB $4F,$19,$A2        ; ( 79, event_go_to_time_for_bed),
+  DEFB $62,$64,$A2        ; ( 98, event_time_for_bed),
+  DEFB $64,$C3,$A1        ; (100, event_night_time),
+  DEFB $82,$6A,$A2        ; (130, event_search_light),
 
-; Dispatch timed events.
+; Dispatch timed event
+;
+; This dispatches time-based game events like parcels, meals, exercise times and roll calls.
 ;
 ; Used by the routine at main_loop.
-;
-; Dispatches time-based game events like parcels, meals, exercise and roll calls.
 ;
 ; Increment the clock, wrapping at 140.
 dispatch_timed_event:
@@ -7093,7 +7330,9 @@ event_found:
   LD BC,bell              ; Point BC at bell
   JP (HL)                 ; Jump to the event handler
 
-; Event: Night time.
+; Event: Night time
+;
+; This makes the hero move to bed, then sets the night-time flag.
 event_night_time:
   LD A,(hero_in_bed)      ; Is the hero already in his bed?
   AND A                   ;
@@ -7104,7 +7343,9 @@ event_night_time_0:
   LD A,$FF                ; Set the night time flag ($FF)
   JR set_attrs            ; Jump to set_attrs
 
-; Event: Another day dawns.
+; Event: Another day dawns
+;
+; This queues the "ANOTHER DAY DAWNS" message, decreases morale by 25, clears the night-time flag, then sets the game window attributes back to daylight colours.
 event_another_day_dawns:
   LD B,$13                ; Queue the message "ANOTHER DAY DAWNS"
   CALL queue_message      ;
@@ -7117,33 +7358,43 @@ set_attrs:
   CALL choose_game_window_attributes ; Choose game window attributes
   JP set_game_window_attributes ; Exit via set_game_window_attributes
 
-; Event: Wake up.
+; Event: Wake up
+;
+; This rings the bell then queues the "TIME TO WAKE UP" message.
 event_wake_up:
   LD (BC),A               ; Ring the bell 40 times as passed in
   LD B,$01                ; Queue the message "TIME TO WAKE UP"
   CALL queue_message      ;
   JP wake_up              ; Exit via wake_up
 
-; Event: Go to roll call.
+; Event: Go to roll call
+;
+; This rings the bell then queues the "ROLL CALL" message.
 event_go_to_roll_call:
   LD (BC),A               ; Ring the bell 40 times as passed in
   LD B,$08                ; Queue the message "ROLL CALL"
   CALL queue_message      ;
   JP go_to_roll_call      ; Exit via go_to_roll_call
 
-; Event: Go to breakfast time.
+; Event: Go to breakfast time
+;
+; This rings the bell then queues the "BREAKFAST TIME" message.
 event_go_to_breakfast_time:
   LD (BC),A               ; Ring the bell 40 times as passed in
   LD B,$02                ; Queue the message "BREAKFAST TIME"
   CALL queue_message      ;
   JP set_route_go_to_breakfast ; Exit via set_route_go_to_breakfast
 
-; Event: Breakfast time.
+; Event: Breakfast time
+;
+; This rings the bell.
 event_breakfast_time:
   LD (BC),A               ; Ring the bell 40 times as passed in
   JP end_of_breakfast     ; Exit via end_of_breakfast
 
-; Event: Go to exercise time.
+; Event: Go to exercise time
+;
+; This rings the bell, queues the message "EXERCISE TIME", then unlocks the exercise yard gates.
 event_go_to_exercise_time:
   LD (BC),A               ; Ring the bell 40 times as passed in
   LD B,$03                ; Queue the message "EXERCISE TIME"
@@ -7152,12 +7403,16 @@ event_go_to_exercise_time:
   LD (locked_doors),HL    ;
   JP set_route_go_to_yard ; Exit via set_route_go_to_yard
 
-; Event: Exercise time.
+; Event: Exercise time
+;
+; This rings the bell.
 event_exercise_time:
   LD (BC),A               ; Ring the bell 40 times as passed in
   JP set_route_go_to_yard_reversed ; Exit via set_route_go_to_yard_reversed
 
-; Event: Go to time for bed.
+; Event: Go to time for bed
+;
+; This rings the bell, locks the gates to the exercise yard, then queues the message "TIME FOR BED".
 event_go_to_time_for_bed:
   LD (BC),A               ; Ring the bell 40 times as passed in
   LD HL,$8180             ; Lock the gates to the exercise yard
@@ -7166,7 +7421,9 @@ event_go_to_time_for_bed:
   CALL queue_message      ;
   JP go_to_time_for_bed   ; Exit via go_to_time_for_bed
 
-; Event: New red cross parcel.
+; Event: New red cross parcel
+;
+; This selects the next red cross parcel, spawns it, if required, then queues the mesage "RED CROSS PARCEL".
 ;
 ; Don't deliver a new red cross parcel while the previous one still exists.
 event_new_red_cross_parcel:
@@ -7210,17 +7467,23 @@ red_cross_parcel_contents_list:
   DEFB $05                ; item_BRIBE
   DEFB $0F                ; item_COMPASS
 
-; Current contents of red cross parcel.
+; Red cross parcel current contents
+;
+; This holds the current contents of the red cross parcel.
 red_cross_parcel_current_contents:
   DEFB $FF
 
-; Event: Time for bed.
+; Event: Time for bed
+;
+; This sets the routes for guard 12 to 15 to enter huts 2 and 3.
 event_time_for_bed:
   LD A,$A6                ; Set route to (REVERSED routeindex_38_GUARD_12_BED, 3)
   LD C,$03                ;
   JR set_guards_route     ; Jump to $A26E
 
-; Event: Search light.
+; Event: Search light
+;
+; This sets the routes for guards 12 to 15 to leave huts 2 and 3.
 event_search_light:
   LD A,$26                ; Set route to (routeindex_38_GUARD_12_BED, 0)
   LD C,$00                ;
@@ -7245,7 +7508,9 @@ event_search_light_0:
   DJNZ event_search_light_0 ; ...loop
   RET                     ; Return
 
-; List of non-player characters: six prisoners and four guards.
+; Prisoners and guards
+;
+; This is a list of the non-player characters: six prisoners and four guards.
 ;
 ; Read-only by set_prisoners_and_guards_route, set_prisoners_and_guards_route_B.
 prisoners_and_guards:
@@ -7260,7 +7525,9 @@ prisoners_and_guards:
   DEFB $18                ; character_24_PRISONER_5
   DEFB $19                ; character_25_PRISONER_6
 
-; Wake up.
+; Wake up
+;
+; This gets the hero and the six other prisoners out of bed.
 ;
 ; Used by the routine at event_wake_up.
 wake_up:
@@ -7321,10 +7588,12 @@ wake_up_3:
   CP $06                  ;
   RET NC                  ;
   CALL setup_room         ; Expand out the room definition for room_index
-  CALL plot_interior_tiles ; Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer
+  CALL plot_interior_tiles ; Render visible tiles array into the screen buffer.
   RET                     ; Return
 
-; End of breakfast time.
+; End of breakfast
+;
+; This makes the hero and the six other prisoners finish breakfast.
 ;
 ; Used by the routine at event_breakfast_time.
 end_of_breakfast:
@@ -7377,9 +7646,11 @@ end_of_breakfast_2:
   CP $1D                  ;
   RET NC                  ;
   CALL setup_room         ; Expand out the room definition for room_index
-  JP plot_interior_tiles  ; Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer and exit via (note: different to wake_up's end)
+  JP plot_interior_tiles  ; Render visible tiles array into the screen buffer and exit via (note: different to wake_up's end)
 
-; Set the hero's route, unless he's in solitary.
+; Set hero route
+;
+; This sets the hero's route, unless he's in solitary.
 ;
 ; Used by the routines at in_permitted_area, event_night_time, wake_up, end_of_breakfast, go_to_time_for_bed, character_bed_vischar, set_route_go_to_yard, set_route_go_to_yard_reversed, set_route_go_to_breakfast, charevnt_breakfast_vischar
 ; and go_to_roll_call.
@@ -7392,7 +7663,9 @@ set_hero_route:
   RET NZ                  ;
 ; FALL THROUGH into set_hero_route_force
 
-; Set the hero's route
+; Set hero route (force)
+;
+; This sets the hero's route, even if he's in solitary.
 ;
 ; Used by the routine at character_event.
 ;
@@ -7408,7 +7681,9 @@ set_hero_route_force:
   CALL set_route          ; Set the route
   RET                     ; Return
 
-; Go to time for bed.
+; Go to time for bed
+;
+; This makes the hero and other characters head to bed.
 ;
 ; Used by the routine at event_go_to_time_for_bed.
 go_to_time_for_bed:
@@ -7419,7 +7694,9 @@ go_to_time_for_bed:
   LD C,$02                ; Set route step to 2
   JP set_prisoners_and_guards_route_B ; Set the routes of all characters in prisoners_and_guards and exit via
 
-; Set individual routes for all characters in prisoners_and_guards.
+; Set prisoners and guards route (variant "A")
+;
+; This sets individual routes for all characters in prisoners_and_guards.
 ;
 ; The route passed in (A',C) is assigned to the first character. The second character gets route (A'+1,C) and so on.
 ;
@@ -7445,7 +7722,9 @@ set_prisoners_and_guards_route_0:
   DJNZ set_prisoners_and_guards_route_0 ; ...loop
   RET                     ; Return
 
-; Set joint routes for all characters in prisoners_and_guards.
+; Set prisoners and guards route (variant "B")
+;
+; This sets joint routes for all characters in prisoners_and_guards.
 ;
 ; The first half of the list (guards 12,13 and prisoners 1,2,3) are set to the route passed in (A',C). The second half of the list (guards 14,15 and prisoners 4,5,6) are set to route (A'+1,C).
 ;
@@ -7476,11 +7755,11 @@ set_prisoners_and_guards_route_B_1:
   DJNZ set_prisoners_and_guards_route_B_0 ; ...loop
   RET                     ; Return
 
-; Set the route for a character.
+; Set character route
+;
+; This finds the charstruct, or vischar, of the specified character index (A) and stores the route (A',C) in it.
 ;
 ; Used by the routines at event_search_light, set_prisoners_and_guards_route and set_prisoners_and_guards_route_B.
-;
-; Finds a charstruct, or a vischar, and stores a route.
 ;
 ; I:A Character index.
 ; I:A' Route index.
@@ -7524,7 +7803,9 @@ set_character_route_vischar_found:
   CALL store_route        ; Store the route at HL
 ; FALL THROUGH into set_route.
 
-; Calls get_target and assigns the result into vischar.
+; Set route
+;
+; This fetches the current target coordinates using get_target then assigns the result into the vischar (HL).
 ;
 ; Used by the routine at set_hero_route.
 ;
@@ -7570,7 +7851,9 @@ set_route_exit:
   POP BC                  ; Restore
   RET                     ; Return
 
-; Store a route at the specified address.
+; Store route
+;
+; This stores the route in (A',C) at HL.
 ;
 ; Used by the routine at set_character_route.
 ;
@@ -7586,7 +7869,9 @@ store_route:
   LD (HL),C               ;
   RET                     ; Return
 
-; Character goes to bed: used when entered_move_a_character is non-zero.
+; Character -> bed (state)
+;
+; This is the entry point for character_bed_common used when entered_move_a_character is non-zero.
 ;
 ; Used by the routine at character_event.
 ;
@@ -7595,7 +7880,9 @@ character_bed_state:
   LD A,(character_index)  ; Get the current character index
   JR character_bed_common ; Jump to character_bed_common
 
-; Character goes to bed: used when entered_move_a_character is zero.
+; Character -> bed (vischar)
+;
+; This is the entry point for character_bed_common used when entered_move_a_character is zero.
 ;
 ; Used by the routine at character_event.
 ;
@@ -7607,7 +7894,9 @@ character_bed_vischar:
   LD BC,$2C00             ; Otherwise set the commandant's route to ($2C,$00) and exit via
   JP set_hero_route       ;
 
-; Common end of above two routines.
+; Character -> bed (common)
+;
+; This is the common tail of the previous two routines. It uses the character index (in A) to assign a "walk to bed" route to the specified character.
 ;
 ; Used by the routines at character_bed_state and character_bed_vischar.
 ;
@@ -7632,7 +7921,9 @@ character_bed_common_0:
   LD (HL),A               ;
   RET                     ; Return
 
-; Character sits.
+; Character sits
+;
+; This makes a character disappear when it sits down and updates the room definition to show them sitting.
 ;
 ; Used by the routine at character_event.
 ;
@@ -7663,7 +7954,9 @@ character_sits_0:
   LD C,$17                ; Otherwise room is room_23_MESS_HALL
   JR character_sit_sleep_common ; Jump to character_sit_sleep_common
 
-; Character sleeps.
+; Character sleeps
+;
+; This makes a character disappear when it gets into bed and updates the room definition to show them sleeping.
 ;
 ; Used by the routine at character_event.
 ;
@@ -7693,7 +7986,9 @@ character_sleeps_0:
   LD C,$05                ; Room is room_5_HUT3RIGHT
 ; FALL THROUGH into character_sit_sleep_common.
 
-; Common end of character sits/sleeps.
+; Character sit/sleep (common)
+;
+; This makes characters disappear, repainting the screen if required.
 ;
 ; Used by the routines at character_sits and character_sleeps.
 ;
@@ -7721,14 +8016,18 @@ character_sit_sleep_refresh:
   LD (HL),$FF             ; Set room to room_NONE ($FF)
 ; FALL THROUGH into select_room_and_plot.
 
-; Select room and plot.
+; Select room and plot
+;
+; This expands out the current room definition into the visible tiles array then repaints those tiles to the screen.
 ;
 ; Used by the routine at hero_sit_sleep_common.
 select_room_and_plot:
   CALL setup_room         ; Expand out the room definition for room_index
-  JP plot_interior_tiles  ; Expand tile buffer into screen buffer, exit via
+  JP plot_interior_tiles  ; Render visible tiles array into the screen buffer, exit via
 
-; The hero sits.
+; Hero sits
+;
+; This is called when the hero should sit down in the mess hall for breakfast.
 ;
 ; Used by the routine at character_event.
 hero_sits:
@@ -7737,7 +8036,9 @@ hero_sits:
   LD HL,hero_in_breakfast ; Point HL at the hero_in_breakfast flag
   JR hero_sit_sleep_common ; Jump to hero_sit_sleep_common
 
-; The hero sleeps.
+; Hero sleeps
+;
+; This is called when the hero should sleep.
 ;
 ; Used by the routines at reset_game and character_event.
 hero_sleeps:
@@ -7746,7 +8047,9 @@ hero_sleeps:
   LD HL,hero_in_bed       ; Point HL at the hero_in_bed flag
 ; FALL THROUGH into hero_sit_sleep_common.
 
-; Common end of hero sits/sleeps.
+; Hero sit/sleep (common)
+;
+; This is the common end of the above two routines. It sets the appropriate breakfast/bed flag, halts the hero, sets his position to (0,0), recalculates his isometric position then re-plots the room.
 ;
 ; Used by the routine at hero_sits.
 ;
@@ -7757,7 +8060,7 @@ hero_sit_sleep_common:
   LD HL,$8002             ;
   LD (HL),A               ;
 ; Set hero position (x,y) to zero.
-  LD HL,$800F                  ; Zero $800F..$8012
+  LD HL,$800F                  ; Zero $800F.$8012
   LD B,$04                     ;
 hero_sit_sleep_common_0:
   LD (HL),A                    ;
@@ -7767,7 +8070,9 @@ hero_sit_sleep_common_0:
   CALL calc_vischar_iso_pos_from_vischar ;
   JR select_room_and_plot ; Exit via select_room_and_plot
 
-; Set hero's and prisoners_and_guards's routes to "go to yard".
+; Set route: "go to yard"
+;
+; This sets the hero's and prisoners_and_guards's routes to "go to yard".
 ;
 ; Used by the routine at event_go_to_exercise_time.
 set_route_go_to_yard:
@@ -7778,7 +8083,9 @@ set_route_go_to_yard:
   LD C,$00                            ;
   JP set_prisoners_and_guards_route_B ;
 
-; Set hero's and prisoners_and_guards's routes to "go to yard" reversed.
+; Set route: "go to yard" reversed
+;
+; This sets the hero's and prisoners_and_guards's routes to "go to yard" reversed.
 ;
 ; Used by the routine at event_exercise_time.
 set_route_go_to_yard_reversed:
@@ -7789,7 +8096,9 @@ set_route_go_to_yard_reversed:
   LD C,$04                            ;
   JP set_prisoners_and_guards_route_B ;
 
-; Set hero's and prisoners_and_guards's routes to "go to breakfast".
+; Set route: "go to breakfast"
+;
+; This sets the hero's and prisoners_and_guards's routes to "go to breakfast".
 ;
 ; Used by the routine at event_go_to_breakfast_time.
 set_route_go_to_breakfast:
@@ -7800,16 +8109,18 @@ set_route_go_to_breakfast:
   LD C,$00                            ;
   JP set_prisoners_and_guards_route_B ;
 
-; Character event: used when entered_move_a_character is non-zero.
+; Character event: breakfast (state)
+;
+; This is the entry point for charevnt_breakfast_common used when entered_move_a_character is non-zero.
 ;
 ; Used by the routine at character_event.
-;
-; Something character related [very similar to the routine at $A3F3].
 charevnt_breakfast_state:
   LD A,(character_index)  ; Get the current character index
   JR charevnt_breakfast_common ; Jump to charevnt_breakfast_common
 
-; Character event: used when entered_move_a_character is zero.
+; Character event: breakfast (vischar)
+;
+; This is the entry point for charevnt_breakfast_common used when entered_move_a_character is zero.
 ;
 ; Used by the routine at character_event.
 charevnt_breakfast_vischar:
@@ -7819,9 +8130,9 @@ charevnt_breakfast_vischar:
   LD BC,$2B00             ; Otherwise set the commandant's route to ($2B,$00) and exit via
   JP set_hero_route       ;
 
-; Common end of above two routines.
+; Character event: breakfast (common)
 ;
-; Sets routes for prisoners and guards.
+; This is the common end of the above two routines. It sets routes for prisoners and guards.
 ;
 ; Used by the routines at charevnt_breakfast_state and charevnt_breakfast_vischar.
 ;
@@ -7845,7 +8156,9 @@ charevnt_breakfast_common_1:
   LD (HL),A               ;
   RET                     ; Return
 
-; Go to roll call.
+; Go to roll call
+;
+; This sends the hero and all the characters in prisoners_and_guards to roll call.
 ;
 ; Used by the routine at event_go_to_roll_call.
 go_to_roll_call:
@@ -7856,22 +8169,45 @@ go_to_roll_call:
   LD BC,$2D00             ; Set the hero's route to (routeindex_45_HERO_ROLL_CALL, 0)
   JP set_hero_route       ;
 
-; Reset the screen.
+; Screen reset
+;
+; This wipes and re-renders the visible tiles array into window_buf. It then zoomboxes the window_buf onto the screen and does a final plot after that.
 ;
 ; Used by the routines at keyscan_break and escaped.
 screen_reset:
   CALL wipe_visible_tiles ; Wipe the visible tiles array
-  CALL plot_interior_tiles ; Expand tile buffer into screen buffer
+  CALL plot_interior_tiles ; Render visible tiles array into the screen buffer
   CALL zoombox            ; Zoombox the scene onto the screen
   CALL plot_game_window   ; Plot the game screen
   LD A,$07                ; Set A to attribute_WHITE_OVER_BLACK
   JP set_game_window_attributes ; Set game window attributes (exit via)
 
-; Hero has escaped.
+; Escaped
+;
+; This is called when the hero has made an escape attempt. It prints the 'WELL DONE' message then tests to see if the correct objects were used in the escape attempt. It then prints an according sequence of messages. If the attempt was
+; successful then on restart the game is reset, otherwise the hero is sent to solitary.
+;
+; The items map to win-lose states as follows:
+;
+; +-------------+------------------------------------+---------------------------------------------+--------+
+; | Combination | Items                              | Message                                     | Result |
+; |             +---------+-------+--------+---------+                                             |        |
+; |             | Uniform | Purse | Papers | Compass |                                             |        |
+; +-------------+---------+-------+--------+---------+---------------------------------------------+--------+
+; | 0           | .       | .     | .      | .       | "BUT WERE RECAPTURED TOTALLY UNPREPARED"    | Lose   |
+; | 1           | .       | .     | .      | X       | "BUT WERE RECAPTURED DUE TO LACK OF PAPERS" | Lose   |
+; | 2           | .       | .     | X      | .       | "BUT WERE RECAPTURED TOTALLY LOST"          | Lose   |
+; | 3           | .       | .     | X      | X       | (the game offers no extra message)          | Win    |
+; | 4           | .       | X     | .      | .       | "BUT WERE RECAPTURED TOTALLY LOST"          | Lose   |
+; | 5           | .       | X     | .      | X       | "AND WILL CROSS THE BORDER SUCCESSFULLY"    | Win    |
+; | 6           | .       | X     | X      | .       | "BUT WERE RECAPTURED TOTALLY LOST"          | Lose   |
+; | 8           | X       | .     | .      | .       | "BUT WERE RECAPTURED AND SHOT AS A SPY"     | Lose   |
+; | 9           | X       | .     | .      | X       | "BUT WERE RECAPTURED AND SHOT AS A SPY"     | Lose   |
+; | 10          | X       | .     | X      | .       | "BUT WERE RECAPTURED AND SHOT AS A SPY"     | Lose   |
+; | 12          | X       | X     | .      | .       | "BUT WERE RECAPTURED AND SHOT AS A SPY"     | Lose   |
+; +-------------+---------+-------+--------+---------+---------------------------------------------+--------+
 ;
 ; Used by the routine at in_permitted_area.
-;
-; Print 'well done' message then test to see if the correct objects were used in the escape attempt.
 escaped:
   CALL screen_reset       ; Reset the screen
 ; Print standard prefix messages.
@@ -7933,7 +8269,9 @@ escaped_1:
   JP NC,reset_game        ; Reset the game if so (exit via)
   JP solitary             ; Otherwise send the hero to solitary (exit via)
 
-; Check for any key press.
+; Keyscan all
+;
+; This tests for any key press.
 ;
 ; Used by the routine at escaped.
 ;
@@ -7951,7 +8289,9 @@ keyscan_all_0:
   XOR A                   ; No keys were pressed - return with Z set
   RET                     ;
 
-; Call item_to_escapeitem then merge result with a previous escapeitem.
+; Join item to escapeitem
+;
+; This calls item_to_escapeitem then merges the result with a previous escapeitem.
 ;
 ; Used by the routine at escaped.
 ;
@@ -7965,7 +8305,9 @@ join_item_to_escapeitem:
   LD C,A                  ;
   RET                     ; Return
 
-; Return a bitmask indicating the presence of items required for escape.
+; Item to escapeitem
+;
+; This returns a bitmask indicating the presence of the items required for escape.
 ;
 ; Used by the routine at join_item_to_escapeitem.
 ;
@@ -7993,9 +8335,9 @@ item_to_escapeitem_2:
   XOR A                   ; Otherwise return zero
   RET                     ;
 
-; Plot a screenlocstring.
+; screenlocstring plot
 ;
-; A screenlocstring is a structure consisting of a screen address at which to start drawing, a count of glyph indices and an array of that number of glyph indices.
+; This draws a screenlocstring to screen. A screenlocstring is a structure consisting of a screen address at which to start drawing, a count of glyph indices and an array of that number of glyph indices.
 ;
 ; Used by the routines at escaped, user_confirm and plot_statics_and_menu_text.
 ;
@@ -8019,7 +8361,7 @@ screenlocstring_loop:
   DJNZ screenlocstring_loop ; ...loop until the counter is zero
   RET                     ; Return
 
-; Escape messages.
+; Escape messages
 ;
 ; "WELL DONE"
 escape_strings:
@@ -8045,9 +8387,9 @@ escape_strings:
 ; "PRESS ANY KEY"
   DEFB $0D,$50,$0D,$18,$1A,$0E,$1B,$1B,$23,$0A,$17,$21,$23,$14,$0E,$21
 
-; Bitmap font definition.
+; Bitmap font
 ;
-; 0..9, A..Z (omitting O), space, full stop
+; This is the game's bitmap font. It contains 0..9, A..Z (omitting O, since the game reuses zero), space and full stop.
 bitmap_font:
   DEFB $00,$7C,$FE,$EE,$EE,$EE,$FE,$7C ; 0
   DEFB $00,$1E,$3E,$6E,$0E,$0E,$0E,$0E ; 1
@@ -8087,17 +8429,21 @@ bitmap_font:
   DEFB $00,$00,$00,$00,$00,$00,$00,$00 ; SPACE
   DEFB $00,$00,$00,$00,$00,$00,$30,$30 ; FULL STOP
 
-; An index used only by move_map().
+; move_map Y
+;
+; This is an index used only by move_map.
 move_map_y:
   DEFB $00
 
-; Game window plotting offset.
+; Game window offset
+;
+; This is the game window's scroll offset. It's (0,0) when displaying interior rooms, but varies when the exterior is shown.
 game_window_offset:
   DEFW $0000
 
-; Get supertiles.
+; Get supertiles
 ;
-; Using map_position copies supertile indices from map_tiles at $BCB8 into the map_buf buffer at $FF58.
+; This uses the position in map_position to choose which supertile indices to copy from map_tiles into the map_buf buffer at $FF58.
 ;
 ; Used by the routines at shunt_map_left, shunt_map_right, shunt_map_up_right, shunt_map_up, shunt_map_down, shunt_map_down_left and reset_outdoors.
 ;
@@ -8149,7 +8495,9 @@ get_supertiles_1:
   JP NZ,get_supertiles_1  ;
   RET                     ; Return
 
-; Plot the complete bottommost row of tiles.
+; Plot bottommost tiles
+;
+; This plots the complete bottommost row of tiles.
 ;
 ; Used by the routines at shunt_map_up_right and shunt_map_up.
 plot_bottommost_tiles:
@@ -8160,7 +8508,9 @@ plot_bottommost_tiles:
   LD DE,inputroutine_kempston_1 ; Point DE at the start of window_buf's final row (= window_buf + 24 * 16 * 8)
   JR plot_horizontal_tiles_common ; Jump to plot_horizontal_tiles_common
 
-; Plot the complete topmost row of tiles.
+; Plot topmost tiles
+;
+; This plots the complete topmost row of tiles.
 ;
 ; Used by the routines at shunt_map_down and shunt_map_down_left.
 plot_topmost_tiles:
@@ -8171,7 +8521,9 @@ plot_topmost_tiles:
   LD DE,$F290             ; Point DE at the start of window_buf's first row
 ; FALL THROUGH into plot_horizontal_tiles_common
 
-; Plots a single horizontal row of tiles to the screen buffer.
+; Plot horizontal tiles (common)
+;
+; This plots a single horizontal row of tiles to the screen buffer.
 ;
 ; Simultaneously updates the visible tiles buffer.
 ;
@@ -8284,9 +8636,9 @@ plot_horizontal_tiles_common_4:
   DJNZ plot_horizontal_tiles_common_4 ; ...loop
   RET                     ; Return
 
-; Plot all tiles.
+; Plot all tiles
 ;
-; Renders the complete screen by plotting all vertical columns in turn.
+; This renders the complete screen by plotting all vertical columns in turn.
 ;
 ; Used by the routines at pick_up_item and reset_outdoors.
 ;
@@ -8327,7 +8679,9 @@ plot_all_tiles_1:
   DJNZ plot_all_tiles_0   ; ...loop
   RET                     ; Return
 
-; Plot the complete rightmost column of tiles.
+; Plot rightmost tiles
+;
+; This plots the complete rightmost column of tiles.
 ;
 ; Used by the routines at shunt_map_left and shunt_map_down_left.
 plot_rightmost_tiles:
@@ -8344,7 +8698,9 @@ plot_rightmost_tiles_0:
   DEC A                   ; Decrement it
   JR plot_vertical_tiles_common ; Jump to plot_vertical_tiles_common
 
-; Plot the complete leftmost column of tiles.
+; Plot leftmost tiles
+;
+; This plots the complete leftmost column of tiles.
 ;
 ; Used by the routines at shunt_map_right and shunt_map_up_right.
 plot_leftmost_tiles:
@@ -8355,7 +8711,9 @@ plot_leftmost_tiles:
   LD A,(map_position)     ; Get the map's X coordinate
 ; FALL THROUGH into plot_vertical_tiles_common
 
-; Plots a single vertical row of tiles to the screen buffer.
+; Plot vertical tiles (common)
+;
+; This plots a single vertical row of tiles to the screen buffer.
 ;
 ; Simultaneously updates the visible tiles buffer.
 ;
@@ -8501,7 +8859,9 @@ plot_vertical_tiles_common_6:
   EX DE,HL                ; Transpose the tile_buf and map_buf pointers back
   RET                     ; Return
 
-; Call plot_tile then advance the screen buffer pointer in DE' by a row.
+; Plot tile, then advance
+;
+; This calls plot_tile then advances the screen buffer pointer in DE' by a row.
 ;
 ; Used by the routine at plot_vertical_tiles_common.
 ;
@@ -8520,7 +8880,9 @@ plot_tile_then_advance_0:
   EXX                     ; Unbank
   RET                     ; Return
 
-; Plot an exterior tile then advance DE' to the next column.
+; Plot tile
+;
+; This plots an exterior tile then advances DE' to the next column.
 ;
 ; Used by the routines at plot_horizontal_tiles_common and plot_tile_then_advance.
 ;
@@ -8575,7 +8937,9 @@ plot_tile_loop:
   EXX                     ; Re-bank input registers
   RET                     ; Return
 
-; Shunt the map left.
+; Shunt map left
+;
+; This moves the map left.
 ;
 ; Used by the routine at move_map.
 shunt_map_left:
@@ -8593,7 +8957,9 @@ shunt_map_left:
   CALL plot_rightmost_tiles ; Plot the complete rightmost column of tiles
   RET                     ; Return
 
-; Shunt the map right.
+; Shunt map right
+;
+; This moves the map right.
 ;
 ; Used by the routine at move_map.
 shunt_map_right:
@@ -8612,7 +8978,9 @@ shunt_map_right:
   CALL plot_leftmost_tiles ; Plot the complete leftmost column of tiles
   RET                     ; Return
 
-; Shunt the map up-right.
+; Shunt map up-right
+;
+; This moves the map up-right.
 ;
 ; Used by the routine at move_map.
 ;
@@ -8634,7 +9002,9 @@ shunt_map_up_right:
   CALL plot_leftmost_tiles ; Plot the complete leftmost column of tiles
   RET                     ; Return
 
-; Shunt the map up.
+; Shunt map up
+;
+; This moves the map up.
 ;
 ; Used by the routine at move_map.
 shunt_map_up:
@@ -8652,7 +9022,9 @@ shunt_map_up:
   CALL plot_bottommost_tiles ; Plot the complete bottommost row of tiles
   RET                     ; Return
 
-; Shunt the map down.
+; Shunt map down
+;
+; This moves the map down.
 ;
 ; Used by the routine at move_map.
 shunt_map_down:
@@ -8670,7 +9042,9 @@ shunt_map_down:
   CALL plot_topmost_tiles ; Plot the complete topmost row of tiles
   RET                     ; Return
 
-; Shunt the map down left.
+; Shunt map down-left
+;
+; This moves the map down-left.
 ;
 ; Used by the routine at move_map.
 shunt_map_down_left:
@@ -8690,9 +9064,9 @@ shunt_map_down_left:
   CALL plot_rightmost_tiles ; Plot the complete rightmost column of tiles
   RET                     ; Return
 
-; Move the map when the hero walks around outdoors.
+; Move map
 ;
-; The map is shunted around in the opposite direction to the apparent character motion.
+; This moves the map when the hero walks around outdoors. The map is shunted around in the opposite direction to the apparent character motion.
 ;
 ; Used by the routines at setup_movable_items and main_loop.
 move_map:
@@ -8836,21 +9210,23 @@ move_map_down_left:
   JP Z,shunt_map_down_left ;
   RET                     ; Otherwise move_map_y is 0 or 2 - return
 
-; Zoombox parameters.
+; Zoombox parameters
 zoombox_x:
-  DEFB $0C                ; X coordinate of left zoombox fill, in game window area
+  DEFB $0C                ; X coordinate of left zoombox fill, in game window area.
 zoombox_width:
-  DEFB $01                ; Maximum width (ish) of zoombox
+  DEFB $01                ; Maximum width (ish) of zoombox.
 zoombox_y:
-  DEFB $08                ; Y coordinate of top zoombox fill, in game window area
+  DEFB $08                ; Y coordinate of top zoombox fill, in game window area.
 zoombox_height:
-  DEFB $01                ; Maximum height (ish) of zoombox
+  DEFB $01                ; Maximum height (ish) of zoombox.
 
-; Game window current attribute byte.
+; Game window attribute
+;
+; This is a copy of the game window's current attribute byte. Assigned by set_attribute_from_A and used by zoombox_draw_tile_1 to set the attribute of a zoombox border tile.
 game_window_attribute:
-  DEFB $07                ; Assigned by set_attribute_from_A. Used by zoombox_draw_tile_1 to set the attribute of a zoombox border tile
+  DEFB $07
 
-; Choose game window attributes.
+; Choose game window attributes
 ;
 ; This uses the current room index and the night-time flag to decide which screen attributes should be used for the game window. Additionally, when in non-illuminated tunnel rooms it will wipe the visible tiles to obscure the tunnel's
 ; route.
@@ -8890,13 +9266,13 @@ choose_attribute_tunnel:
   JR Z,set_attribute_from_C ; Jump if so
 ; The hero holds no torch - wipe the tiles so that nothing gets drawn.
   CALL wipe_visible_tiles ; Wipe the visible tiles array
-  CALL plot_interior_tiles ; Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer
+  CALL plot_interior_tiles ; Render visible tiles array into the screen buffer
   LD A,$01                ; For a dark tunnel we use attribute_BLUE_OVER_BLACK
   JR set_attribute_from_A ; Jump to set_attribute_from_A
 
-; Zoombox.
+; Zoombox
 ;
-; Animate the window buffer onto the screen via a zooming box effect.
+; This animates the window buffer onto the screen using a zooming box effect.
 ;
 ; Used by the routines at enter_room, screen_reset and reset_outdoors.
 zoombox:
@@ -8960,7 +9336,9 @@ zoombox_4:
   JP C,zoombox_0          ;
   RET                     ; Return
 
-; Draw the zoombox contents.
+; Zoombox: fill
+;
+; This draws the zoombox contents.
 ;
 ; Used by the routine at zoombox.
 zoombox_fill:
@@ -9050,7 +9428,9 @@ zoombox_fill_5:
   DJNZ zoombox_fill_2     ; ...loop (outer)
   RET                     ; Return
 
-; Draw the zoombox border.
+; Zoombox: draw border
+;
+; This draws the zoombox border.
 ;
 ; Used by the routine at zoombox.
 zoombox_draw_border:
@@ -9152,12 +9532,14 @@ zoombox_draw_border_8:
   DJNZ zoombox_draw_border_7 ; ...loop
   RET                     ; Return
 
-; Draw a single zoombox border tile.
+; Zoombox: draw tile
+;
+; This draws a single zoombox border tile.
 ;
 ; Used by the routine at zoombox_draw_border.
 ;
 ; I:A Index of tile to draw.
-; I:BC (preserved)
+; I:BC Preserved.
 ; I:HL Destination address.
 zoombox_draw_tile:
   PUSH BC                 ; Preserve
@@ -9197,7 +9579,9 @@ zoombox_draw_tile_1:
   POP BC                  ; Restore
   RET                     ; Return
 
-; Searchlight movement data.
+; Searchlight movements
+;
+; This is an array defining the movement patterns for the three different searchlights.
 searchlight_movements:
   DEFB $24,$52,$2C,$02,$00 ; x, y, counter, direction, index
   DEFW searchlight_path_2 ; pointer to movement data
@@ -9205,11 +9589,11 @@ searchlight_movements:
   DEFW searchlight_path_1 ; pointer to movement data
   DEFB $3C,$4C,$20,$02,$00 ; x, y, counter, direction, index
   DEFW searchlight_path_0 ; pointer to movement data
-; Searchlight movement pattern for ?
+; Searchlight movement pattern for L-shaped gap?
 searchlight_path_0:
   DEFB $20,$02            ; (32, bottom right)
   DEFB $20,$01            ; (32, top right)
-  DEFB $FF                ; terminator
+  DEFB $FF                ; Terminating byte.
 ; Searchlight movement pattern for main compound.
 searchlight_path_1:
   DEFB $18,$01            ; (24, top right)
@@ -9220,14 +9604,16 @@ searchlight_path_1:
   DEFB $14,$00            ; (20, top left)
   DEFB $20,$03            ; (32, bottom left)
   DEFB $2C,$02            ; (44, bottom right)
-  DEFB $FF                ; terminator
+  DEFB $FF                ; Terminating byte.
 ; Searchlight movement pattern for ?
 searchlight_path_2:
   DEFB $2C,$02            ; (44, bottom right)
   DEFB $2A,$01            ; (42, top right)
-  DEFB $FF                ; terminator
+  DEFB $FF                ; Terminating byte.
 
-; Decides searchlight movement.
+; Searchlight movement
+;
+; This decides searchlight movement.
 ;
 ; Used by the routine at nighttime.
 ;
@@ -9282,7 +9668,7 @@ searchlight_movement_4:
   DEC BC                  ;
   LD A,(BC)               ; Bug: A is loaded but never used again
 searchlight_movement_5:
-  DEC HL                  ; HL -= 2;
+  DEC HL                  ; HL -= 2
   DEC HL                  ;
 ; Copy counter + direction_t.
   LD A,(BC)               ; Copy counter
@@ -9325,7 +9711,9 @@ searchlight_movement_10:
   LD (HL),E               ; Store x
   RET                     ; Return
 
-; Turns white screen elements light blue and tracks the hero with a searchlight.
+; Night-time
+;
+; This drives the searchlights. It is called when day_or_night is non-zero.
 ;
 ; Used by the routine at main_loop.
 nighttime:
@@ -9470,14 +9858,16 @@ next_searchlight:
 
 ; Searchlight state variables
 ;
-; (Assigned by nighttime. Read by searchlight_plot.)
+; Assigned by nighttime. Read by searchlight_plot.
 searchlight_clip_left:
   DEFB $00
-; Coordinates of searchlight when hero is caught.
+; These are the coordinates of the searchlight when the hero is caught.
 searchlight_caught_coord:
   DEFW $0000
 
-; Is the hero is caught in the searchlight?
+; Searchlight caught
+;
+; This detects when the hero gets caught in the searchlight.
 ;
 ; Used by the routine at nighttime.
 ;
@@ -9517,7 +9907,7 @@ searchlight_caught:
   RET NC                  ; Return if so - the hero isn't in the hotspot
 ; The hero is in the hotspot.
 ;
-; DPT: It seems odd to not do this next test first, since it's cheaper.
+; Commentary: It seems odd to not do this next test first, since it's cheaper.
   LD A,(searchlight_state) ; Is searchlight_state set to searchlight_STATE_CAUGHT? ($1F)
   CP $1F                   ;
   RET Z                   ; Return if so
@@ -9532,9 +9922,11 @@ searchlight_caught:
   LD B,$0A                ; Decrease morale by 10
   JP decrease_morale      ; Exit via decrease_morale
 
-; Plot the searchlight.
+; Searchlight: plot
 ;
-; Note: In terms of attributes the game window is at (7,2)-(29,17) inclusive.
+; This draws the searchlight.
+;
+; Note: The game window attributes are located at (7,2)-(29,17) inclusive.
 ;
 ; Used by the routine at nighttime.
 ;
@@ -9661,7 +10053,9 @@ searchlight_shape:
   DEFB $00,$00
   DEFB $00,$00
 
-; Barbed wire tiles used by the zoombox effect.
+; Zoombox tiles
+;
+; These are the barbed wire tiles used by the zoombox effect.
 zoombox_tiles:
   DEFB $00,$00,$00,$03,$04,$08,$08,$08 ; top left tile, zoombox_tile_wire_tl
   DEFB $00,$20,$18,$F4,$2F,$18,$04,$00 ; horizontal tile, zoombox_tile_wire_hz
@@ -9670,11 +10064,17 @@ zoombox_tiles:
   DEFB $10,$10,$10,$20,$C0,$00,$00,$00 ; bottom right tile, zoombox_tile_wire_br
   DEFB $10,$10,$08,$07,$00,$00,$00,$00 ; bottom left tile, zoombox_tile_wire_bl
 
-; Bribed character.
+; Bribed character
+;
+; This is the current bribed character.
+;
+; Set by bribe_found. Read by B05B, C97E and tr_pursue.
 bribed_character:
   DEFB $FF
 
-; Test for characters meeting obstacles like doors and map bounds.
+; Touch
+;
+; This tests for characters meeting obstacles like doors and map bounds.
 ;
 ; Also assigns saved_pos to specified vischar's pos and sets the sprite_index.
 ;
@@ -9731,7 +10131,9 @@ touch_2:
   XOR A                   ; Set flags to Z
   RET                     ; Return
 
-; Handle collisions, including items being pushed around.
+; Collision
+;
+; This handles collisions, including items being pushed around.
 ;
 ; Used by the routines at touch and spawn_character.
 ;
@@ -9966,7 +10368,9 @@ collision_18:
   JP NZ,collision_0       ;
   RET                     ; Return with Z set
 
-; Character accepts the bribe.
+; Accept bribe
+;
+; This is called when a character accepts the bribe.
 ;
 ; Used by the routines at collision and target_reached.
 ;
@@ -9994,7 +10398,7 @@ accept_bribe_0:
   LD (DE),A               ;
   AND $3F                 ; Set the bribe item's item_struct room to itemstruct_ROOM_NONE
   LD ($76EC),A            ;
-  CALL draw_all_items     ; Draw both held items
+  CALL draw_all_items     ; Draw held items
 ; Set the vischar_PURSUIT_SAW_BRIBE flag on all visible hostiles. Iterate over hostile and visible non-player characters.
   LD B,$07                ; 7 iterations
   LD HL,$8020             ; Start at the second visible character
@@ -10016,7 +10420,9 @@ accept_bribe_2:
   LD B,$12                ; Then queue the messsage "AND ACTS AS DECOY"
   JP queue_message        ; Return
 
-; Tests whether the position in saved_pos touches any wall or fence boundary.
+; Bounds check
+;
+; This tests whether the position in saved_pos_x touches any wall or fence boundary.
 ;
 ; A position (x,y,h) touches a wall if (minx + 2 >= x <= maxx + 3) and (miny >= y <= maxy + 3) and (minh >= h <= maxh + 1).
 ;
@@ -10107,7 +10513,9 @@ bounds_next:
   AND B                   ; B is zero, AND it with itself to set Z flag
   RET                     ; Return with Z set
 
-; Multiplies A by 8, returning the result in BC.
+; Multiply by 8
+;
+; This multiplies A by 8, returning the result in BC.
 ;
 ; Used by the routines at bounds_check, spawn_character, vischar_move_x, vischar_move_y and get_next_drawable_itemstruct.
 ;
@@ -10124,7 +10532,9 @@ multiply_by_8:
   LD C,A                  ; Move low part of result into C
   RET                     ; Return
 
-; Locate current door, queuing a message if it's locked.
+; Is door locked?
+;
+; This locates the current door, queuing a message if it's locked.
 ;
 ; Used by the routines at door_handling and door_handling_interior.
 ;
@@ -10156,7 +10566,9 @@ is_door_locked_1:
   AND B                   ; Set flags to Z - the door is open
   RET                     ; Return
 
-; Door handling.
+; Door handling
+;
+; This checks for and actions door transitions.
 ;
 ; Used by the routine at touch.
 ;
@@ -10200,7 +10612,7 @@ door_handling_next:
   INC H                   ;
 door_handling_2:
   DJNZ door_handling_1    ; ...loop
-; DPT: This seems to exist to set Z, but this routine doesn't return anything!
+; Commentary: This seems to exist to set Z, but this routine doesn't return anything!
   AND B                   ; Set Z (B is zero here)
   RET                     ; Return
 door_handling_found:
@@ -10234,9 +10646,9 @@ door_handling_3:
   DEC HL                  ;
   JP transition           ; Jump to transition -- never returns
 
-; Test whether an exterior door is in range.
+; Door in range?
 ;
-; A door is in range if (saved_X,saved_Y) is within -3..+2 of its position (once scaled).
+; This tests whether an exterior door is in range. A door is in range if (saved_X,saved_Y) is within -3..+2 of its position (once scaled).
 ;
 ; Used by the routines at door_handling and get_nearest_door.
 ;
@@ -10293,6 +10705,8 @@ door_in_range_3:
   CCF                     ; Invert the carry flag
   RET                     ; Return with result of final test
 
+; Multiply by 4
+;
 ; Multiplies A by 4, returning the result in BC.
 ;
 ; Used by the routines at transition and door_in_range.
@@ -10308,7 +10722,9 @@ multiply_by_4:
   LD C,A                  ; BC is the multiplied value
   RET                     ; Return
 
-; Check the character is inside of bounds, when indoors.
+; Interior bounds check
+;
+; This checks that the character is inside of bounds, when indoors.
 ;
 ; Used by the routine at bounds_check.
 ;
@@ -10397,7 +10813,9 @@ next:
   AND B                   ; B is zero, AND it with itself to set Z flag
   RET                     ; Return with Z set
 
-; Reset the hero's position, redraw the scene, then zoombox it onto the screen.
+; Reset outdoors
+;
+; This resets the hero's position, redraws the scene, then zoomboxes it onto the screen.
 ;
 ; Used by the routines at transition and keyscan_break.
 ;
@@ -10430,7 +10848,9 @@ reset_outdoors:
   CALL zoombox            ; Zoombox the scene onto the screen
   RET                     ; Return
 
-; Door handling (indoors).
+; Door handling: interior
+;
+; This is called from door_handling to handle doors when not outside.
 ;
 ; Used by the routine at door_handling.
 ;
@@ -10510,7 +10930,9 @@ dhi_next:
   INC HL                  ; Advance to the next door in interior_doors[]
   JR door_handling_interior_0 ; ...loop
 
-; The hero has tried to open the red cross parcel.
+; Action: Red cross parcel
+;
+; This handles the hero opening the red cross parcel.
 action_red_cross_parcel:
   LD A,$3F                ; Clear the red cross parcel item's room field
   LD ($771D),A            ;
@@ -10523,16 +10945,17 @@ action_red_cross_parcel:
 ; HL now points to the held item.
 action_red_cross_parcel_0:
   LD (HL),$FF             ; Remove parcel from the inventory
-  CALL draw_all_items     ; Draw both held items
+  CALL draw_all_items     ; Draw held items
   LD A,(red_cross_parcel_current_contents) ; Fetch the value of the parcel's current contents
   CALL drop_item_tail     ; Pass that into "drop item, tail part"
   LD B,$0C                ; Queue the message "YOU OPEN THE BOX"
   CALL queue_message      ;
   JP increase_morale_by_10_score_by_50 ; Increase morale by 10, score by 50 and exit via
 
-; The hero tries to bribe a prisoner.
+; Action: Bribe
 ;
-; This searches through the visible, friendly characters only and returns the first found. The selected character will then pursue the hero. Once they've touched it will accept the bribe (see tr_pursue).
+; This handles the hero bribing a fellow prisoner. It searches through the visible, friendly characters only and returns the first found. The selected character will then pursue the hero. Once they've touched it will accept the bribe (see
+; tr_pursue).
 ;
 ; Iterate over non-player visible characters.
 action_bribe:
@@ -10557,7 +10980,9 @@ bribe_found:
   LD (HL),$01             ; Set flags to vischar_PURSUIT_PURSUE
   RET                     ; Return
 
-; Use poison.
+; Action: Poison
+;
+; This handles the hero poisoning the food.
 action_poison:
   LD HL,(items_held)      ; Load both held items
   LD A,$07                ; Prepare item_FOOD
@@ -10572,10 +10997,12 @@ have_food:
   SET 5,(HL)              ; Set bit 5
   LD A,$43                    ; Set the screen attribute for the food item to bright-purple over black
   LD (item_attributes_food),A ;
-  CALL draw_all_items     ; Draw both held items
+  CALL draw_all_items     ; Draw held items
   JP increase_morale_by_10_score_by_50 ; Increase morale by 10, score by 50 and exit via
 
-; Use guard's uniform.
+; Action: Uniform
+;
+; This handles the hero donning the guard's uniform.
 action_uniform:
   LD HL,$8015             ; Point HL at the hero's vischar sprite set pointer
   LD DE,sprite_guard      ; Point DE at the guard sprite set
@@ -10593,9 +11020,9 @@ action_uniform:
   LD (HL),D               ;
   JP increase_morale_by_10_score_by_50 ; Increase morale by 10, score by 50 and exit via
 
-; Use shovel.
+; Action: Shovel
 ;
-; The shovel only works in the room with the blocked tunnel: number 50.
+; This handles the hero using the shovel to clear the blockage in tunnel room number 50.
 action_shovel:
   LD A,(room_index)       ; If the global current room index isn't room_50_BLOCKED_TUNNEL bail out
   CP $32                  ;
@@ -10616,10 +11043,12 @@ action_shovel:
   LD (roomdef_50_blocked_tunnel_collapsed_tunnel),A ;
   CALL setup_room         ; Setup the room
   CALL choose_game_window_attributes ; Choose game window attributes
-  CALL plot_interior_tiles ; Expand all of the tile indices in the tiles buffer to full tiles in the screen buffer
+  CALL plot_interior_tiles ; Render visible tiles array into the screen buffer
   JP increase_morale_by_10_score_by_50 ; Increase morale by 10, score by 50 and exit via
 
-; Use wiresnips.
+; Action: Wiresnips
+;
+; This handles the hero using the snips to cut through a wire fence.
 ;
 ; Check the hero's position against the four vertically-oriented fences.
 action_wiresnips:
@@ -10722,7 +11151,9 @@ snips_tail:
   LD B,$0B                ; Queue the message "CUTTING THE WIRE" and exit via
   JP queue_message        ;
 
-; Use lockpick.
+; Action: Lockpick
+;
+; This handles the hero using the lockpick to enter a locked room.
 action_lockpick:
   CALL get_nearest_door   ; Get the nearest door in range of the hero in HL
   RET NZ                  ; Return if no door was nearby
@@ -10735,22 +11166,30 @@ action_lockpick:
   LD B,$0A                ; Queue the message "PICKING THE LOCK" and exit via
   JP queue_message        ;
 
-; Use red key.
+; Action: Red key
+;
+; This handles the hero using the red key.
 action_red_key:
   LD A,$16                ; Set the room number in A to room_22_REDKEY
   JR action_key           ; Jump to action_key
 
-; Use yellow key.
+; Action: Yellow key
+;
+; This handles the hero using the yellow key.
 action_yellow_key:
   LD A,$0D                ; Set the room number in A to room_13_CORRIDOR
   JR action_key           ; Jump to action_key
 
-; Use green key.
+; Action: Green key
+;
+; This handles the hero using the green key.
 action_green_key:
   LD A,$0E                ; Set the room number in A to room_14_TORCH
 ; FALL THROUGH into action_key.
 
-; Use a key.
+; Action: Key
+;
+; This is the common end of the previous three routines.
 ;
 ; Used by the routines at action_red_key and action_yellow_key.
 ;
@@ -10771,7 +11210,9 @@ action_key:
 action_key_0:
   JP queue_message        ; Queue the message identified by B
 
-; Return the nearest door in range of the hero.
+; Get nearest door
+;
+; This returns the nearest door to the hero.
 ;
 ; Used by the routines at action_lockpick and action_key.
 ;
@@ -10877,9 +11318,9 @@ gnd_exx_next:
   EXX                     ; Switch back
   JR gnd_next             ; ...loop
 
-; Wall boundaries.
+; Walls
 ;
-; The coordinates are in map space.
+; These are all of the walls/boundaries in the exterior map. The coordinates are in map space.
 ;
 ; +-------+----------------+
 ; | Field | Description    |
@@ -10917,7 +11358,9 @@ walls:
   DEFB $46,$48,$5E,$60,$00,$08 ; 22: ( 70-72,   94-96,  0-8 ) Fence - watchtower (top right of main camp)
   DEFB $69,$6D,$46,$49,$00,$08 ; 23: (105-109,  70-73,  0-8 ) Fence - gate wall middle
 
-; Animate all visible characters.
+; Animate
+;
+; This animates all visible characters.
 ;
 ; Used by the routines at setup_movable_items and main_loop.
 animate:
@@ -10994,7 +11437,7 @@ animate_2:
   LD (saved_height),HL    ; Save it in saved_height
   CALL touch              ; Test for characters meeting obstacles like doors and map bounds
   JP NZ,animate_pop_next  ; If outside bounds (collided with something), jump to animate_pop_next to halt any animation
-  DEC (IY+$0C)            ; Decrement animation index (DPT: Was there a bug around here?)
+  DEC (IY+$0C)            ; Decrement animation index [DPT: Was there a bug around here?]
   JR animate_7            ; (else)
 ; Have we reached the end of the animation?
 animate_3:
@@ -11135,7 +11578,9 @@ animate_8:
   POP HL                  ; Pop and swap?
   JP animate_backwards    ; Jump
 
-; Calculate screen position for the specified vischar from mi.pos.
+; Calculate vischar isometric position (from vischar)
+;
+; This calculates the isometric screen position for the specified vischar from vischar.mi.pos.
 ;
 ; Used by the routines at enter_room, setup_movable_item, hero_sit_sleep_common, reset_outdoors and spawn_character.
 ;
@@ -11152,7 +11597,9 @@ calc_vischar_iso_pos_from_vischar:
   POP HL                  ; Restore vischar pointer
 ; Now FALL THROUGH into calc_vischar_iso_pos_from_state which will read from saved_pos.
 
-; Calculate screen position for the specified vischar from saved_pos.
+; Calculate vischar isometric position (from state)
+;
+; This calculates the isometric screen position for the specified vischar from saved_pos.
 ;
 ; Used by the routine at animate.
 ;
@@ -11193,7 +11640,9 @@ calc_vischar_iso_pos_from_state:
   LD (HL),D               ;
   RET                     ; Return
 
-; Reset the game.
+; Reset game
+;
+; This resets the game.
 ;
 ; Used by the routines at keyscan_break, escaped and main.
 ;
@@ -11227,7 +11676,7 @@ reset_game_1:
 ; Reset and redraw items.
   LD HL,$FFFF             ; Set both items_held to item_NONE ($FF)
   LD (items_held),HL      ;
-  CALL draw_all_items     ; Draw both held items
+  CALL draw_all_items     ; Draw held items
 ; Reset the hero's sprite.
   LD HL,sprite_prisoner   ; Set vischar.mi.sprite to the prisoner sprite set
   LD ($8015),HL           ;
@@ -11238,7 +11687,9 @@ reset_game_1:
   CALL enter_room         ; The hero enters a room
   RET                     ; Return
 
-; Resets all visible characters, clock, day_or_night flag, general flags, collapsed tunnel objects, locks the gates, resets all beds, clears the mess halls and resets characters.
+; Reset map and characters
+;
+; This resets all visible characters, the game clock, day_or_night flag, general flags, collapsed tunnel objects, locks the gates, resets all beds, clears the mess halls and resets characters.
 ;
 ; Used by the routines at reset_game and solitary.
 reset_map_and_characters:
@@ -11339,7 +11790,7 @@ character_reset_data:
   DEFB $FF,$34,$2C        ; (room_NONE,        52,44) for character 24
   DEFB $FF,$34,$1C        ; (room_NONE,        52,28) for character 25
 
-; render_mask_buffer stuff.
+; render_mask_buffer variables
 mask_left_skip:
   DEFB $00
 mask_top_skip:
@@ -11349,7 +11800,9 @@ mask_run_height:
 mask_run_width:
   DEFB $00
 
-; Check the mask buffer to see if the hero is hiding behind something.
+; Searchlight mask test
+;
+; This checks the mask buffer to see if the hero is hiding behind the scenery.
 ;
 ; Used by the routine at plot_sprites.
 ;
@@ -11388,7 +11841,9 @@ still_in_searchlight:
   LD (HL),$1F             ;
   RET                     ; Return
 
-; Plot vischars and items in order.
+; Plot sprites
+;
+; This plots all vischars and items in order.
 ;
 ; Used by the routines at setup_movable_items and main_loop.
 ;
@@ -11424,7 +11879,9 @@ plot_item:
   CALL plot_masked_sprite_16px_x_is_zero ; Call the sprite plotter for 16-pixel-wide sprites
   JR plot_sprites         ; ...loop
 
-; Finds the next vischar or item to draw.
+; Get next drawable
+;
+; This finds the next vischar or item that should be drawn.
 ;
 ; Used by the routine at plot_sprites.
 ;
@@ -11538,10 +11995,10 @@ lvoi_item_found:
   DEC HL                  ; Point HL back at the base of the itemstruct. (Note that DEC HL doesn't alter the Z flag)
   RET                     ; Return with Z set
 
-; Render the mask buffer.
+; Render mask buffer
 ;
-; The game uses a series of RLE encoded masks to characters to cut away pixels belonging to foreground objects. This ensures that characters aren't drawn atop of walls, huts and fences. This routine works out which masks intersect with the
-; current player position then overlays them into the mask buffer at $8100.
+; This renders the mask buffer. The game uses a series of RLE encoded masks on characters to cut away pixels belonging to foreground objects. This ensures that characters aren't drawn atop of walls, huts and fences. This routine works out
+; which masks intersect with the current player position then overlays them into the mask buffer at $8100.
 ;
 ; At 32x40 pixels the mask buffer is small: sized to fit a single character.
 ;
@@ -11833,7 +12290,7 @@ render_mask_buffer_12:
   LD B,$01                ; Set B for (self modified width) iterations
 ; Start loop
 ;
-; DPT: The banking of A is hard to follow here. It's difficult to see if this section is entered with a skip value whether it will be handled correctly.
+; Commentary: The banking of A is hard to follow here. It's difficult to see if this section is entered with a skip value whether it will be handled correctly.
 render_mask_buffer_13:
   EX AF,AF'               ; Bank the <repeat length>
   LD A,(DE)               ; Read a byte. It could be a repeat count or a tile index
@@ -11914,7 +12371,7 @@ rmb_pop_next:
 
 ; Multiply
 ;
-; Multiplies the two 8-bit values in A and E returning a 16-bit result in HL.
+; This multiplies the two 8-bit values in A and E, returning a 16-bit result in HL.
 ;
 ; Used by the routine at render_mask_buffer.
 ;
@@ -11936,7 +12393,9 @@ multiply_1:
   DJNZ multiply_0         ; ...loop
   RET                     ; Return
 
-; AND a tile in the mask buffer against the specified mask tile.
+; Mask against tile
+;
+; This ANDs a tile in the mask buffer against the specified mask tile.
 ;
 ; Used by the routine at render_mask_buffer.
 ;
@@ -11969,16 +12428,18 @@ mat_loop:
   EXX                     ; Switch register banks back
   RET                     ; Return
 
-; Clip the given vischar's dimensions to the game window.
+; Vischar visible
+;
+; This clips the given vischar's dimensions to the game window.
 ;
 ; Used by the routines at restore_tiles and setup_vischar_plotting.
 ;
-; I:IY Pointer to visible character.
-; O:A 0/255 => vischar visible/not visible.
-; O:B Lefthand skip (bytes).
+; I:IY Pointer to visible character
+; O:A 0/255 => vischar visible/not visible
+; O:B Lefthand skip (bytes
 ; O:C Clipped width (bytes).
-; O:D Top skip (rows).
-; O:E Clipped height (rows).
+; O:D Top skip (rows)
+; O:E Clipped height (rows)
 ;
 ; To determine visibility and sort out clipping there are five cases to consider per axis: (A) the vischar is completely off the left/top of window, (B) the vischar is clipped on its left/top, (C) the vischar is entirely visible, (D) the
 ; vischar is clipped on its right/bottom, and (E) the vischar is completely off the right/bottom of window.
@@ -12102,7 +12563,9 @@ vv_not_visible:
   AND A                   ; Clear Z (vischar is not visible)
   RET                     ; Return
 
-; Paint any tiles occupied by visible characters with tiles from tile_buf.
+; Restore tiles
+;
+; This paints any tiles occupied by visible characters with tiles from tile_buf.
 ;
 ; Used by the routine at main_loop.
 restore_tiles:
@@ -12148,7 +12611,7 @@ rt_loop:
   AND $1F                 ; Mask away the rotated-out bits
   ADD A,$02               ; Add two
   PUSH AF                 ; Save the computed height
-; DPT: It seems that the following sequence (from $BBDC to $BC01) duplicates the work done by vischar_visible. I can't see any benefit to it.
+; Commentary: It seems that the following sequence (from $BBDC to $BC01) duplicates the work done by vischar_visible. I can't see any benefit to it.
 ;
 ; Compute bottom = height + iso_pos_y - map_position_y. This is the distance of the (clipped) bottom edge of the vischar from the top of the window.
   LD HL,iso_pos_y         ; Point HL at iso_pos_y
@@ -12319,7 +12782,9 @@ rt_next_vischar:
   JP NZ,rt_loop           ;
   RET                     ; Return
 
-; Turn a map ref into a tile set pointer.
+; Select tile set
+;
+; This turns a map position (from map_position), adds on the given (x,y) offset and turns that resulting coordinate into a tile set pointer.
 ;
 ; Used by the routine at restore_tiles.
 ;
@@ -12386,7 +12851,9 @@ sts_exit:
   EX AF,AF'               ; Restore A
   RET                     ; Return
 
-; Map super-tile refs. 54x34. Each byte represents a 32x32 tile.
+; Map tiles
+;
+; This 54x34 element array defines the exterior game map. Each byte is a super-tile reference, representing a 32x32 tile.
 ;
 ; The map, with blanks and grass replaced to show the outline more clearly:
 ;
@@ -12491,13 +12958,17 @@ map_tiles:
   DEFB $23,$24,$25,$23,$25,$24,$25,$23,$23,$25,$23,$24,$23,$24,$23,$25,$23,$24,$25,$23,$24,$23,$24,$24,$23,$24,$25,$24,$23,$25,$24,$25,$23,$24,$23,$24,$24,$25,$24,$23,$25,$23,$24,$25,$24,$25,$23,$25,$24,$25,$25,$23,$25,$23
   DEFB $23,$24,$25,$23,$25,$24,$25,$23,$23,$25,$23,$24,$23,$24,$23,$25,$23,$24,$25,$23,$24,$23,$24,$24,$23,$24,$25,$24,$23,$25,$24,$25,$23,$24,$23,$24,$24,$25,$24,$23,$25,$23,$24,$25,$24,$25,$23,$25,$24,$25,$25,$23,$25,$23
 
-; Pointer to bytes to output as pseudo-random data.
+; PRNG pointer
+;
+; This is a pointer to some bytes to output as pseudo-random data.
 ;
 ; Initially set to $9000. Wraps around after $90FF.
 prng_pointer:
   DEFW $9000
 
-; Spawn characters.
+; Spawn characters
+;
+; This iterates over all of the character structs testing each one to see if it can be brought on-screen.
 ;
 ; Used by the routines at setup_movable_items and main_loop.
 ;
@@ -12592,7 +13063,9 @@ spawn_characters_4:
   DJNZ sc_loop            ; ...loop
   RET                     ; Return
 
-; Remove any off-screen non-player characters.
+; Purge invisible characters
+;
+; This iterates over all of the visible characters testing each one to see if it's off-screen. If so it can be purged.
 ;
 ; This is the opposite of spawn_characters.
 ;
@@ -12642,7 +13115,7 @@ pic_loop:
   LD A,D                  ; Copy miny to A
   CP C                    ; Is miny >= result?
   JR NC,pic_reset         ; Jump to reset if so (out of bounds)
-; DPT: 16 is used for screen height here, but 24 is used for width below - so that doesn't line up with the actual values which are 24x17.
+; Commentary: 16 is used for screen height here, but 24 is used for width below - so that doesn't line up with the actual values which are 24x17.
   ADD A,$22               ; Add 16 + 2 * 9 (16 => screen height, 9 => buffer zone size)
   JR NC,purge_invisible_characters_2 ; Clamp to a maximum of 255
   LD A,$FF                           ;
@@ -12682,7 +13155,9 @@ pic_next:
   DJNZ pic_loop           ; ...loop
   RET                     ; Return
 
-; Add a character to the visible character list.
+; Spawn character
+;
+; This adds a character to the visible character (vischar) list.
 ;
 ; Used by the routine at spawn_characters.
 ;
@@ -12866,7 +13341,9 @@ spawn_end:
   POP HL                  ; Restore vischar pointer
   JP character_behaviour  ; Exit via character_behaviour
 
-; Reset a visible character (either a character or a stove/crate object).
+; Reset visible character
+;
+; This resets a visible character (vischar). It could be a person or a stove/crate object.
 ;
 ; Used by the routines at transition, reset_nonplayer_visible_characters, reset_map_and_characters and purge_invisible_characters.
 ;
@@ -12971,9 +13448,9 @@ rvc_end:
   LDI                     ;
   RET                     ; Return
 
-; Return the coordinates of the route's current target.
+; Get target
 ;
-; Given a route_t return the coordinates the character should move to. Coordinates are returned as a tinypos_t when moving to a door or an xy_t when moving to a numbered location.
+; This returns the coordinates the character should move to, given a route_t pointer in HL. Coordinates are returned as a tinypos_t when moving to a door or as an xy_t when moving to a numbered location.
 ;
 ; If the route specifies 'wander' then one of eight random locations starting from route.step is chosen.
 ;
@@ -13052,7 +13529,9 @@ gt_route_ends:
   LD A,$FF                ; Return with A set to 255
   RET                     ;
 
-; Move one (off-screen) character around at a time.
+; Move a character
+;
+; This moves one (off-screen) character around at a time.
 ;
 ; Used by the routine at main_loop.
 move_a_character:
@@ -13274,7 +13753,9 @@ mc_route_down:
   DEC (HL)                ; Decrement route.step
   RET                     ; Return
 
-; Moves the first value toward the second.
+; Move towards
+;
+; This moves the first value toward the second.
 ;
 ; Used by the routine at move_a_character.
 ;
@@ -13318,7 +13799,9 @@ move_towards_3:
   LD (DE),A               ;
   RET                     ; Return
 
-; Get character struct.
+; Get character struct
+;
+; This returns the character struct indexed by A.
 ;
 ; Used by the routines at set_character_route, reset_visible_character and move_a_character.
 ;
@@ -13337,11 +13820,11 @@ get_character_struct:
   INC H                   ;
   RET                     ; Return
 
-; Character event.
+; Character event
+;
+; This is called when a route has ended. It makes characters wander around, sit, sleep, etc.
 ;
 ; Used by the routines at move_a_character and route_ended.
-;
-; Makes characters sit, sleep or other things TBD.
 ;
 ; I:HL Points to character_struct.route or vischar.route.
 character_event:
@@ -13496,15 +13979,17 @@ charevnt_hero_sleeps:
   POP HL
   JP hero_sleeps          ; goto hero_sleeps;
 
-; A countdown until any food item is discovered.
+; Food discovered counter
 ;
-; (<- automatics, target_reached)
+; This is a countdown until any food item is discovered.
+;
+; Used by automatics and target_reached.
 food_discovered_counter:
   DEFB $00
 
-; Make characters follow the hero if he's being suspicious.
+; Automatics
 ;
-; Also handles food item discovery and automatic hero behaviour.
+; Drives automatic behaviour for NPCs and the hero when the player idles. Causes characters to follow the hero if he's being suspicious. Also: Food item discovery.
 ;
 ; Used by the routine at main_loop.
 automatics:
@@ -13589,7 +14074,9 @@ auto_run_cb:
 auto_return:
   RET                     ; Return
 
-; Character behaviour.
+; Character behaviour
+;
+; This handles the various different pursuit modes that vischars can be in (pursuing the hero, a dog moving towards food, etc.) and drives character movement.
 ;
 ; Used by the routines at spawn_character and automatics.
 ;
@@ -13783,7 +14270,9 @@ cb_move_y_dominant:
   DEC L                   ; Rewind HL to vischar.position.x
   JP target_reached       ; Exit via target_reached
 
-; Move a character on the X axis.
+; Vischar move X
+;
+; This moves a character on the X axis.
 ;
 ; Used by the routine at character_behaviour.
 ;
@@ -13839,7 +14328,9 @@ vmx_equal:
   XOR A                   ; Return input_NONE (0)
   RET                     ;
 
-; Move a character on the Y axis.
+; Vischar move Y
+;
+; This moves a character on the Y axis.
 ;
 ; Used by the routine at character_behaviour.
 ;
@@ -13897,7 +14388,9 @@ vmy_equal:
   XOR A                   ; Return input_NONE (0)
   RET                     ;
 
-; Called when a character reaches its target.
+; Target reached
+;
+; This is called when a character reaches its target. It handles the various different pursuit modes that vischars can be in (getting caught, bribes, dogs being poisoned) and door transitions.
 ;
 ; Used by the routine at character_behaviour.
 ;
@@ -14031,7 +14524,9 @@ tr_another_route_step:
   DEC L                   ; Rewind HL to vischar.route.index
 ; FALL THROUGH to get_target_assign_pos.
 
-; Calls get_target then puts coords in vischar.target and set flags.
+; Get target, assign position
+;
+; This calls get_target then puts the returned coordinates in vischar.target and sets flags.
 ;
 ; Used by the routines at set_route, accept_bribe, character_behaviour, target_reached and route_ended.
 ;
@@ -14044,7 +14539,9 @@ get_target_assign_pos:
   POP HL                  ; Restore the route pointer
 ; FALL THROUGH into route_ended.
 
-; Called when get_target has run out of route.
+; Route ended
+;
+; This is called when get_target has run out of targets on the current route.
 ;
 ; Used by the routine at spawn_character.
 ;
@@ -14094,7 +14591,9 @@ route_ended_1:
   RET                     ;
   DEFB $18,$09            ; Unreferenced bytes
 
-; "Didn't hit end of list" case. -- not really a routine in its own right
+; Handle target
+;
+; This is the "didn't hit end of list" case from get_target_assign_pos. It's not really a routine in its own right.
 ;
 ; Used by the routine at get_target_assign_pos.
 handle_target:
@@ -14110,13 +14609,17 @@ handle_target_0:
   LD A,$80                ; (This return value is never used)
   RET                     ; Return
 
+; Multiply by 1
+;
 ; Widen A to BC (multiply by 1).
 multiply_by_1:
   LD C,A                  ; Widen A into BC
   LD B,$00                ;
   RET                     ; Return
 
-; Return a route.
+; Get route
+;
+; Returns the route with index A in DE.
 ;
 ; Used by the routines at get_target and target_reached.
 ;
@@ -14133,9 +14636,9 @@ get_route:
   LD D,(HL)               ;
   RET                     ; Return
 
-; Pseudo-random number generator.
+; Random nibble
 ;
-; This returns the bottom nibbles of the bytes from $9000..$90FF in sequence, acting as a cheap pseudo-random number generator.
+; This is a cheap pseudo-random number generator. It returns the bottom nibbles from the bytes at $9000..$90FF, in sequence.
 ;
 ; Used by the routine at get_target.
 ;
@@ -14151,11 +14654,13 @@ random_nibble:
   POP HL                  ; Restore HL
   RET                     ; Return
 
-; Unreferenced bytes.
+; Unreferenced bytes
 LCB92:
   DEFB $13,$40,$30,$10,$7E,$F0
 
-; Send the hero to solitary.
+; Solitary
+;
+; This sends the hero to solitary.
 ;
 ; Used by the routines at escaped, collision, target_reached and action_papers.
 ;
@@ -14172,7 +14677,7 @@ solitary:
   LD C,(HL)               ; Fetch the item
   LD (HL),$FF             ; Set it to item_NONE
   CALL item_discovered    ; Discover the item
-  CALL draw_all_items     ; Redraw both held items
+  CALL draw_all_items     ; Draw held items
 ; Discover all items.
   LD B,$10                ; Set B to 16 iterations - once per item
   LD HL,$76C9             ; Point HL at item_structs[0].room
@@ -14219,7 +14724,7 @@ solitary_next:
 ; Move the hero to solitary.
   LD A,$18                ; Set vischar[0].room to room_24_SOLITARY
   LD ($801C),A            ;
-; DPT: I reckon this should instead be 24 which is the door between room_22_REDKEY and room_24_SOLITARY.
+; Commentary: This should instead be 24 which is the door between room_22_REDKEY and room_24_SOLITARY.
   LD A,$14                ; Set the global current door to 20
   LD (current_door),A     ;
   LD B,$23                ; Decrease morale by 35
@@ -14250,18 +14755,22 @@ solitary_next:
   LD ($8002),A            ;
   JP transition           ; Exit via transition
 
-; Partial character struct.
+; Solitary commandant data
 ;
-; (<- solitary)
+; This is used to set the commandant on a path which results in the hero being released.
+;
+; Used by the routine at solitary.
 solitary_commandant_data:
   DEFB $00                ; room  = room_0_OUTDOORS
   DEFB $74,$64,$03        ; pos   = 116, 100, 3
   DEFB $24,$00            ; route = 36, 0
 
-; Guards follow suspicious character.
+; Guards follow suspicious character
 ;
-; This routine decides whether the given vischar pursues the hero. - The commandant can see through the hero's disguise if he's wearing the guard's uniform, but other guards do not. - Bribed characters will ignore the hero. - When outdoors,
-; line of sight checking is used to determine if the hero will be pursued. - If the red_flag is in effect the hero will be pursued, otherwise he will just be hassled.
+; This routine decides whether the given vischar should pursue the hero.
+;
+; The commandant can see through the hero's disguise if he's wearing the guard's uniform, but other guards do not. Bribed characters will ignore the hero. When outdoors, line of sight checking is used to determine if the hero will be
+; pursued. If the red_flag is in effect the hero will be pursued, otherwise he will just be hassled.
 ;
 ; Used by the routine at automatics.
 ;
@@ -14361,13 +14870,13 @@ gfsc_bell:
   CALL hostiles_pursue    ; Call hostiles_pursue
   RET                     ; Return
 
-; Hostiles pursue prisoners.
+; Hostiles pursue
 ;
-; Used by the routines at automatics, guards_follow_suspicious_character, is_item_discoverable and event_roll_call.
-;
-; For all visible, hostile characters, at height < 32, set the bribed/pursue flag.
+; This sets the pursue flag for all visible, hostile characters (who aren't in up in towers).
 ;
 ; Research: If I nop this out then guards don't spot the items I drop. Iterate non-player characters.
+;
+; Used by the routines at automatics, guards_follow_suspicious_character, is_item_discoverable and event_roll_call.
 hostiles_pursue:
   LD HL,$8020             ; Point HL at the second vischar
   LD DE,$0020             ; Prepare the vischar stride
@@ -14398,11 +14907,9 @@ hp_next:
 
 ; Is item discoverable?
 ;
+; This searches through item_structs for items dropped nearby. If items are found then hostiles are made to pursue the hero, but the green key and food items are ignored.
+;
 ; Used by the routine at automatics.
-;
-; Searches item_structs for items dropped nearby. If items are found the hostiles are made to pursue the hero.
-;
-; Green key and food items are ignored.
 is_item_discoverable:
   LD A,(room_index)       ; Get the global current room index
   AND A                   ; Is it room_0_OUTDOORS?
@@ -14439,9 +14946,9 @@ iid_nearby:
   CALL hostiles_pursue    ; Otherwise, hostiles pursue prisoners
   RET                     ; Return
 
-; Is an item discoverable indoors?
+; Is item discoverable (interior)
 ;
-; A discoverable item is one which has been moved away from its default room, and one that isn't the red cross parcel.
+; This searches through item_structs for items which have been moved away from their default room. The red cross parcel is ignored.
 ;
 ; Used by the routines at move_a_character and is_item_discoverable.
 ;
@@ -14497,7 +15004,9 @@ iidi_found:
   XOR A                   ; Return with Z set (found)
   RET                     ;
 
-; An item is discovered.
+; Item discovered
+;
+; This resets an item which has been discovered.
 ;
 ; Used by the routines at reset_game, move_a_character, automatics and solitary.
 ;
@@ -14540,9 +15049,9 @@ id_interior:
   LD (HL),$05             ; Set height to 5
   JP calc_interior_item_iso_pos ; Exit via calc_interior_item_iso_pos
 
-; Default locations of items.
+; Default item locations
 ;
-; An array of 16 three-byte structures.
+; This is an array of 16 three-byte structures that define the default locations of the items available in the game.
 ;
 ; +------+-------+----------------+---------------------------------------+
 ; | Type | Bytes | Name           | Meaning                               |
@@ -14571,7 +15080,11 @@ default_item_locations:
   DEFB $3F,$1E,$22        ; item_PURSE            { ITEM_ROOM(room_NONE, 0), ... }
   DEFB $3F,$34,$1C        ; item_COMPASS          { ITEM_ROOM(room_NONE, 0), ... }
 
-; Data for the four classes of characters. (<- spawn_character)
+; Character meta data
+;
+; This is an array of four definitions (type: character_class_data_t), one for each of the character classes.
+;
+; Used by the routine at spawn_character.
 character_meta_data_commandant:
   DEFW animations         ; &animations[0]
   DEFW sprite_commandant  ; sprite_commandant
@@ -14585,11 +15098,21 @@ character_meta_data_prisoner:
   DEFW animations         ; &animations[0]
   DEFW sprite_prisoner    ; sprite_prisoner
 
-; Indices into animations.
+; Animation indices
 ;
-; none, up, down, left, up+left, down+left, right, up+right, down+right, fire
+; This maps a character's direction and user input to an animation index and reverse flag.
 ;
-; Groups of nine. (<- animate)
+; The horizontal axis is input (U/D/L/R = Up/Down/Left/Right) and the vertical axis is direction (TL/TR/BR/BL + crawl flag).
+;
+; For example:
+;
+; if (direction,input) is (TL, None) then index is 8 which is CE02 / anim_wait_tl.
+;
+; if (direction,input) is (TR + Crawl, D+L) then index is 21 which is CE1C / anim_crawlwait_tr.
+;
+; Modulo the reverse flag the highest index in the table is 23 which is the max index in animations (== animations__LIMIT - 1).
+;
+; Used by the routine at animate.
 animindices:
   DEFB $08,$00,$04,$87,$00,$87,$04,$04,$04 ; TL
   DEFB $09,$84,$05,$05,$84,$05,$01,$01,$05 ; TR
@@ -14600,94 +15123,135 @@ animindices:
   DEFB $16,$8E,$0E,$12,$8E,$0E,$91,$91,$0E ; BR + crawl
   DEFB $17,$13,$92,$0F,$13,$0F,$8F,$8F,$92 ; BL + crawl
 
-; Animation states.
+; Animations
 ;
-; Array, 24 long, of pointers to data.
+; This is an array, 24 long, of pointers to animation data.
+;
+; Normal animations, move the map
 animations:
-  DEFW anim_walk_tl       ; anim_walk_tl
-  DEFW anim_walk_tr       ; anim_walk_tr
-  DEFW anim_walk_br       ; anim_walk_br
-  DEFW anim_walk_bl       ; anim_walk_bl
-  DEFW anim_turn_tl       ; anim_turn_tl
-  DEFW anim_turn_tr       ; anim_turn_tr
-  DEFW anim_turn_br       ; anim_turn_br
-  DEFW anim_turn_bl       ; anim_turn_bl
-  DEFW anim_wait_tl       ; anim_wait_tl
-  DEFW anim_wait_tr       ; anim_wait_tr
-  DEFW anim_wait_br       ; anim_wait_br
-  DEFW anim_wait_bl       ; anim_wait_bl
-  DEFW anim_crawl_tl      ; anim_crawl_tl
-  DEFW anim_crawl_tr      ; anim_crawl_tr
-  DEFW anim_crawl_br      ; anim_crawl_br
-  DEFW anim_crawl_bl      ; anim_crawl_bl
-  DEFW anim_crawlturn_tl  ; anim_crawlturn_tl
-  DEFW anim_crawlturn_tr  ; anim_crawlturn_tr
-  DEFW anim_crawlturn_br  ; anim_crawlturn_br
-  DEFW anim_crawlturn_bl  ; anim_crawlturn_bl
-  DEFW anim_crawlwait_tl  ; anim_crawlwait_tl
-  DEFW anim_crawlwait_tr  ; anim_crawlwait_tr
-  DEFW anim_crawlwait_br  ; anim_crawlwait_br
-  DEFW anim_crawlwait_bl  ; anim_crawlwait_bl
+  DEFW anim_walk_tl
+  DEFW anim_walk_tr
+  DEFW anim_walk_br
+  DEFW anim_walk_bl
+; Normal + turning
+  DEFW anim_turn_tl
+  DEFW anim_turn_tr
+  DEFW anim_turn_br
+  DEFW anim_turn_bl
+; Standing still
+  DEFW anim_wait_tl
+  DEFW anim_wait_tr
+  DEFW anim_wait_br
+  DEFW anim_wait_bl
+; Note that when crawling the hero won't spin around in the tunnel. He'll retain his orientation until specficially spun around using the controls opposite to the direction of the tunnel.
+;
+; Crawling
+  DEFW anim_crawl_tl
+  DEFW anim_crawl_tr
+  DEFW anim_crawl_br
+  DEFW anim_crawl_bl
+; Crawling + turning
+  DEFW anim_crawlturn_tl
+  DEFW anim_crawlturn_tr
+  DEFW anim_crawlturn_br
+  DEFW anim_crawlturn_bl
+; Crawling still
+  DEFW anim_crawlwait_tl
+  DEFW anim_crawlwait_tr
+  DEFW anim_crawlwait_br
+  DEFW anim_crawlwait_bl
 
-; Sprites: objects which can move.
+; Sprites
 ;
-; This include STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT.
+; These are the objects which can move. This includes STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT.
 ;
-; Structure: (b) width in bytes + 1, (b) height in rows, (w) data ptr, (w) mask ptr
+; Structure:
 ;
-; 'tl' => character faces top left of the screen
-;
-; 'br' => character faces bottom right of the screen
+; +---------+--------------------+
+; | Type    | Description        |
+; +---------+--------------------+
+; | Byte    | Width in bytes + 1 |
+; | Byte    | Height in rows     |
+; | Pointer | Data pointer       |
+; | Pointer | Mask pointer       |
+; +---------+--------------------+
 sprite_stove:
-  DEFB $03,$16,$46,$DB,$72,$DB ; 3, 22, &bitmap_stove, &mask_stove } // (16x22,$DB46,$DB72)
+  DEFB $03,$16,$46,$DB,$72,$DB ; 3, 22, { bitmap_stove, mask_stove } // (16x22,$DB46,$DB72)
 sprite_crate:
-  DEFB $04,$18,$B6,$DA,$FE,$DA ; 4, 24, &bitmap_crate, &mask_crate } // (24x24,$DAB6,$DAFE)
+  DEFB $04,$18,$B6,$DA,$FE,$DA ; 4, 24, { bitmap_crate, mask_crate } // (24x24,$DAB6,$DAFE)
 ; Glitch: All of the prisoner sprites are one row too high.
 sprite_prisoner:
-  DEFB $03,$1B,$8C,$D2,$45,$D5 ; 3, 27, &bitmap_prisoner_facing_top_left_1, &mask_various_facing_top_left_1 } // (16x27,$D28C,$D545)
-  DEFB $03,$1C,$56,$D2,$05,$D5 ; 3, 28, &bitmap_prisoner_facing_top_left_2, &mask_various_facing_top_left_2 } // (16x28,$D256,$D505)
-  DEFB $03,$1C,$20,$D2,$C5,$D4 ; 3, 28, &bitmap_prisoner_facing_top_left_3, &mask_various_facing_top_left_3 } // (16x28,$D220,$D4C5)
-  DEFB $03,$1C,$EA,$D1,$85,$D4 ; 3, 28, &bitmap_prisoner_facing_top_left_4, &mask_various_facing_top_left_4 } // (16x28,$D1EA,$D485)
-  DEFB $03,$1B,$C0,$D2,$85,$D5 ; 3, 27, &bitmap_prisoner_facing_bottom_right_1, &mask_various_facing_bottom_right_1 } // (16x27,$D2C0,$D585)
-  DEFB $03,$1D,$F4,$D2,$C5,$D5 ; 3, 29, &bitmap_prisoner_facing_bottom_right_2, &mask_various_facing_bottom_right_2 } // (16x29,$D2F4,$D5C5)
-  DEFB $03,$1C,$2C,$D3,$05,$D6 ; 3, 28, &bitmap_prisoner_facing_bottom_right_3, &mask_various_facing_bottom_right_3 } // (16x28,$D32C,$D605)
-  DEFB $03,$1C,$62,$D3,$3D,$D6 ; 3, 28, &bitmap_prisoner_facing_bottom_right_4, &mask_various_facing_bottom_right_4 } // (16x28,$D362,$D63D)
-  DEFB $04,$10,$C5,$D3,$77,$D6 ; 4, 16, &bitmap_crawl_facing_bottom_left_1, &mask_crawl_facing_bottom_left } // (24x16,$D3C5,$D677)
-  DEFB $04,$0F,$98,$D3,$77,$D6 ; 4, 15, &bitmap_crawl_facing_bottom_left_2, &mask_crawl_facing_bottom_left } // (24x15,$D398,$D677)
-  DEFB $04,$10,$F5,$D3,$55,$D4 ; 4, 16, &bitmap_crawl_facing_top_left_1, &mask_crawl_facing_top_left } // (24x16,$D3F5,$D455)
-  DEFB $04,$10,$25,$D4,$55,$D4 ; 4, 16, &bitmap_crawl_facing_top_left_2, &mask_crawl_facing_top_left } // (24x16,$D425,$D455)
+  DEFB $03,$1B,$8C,$D2,$45,$D5 ; 3, 27, { bitmap_prisoner_facing_top_left_1, mask_various_facing_top_left_1 } // (16x27,$D28C,$D545)
+  DEFB $03,$1C,$56,$D2,$05,$D5 ; 3, 28, { bitmap_prisoner_facing_top_left_2, mask_various_facing_top_left_2 } // (16x28,$D256,$D505)
+  DEFB $03,$1C,$20,$D2,$C5,$D4 ; 3, 28, { bitmap_prisoner_facing_top_left_3, mask_various_facing_top_left_3 } // (16x28,$D220,$D4C5)
+  DEFB $03,$1C,$EA,$D1,$85,$D4 ; 3, 28, { bitmap_prisoner_facing_top_left_4, mask_various_facing_top_left_4 } // (16x28,$D1EA,$D485)
+  DEFB $03,$1B,$C0,$D2,$85,$D5 ; 3, 27, { bitmap_prisoner_facing_bottom_right_1, mask_various_facing_bottom_right_1 } // (16x27,$D2C0,$D585)
+  DEFB $03,$1D,$F4,$D2,$C5,$D5 ; 3, 29, { bitmap_prisoner_facing_bottom_right_2, mask_various_facing_bottom_right_2 } // (16x29,$D2F4,$D5C5)
+  DEFB $03,$1C,$2C,$D3,$05,$D6 ; 3, 28, { bitmap_prisoner_facing_bottom_right_3, mask_various_facing_bottom_right_3 } // (16x28,$D32C,$D605)
+  DEFB $03,$1C,$62,$D3,$3D,$D6 ; 3, 28, { bitmap_prisoner_facing_bottom_right_4, mask_various_facing_bottom_right_4 } // (16x28,$D362,$D63D)
+  DEFB $04,$10,$C5,$D3,$77,$D6 ; 4, 16, { bitmap_crawl_facing_bottom_left_1, mask_crawl_facing_bottom_left } // (24x16,$D3C5,$D677)
+  DEFB $04,$0F,$98,$D3,$77,$D6 ; 4, 15, { bitmap_crawl_facing_bottom_left_2, mask_crawl_facing_bottom_left } // (24x15,$D398,$D677)
+  DEFB $04,$10,$F5,$D3,$55,$D4 ; 4, 16, { bitmap_crawl_facing_top_left_1, mask_crawl_facing_top_left } // (24x16,$D3F5,$D455)
+  DEFB $04,$10,$25,$D4,$55,$D4 ; 4, 16, { bitmap_crawl_facing_top_left_2, mask_crawl_facing_top_left } // (24x16,$D425,$D455)
 sprite_dog:
-  DEFB $04,$10,$67,$D8,$21,$D9 ; 4, 16, &bitmap_dog_facing_top_left_1, &mask_dog_facing_top_left } // (24x16,$D867,$D921)
-  DEFB $04,$10,$97,$D8,$21,$D9 ; 4, 16, &bitmap_dog_facing_top_left_2, &mask_dog_facing_top_left } // (24x16,$D897,$D921)
-  DEFB $04,$0F,$C7,$D8,$21,$D9 ; 4, 15, &bitmap_dog_facing_top_left_3, &mask_dog_facing_top_left } // (24x15,$D8C7,$D921)
-  DEFB $04,$0F,$F4,$D8,$21,$D9 ; 4, 15, &bitmap_dog_facing_top_left_4, &mask_dog_facing_top_left } // (24x15,$D8F4,$D921)
-  DEFB $04,$0E,$51,$D9,$F9,$D9 ; 4, 14, &bitmap_dog_facing_bottom_right_1, &mask_dog_facing_bottom_right } // (24x14,$D951,$D9F9)
-  DEFB $04,$0F,$7B,$D9,$F9,$D9 ; 4, 15, &bitmap_dog_facing_bottom_right_2, &mask_dog_facing_bottom_right } // (24x15,$D97B,$D9F9)
+  DEFB $04,$10,$67,$D8,$21,$D9 ; 4, 16, { bitmap_dog_facing_top_left_1, mask_dog_facing_top_left } // (24x16,$D867,$D921)
+  DEFB $04,$10,$97,$D8,$21,$D9 ; 4, 16, { bitmap_dog_facing_top_left_2, mask_dog_facing_top_left } // (24x16,$D897,$D921)
+  DEFB $04,$0F,$C7,$D8,$21,$D9 ; 4, 15, { bitmap_dog_facing_top_left_3, mask_dog_facing_top_left } // (24x15,$D8C7,$D921)
+  DEFB $04,$0F,$F4,$D8,$21,$D9 ; 4, 15, { bitmap_dog_facing_top_left_4, mask_dog_facing_top_left } // (24x15,$D8F4,$D921)
+  DEFB $04,$0E,$51,$D9,$F9,$D9 ; 4, 14, { bitmap_dog_facing_bottom_right_1, mask_dog_facing_bottom_right } // (24x14,$D951,$D9F9)
+  DEFB $04,$0F,$7B,$D9,$F9,$D9 ; 4, 15, { bitmap_dog_facing_bottom_right_2, mask_dog_facing_bottom_right } // (24x15,$D97B,$D9F9)
 ; Glitch: The height of following sprite is two rows too high.
-  DEFB $04,$0F,$A8,$D9,$F9,$D9 ; 4, 15, &bitmap_dog_facing_bottom_right_3, &mask_dog_facing_bottom_right } // (24x15,$D9A8,$D9F9)
-  DEFB $04,$0E,$CF,$D9,$F9,$D9 ; 4, 14, &bitmap_dog_facing_bottom_right_4, &mask_dog_facing_bottom_right } // (24x14,$D9CF,$D9F9)
+  DEFB $04,$0F,$A8,$D9,$F9,$D9 ; 4, 15, { bitmap_dog_facing_bottom_right_3, mask_dog_facing_bottom_right } // (24x15,$D9A8,$D9F9)
+  DEFB $04,$0E,$CF,$D9,$F9,$D9 ; 4, 14, { bitmap_dog_facing_bottom_right_4, mask_dog_facing_bottom_right } // (24x14,$D9CF,$D9F9)
 sprite_guard:
-  DEFB $03,$1B,$4D,$D7,$45,$D5 ; 3, 27, &bitmap_guard_facing_top_left_1, &mask_various_facing_top_left_1 } // (16x27,$D74D,$D545)
-  DEFB $03,$1D,$13,$D7,$05,$D5 ; 3, 29, &bitmap_guard_facing_top_left_2, &mask_various_facing_top_left_2 } // (16x29,$D713,$D505)
-  DEFB $03,$1B,$DD,$D6,$C5,$D4 ; 3, 27, &bitmap_guard_facing_top_left_3, &mask_various_facing_top_left_3 } // (16x27,$D6DD,$D4C5)
-  DEFB $03,$1B,$A7,$D6,$85,$D4 ; 3, 27, &bitmap_guard_facing_top_left_4, &mask_various_facing_top_left_4 } // (16x27,$D6A7,$D485)
-  DEFB $03,$1D,$83,$D7,$85,$D5 ; 3, 29, &bitmap_guard_facing_bottom_right_1, &mask_various_facing_bottom_right_1 } // (16x29,$D783,$D585)
-  DEFB $03,$1D,$BD,$D7,$C5,$D5 ; 3, 29, &bitmap_guard_facing_bottom_right_2, &mask_various_facing_bottom_right_2 } // (16x29,$D7BD,$D5C5)
-  DEFB $03,$1C,$F7,$D7,$05,$D6 ; 3, 28, &bitmap_guard_facing_bottom_right_3, &mask_various_facing_bottom_right_3 } // (16x28,$D7F7,$D605)
-  DEFB $03,$1C,$2F,$D8,$3D,$D6 ; 3, 28, &bitmap_guard_facing_bottom_right_4, &mask_various_facing_bottom_right_4 } // (16x28,$D82F,$D63D)
+  DEFB $03,$1B,$4D,$D7,$45,$D5 ; 3, 27, { bitmap_guard_facing_top_left_1, mask_various_facing_top_left_1 } // (16x27,$D74D,$D545)
+  DEFB $03,$1D,$13,$D7,$05,$D5 ; 3, 29, { bitmap_guard_facing_top_left_2, mask_various_facing_top_left_2 } // (16x29,$D713,$D505)
+  DEFB $03,$1B,$DD,$D6,$C5,$D4 ; 3, 27, { bitmap_guard_facing_top_left_3, mask_various_facing_top_left_3 } // (16x27,$D6DD,$D4C5)
+  DEFB $03,$1B,$A7,$D6,$85,$D4 ; 3, 27, { bitmap_guard_facing_top_left_4, mask_various_facing_top_left_4 } // (16x27,$D6A7,$D485)
+  DEFB $03,$1D,$83,$D7,$85,$D5 ; 3, 29, { bitmap_guard_facing_bottom_right_1, mask_various_facing_bottom_right_1 } // (16x29,$D783,$D585)
+  DEFB $03,$1D,$BD,$D7,$C5,$D5 ; 3, 29, { bitmap_guard_facing_bottom_right_2, mask_various_facing_bottom_right_2 } // (16x29,$D7BD,$D5C5)
+  DEFB $03,$1C,$F7,$D7,$05,$D6 ; 3, 28, { bitmap_guard_facing_bottom_right_3, mask_various_facing_bottom_right_3 } // (16x28,$D7F7,$D605)
+  DEFB $03,$1C,$2F,$D8,$3D,$D6 ; 3, 28, { bitmap_guard_facing_bottom_right_4, mask_various_facing_bottom_right_4 } // (16x28,$D82F,$D63D)
 sprite_commandant:
-  DEFB $03,$1C,$D6,$D0,$45,$D5 ; 3, 28, &bitmap_commandant_facing_top_left_1, &mask_various_facing_top_left_1 } // (16x28,$D0D6,$D545)
-  DEFB $03,$1E,$9A,$D0,$05,$D5 ; 3, 30, &bitmap_commandant_facing_top_left_2, &mask_various_facing_top_left_2 } // (16x30,$D09A,$D505)
-  DEFB $03,$1D,$60,$D0,$C5,$D4 ; 3, 29, &bitmap_commandant_facing_top_left_3, &mask_various_facing_top_left_3 } // (16x29,$D060,$D4C5)
-  DEFB $03,$1D,$26,$D0,$85,$D4 ; 3, 29, &bitmap_commandant_facing_top_left_4, &mask_various_facing_top_left_4 } // (16x29,$D026,$D485)
-  DEFB $03,$1B,$0E,$D1,$85,$D5 ; 3, 27, &bitmap_commandant_facing_bottom_right_1, &mask_various_facing_bottom_right_1 } // (16x27,$D10E,$D585)
-  DEFB $03,$1C,$44,$D1,$C5,$D5 ; 3, 28, &bitmap_commandant_facing_bottom_right_2, &mask_various_facing_bottom_right_2 } // (16x28,$D144,$D5C5)
-  DEFB $03,$1B,$7C,$D1,$05,$D6 ; 3, 27, &bitmap_commandant_facing_bottom_right_3, &mask_various_facing_bottom_right_3 } // (16x27,$D17C,$D605)
-  DEFB $03,$1C,$B2,$D1,$3D,$D6 ; 3, 28, &bitmap_commandant_facing_bottom_right_4, &mask_various_facing_bottom_right_4 } // (16x28,$D1B2,$D63D)
+  DEFB $03,$1C,$D6,$D0,$45,$D5 ; 3, 28, { bitmap_commandant_facing_top_left_1, mask_various_facing_top_left_1 } // (16x28,$D0D6,$D545)
+  DEFB $03,$1E,$9A,$D0,$05,$D5 ; 3, 30, { bitmap_commandant_facing_top_left_2, mask_various_facing_top_left_2 } // (16x30,$D09A,$D505)
+  DEFB $03,$1D,$60,$D0,$C5,$D4 ; 3, 29, { bitmap_commandant_facing_top_left_3, mask_various_facing_top_left_3 } // (16x29,$D060,$D4C5)
+  DEFB $03,$1D,$26,$D0,$85,$D4 ; 3, 29, { bitmap_commandant_facing_top_left_4, mask_various_facing_top_left_4 } // (16x29,$D026,$D485)
+  DEFB $03,$1B,$0E,$D1,$85,$D5 ; 3, 27, { bitmap_commandant_facing_bottom_right_1, mask_various_facing_bottom_right_1 } // (16x27,$D10E,$D585)
+  DEFB $03,$1C,$44,$D1,$C5,$D5 ; 3, 28, { bitmap_commandant_facing_bottom_right_2, mask_various_facing_bottom_right_2 } // (16x28,$D144,$D5C5)
+  DEFB $03,$1B,$7C,$D1,$05,$D6 ; 3, 27, { bitmap_commandant_facing_bottom_right_3, mask_various_facing_bottom_right_3 } // (16x27,$D17C,$D605)
+  DEFB $03,$1C,$B2,$D1,$3D,$D6 ; 3, 28, { bitmap_commandant_facing_bottom_right_4, mask_various_facing_bottom_right_4 } // (16x28,$D1B2,$D63D)
 
-; Animations.
+; Animations
 ;
-; Read by routine around $B64F (animate)
+; This is a sequence of variably-sized entries (type: anim_t).
+;
+; If suffixed '_tl' the character faces top left of the screen, if suffixed '_br' the character faces bottom right of the screen, etc.
+;
+; Animations (type: anim_t) have the following format:
+;
+; +-------------+-------------+---------------+----------------------------------------------------------------------+
+; | Type        | Bytes       | Name          | Meaning                                                              |
+; +-------------+-------------+---------------+----------------------------------------------------------------------+
+; | Byte        | 1           | nframes       | Number of frames in this animation                                   |
+; | direction_t | 1           | from          | Which direction to turn to when animation starts (when reversed)     |
+; | direction_t | 1           | to            | Which direction to turn to when animation starts (when not reversed) |
+; | direction_t | 1           | map_direction | Direction to move the map, or 255 to not move it                     |
+; | animframe_t | nframes * 4 | frames        | Animation frames                                                     |
+; +-------------+-------------+---------------+----------------------------------------------------------------------+
+;
+; Animation frames (type: animframe_t) have the following format:
+;
+; +------+-------+-------------+-----------------------------------------------------------------------------+
+; | Type | Bytes | Name        | Meaning                                                                     |
+; +------+-------+-------------+-----------------------------------------------------------------------------+
+; | Byte | 1     | dx          | How much this frame moves the character by on the X axis. Signed delta      |
+; | Byte | 1     | dy          | How much this frame moves the character by on the Y axis. Signed delta      |
+; | Byte | 1     | dh          | How much this frame moves the character by on the height axis. Signed delta |
+; | Byte | 1     | spriteindex | Sprite index (relative to vischar's sprite base) + flip flag in top bit     |
+; +------+-------+-------------+-----------------------------------------------------------------------------+
+;
+; Used by the routine at animate.
 anim_crawlwait_tl:
   DEFB $01,$04,$04,$FF,$00,$00,$00,$0A
 anim_crawlwait_tr:
@@ -14737,7 +15301,12 @@ anim_crawlturn_br:
 anim_crawlturn_bl:
   DEFB $02,$07,$04,$FF,$00,$00,$00,$08,$00,$00,$00,$0A
 
-; Sprite bitmaps and masks.
+; Sprite bitmaps and masks
+;
+; This section contains the bitmaps and masks for all of the movable items in the game. This includes STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT. This section also contains the sprite for the waving morale flag.
+;
+; The sprite definitions at sprite_stove onwards point into the data in this section to create animatable sprites. In particular this allows the same masks to be re-used across multiple game characters, which saves space.
+;
 bitmap_commandant_facing_top_left_4:
   DEFB $00,$00,$00,$60,$00,$F0,$00,$F8 ; bitmap: COMMANDANT FACING TOP LEFT 4
   DEFB $00,$FC,$01,$7C,$01,$78,$00,$04 ;
@@ -15174,14 +15743,14 @@ mask_stove:
   DEFB $80,$01,$80,$01,$C0,$03,$80,$01 ;
   DEFB $80,$01,$0C,$30                 ;
 
-; Mark nearby items.
+; Mark nearby items
 ;
-; Iterates over itemstructs, testing to see if each item is within the range (-1..22, 0..15) of the current map position. If it is it sets the flags itemstruct_ROOM_FLAG_NEARBY_6 and itemstruct_ROOM_FLAG_NEARBY_7 on the item, otherwise it
-; clears both of those flags.
-;
-; Used by the routines at setup_movable_items and main_loop.
+; This iterates over itemstructs, testing to see if each item is within the range (-1..22, 0..15) of the current map position. If it is it sets the flags itemstruct_ROOM_FLAG_NEARBY_6 and itemstruct_ROOM_FLAG_NEARBY_7 on the item, otherwise
+; it clears both of those flags.
 ;
 ; This is similar to is_item_discoverable_interior in that it iterates over all item_structs.
+;
+; Used by the routines at setup_movable_items and main_loop.
 mark_nearby_items:
   LD A,(room_index)       ; Get the global current room index
   CP $FF                  ; Is it room_NONE?
@@ -15245,7 +15814,9 @@ mni_next:
   DJNZ mni_loop           ; ...loop
   RET                     ; Return
 
-; Find the next item to draw that is furthest behind (x,y).
+; Get next drawable itemstruct
+;
+; This finds the next item to draw that is furthest behind (x,y).
 ;
 ; Used by the routine at get_next_drawable.
 ;
@@ -15324,11 +15895,14 @@ ggi_loop_end:
   DJNZ ggi_loop           ; ...loop
   RET                     ; Return
 
-; Set up item plotting.
+; Set-up item plotting
+;
+; This checks that the item is visible, and if so readies the sprite plotter for the given item. The clipped values from the visibility check are used to enable or disable portions of the inner loop to cause clipping. Note that item
+; plotting only ever uses the 16 pixel plotter.
+;
+; Note: This is the counterpart of, and very similar to, the routine at setup_vischar_plotting.
 ;
 ; Used by the routine at plot_sprites.
-;
-; Counterpart of, and very similar to, the routine at setup_vischar_plotting.
 ;
 ; I:A Item index
 ; I:IY Pointer to item_struct
@@ -15488,9 +16062,11 @@ setup_item_plotting_0:
   XOR A                   ; Set Z flag to signal "is visible" for return
   RET                     ; Return
 
-; Clip the given item's dimensions to the game window.
+; Item visible
 ;
-; Counterpart to vischar_visible.
+; This clips the given item's dimensions to the game window.
+;
+; Counterpart of vischar_visible see that for further comments.
 ;
 ; Used by the routine at setup_item_plotting.
 ;
@@ -15590,11 +16166,13 @@ iv_not_visible:
   OR $01                  ; Clear Z (item is not visible)
   RET                     ; Return
 
-; Item attributes.
+; Item attributes
 ;
-; 20 bytes, 4 of which are unknown, possibly unused.
+; This defines the attribute byte to use for all sixteen items,
 ;
-; 'Yellow/black' means yellow ink over black paper, for example.
+; This is an array of 20 bytes, the final four of which are unused.
+;
+; In the descriptions 'yellow/black' means yellow ink over black paper, for example.
 item_attributes:
   DEFB $06                ; item_attribute: WIRESNIPS - yellow/black
   DEFB $05                ; item_attribute: SHOVEL - cyan/black
@@ -15614,15 +16192,15 @@ item_attributes_food:
   DEFB $07                ; item_attribute: RADIO - white/black
   DEFB $07                ; item_attribute: PURSE - white/black
   DEFB $04                ; item_attribute: COMPASS - green/black
-; The following are likely unused.
+; The final four bytes are unused.
   DEFB $06                ; item_attribute: yellow/black
   DEFB $05                ; item_attribute: cyan/black
   DEFB $42                ; item_attribute: bright-red/black
   DEFB $42                ; item_attribute: bright-red/black
 
-; Item definitions.
+; Item definitions
 ;
-; Array of "sprite" structures.
+; This is an array of 16 "sprite" structures.
 ;
 ; item_definition: WIRESNIPS
 item_definitions:
@@ -15706,7 +16284,11 @@ item_definitions:
   DEFW bitmap_compass     ; bitmap pointer
   DEFW mask_compass       ; mask pointer
 
-; Item bitmaps and masks.
+; Item bitmaps and masks
+;
+; This section contains the bitmaps and masks for all of the (non-movable) items in the game. This includes SHOVEL, KEY, LOCKPICK, COMPASS, PURSE, PAPERS and so on.
+;
+; The item definitions at item_definitions onwards point into the data in this section to create placable items. In particular this allows the same masks to be re-used across multiple game items, which saves space.
 bitmap_shovel:
   DEFB $00,$00            ; item_bitmap: SHOVEL (16x13)
   DEFB $00,$02            ;
@@ -16116,47 +16698,48 @@ mask_food:
   DEFB $F8,$03            ;
   DEFB $FE,$07            ;
 
-; Unreferenced bytes.
+; Unreferenced bytes
 LE0D7:
   DEFB $00,$00,$00,$00,$00,$00,$00,$00
   DEFB $00
 
-; Addresses of self-modified locations which are changed between NOPs and LD (HL),A.
+; Plot masked sprites (16px) enables
 ;
-; (<- setup_item_plotting, setup_vischar_plotting)
+; These are the addresses of self-modified locations which are set to NOP or LD (HL),A depending on the clipping required.
+;
+; Used by the routines at setup_item_plotting, setup_vischar_plotting.
 plot_masked_sprite_16px_enables:
-  DEFW pms16_right_plot_enable_0 ; pms16_right_plot_enable_0
-  DEFW pms16_left_plot_enable_0 ; pms16_left_plot_enable_0
-  DEFW pms16_right_plot_enable_1 ; pms16_right_plot_enable_1
-  DEFW pms16_left_plot_enable_1 ; pms16_left_plot_enable_1
-  DEFW pms16_right_plot_enable_2 ; pms16_right_plot_enable_2
-  DEFW pms16_left_plot_enable_2 ; pms16_left_plot_enable_2
+  DEFW pms16_right_plot_enable_0
+  DEFW pms16_left_plot_enable_0
+  DEFW pms16_right_plot_enable_1
+  DEFW pms16_left_plot_enable_1
+  DEFW pms16_right_plot_enable_2
+  DEFW pms16_left_plot_enable_2
 
-; Addresses of self-modified locations which are changed between NOPs and LD (HL),A.
+; Plot masked sprites (24px) enables
 ;
-; (<- setup_vischar_plotting)
+; These are the addresses of self-modified locations which are set to NOP or LD (HL),A depending on the clipping required.
+;
+; Used by the routine at setup_vischar_plotting.
 plot_masked_sprite_24px_enables:
-  DEFW pms24_right_plot_enable_0 ; pms24_right_plot_enable_0
-  DEFW pms24_left_plot_enable_0 ; pms24_left_plot_enable_0
-  DEFW pms24_right_plot_enable_1 ; pms24_right_plot_enable_1
-  DEFW pms24_left_plot_enable_1 ; pms24_left_plot_enable_1
-  DEFW pms24_right_plot_enable_2 ; pms24_right_plot_enable_2
-  DEFW pms24_left_plot_enable_2 ; pms24_left_plot_enable_2
-  DEFW pms24_right_plot_enable_3 ; pms24_right_plot_enable_3
-  DEFW pms24_left_plot_enable_3 ; pms24_left_plot_enable_3
-; These two look different. Unused?
-  DEFW plot_masked_sprite_16px ; plot_masked_sprite_16px
-  DEFW plot_masked_sprite_24px ; plot_masked_sprite_24px
+  DEFW pms24_right_plot_enable_0
+  DEFW pms24_left_plot_enable_0
+  DEFW pms24_right_plot_enable_1
+  DEFW pms24_left_plot_enable_1
+  DEFW pms24_right_plot_enable_2
+  DEFW pms24_left_plot_enable_2
+  DEFW pms24_right_plot_enable_3
+  DEFW pms24_left_plot_enable_3
 
-; Unused word?
-;
-; Unsure if related to the above plot_masked_sprite_24px_enables table.
-LE100:
+; Unreferenced bytes
+LE0FC:
+  DEFW plot_masked_sprite_16px
+  DEFW plot_masked_sprite_24px
   DEFW $0806
 
-; Sprite plotter for 24 pixel-wide masked sprites.
+; Plot masked sprite (24px)
 ;
-; This is used for characters and objects.
+; This is the sprite plotter for 24 pixel-wide masked sprites. It's used for both characters and objects.
 ;
 ; Used by the routine at plot_sprites.
 ;
@@ -16171,7 +16754,7 @@ plot_masked_sprite_24px:
   JP NC,pms24_left        ; Jump if so
 ; Right shifting case.
 ;
-; A is 0..3 here: the amount by which we want to shift the sprite right. The following op turns that into a jump table distance. e.g. it turns (0,1,2,3) into (3,2,1,0) then scales it by the length of each rotate sequence (8 bytes) to obtain
+; A is 0..3 here: the amount by which we want to shift the sprite right. The following op turns that into a jump table distance. e.g. It turns (0,1,2,3) into (3,2,1,0) then scales it by the length of each rotate sequence (8 bytes) to obtain
 ; the jump offset.
   CPL                     ; x = (~x & 3)
   AND $03                 ;
@@ -16565,16 +17148,18 @@ pms24_left_plot_enable_3:
   JP NZ,pms24_left_loop   ;
   RET                     ; Return
 
-; Alternative entry point for plot_masked_sprite_16px that assumes x is zero.
+; Plot masked sprite (16px) (x is zero)
+;
+; This is an alternative entry point for plot_masked_sprite_16px that assumes x is zero.
 ;
 ; Used by the routine at plot_sprites.
 plot_masked_sprite_16px_x_is_zero:
   XOR A                   ; Zero x
   JR pms16_right          ; Jump to pms16_left
 
-; Sprite plotter for 16 pixel-wide masked sprites.
+; Plot masked sprite (16px)
 ;
-; This is used for characters and objects.
+; This is a plotter for 16 pixel-wide masked sprites. This is used for characters and objects.
 ;
 ; Used by the routines at plot_sprites, plot_masked_sprite_16px_x_is_zero and plot_masked_sprite_16px.
 ;
@@ -16589,7 +17174,7 @@ plot_masked_sprite_16px:
   JP NC,pms16_left        ; Jump if so
 ; Right shifting case.
 ;
-; A is 0..3 here: the amount by which we want to shift the sprite right. The following op turns that into a jump table distance. e.g. it turns (0,1,2,3) into (3,2,1,0) then scales it by the length of each rotate sequence (6 bytes) to obtain
+; A is 0..3 here: the amount by which we want to shift the sprite right. The following op turns that into a jump table distance. e.g. It turns (0,1,2,3) into (3,2,1,0) then scales it by the length of each rotate sequence (6 bytes) to obtain
 ; the jump offset.
 pms16_right:
   CPL                     ; x = (~x & 3)
@@ -16889,16 +17474,24 @@ pms16_left_plot_enable_2:
   JP NZ,pms16_left_loop   ;
   RET                     ; Return
 
-; Horizontally flips the 24 pixels in E,C,B and counterpart masks in E',C',B'.
+; Flip 24 masked pixels
+;
+; This horizontally flips the 24 pixels in E,C,B and counterpart masks in E',C',B'.
 ;
 ; Used by the routine at plot_masked_sprite_24px.
 ;
-; I:B Left 8 pixels.
-; I:C Middle 8 pixels.
-; I:E Right 8 pixels.
-; O:B Flipped left 8 pixels.
-; O:C Flipped middle 8 pixels.
-; O:E Flipped right 8 pixels.
+; I:B Left eight pixels.
+; I:C Middle eight pixels.
+; I:E Right eight pixels.
+; I:B' Left eight mask pixels.
+; I:C' Middle eight mask pixels.
+; I:E' Right eight mask pixels.
+; O:B Flipped left eight pixels.
+; O:C Flipped middle eight pixels.
+; O:E Flipped right eight pixels.
+; O:B' Flipped left eight mask pixels.
+; O:C' Flipped middle eight mask pixels.
+; O:E' Flipped right eight mask pixels.
 ;
 ; Horizontally flip the bitmap bytes by looking up each byte in the flipped / bit-reversed table at $7F00 and swapping the left and right pixels over.
 flip_24_masked_pixels:
@@ -16923,14 +17516,20 @@ flip_24_masked_pixels:
   EXX                     ; Restore original bank
   RET                     ; Return
 
-; Horizontally flips the 16 pixels in D,E and counterpart masks in D',E'.
+; Flip 16 masked pixels
+;
+; This horizontally flips the 16 pixels in D,E and counterpart masks in D',E'.
 ;
 ; Used by the routines at pms16_right and pms16_left.
 ;
-; I:D Left 8 pixels.
-; I:E Right 8 pixels.
-; O:D Flipped left 8 pixels.
-; O:E Flipped right 8 pixels.
+; I:D Left eight pixels.
+; I:E Right eight pixels.
+; I:D Left eight mask pixels.
+; I:E Right eight mask pixels.
+; O:D Flipped left eight pixels.
+; O:E Flipped right eight pixels.
+; O:D Flipped left eight mask pixels.
+; O:E Flipped right eight mask pixels.
 ;
 ; Horizontally flip the bitmap bytes by looking up each byte in the flipped / bit-reversed table at $7F00 and swapping the left and right pixels over.
 flip_16_masked_pixels:
@@ -16951,11 +17550,13 @@ flip_16_masked_pixels:
   EXX                     ; Restore original bank
   RET                     ; Return
 
-; Set up vischar plotting.
+; Set-up vischar plotting
+;
+; This checks that the vischar is visible, and if so readies the sprite plotter for the given vischar. The clipped values from the visibility check are used to enable or disable portions of the inner loop to cause clipping.
+;
+; Note: This is the counterpart of, and very similar to, the routine at setup_item_plotting.
 ;
 ; Used by the routine at plot_sprites.
-;
-; Counterpart of, and very similar to, the routine at setup_item_plotting.
 ;
 ; I:HL Pointer to visible character
 ; I:IY Pointer to visible character
@@ -17188,11 +17789,11 @@ setup_vischar_plotting_1:
 ; The Z flag remains set from E52E signalling "is visible".
   RET                     ; Return
 
-; Scale down a pos_t and assign result to a tinypos_t.
+; Position to tinypos
+;
+; This divides the three input 16-bit words (type: pos_t) by 8, with rounding to nearest, storing the result as bytes (type: tinypos_t).
 ;
 ; Used by the routines at drop_item_tail, in_permitted_area, reset_visible_character, character_behaviour and guards_follow_suspicious_character.
-;
-; Divides the three input 16-bit words by 8, with rounding to nearest, storing the result as bytes.
 ;
 ; I:HL Pointer to input pos_t.
 ; I:DE Pointer to output tinypos_t.
@@ -17212,7 +17813,9 @@ pos_to_tinypos_0:
   DJNZ pos_to_tinypos_0   ; ...loop
   RET                     ; Return
 
-; Divide AC by 8, with rounding to nearest.
+; Divide by eight with rounding
+;
+; This divides (C,A) by 8, with rounding to nearest, returning the result in A.
 ;
 ; Used by the routines at calc_interior_item_iso_pos, purge_invisible_characters, setup_vischar_plotting and pos_to_tinypos.
 ;
@@ -17225,7 +17828,9 @@ divide_by_8_with_rounding:
   INC C                   ;
 ; FALL THROUGH into divide_by_8.
 
-; Divide AC by 8.
+; Divide by eight
+;
+; This divides (C,A) by 8 returning the result in A.
 ;
 ; Used by the routines at reset_outdoors, purge_invisible_characters, setup_vischar_plotting and divide_by_8_with_rounding.
 ;
@@ -17243,224 +17848,223 @@ divide_by_8:
 
 ; Masks
 ;
-; Mask encoding: A top-bit-set byte indicates a repetition, the count of which is in the bottom seven bits. The subsequent byte is the value to repeat.
+; This is a sequence of RLE-compressed masks.
 ;
-; { byte count+flags; ... }
+; In each mask, the first byte is the width. Following that a top-bit-set byte indicates a repetition, the count of which is in the bottom seven bits. The subsequent byte is the value to repeat. The repetition count is +1, so <0x83> <0x01>
+; expands to <0x01> <0x01>.
 exterior_mask_0:
-  DEFB $2A,$A0,$00,$05,$07,$08,$09,$01 ; exterior_mask_0
-  DEFB $0A,$A2,$00,$05,$06,$04,$85,$01 ;
-  DEFB $0B,$9F,$00,$05,$06,$04,$88,$01 ;
-  DEFB $0C,$9C,$00,$05,$06,$04,$8A,$01 ;
-  DEFB $0D,$0E,$99,$00,$05,$06,$04,$8D ;
-  DEFB $01,$0F,$10,$96,$00,$05,$06,$04 ;
-  DEFB $90,$01,$11,$94,$00,$05,$06,$04 ;
-  DEFB $92,$01,$12,$92,$00,$05,$06,$04 ;
-  DEFB $94,$01,$12,$90,$00,$05,$06,$04 ;
-  DEFB $96,$01,$12,$8E,$00,$05,$06,$04 ;
-  DEFB $98,$01,$12,$8C,$00,$05,$06,$04 ;
-  DEFB $9A,$01,$12,$8A,$00,$05,$06,$04 ;
-  DEFB $9C,$01,$12,$88,$00,$05,$06,$04 ;
-  DEFB $9E,$01,$18,$86,$00,$05,$06,$04 ;
-  DEFB $A1,$01,$84,$00,$05,$06,$04,$A3 ;
-  DEFB $01,$00,$00,$05,$06,$04,$A5,$01 ;
-  DEFB $05,$03,$04,$A7,$01,$02,$A9,$01 ;
-  DEFB $02,$A9,$01,$02,$A9,$01,$02,$A9 ;
-  DEFB $01,$02,$A9,$01,$02,$A9,$01,$02 ;
-  DEFB $A9,$01,$02,$A9,$01,$02,$A9,$01 ;
+  DEFB $2A,$A0,$00,$05,$07,$08,$09,$01
+  DEFB $0A,$A2,$00,$05,$06,$04,$85,$01
+  DEFB $0B,$9F,$00,$05,$06,$04,$88,$01
+  DEFB $0C,$9C,$00,$05,$06,$04,$8A,$01
+  DEFB $0D,$0E,$99,$00,$05,$06,$04,$8D
+  DEFB $01,$0F,$10,$96,$00,$05,$06,$04
+  DEFB $90,$01,$11,$94,$00,$05,$06,$04
+  DEFB $92,$01,$12,$92,$00,$05,$06,$04
+  DEFB $94,$01,$12,$90,$00,$05,$06,$04
+  DEFB $96,$01,$12,$8E,$00,$05,$06,$04
+  DEFB $98,$01,$12,$8C,$00,$05,$06,$04
+  DEFB $9A,$01,$12,$8A,$00,$05,$06,$04
+  DEFB $9C,$01,$12,$88,$00,$05,$06,$04
+  DEFB $9E,$01,$18,$86,$00,$05,$06,$04
+  DEFB $A1,$01,$84,$00,$05,$06,$04,$A3
+  DEFB $01,$00,$00,$05,$06,$04,$A5,$01
+  DEFB $05,$03,$04,$A7,$01,$02,$A9,$01
+  DEFB $02,$A9,$01,$02,$A9,$01,$02,$A9
+  DEFB $01,$02,$A9,$01,$02,$A9,$01,$02
+  DEFB $A9,$01,$02,$A9,$01,$02,$A9,$01
 exterior_mask_1:
-  DEFB $12,$02,$91,$01,$02,$91,$01,$02 ; exterior_mask_1
-  DEFB $91,$01,$02,$91,$01,$02,$91,$01 ;
-  DEFB $02,$91,$01,$02,$91,$01,$02,$91 ;
-  DEFB $01,$02,$91,$01,$02,$91,$01     ;
+  DEFB $12,$02,$91,$01,$02,$91,$01,$02
+  DEFB $91,$01,$02,$91,$01,$02,$91,$01
+  DEFB $02,$91,$01,$02,$91,$01,$02,$91
+  DEFB $01,$02,$91,$01,$02,$91,$01
 exterior_mask_2:
-  DEFB $10,$13,$14,$15,$8D,$00,$16,$17 ; exterior_mask_2
-  DEFB $18,$17,$15,$8B,$00,$19,$1A,$1B ;
-  DEFB $17,$18,$17,$15,$89,$00,$19,$1A ;
-  DEFB $1C,$1A,$1B,$17,$18,$17,$15,$87 ;
-  DEFB $00,$19,$1A,$1C,$1A,$1C,$1A,$1B ;
-  DEFB $17,$13,$14,$15,$85,$00,$19,$1A ;
-  DEFB $1C,$1A,$1C,$1A,$1C,$1D,$16,$17 ;
-  DEFB $18,$17,$15,$83,$00,$19,$1A,$1C ;
-  DEFB $1A,$1C,$1A,$1C,$1D,$19,$1A,$1B ;
-  DEFB $17,$18,$17,$15,$00,$19,$1A,$1C ;
-  DEFB $1A,$1C,$1A,$1C,$1D,$19,$1A,$1C ;
-  DEFB $1A,$1B,$17,$18,$17,$00,$20,$1C ;
-  DEFB $1A,$1C,$1A,$1C,$1D,$19,$1A,$1C ;
-  DEFB $1A,$1C,$1A,$1B,$17,$83,$00,$20 ;
-  DEFB $1C,$1A,$1C,$1D,$19,$1A,$1C,$1A ;
-  DEFB $1C,$1A,$1C,$1D,$85,$00,$20,$1C ;
-  DEFB $1D,$19,$1A,$1C,$1A,$1C,$1A,$1C ;
-  DEFB $1D,$87,$00,$1F,$19,$1A,$1C,$1A ;
-  DEFB $1C,$1A,$1C,$1D,$89,$00,$20,$1C ;
-  DEFB $1A,$1C,$1A,$1C,$1D,$8B,$00,$20 ;
-  DEFB $1C,$1A,$1C,$1D,$8D,$00,$20,$1C ;
-  DEFB $1D,$8F,$00,$1F                 ;
+  DEFB $10,$13,$14,$15,$8D,$00,$16,$17
+  DEFB $18,$17,$15,$8B,$00,$19,$1A,$1B
+  DEFB $17,$18,$17,$15,$89,$00,$19,$1A
+  DEFB $1C,$1A,$1B,$17,$18,$17,$15,$87
+  DEFB $00,$19,$1A,$1C,$1A,$1C,$1A,$1B
+  DEFB $17,$13,$14,$15,$85,$00,$19,$1A
+  DEFB $1C,$1A,$1C,$1A,$1C,$1D,$16,$17
+  DEFB $18,$17,$15,$83,$00,$19,$1A,$1C
+  DEFB $1A,$1C,$1A,$1C,$1D,$19,$1A,$1B
+  DEFB $17,$18,$17,$15,$00,$19,$1A,$1C
+  DEFB $1A,$1C,$1A,$1C,$1D,$19,$1A,$1C
+  DEFB $1A,$1B,$17,$18,$17,$00,$20,$1C
+  DEFB $1A,$1C,$1A,$1C,$1D,$19,$1A,$1C
+  DEFB $1A,$1C,$1A,$1B,$17,$83,$00,$20
+  DEFB $1C,$1A,$1C,$1D,$19,$1A,$1C,$1A
+  DEFB $1C,$1A,$1C,$1D,$85,$00,$20,$1C
+  DEFB $1D,$19,$1A,$1C,$1A,$1C,$1A,$1C
+  DEFB $1D,$87,$00,$1F,$19,$1A,$1C,$1A
+  DEFB $1C,$1A,$1C,$1D,$89,$00,$20,$1C
+  DEFB $1A,$1C,$1A,$1C,$1D,$8B,$00,$20
+  DEFB $1C,$1A,$1C,$1D,$8D,$00,$20,$1C
+  DEFB $1D,$8F,$00,$1F
 exterior_mask_3:
-  DEFB $1A,$88,$00,$05,$4C,$90,$00,$86 ; exterior_mask_3
-  DEFB $00,$05,$06,$04,$32,$30,$4C,$8E ;
-  DEFB $00,$84,$00,$05,$06,$04,$84,$01 ;
-  DEFB $32,$30,$4C,$8C,$00,$00,$00,$05 ;
-  DEFB $06,$04,$88,$01,$32,$30,$4C,$8A ;
-  DEFB $00,$00,$06,$04,$8C,$01,$32,$30 ;
-  DEFB $4C,$88,$00,$02,$90,$01,$32,$30 ;
-  DEFB $4C,$86,$00,$02,$92,$01,$32,$30 ;
-  DEFB $4C,$84,$00,$02,$94,$01,$32,$30 ;
-  DEFB $4C,$00,$00,$02,$96,$01,$32,$30 ;
-  DEFB $00,$02,$98,$01,$12,$02,$98,$01 ;
-  DEFB $12,$02,$98,$01,$12,$02,$98,$01 ;
-  DEFB $12,$02,$98,$01,$12,$02,$98,$01 ;
-  DEFB $12,$02,$98,$01,$12,$02,$98,$01 ;
-  DEFB $12,$02,$98,$01,$12,$02,$98,$01 ;
-  DEFB $12,$02,$98,$01,$12,$02,$98,$01 ;
-  DEFB $12                             ;
+  DEFB $1A,$88,$00,$05,$4C,$90,$00,$86
+  DEFB $00,$05,$06,$04,$32,$30,$4C,$8E
+  DEFB $00,$84,$00,$05,$06,$04,$84,$01
+  DEFB $32,$30,$4C,$8C,$00,$00,$00,$05
+  DEFB $06,$04,$88,$01,$32,$30,$4C,$8A
+  DEFB $00,$00,$06,$04,$8C,$01,$32,$30
+  DEFB $4C,$88,$00,$02,$90,$01,$32,$30
+  DEFB $4C,$86,$00,$02,$92,$01,$32,$30
+  DEFB $4C,$84,$00,$02,$94,$01,$32,$30
+  DEFB $4C,$00,$00,$02,$96,$01,$32,$30
+  DEFB $00,$02,$98,$01,$12,$02,$98,$01
+  DEFB $12,$02,$98,$01,$12,$02,$98,$01
+  DEFB $12,$02,$98,$01,$12,$02,$98,$01
+  DEFB $12,$02,$98,$01,$12,$02,$98,$01
+  DEFB $12,$02,$98,$01,$12,$02,$98,$01
+  DEFB $12,$02,$98,$01,$12,$02,$98,$01
+  DEFB $12
 exterior_mask_4:
-  DEFB $0D,$02,$8C,$01,$02,$8C,$01,$02 ; exterior_mask_4
-  DEFB $8C,$01,$02,$8C,$01             ;
+  DEFB $0D,$02,$8C,$01,$02,$8C,$01,$02
+  DEFB $8C,$01,$02,$8C,$01
 exterior_mask_5:
-  DEFB $0E,$02,$8C,$01,$12,$02,$8C,$01 ; exterior_mask_5
-  DEFB $12,$02,$8C,$01,$12,$02,$8C,$01 ;
-  DEFB $12,$02,$8C,$01,$12,$02,$8C,$01 ;
-  DEFB $12,$02,$8C,$01,$12,$02,$8C,$01 ;
-  DEFB $12,$02,$8D,$01,$02,$8D,$01     ;
+  DEFB $0E,$02,$8C,$01,$12,$02,$8C,$01
+  DEFB $12,$02,$8C,$01,$12,$02,$8C,$01
+  DEFB $12,$02,$8C,$01,$12,$02,$8C,$01
+  DEFB $12,$02,$8C,$01,$12,$02,$8C,$01
+  DEFB $12,$02,$8D,$01,$02,$8D,$01
 exterior_mask_6:
-  DEFB $08,$5B,$5A,$86,$00,$01,$01,$5B ; exterior_mask_6
-  DEFB $5A,$84,$00,$84,$01,$5B,$5A,$00 ;
-  DEFB $00,$86,$01,$5B,$5A,$D8,$01     ;
+  DEFB $08,$5B,$5A,$86,$00,$01,$01,$5B
+  DEFB $5A,$84,$00,$84,$01,$5B,$5A,$00
+  DEFB $00,$86,$01,$5B,$5A,$D8,$01
 exterior_mask_7:
-  DEFB $09,$88,$01,$12,$88,$01,$12,$88 ; exterior_mask_7
-  DEFB $01,$12,$88,$01,$12,$88,$01,$12 ;
-  DEFB $88,$01,$12,$88,$01,$12,$88,$01 ;
-  DEFB $12                             ;
+  DEFB $09,$88,$01,$12,$88,$01,$12,$88
+  DEFB $01,$12,$88,$01,$12,$88,$01,$12
+  DEFB $88,$01,$12,$88,$01,$12,$88,$01
+  DEFB $12
 exterior_mask_8:
-  DEFB $10,$8D,$00,$23,$24,$25,$8B,$00 ; exterior_mask_8
-  DEFB $23,$26,$27,$26,$28,$89,$00,$23 ;
-  DEFB $26,$27,$26,$22,$29,$2A,$87,$00 ;
-  DEFB $23,$26,$27,$26,$22,$29,$2B,$29 ;
-  DEFB $2A,$85,$00,$23,$24,$25,$26,$22 ;
-  DEFB $29,$2B,$29,$2B,$29,$2A,$83,$00 ;
-  DEFB $23,$26,$27,$26,$28,$2F,$2B,$29 ;
-  DEFB $2B,$29,$2B,$29,$2A,$00,$23,$26 ;
-  DEFB $27,$26,$22,$29,$2A,$2F,$2B,$29 ;
-  DEFB $2B,$29,$2B,$29,$2A,$26,$27,$26 ;
-  DEFB $22,$29,$2B,$29,$2A,$2F,$2B,$29 ;
-  DEFB $2B,$29,$2B,$29,$2A,$26,$22,$29 ;
-  DEFB $2B,$29,$2B,$29,$2A,$2F,$2B,$29 ;
-  DEFB $2B,$29,$2B,$31,$2D,$2F,$2B,$29 ;
-  DEFB $2B,$29,$2B,$29,$2A,$2F,$2B,$29 ;
-  DEFB $2B,$31,$83,$00,$2F,$2B,$29,$2B ;
-  DEFB $29,$2B,$29,$2A,$2F,$2B,$31,$85 ;
-  DEFB $00,$2F,$2B,$29,$2B,$29,$2B,$29 ;
-  DEFB $2A,$2E,$87,$00,$2F,$2B,$29,$2B ;
-  DEFB $29,$2B,$31,$2D,$88,$00,$2F,$2B ;
-  DEFB $29,$2B,$31,$8B,$00,$2F,$2B,$31 ;
-  DEFB $8D,$00,$2E,$8F,$00             ;
+  DEFB $10,$8D,$00,$23,$24,$25,$8B,$00
+  DEFB $23,$26,$27,$26,$28,$89,$00,$23
+  DEFB $26,$27,$26,$22,$29,$2A,$87,$00
+  DEFB $23,$26,$27,$26,$22,$29,$2B,$29
+  DEFB $2A,$85,$00,$23,$24,$25,$26,$22
+  DEFB $29,$2B,$29,$2B,$29,$2A,$83,$00
+  DEFB $23,$26,$27,$26,$28,$2F,$2B,$29
+  DEFB $2B,$29,$2B,$29,$2A,$00,$23,$26
+  DEFB $27,$26,$22,$29,$2A,$2F,$2B,$29
+  DEFB $2B,$29,$2B,$29,$2A,$26,$27,$26
+  DEFB $22,$29,$2B,$29,$2A,$2F,$2B,$29
+  DEFB $2B,$29,$2B,$29,$2A,$26,$22,$29
+  DEFB $2B,$29,$2B,$29,$2A,$2F,$2B,$29
+  DEFB $2B,$29,$2B,$31,$2D,$2F,$2B,$29
+  DEFB $2B,$29,$2B,$29,$2A,$2F,$2B,$29
+  DEFB $2B,$31,$83,$00,$2F,$2B,$29,$2B
+  DEFB $29,$2B,$29,$2A,$2F,$2B,$31,$85
+  DEFB $00,$2F,$2B,$29,$2B,$29,$2B,$29
+  DEFB $2A,$2E,$87,$00,$2F,$2B,$29,$2B
+  DEFB $29,$2B,$31,$2D,$88,$00,$2F,$2B
+  DEFB $29,$2B,$31,$8B,$00,$2F,$2B,$31
+  DEFB $8D,$00,$2E,$8F,$00
 exterior_mask_9:
-  DEFB $0A,$83,$00,$05,$06,$30,$4C,$83 ; exterior_mask_9
-  DEFB $00,$00,$05,$06,$04,$01,$01,$32 ;
-  DEFB $30,$4C,$00,$34,$04,$86,$01,$32 ;
-  DEFB $33,$83,$00,$40,$01,$01,$3F,$83 ;
-  DEFB $00,$02,$46,$47,$48,$49,$42,$41 ;
-  DEFB $45,$44,$12,$34,$01,$01,$46,$4B ;
-  DEFB $43,$44,$01,$01,$33,$00,$3C,$3E ;
-  DEFB $40,$01,$01,$3F,$37,$39,$00,$83 ;
-  DEFB $00,$3D,$3A,$3B,$38,$83,$00     ;
+  DEFB $0A,$83,$00,$05,$06,$30,$4C,$83
+  DEFB $00,$00,$05,$06,$04,$01,$01,$32
+  DEFB $30,$4C,$00,$34,$04,$86,$01,$32
+  DEFB $33,$83,$00,$40,$01,$01,$3F,$83
+  DEFB $00,$02,$46,$47,$48,$49,$42,$41
+  DEFB $45,$44,$12,$34,$01,$01,$46,$4B
+  DEFB $43,$44,$01,$01,$33,$00,$3C,$3E
+  DEFB $40,$01,$01,$3F,$37,$39,$00,$83
+  DEFB $00,$3D,$3A,$3B,$38,$83,$00
 exterior_mask_10:
-  DEFB $08,$35,$86,$01,$36,$90,$01,$88 ; exterior_mask_10
-  DEFB $00,$3C,$86,$00,$39,$3C,$00,$02 ;
-  DEFB $36,$35,$12,$00,$39,$3C,$00,$02 ;
-  DEFB $01,$01,$12,$00,$39,$3C,$00,$02 ;
-  DEFB $01,$01,$12,$00,$39,$3C,$00,$02 ;
-  DEFB $01,$01,$12,$00,$39,$3C,$00,$02 ;
-  DEFB $01,$01,$12,$00,$39,$3C,$00,$02 ;
-  DEFB $01,$01,$12,$00,$39,$3C,$00,$02 ;
-  DEFB $01,$01,$12,$00,$39,$3C,$00,$02 ;
-  DEFB $01,$01,$12,$00,$39             ;
+  DEFB $08,$35,$86,$01,$36,$90,$01,$88
+  DEFB $00,$3C,$86,$00,$39,$3C,$00,$02
+  DEFB $36,$35,$12,$00,$39,$3C,$00,$02
+  DEFB $01,$01,$12,$00,$39,$3C,$00,$02
+  DEFB $01,$01,$12,$00,$39,$3C,$00,$02
+  DEFB $01,$01,$12,$00,$39,$3C,$00,$02
+  DEFB $01,$01,$12,$00,$39,$3C,$00,$02
+  DEFB $01,$01,$12,$00,$39,$3C,$00,$02
+  DEFB $01,$01,$12,$00,$39,$3C,$00,$02
+  DEFB $01,$01,$12,$00,$39
 exterior_mask_11:
-  DEFB $08,$01,$4F,$86,$00,$01,$50,$01 ; exterior_mask_11
-  DEFB $4F,$84,$00,$01,$00,$00,$51,$01 ;
-  DEFB $4F,$00,$00,$01,$00,$00,$53,$19 ;
-  DEFB $50,$01,$4F,$01,$00,$00,$53,$19 ;
-  DEFB $00,$00,$52,$01,$00,$00,$53,$19 ;
-  DEFB $00,$00,$52,$01,$54,$00,$53,$19 ;
-  DEFB $00,$00,$52,$83,$00,$55,$19,$00 ;
-  DEFB $00,$52,$85,$00,$54,$00,$52     ;
+  DEFB $08,$01,$4F,$86,$00,$01,$50,$01
+  DEFB $4F,$84,$00,$01,$00,$00,$51,$01
+  DEFB $4F,$00,$00,$01,$00,$00,$53,$19
+  DEFB $50,$01,$4F,$01,$00,$00,$53,$19
+  DEFB $00,$00,$52,$01,$00,$00,$53,$19
+  DEFB $00,$00,$52,$01,$54,$00,$53,$19
+  DEFB $00,$00,$52,$83,$00,$55,$19,$00
+  DEFB $00,$52,$85,$00,$54,$00,$52
 exterior_mask_12:
-  DEFB $02,$56,$57,$56,$57,$58,$59,$58 ; exterior_mask_12
-  DEFB $59,$58,$59,$58,$59,$58,$59,$58 ;
-  DEFB $59                             ;
+  DEFB $02,$56,$57,$56,$57,$58,$59,$58
+  DEFB $59,$58,$59,$58,$59,$58,$59,$58
+  DEFB $59
 exterior_mask_13:
-  DEFB $05,$00,$00,$23,$24,$25,$02,$00 ; exterior_mask_13
-  DEFB $27,$26,$28,$02,$00,$22,$26,$28 ;
-  DEFB $02,$00,$2B,$29,$2A,$02,$00,$2B ;
-  DEFB $29,$2A,$02,$00,$2B,$29,$2A,$02 ;
-  DEFB $00,$2B,$29,$2A,$02,$00,$2B,$29 ;
-  DEFB $2A,$02,$00,$2B,$31,$00,$02,$00 ;
-  DEFB $83,$00                         ;
+  DEFB $05,$00,$00,$23,$24,$25,$02,$00
+  DEFB $27,$26,$28,$02,$00,$22,$26,$28
+  DEFB $02,$00,$2B,$29,$2A,$02,$00,$2B
+  DEFB $29,$2A,$02,$00,$2B,$29,$2A,$02
+  DEFB $00,$2B,$29,$2A,$02,$00,$2B,$29
+  DEFB $2A,$02,$00,$2B,$31,$00,$02,$00
+  DEFB $83,$00
 exterior_mask_14:
-  DEFB $04,$19,$83,$00,$19,$17,$15,$00 ; exterior_mask_14
-  DEFB $19,$17,$18,$17,$19,$1A,$1B,$17 ;
-  DEFB $19,$1A,$1C,$1D,$19,$1A,$1C,$1D ;
-  DEFB $19,$1A,$1C,$1D,$19,$1A,$1C,$1D ;
-  DEFB $19,$1A,$1C,$1D,$00,$20,$1C,$1D ;
+  DEFB $04,$19,$83,$00,$19,$17,$15,$00
+  DEFB $19,$17,$18,$17,$19,$1A,$1B,$17
+  DEFB $19,$1A,$1C,$1D,$19,$1A,$1C,$1D
+  DEFB $19,$1A,$1C,$1D,$19,$1A,$1C,$1D
+  DEFB $19,$1A,$1C,$1D,$00,$20,$1C,$1D
 interior_mask_15:
-  DEFB $02,$04,$32,$01,$01 ; interior_mask_15
+  DEFB $02,$04,$32,$01,$01
 interior_mask_16:
-  DEFB $09,$86,$00,$5D,$5C,$54,$84,$00 ; interior_mask_16
-  DEFB $5D,$5C,$01,$01,$01,$00,$00,$5D ;
-  DEFB $5C,$85,$01,$5D,$5C,$87,$01,$2B ;
-  DEFB $88,$01                         ;
+  DEFB $09,$86,$00,$5D,$5C,$54,$84,$00
+  DEFB $5D,$5C,$01,$01,$01,$00,$00,$5D
+  DEFB $5C,$85,$01,$5D,$5C,$87,$01,$2B
+  DEFB $88,$01
 interior_mask_17:
-  DEFB $05,$00,$00,$5D,$5C,$67,$5D,$5C ; interior_mask_17
-  DEFB $83,$01,$3C,$84,$01             ;
+  DEFB $05,$00,$00,$5D,$5C,$67,$5D,$5C
+  DEFB $83,$01,$3C,$84,$01
 interior_mask_18:
-  DEFB $02,$5D,$68,$3C,$69 ; interior_mask_18
+  DEFB $02,$5D,$68,$3C,$69
 interior_mask_19:
-  DEFB $0A,$86,$00,$5D,$5C,$46,$47,$84 ; interior_mask_19
-  DEFB $00,$5D,$5C,$83,$01,$39,$00,$00 ;
-  DEFB $5D,$5C,$86,$01,$5D,$5C,$88,$01 ;
-  DEFB $4A,$89,$01                     ;
+  DEFB $0A,$86,$00,$5D,$5C,$46,$47,$84
+  DEFB $00,$5D,$5C,$83,$01,$39,$00,$00
+  DEFB $5D,$5C,$86,$01,$5D,$5C,$88,$01
+  DEFB $4A,$89,$01
 interior_mask_20:
-  DEFB $06,$5D,$5C,$01,$47,$6A,$00,$4A ; interior_mask_20
-  DEFB $84,$01,$6B,$00,$84,$01,$5F     ;
+  DEFB $06,$5D,$5C,$01,$47,$6A,$00,$4A
+  DEFB $84,$01,$6B,$00,$84,$01,$5F
 interior_mask_21:
-  DEFB $04,$05,$4C,$00,$00,$61,$65,$66 ; interior_mask_21
-  DEFB $4C,$61,$12,$02,$60,$61,$12,$02 ;
-  DEFB $60,$61,$12,$02,$60,$61,$12,$02 ;
-  DEFB $60                             ;
+  DEFB $04,$05,$4C,$00,$00,$61,$65,$66
+  DEFB $4C,$61,$12,$02,$60,$61,$12,$02
+  DEFB $60,$61,$12,$02,$60,$61,$12,$02
+  DEFB $60
 interior_mask_22:
-  DEFB $04,$00,$00,$05,$4C,$05,$63,$64 ; interior_mask_22
-  DEFB $60,$61,$12,$02,$60,$61,$12,$02 ;
-  DEFB $60,$61,$12,$02,$60,$61,$12,$02 ;
-  DEFB $60,$61,$12,$62,$00             ;
+  DEFB $04,$00,$00,$05,$4C,$05,$63,$64
+  DEFB $60,$61,$12,$02,$60,$61,$12,$02
+  DEFB $60,$61,$12,$02,$60,$61,$12,$02
+  DEFB $60,$61,$12,$62,$00
 interior_mask_23:
-  DEFB $03,$00,$6C,$00,$02,$01,$68,$02 ; interior_mask_23
-  DEFB $01,$69                         ;
+  DEFB $03,$00,$6C,$00,$02,$01,$68,$02
+  DEFB $01,$69
 interior_mask_24:
-  DEFB $05,$01,$5E,$4C,$00,$00,$01,$01 ; interior_mask_24
-  DEFB $32,$30,$00,$84,$01,$5F         ;
+  DEFB $05,$01,$5E,$4C,$00,$00,$01,$01
+  DEFB $32,$30,$00,$84,$01,$5F
 interior_mask_25:
-  DEFB $02,$6E,$5A,$6D,$39,$3C,$39 ; interior_mask_25
+  DEFB $02,$6E,$5A,$6D,$39,$3C,$39
 interior_mask_26:
-  DEFB $04,$5D,$5C,$46,$47,$4A,$01,$01 ; interior_mask_26
-  DEFB $39                             ;
+  DEFB $04,$5D,$5C,$46,$47,$4A,$01,$01
+  DEFB $39
 interior_mask_27:
-  DEFB $03,$2C,$47,$00,$00,$61,$12,$00 ; interior_mask_27
-  DEFB $61,$12                         ;
+  DEFB $03,$2C,$47,$00,$00,$61,$12,$00
+  DEFB $61,$12
 interior_mask_28:
-  DEFB $03,$00,$45,$1E,$02,$60,$00,$02 ; interior_mask_28
-  DEFB $60,$00                         ;
+  DEFB $03,$00,$45,$1E,$02,$60,$00,$02
+  DEFB $60,$00
 interior_mask_29:
-  DEFB $05,$45,$1E,$2C,$47,$00,$2C,$47 ; interior_mask_29
-  DEFB $45,$1E,$12,$00,$61,$12,$61,$12 ;
-  DEFB $00,$61,$5F,$00,$00             ;
+  DEFB $05,$45,$1E,$2C,$47,$00,$2C,$47
+  DEFB $45,$1E,$12,$00,$61,$12,$61,$12
+  DEFB $00,$61,$5F,$00,$00
 
-; Interior masking data.
+; Interior mask data source
+;
+; This is an array of 47 mask structs with the constant final height byte omitted. Copied to $81DB by setup_room.
 ;
 ; Used only by setup_room.
-;
-; 47 mask structs with the constant final height byte omitted.
-;
-; Copied to $81DB by setup_room.
 interior_mask_data_source:
   DEFB $1B,$7B,$7F,$F1,$F3,$36,$28 ; $1B, { $7B, $7F, $F1, $F3 }, { $36, $28 }
   DEFB $1B,$77,$7B,$F3,$F5,$36,$18 ; $1B, { $77, $7B, $F3, $F5 }, { $36, $18 }
@@ -17510,48 +18114,46 @@ interior_mask_data_source:
   DEFB $11,$79,$7B,$F4,$F6,$0A,$0A ; $11, { $79, $7B, $F4, $F6 }, { $0A, $0A }
   DEFB $0F,$88,$8C,$F5,$F8,$0A,$0A ; $0F, { $88, $8C, $F5, $F8 }, { $0A, $0A }
 
-; Pointers to run-length encoded mask data.
+; Mask pointers
 ;
-; The first half is outdoor masks, the second is indoor masks.
-;
-; 30 pointers to byte arrays.
+; This is an array of 30 pointers to run-length encoded mask data. The first half is outdoor masks, the second is indoor masks.
 mask_pointers:
-  DEFW exterior_mask_0    ; exterior_mask
-  DEFW exterior_mask_1    ; exterior_mask
-  DEFW exterior_mask_2    ; exterior_mask
-  DEFW exterior_mask_3    ; exterior_mask
-  DEFW exterior_mask_4    ; exterior_mask
-  DEFW exterior_mask_5    ; exterior_mask
-  DEFW exterior_mask_6    ; exterior_mask
-  DEFW exterior_mask_7    ; exterior_mask
-  DEFW exterior_mask_8    ; exterior_mask
-  DEFW exterior_mask_9    ; exterior_mask
-  DEFW exterior_mask_10   ; exterior_mask
-  DEFW exterior_mask_11   ; exterior_mask
-  DEFW exterior_mask_13   ; exterior_mask
-  DEFW exterior_mask_14   ; exterior_mask
-  DEFW exterior_mask_12   ; exterior_mask
-  DEFW interior_mask_29   ; interior_mask
-  DEFW interior_mask_27   ; interior_mask
-  DEFW interior_mask_28   ; interior_mask
-  DEFW interior_mask_15   ; interior_mask
-  DEFW interior_mask_16   ; interior_mask
-  DEFW interior_mask_17   ; interior_mask
-  DEFW interior_mask_18   ; interior_mask
-  DEFW interior_mask_19   ; interior_mask
-  DEFW interior_mask_20   ; interior_mask
-  DEFW interior_mask_21   ; interior_mask
-  DEFW interior_mask_22   ; interior_mask
-  DEFW interior_mask_23   ; interior_mask
-  DEFW interior_mask_24   ; interior_mask
-  DEFW interior_mask_25   ; interior_mask
-  DEFW interior_mask_26   ; interior_mask
+  DEFW exterior_mask_0
+  DEFW exterior_mask_1
+  DEFW exterior_mask_2
+  DEFW exterior_mask_3
+  DEFW exterior_mask_4
+  DEFW exterior_mask_5
+  DEFW exterior_mask_6
+  DEFW exterior_mask_7
+  DEFW exterior_mask_8
+  DEFW exterior_mask_9
+  DEFW exterior_mask_10
+  DEFW exterior_mask_11
+  DEFW exterior_mask_13
+  DEFW exterior_mask_14
+  DEFW exterior_mask_12
+  DEFW interior_mask_29
+  DEFW interior_mask_27
+  DEFW interior_mask_28
+  DEFW interior_mask_15
+  DEFW interior_mask_16
+  DEFW interior_mask_17
+  DEFW interior_mask_18
+  DEFW interior_mask_19
+  DEFW interior_mask_20
+  DEFW interior_mask_21
+  DEFW interior_mask_22
+  DEFW interior_mask_23
+  DEFW interior_mask_24
+  DEFW interior_mask_25
+  DEFW interior_mask_26
 
-; mask_t structs for the exterior scene.
+; Exterior mask data
 ;
-; 58 mask_t structs.
+; This is an array of 58 mask definitions (type: mask_t) used for the exterior scene.
 ;
-; 'mask_t' defines a mask:
+; A mask_t is defined as follows:
 ;
 ; +-----------+-------+--------+-------------------------------------------------------------------------------------------------------------------------------------------------+
 ; | Type      | Bytes | Name   | Meaning                                                                                                                                         |
@@ -17561,7 +18163,7 @@ mask_pointers:
 ; | tinypos_t | 3     | pos    | If a character is behind this point then the mask is enabled. ("Behind" here means when character coord x is greater and y is greater-or-equal) |
 ; +-----------+-------+--------+-------------------------------------------------------------------------------------------------------------------------------------------------+
 ;
-; Used by render_mask_buffer. Used in outdoor mode only.
+; Used by render_mask_buffer in outdoor mode only.
 exterior_mask_data:
   DEFB $00,$47,$70,$27,$3F,$6A,$52,$0C
   DEFB $00,$5F,$88,$33,$4B,$5E,$52,$0C
@@ -17622,13 +18224,13 @@ exterior_mask_data:
   DEFB $0D,$2C,$2F,$51,$5A,$3E,$3E,$08
   DEFB $0D,$3C,$3F,$49,$52,$46,$46,$08
 
-; Saved stack pointer.
+; Saved stack pointer
 ;
 ; Used by plot_game_window and wipe_game_window.
 saved_sp:
   DEFW $0000
 
-; Game screen start addresses.
+; Game window start addresses
 ;
 ; 128 screen pointers.
 game_window_start_addresses:
@@ -17761,17 +18363,17 @@ game_window_start_addresses:
   DEFW $5627
   DEFW $5727
 
-; Plot the game screen.
+; Plot game window
 ;
-; This transfers the game's linear screen buffer into the game window region of the Spectrum's screen memory. The input buffer is 24x17x8 bytes. The output region is smaller at 23x16x8 bytes. The addresses are stored precalculated in the
-; table at game_window_start_addresses.
+; This transfers the game's linear screen buffer into the game window region of the Spectrum's screen memory. The input buffer is 24x17x8 bytes. The output region is smaller: 23x16x8 bytes. The destination addresses are stored precalculated
+; in the table at game_window_start_addresses.
 ;
-; Scrolling to 4-bit nibble accuracy is permitted by implementing two cases here: aligned and unaligned. Aligned transfers just have to move the bytes across and so are fast. Unaligned transfers have to roll bytes right to effect the left
-; shift, so are much slower.
+; Scrolling to 4-bit accuracy is permitted by implementing two cases here: aligned and unaligned. Aligned transfers just have to move the bytes across and so are fast. Unaligned transfers have to roll bytes right to effect the left shift,
+; so are much slower.
 ;
-; The aligned case copies 23 bytes per scanline starting at $F291 (one byte into buffer). The unaligned case rolls the bytes right (so it moves left? CHECK) starting at $F290.
+; The aligned case copies 23 bytes per scanline starting at $F291 (one byte into buffer). The unaligned case rolls the bytes right starting at $F290.
 ;
-; Uses the Z80 SP stack trick.
+; This uses the Z80 optimisation where values are popped from the stack.
 ;
 ; Used by the routines at main_loop and screen_reset.
 plot_game_window:
@@ -17921,9 +18523,10 @@ plot_game_window_4:
   LD SP,(saved_sp)        ; Restore the stack pointer
   RET                     ; Return
 
-; Event: roll call.
+; Event: Roll call
 ;
-; Range checking that X is in ($72..$7C) and Y is in ($6A..$72).
+; This checks that the hero is within the roll call bounds. hero_map_position_x must be in ($72..$7C) and hero_map_position_y must be in ($6A..$72). If not, then the bell is sounded and the "MISSED ROLL CALL" message is queued. Otherwise
+; all visible characters are made to face bottom left.
 ;
 ; Is the hero within the roll call area bounds?
 event_roll_call:
@@ -17960,9 +18563,9 @@ not_at_roll_call:
   CALL queue_message      ;
   JP hostiles_pursue      ; Exit via hostiles_pursue
 
-; Use papers.
+; Action: Papers
 ;
-; Is the hero within the main gate bounds?
+; This checks that the hero is within the main gate bounds. hero_map_position_x must be in ($69..$6D) and hero_map_position_y must be in ($49..$4B). If so, the hero will be transported to the outside of the gates.
 ;
 ; Range checking that X is in ($69..$6D) and Y is in ($49..$4B).
 action_papers:
@@ -17998,13 +18601,15 @@ ap_coord_check_loop:
 outside_main_gate:
   DEFB $D6,$8A,$06
 
-; Wait for the user to press 'Y' or 'N'.
+; User confirm
+;
+; This waits until the user presses 'Y' or 'N', then returns an indication of which was pressed in the Z flag.
 ;
 ; Used by the routines at keyscan_break and choose_keys.
 ;
 ; O:F 'Y'/'N' pressed => return Z/NZ
 user_confirm:
-  LD HL,LF014               ; Print "CONFIRM. Y OR N"
+  LD HL,confirm_query       ; Print "CONFIRM Y OR N"
   CALL screenlocstring_plot ;
 ; Start loop (infinite)
 user_confirm_0:
@@ -18017,13 +18622,11 @@ user_confirm_0:
   CPL                     ; Invert the bits to turn active low into active high
   BIT 3,A                 ; Was bit 3 set? (active high meaning 'N' is pressed)
   RET NZ                  ; Return with Z clear if so
-  JR user_confirm_0       ; ...loop
+  JR user_confirm_0       ; ..loop
+confirm_query:
+  DEFB $0B,$50,$0F,$0C,$00,$17,$0F,$12,$1A,$16,$24,$23,$21,$23,$00,$1A,$23,$17 ; "CONFIRM Y OR N"
 
-; Confirm query.
-LF014:
-  DEFB $0B,$50,$0F,$0C,$00,$17,$0F,$12,$1A,$16,$24,$23,$21,$23,$00,$1A,$23,$17 ; "CONFIRM. Y OR N"
-
-; Further game messages.
+; Further game messages
 more_messages_he_takes_the_bribe:
   DEFB $11,$0E,$23,$1C,$0A,$14,$0E,$1B,$23,$1C,$11,$0E,$23,$0B,$1A,$12,$0B,$0E,$FF ; "HE TAKES THE BRIBE"
 more_messages_and_acts_as_decoy:
@@ -18031,21 +18634,23 @@ more_messages_and_acts_as_decoy:
 more_messages_another_day_dawns:
   DEFB $0A,$17,$00,$1C,$11,$0E,$1A,$23,$0D,$0A,$21,$23,$0D,$0A,$1F,$17,$1B,$FF ; "ANOTHER DAY DAWNS"
 
-; Locked gates and doors.
+; Locked doors
+;
+; This is a list of locked gates and doors.
 locked_doors:
   DEFB $80,$81            ; gates
   DEFB $8D,$8C,$8E,$A2,$98,$9F,$96 ; doors
   DEFB $00,$00            ; unused
 
-; Jump to main.
+; Jump to main
 ;
 ; Used by the routine at loaded.
 jump_to_main:
   JP main
 
-; User-defined keys.
+; Key definitions
 ;
-; Pairs of (port, key mask).
+; These are the user-defined keys. It's pairs of (port, key mask).
 keydefs:
   DEFB $00,$00            ; Left
   DEFB $00,$00            ; Right
@@ -18063,7 +18668,9 @@ keydefs:
 ; $FF58..$FF7A - 7x5 = 35 bytes of map_buf
 ; $FF80..$FFFF - the stack
 
-; Static tiles plot direction.
+; Static tiles plot direction
+;
+; This is a stash location used by plot_static_tiles.
 ;
 ; +-------+------------+
 ; | Value | Meaning    |
@@ -18074,7 +18681,9 @@ keydefs:
 static_tiles_plot_direction:
   DEFB $00
 
-; Definitions of fixed graphic elements.
+; Static graphic definitions
+;
+; These are the definitions for the fixed graphic elements.
 ;
 ; Only used by plot_statics_and_menu_text.
 ;
@@ -18122,7 +18731,9 @@ statics_corner_bl:
 statics_corner_br:
   DEFB $5F,$50,$82,$0A,$0C
 
-; The game starts here.
+; Main
+;
+; This is where the game starts.
 ;
 ; Used by the routine at jump_to_main.
 main:
@@ -18150,7 +18761,7 @@ main:
 ; Start loop
 main_0:
   LD A,L                  ; Shuffle
-  LD C,$00                ; Zero C (DPT: Could have used XOR C)
+  LD C,$00                ; Zero C (Commentary: Could have used XOR C)
 ; Reverse a byte
   LD B,$08                ; Set B for eight iterations
 ; Start loop
@@ -18180,7 +18791,7 @@ main_2:
   POP DE                  ; Restore vischar_initial
   POP BC                  ; ...loop until the vischars are populated
   DJNZ main_2             ;
-; Write $FF $FF at $8020 and every 32 bytes after. (DPT: Possibly easier to do the inverse and clear those bytes at $8000).
+; Write $FF $FF at $8020 and every 32 bytes after. (Commentary: It could be easier to do the inverse and clear those bytes at $8000).
   LD B,$07                ; Set B for seven iterations
 ; Iterate over non-player visible characters.
   LD HL,$8020             ; Start at the second visible character
@@ -18222,7 +18833,9 @@ vischar_initial:
   DEFW $0000,$0000,$0018  ; mi.pos
   DEFW sprite_prisoner    ; mi.sprite
 
-; Plot all static graphics and menu text.
+; Plot statics and menu text
+;
+; This plots all static graphics and menu text.
 ;
 ; Used by the routine at main.
 plot_statics_and_menu_text:
@@ -18255,7 +18868,7 @@ plot_statics_and_menu_text_3:
   DJNZ plot_statics_and_menu_text_3 ; ...loop
   RET                     ; Return
 
-; Plot static tiles horizontally.
+; Plot static tiles, horizontal
 ;
 ; Used by the routine at plot_statics_and_menu_text.
 ;
@@ -18265,7 +18878,7 @@ plot_static_tiles_horizontal:
   XOR A                   ; Set direction flag to zero
   JR plot_static_tiles    ; Exit via plot static tiles
 
-; Plot static tiles vertically.
+; Plot static tiles, vertical
 ;
 ; Used by the routine at plot_statics_and_menu_text.
 ;
@@ -18275,7 +18888,9 @@ plot_static_tiles_vertical:
   LD A,$FF                ; Set the plot direction flag to $FF (vertical)
 ; FALL THROUGH into plot_static_tiles
 
-; Plot static tiles.
+; Plot static tiles
+;
+; This draws static tiles to the screen - the tiles used by the morale flag, score, etc.
 ;
 ; Used by the routine at plot_static_tiles_horizontal.
 ;
@@ -18353,7 +18968,9 @@ plot_static_tiles_4:
   DJNZ plot_static_tiles_0 ; ...loop
   RET                     ; Return
 
-; Clear the full screen and attributes and set the screen border to black.
+; Wipe full screen and attributes
+;
+; This clears the full screen and attributes and sets the screen border to black.
 ;
 ; Used by the routine at main.
 ;
@@ -18375,11 +18992,11 @@ wipe_full_screen_and_attributes:
   OUT ($FE),A             ; Set the border (and speaker)
   RET                     ; Return
 
-; Menu screen key handling.
+; Check menu keys
+;
+; This scans for a keypress. It will either start the game, select an input device or do nothing. If an input device is chosen, update the menu highlight to match and record which input device was chosen.
 ;
 ; Used by the routine at menu_screen.
-;
-; Scan for a keypress. It will either start the game, select an input device or do nothing. If an input device is chosen, update the menu highlight to match and record which input device was chosen.
 ;
 ; If the game is started then copy the required input routine to $F075. If the chosen input device is the keyboard, then exit via choose_keys.
 check_menu_keys:
@@ -18425,41 +19042,45 @@ cmk_cpy_rout:
   POP BC                  ; Discard the previous return address and resume at F17D
   RET                     ;
 
-; Key choice prompt strings.
+; Define key prompts
+;
+; This is the set of prompts used when defining keys.
 define_key_prompts:
   DEFB $6D,$40,$0B,$0C,$11,$00,$00,$1B,$0E,$23,$14,$0E,"!",$1B ; "CHOOSE KEYS"
-  DEFB $CD,$40,$05,$15,$0E,$0F,$1C,"$" ; "LEFT."
-  DEFB $0D,$48,$06,$1A,$12,$10,$11,$1C,"$" ; "RIGHT."
-  DEFB $4D,$48,$03,$1D,$18,"$" ; "UP."
-  DEFB $8D,$48,$05,$0D,$00,$1F,$17,"$" ; "DOWN."
-  DEFB $CD,$48,$05,$0F,$12,$1A,$0E ; "FIRE."
+  DEFB $CD,$40,$05,$15,$0E,$0F,$1C,"$" ; "LEFT"
+  DEFB $0D,$48,$06,$1A,$12,$10,$11,$1C,"$" ; "RIGHT"
+  DEFB $4D,$48,$03,$1D,$18,"$" ; "UP"
+  DEFB $8D,$48,$05,$0D,$00,$1F,$17,"$" ; "DOWN"
+  DEFB $CD,$48,$05,$0F,$12,$1A,$0E ; "FIRE"
 
 ; byte_F2E1
 ;
-; Unsure if anything reads this byte for real, but its address is taken prior to accessing keyboard_port_hi_bytes.
+; Nothing uses this byte for storage but its address is taken by choose_keys prior to accessing keyboard_port_hi_bytes.
 ;
-; (<- choose_keys)
+; Used by the routine at choose_keys.
 byte_F2E1:
   DEFB $24
 
-; Table of keyscan high bytes.
+; Keyboard port high bytes
 ;
-; Zero terminated.
+; This is a zero-terminated table of high bytes used when doing a keyboard scan.
 ;
-; (<- choose_keys)
+; Used by the routine at choose_keys.
 keyboard_port_hi_bytes:
   DEFB $F7,$EF,$FB,$DF,$FD,$BF,$FE,$7F,$00
 
-; Table of special key name strings, prefixed by their length.
+; Special key names
+;
+; This is a table of strings to use for special keys, like ENTER. The strings are prefixed by a length byte.
 special_key_names:
   DEFB $05,$0E,$17,$1C,$0E,$1A ; "ENTER"
   DEFB $04,$0C,$0A,$18,$1B ; "CAPS"
   DEFB $06,$1B,$21,$16,$0B,$00,$15 ; "SYMBOL"
   DEFB $05,$1B,$18,$0A,$0C,$0E ; "SPACE"
 
-; Table mapping key codes to glyph indices.
+; Keycode to glyph
 ;
-; Each table entry is a character (a glyph index) OR if its top bit is set then bottom seven bits are an index into special_key_names.
+; This is a table that maps key codes to glyph indices. Each table entry is a character (a glyph index) OR if its top bit is set then bottom seven bits are an index into special_key_names.
 keycode_to_glyph:
   DEFB $01,$02,$03,$04,$05 ; table_12345
   DEFB $00,$09,$08,$07,$06 ; table_09876
@@ -18470,7 +19091,11 @@ keycode_to_glyph:
   DEFB $86,$22,$20,$0C,$1E ; table_SHIFTZXCV
   DEFB $92,$8B,$16,$17,$0B ; table_SPACESYMSHFTMNB
 
-; Screen addresses where chosen key names are plotted.
+; Key name screen addresses
+;
+; This is the list of screen addresses where chosen key names are plotted.
+;
+; Used by the routine at choose_keys.
 key_name_screen_addrs:
   DEFW $40D5
   DEFW $4815
@@ -18478,7 +19103,7 @@ key_name_screen_addrs:
   DEFW $4895
   DEFW $48D5
 
-; Wipe the game screen.
+; Wipe game window
 ;
 ; This wipes the area of the screen where the game window is plotted.
 ;
@@ -18503,7 +19128,10 @@ wipe_game_window_1:
   LD SP,(saved_sp)        ; Restore the stack pointer
   RET                     ; Return
 
-; Choose keys.
+; Choose keys
+;
+; This wipes the game window, sets its attributes, draws prompts, then sits in a loop waiting for the player to make their key choices. The chosen keys (defined by port and mask) are stored in the table at keydefs. Finally the user is asked
+; to confirm their key choices.
 ;
 ; Used by the routine at check_menu_keys.
 ;
@@ -18630,7 +19258,7 @@ ck_find_key_glyph:
   LD A,(HL)               ; Load the glyph
   OR A                    ; Test the top bit
   JP P,ck_plot_glyph      ; Jump if clear (JP P => positive)
-; If the top bit was set then it's a special key, like BREAK or ENTER.
+; If the top bit was set then it's a special key, like SPACE or ENTER.
   AND $7F                 ; Extract the byte offset into special_key_names
   LD DE,special_key_names ; Point DE at special_key_names
   LD L,A                  ; Widen byte offset into HL
@@ -18668,7 +19296,9 @@ ck_delay:
   RET Z                   ; If Z set 'Y' was pressed so return
   JP NZ,choose_keys       ; ...loop (infinite)
 
-; Set the screen attributes of the specified menu item.
+; Set menu item attributes
+;
+; This sets the screen attributes of the specified menu item.
 ;
 ; Used by the routines at main and check_menu_keys.
 ;
@@ -18696,7 +19326,9 @@ set_menu_item_attributes_2:
   DJNZ set_menu_item_attributes_2 ; ...loop
   RET                     ; Return
 
-; Scan for keys that select an input device.
+; Menu key scan
+;
+; This scans for keys that select an input device.
 ;
 ; Used by the routine at check_menu_keys.
 ;
@@ -18728,16 +19360,18 @@ mk_check_for_0:
   LD A,$FF                ; Otherwise return $FF
   RET                     ;
 
-; List of available input routines.
+; Input routines
 ;
-; Array [4] of pointers to input routines.
+; This is an array of four pointers to input device handling routines.
 inputroutines:
   DEFW inputroutine_keyboard
   DEFW inputroutine_kempston
   DEFW inputroutine_sinclair
   DEFW inputroutine_protek
 
-; Chosen input device.
+; Chosen input device
+;
+; This records which input device was chosen.
 ;
 ; +-------+----------+
 ; | Value | Meaning  |
@@ -18750,7 +19384,9 @@ inputroutines:
 chosen_input_device:
   DEFB $00
 
-; Key choice screenlocstrings.
+; Key choice screenlocstrings
+;
+; This is a table of screenlocstrings to use for the main menu.
 key_choice_screenlocstrings:
   DEFB $8E,$40,$08,$0C,$00,$17,$1C,$1A,$00,$15,$1B ; "CONTROLS"
   DEFB $CD,$40,$08,$00,$23,$1B,$0E,$15,$0E,$0C,$1C ; "0 SELECT"
@@ -18761,9 +19397,9 @@ key_choice_screenlocstrings:
   DEFB $07,$50,$17,$0B,$1A,$0E,$0A,$14,$23,$00,$1A,$23,$0C,$0A,$18,$1B,$23,$0A,$17,$0D,$23,$1B,$18,$0A,$0C,$0E ; "BREAK OR CAPS AND SPACE"
   DEFB $2C,$50,$0C,$0F,$00,$1A,$23,$17,$0E,$1F,$23,$10,$0A,$16,$0E ; "FOR NEW GAME"
 
-; Run the menu screen.
+; Menu screen
 ;
-; Waits for user to select an input device, waves the morale flag and plays the title tune.
+; This runs the main menu. It waits for user to select an input device while waving the morale flag and playing the title tune.
 ;
 ; Used by the routine at main.
 ;
@@ -18858,9 +19494,9 @@ menu_screen_5:
   JP NZ,menu_screen_2     ;
   JP menu_screen          ; ...loop (infinite)
 
-; Return the frequency to play at to generate the given semitone.
+; Frequency for semitone
 ;
-; The frequency returned is the number of iterations that the music routine should count for before flipping the speaker output bit.
+; This returns the frequency that the beeper should be played at to generate the given semitone. The frequency returned is the number of iterations that the music routine should count for before flipping the speaker output bit.
 ;
 ; Used by the routine at menu_screen.
 ;
@@ -18877,7 +19513,7 @@ frequency_for_semitone:
   LD B,(HL)               ; Fetch frequency from table
   INC HL                  ;
   LD C,(HL)               ;
-; DPT: This increment could be baked into the table itself.
+; Commentary: This increment could be baked into the table itself.
   INC C                   ; Increment
   INC B                   ; Increment
   JR NZ,frequency_for_semitone_0 ; If B rolled over, increment C (big endian?)
@@ -18888,17 +19524,19 @@ frequency_for_semitone_0:
   LD E,C                  ;
   RET                     ; Return
 
-; Music channel indices.
+; Music channel indices
 music_channel0_index:
   DEFW $0000
 music_channel1_index:
   DEFW $0000
 
-; Unreferenced byte.
+; Unreferenced byte
 LF545:
   DEFB $00
 
-; High music channel notes (semitones).
+; Music channel 0 data
+;
+; This is the music data for the "high" channel. Each byte is an index into the semitone table.
 ;
 ; Start of The Great Escape theme.
 music_channel0_data:
@@ -18988,7 +19626,7 @@ music_channel0_data:
   DEFB $00,$00,$00,$00,$00,$00,$00,$00
 ; End of song marker
   DEFB $FF
-; Low music channel notes (semitones).
+; This is the music data for the "low" channel. Each byte is an index into the semitone table.
 ;
 ; Start of The Great Escape theme.
 music_channel1_data:
@@ -19078,9 +19716,7 @@ music_channel1_data:
   DEFB $11,$00,$08,$00,$11,$00,$0D,$00
 ; End of song marker
   DEFB $FF
-; The frequency to use to produce the given semitone.
-;
-; Covers full octaves from C2 to B6 and C7 only.
+; The frequency to use to produce the given semitone. It covers full octaves from C2 to B6 and C7 only.
 ;
 ; Used by frequency_for_semitone
 semitone_to_frequency:
@@ -19168,7 +19804,9 @@ semitone_to_frequency:
   DEFW $0000
   DEFW $0000
 
-; 769 bytes of apparently unreferenced bytes.
+; Unreferenced bytes
+;
+; This is 769 bytes of apparently unreferenced bytes.
 LFAE0:
   DEFB $00,$0F,$00,$18,$00,$14,$00,$18
   DEFB $00,$14,$00,$15,$00,$16,$00,$1A
@@ -19268,9 +19906,9 @@ LFAE0:
   DEFB $00,$00,$00,$00,$00,$00,$00,$00
   DEFB $C9
 
-; Loaded.
+; Loaded
 ;
-; This is the very first entry point used to shunt the game image down into its proper position.
+; This is the very first entry point. It's used to shunt the game image down into its proper position.
 loaded:
   DI                      ; Disable interrupts
   LD SP,$FFFF             ; Point SP at the topmost byte of RAM
@@ -19280,14 +19918,14 @@ loaded:
   LDIR                    ;
   JP jump_to_main         ; Exit via jump_to_main
 
-; Unreferenced bytes.
+; Unreferenced bytes
 LFDF3:
   DEFB $00,$00,$00,$00,$00,$00,$00,$00
   DEFB $00,$00,$00,$00,$00
 
-; Keyboard input routine.
+; Input routine: Keyboard
 ;
-; Walks the keydefs table testing the ports against masks as setup by choose_keys.
+; This walks the keydefs table testing the ports against masks as setup by choose_keys.
 ;
 ; O:A Input value (as per enum input).
 inputroutine_keyboard:
@@ -19355,9 +19993,9 @@ inputroutine_keyboard_4:
   ADD A,$09               ; result += input_FIRE
   RET                     ; Return
 
-; Protek (cursor) joystick input routine.
+; Input routine: Protek
 ;
-; Up/Down/Left/Right/Fire = keys 7/6/5/8/0.
+; This is the input routine for Protek (cursor) joysticks. The Protek interface maps Up/Down/Left/Right/Fire to keys 7/6/5/8/0.
 ;
 ; O:A Input value (as per enum input).
 inputroutine_protek:
@@ -19403,9 +20041,9 @@ inputroutine_protek_2:
   ADD A,E                 ; Combine the (up_down + left_right) and fire values
   RET                     ; Return
 
-; Kempston joystick input routine.
+; Input routine: Kempston
 ;
-; Reading port $1F yields 000FUDLR active high.
+; This is the Kempston joystick input routine. Reading port $1F yields a byte of format 000FUDLR, where the bits are active high.
 ;
 ; O:A Input value (as per enum input).
 inputroutine_kempston:
@@ -19442,18 +20080,18 @@ inputroutine_kempston_4:
   ADD A,C                 ;
   RET                     ; Return
 
-; Fuller joystick input routine.
+; Input routine: Fuller
 ;
-; Reading port $7F yields F---RLDU active low.
+; This is the Fuller joystick input routine. Reading port $7F yields a byte of format F---RLDU, where the bits are active low
 ;
-; This is unused by the game.
+; This is unused by the game!
 ;
 ; O:A Input value (as per enum input).
 inputroutine_fuller:
   LD BC,$007F             ; Load BC with port number $7F
   IN A,(C)                ; Read that port. We'll receive FxxxRLDU
   LD BC,$0000             ; Clear our variables
-; DPT: This is odd. It's testing an unspecified bit to see whether to complement the read value. I don't see a reference for that behaviour anywhere.
+; Commentary: This is odd. It's testing an unspecified bit to see whether to complement the read value. I don't see a reference for that behaviour anywhere.
   BIT 4,A                 ; Test bit 4
   JR Z,inputroutine_fuller_0 ; Jump forward if clear
   CPL                     ; Complement the value
@@ -19487,9 +20125,9 @@ inputroutine_fuller_5:
   ADD A,C                 ;
   RET                     ; Return
 
-; Sinclair joystick input routine.
+; Input route: Sinclair
 ;
-; Up/Down/Left/Right/Fire = keys 9/8/6/7/0.
+; This is the input routine for Sinclair joysticks. The Sinclair interface maps Up/Down/Left/Right/Fire to keys 9/8/6/7/0.
 ;
 ; O:A Input value (as per enum input).
 inputroutine_sinclair:
@@ -19527,7 +20165,7 @@ inputroutine_sinclair_4:
   ADD A,C                 ;
   RET                     ; Return
 
-; Data block at FEF4.
+; Junk
 ;
 ; The final standard speed data block on the tape is loaded at $FC60..$FF81. The bytes from here up to $FF81 come from that block.
 LFEF4:

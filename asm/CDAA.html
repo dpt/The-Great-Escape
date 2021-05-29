@@ -24,16 +24,31 @@ Next: <a href="CDF2.html">CDF2</a>
 </td>
 </tr>
 </table>
-<div class="description">CDAA: Indices into animations.</div>
+<div class="description">CDAA: Animation indices</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-none, up, down, left, up+left, down+left, right, up+right, down+right, fire
+This maps a character's direction and user input to an animation index and reverse flag.
 </div>
 <div class="paragraph">
-Groups of nine. (&lt;- animate)
+The horizontal axis is input (U/D/L/R = Up/Down/Left/Right) and the vertical axis is direction (TL/TR/BR/BL + crawl flag).
+</div>
+<div class="paragraph">
+For example:
+</div>
+<div class="paragraph">
+if (direction,input) is (TL, None) then index is 8 which is <a href="CDF2.html#ce02">CE02</a> / anim_wait_tl.
+</div>
+<div class="paragraph">
+if (direction,input) is (TR + Crawl, D+L) then index is 21 which is <a href="CDF2.html#ce1c">CE1C</a> / anim_crawlwait_tr.
+</div>
+<div class="paragraph">
+Modulo the reverse flag the highest index in the table is 23 which is the max index in <a href="CDF2.html">animations</a> (== animations__LIMIT - 1).
+</div>
+<div class="paragraph">
+Used by the routine at <a href="B5CE.html">animate</a>.
 </div>
 </div>
 </td>
@@ -99,7 +114,7 @@ Next: <a href="CDF2.html">CDF2</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

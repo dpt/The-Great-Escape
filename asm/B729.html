@@ -24,11 +24,14 @@ Next: <a href="B75A.html">B75A</a>
 </td>
 </tr>
 </table>
-<div class="description">B729: Calculate screen position for the specified vischar from saved_pos.</div>
+<div class="description">B729: Calculate vischar isometric position (from state)</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This calculates the isometric screen position for the specified vischar from saved_pos.
+</div>
 <div class="paragraph">
 Used by the routine at <a href="B5CE.html">animate</a>.
 </div>
@@ -83,7 +86,7 @@ Set vischar.iso_pos.x to ($200 - saved_pos_x + saved_pos_y) * 2
 <td class="asm-label"></td>
 <td class="address-1"><span id="b72e"></span>B72E</td>
 <td class="instruction">LD HL,($81A6)</td>
-<td class="comment-1" rowspan="3">HL = saved_pos_y + $200</td>
+<td class="comment-1" rowspan="3"><span class="register">HL</span> = saved_pos_y + $200</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -111,7 +114,7 @@ Set vischar.iso_pos.x to ($200 - saved_pos_x + saved_pos_y) * 2
 <td class="asm-label"></td>
 <td class="address-1"><span id="b73a"></span>B73A</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-1" rowspan="1">HL -= saved_pos_x</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span> -= saved_pos_x</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -166,7 +169,7 @@ Set vischar.iso_pos_y = $800 - saved_pos_x - saved_pos_y - saved_height
 <td class="asm-label"></td>
 <td class="address-1"><span id="b743"></span>B743</td>
 <td class="instruction">LD HL,$0800</td>
-<td class="comment-1" rowspan="1">HL = $800</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span> = $800</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -178,7 +181,7 @@ Set vischar.iso_pos_y = $800 - saved_pos_x - saved_pos_y - saved_height
 <td class="asm-label"></td>
 <td class="address-1"><span id="b747"></span>B747</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-1" rowspan="1">HL -= saved_pos_x</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span> -= saved_pos_x</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -190,7 +193,7 @@ Set vischar.iso_pos_y = $800 - saved_pos_x - saved_pos_y - saved_height
 <td class="asm-label"></td>
 <td class="address-1"><span id="b74d"></span>B74D</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-1" rowspan="1">HL -= saved_height</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span> -= saved_height</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -202,7 +205,7 @@ Set vischar.iso_pos_y = $800 - saved_pos_x - saved_pos_y - saved_height
 <td class="asm-label"></td>
 <td class="address-1"><span id="b753"></span>B753</td>
 <td class="instruction">SBC HL,BC</td>
-<td class="comment-1" rowspan="1">HL -= saved_pos_y</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span> -= saved_pos_y</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -245,7 +248,7 @@ Next: <a href="B75A.html">B75A</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

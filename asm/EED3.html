@@ -24,22 +24,22 @@ Next: <a href="EF9A.html">EF9A</a>
 </td>
 </tr>
 </table>
-<div class="description">EED3: Plot the game screen.</div>
+<div class="description">EED3: Plot game window</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-This transfers the game's linear screen buffer into the game window region of the Spectrum's screen memory. The input buffer is 24x17x8 bytes. The output region is smaller at 23x16x8 bytes. The addresses are stored precalculated in the table at <a href="EDD3.html">game_window_start_addresses</a>.
+This transfers the game's linear screen buffer into the game window region of the Spectrum's screen memory. The input buffer is 24x17x8 bytes. The output region is smaller: 23x16x8 bytes. The destination addresses are stored precalculated in the table at <a href="EDD3.html">game_window_start_addresses</a>.
 </div>
 <div class="paragraph">
-Scrolling to 4-bit nibble accuracy is permitted by implementing two cases here: aligned and unaligned. Aligned transfers just have to move the bytes across and so are fast. Unaligned transfers have to roll bytes right to effect the left shift, so are much slower.
+Scrolling to 4-bit accuracy is permitted by implementing two cases here: aligned and unaligned. Aligned transfers just have to move the bytes across and so are fast. Unaligned transfers have to roll bytes right to effect the left shift, so are much slower.
 </div>
 <div class="paragraph">
-The aligned case copies 23 bytes per scanline starting at $F291 (one byte into buffer). The unaligned case rolls the bytes right (so it moves left? CHECK) starting at $F290.
+The aligned case copies 23 bytes per scanline starting at $F291 (one byte into buffer). The unaligned case rolls the bytes right starting at $F290.
 </div>
 <div class="paragraph">
-Uses the Z80 SP stack trick.
+This uses the Z80 optimisation where values are popped from the stack.
 </div>
 <div class="paragraph">
 Used by the routines at <a href="9D7B.html">main_loop</a> and <a href="A50B.html">screen_reset</a>.
@@ -817,7 +817,7 @@ Next: <a href="EF9A.html">EF9A</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

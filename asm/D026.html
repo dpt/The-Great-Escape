@@ -24,11 +24,24 @@ Next: <a href="DB9E.html">DB9E</a>
 </td>
 </tr>
 </table>
-<div class="description">D026: Sprite bitmaps and masks.</div>
+<div class="description">D026: Sprite bitmaps and masks</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This section contains the bitmaps and masks for all of the movable items in the game. This includes STOVE, CRATE, PRISONER, CRAWL, DOG, GUARD and COMMANDANT. This section also contains the sprite for the waving morale flag.
+</div>
+<div class="paragraph">
+The sprite definitions at <a href="CE22.html">sprite_stove</a> onwards point into the data in this section to create animatable sprites. In particular this allows the same masks to be re-used across multiple game characters, which saves space.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d026"></span>
+<div class="comments">
 <div class="paragraph">
 <table class="">
 <tr>
@@ -2753,7 +2766,7 @@ Next: <a href="DB9E.html">DB9E</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

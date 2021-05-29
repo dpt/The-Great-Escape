@@ -24,13 +24,23 @@ Next: <a href="CE22.html">CE22</a>
 </td>
 </tr>
 </table>
-<div class="description">CDF2: Animation states.</div>
+<div class="description">CDF2: Animations</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Array, 24 long, of pointers to data.
+This is an array, 24 long, of pointers to animation data.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="cdf2"></span>
+<div class="comments">
+<div class="paragraph">
+Normal animations, move the map
 </div>
 </div>
 </td>
@@ -39,145 +49,198 @@ Array, 24 long, of pointers to data.
 <td class="asm-label">animations</td>
 <td class="address-1"><span id="cdf2"></span>CDF2</td>
 <td class="instruction">DEFW <a href="CF06.html#cf26">anim_walk_tl</a></td>
-<td class="comment-1" rowspan="1">anim_walk_tl</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="cdf4"></span>CDF4</td>
 <td class="instruction">DEFW <a href="CF06.html#cf3a">anim_walk_tr</a></td>
-<td class="comment-1" rowspan="1">anim_walk_tr</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="cdf6"></span>CDF6</td>
 <td class="instruction">DEFW <a href="CF06.html#cf4e">anim_walk_br</a></td>
-<td class="comment-1" rowspan="1">anim_walk_br</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="cdf8"></span>CDF8</td>
 <td class="instruction">DEFW <a href="CF06.html#cf62">anim_walk_bl</a></td>
-<td class="comment-1" rowspan="1">anim_walk_bl</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="cdfa"></span>
+<div class="comments">
+<div class="paragraph">
+Normal + turning
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="cdfa"></span>CDFA</td>
 <td class="instruction">DEFW <a href="CF06.html#cf96">anim_turn_tl</a></td>
-<td class="comment-1" rowspan="1">anim_turn_tl</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="cdfc"></span>CDFC</td>
 <td class="instruction">DEFW <a href="CF06.html#cfa2">anim_turn_tr</a></td>
-<td class="comment-1" rowspan="1">anim_turn_tr</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="cdfe"></span>CDFE</td>
 <td class="instruction">DEFW <a href="CF06.html#cfae">anim_turn_br</a></td>
-<td class="comment-1" rowspan="1">anim_turn_br</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ce00"></span>CE00</td>
 <td class="instruction">DEFW <a href="CF06.html#cfba">anim_turn_bl</a></td>
-<td class="comment-1" rowspan="1">anim_turn_bl</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ce02"></span>
+<div class="comments">
+<div class="paragraph">
+Standing still
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ce02"></span>CE02</td>
 <td class="instruction">DEFW <a href="CF06.html#cf76">anim_wait_tl</a></td>
-<td class="comment-1" rowspan="1">anim_wait_tl</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ce04"></span>CE04</td>
 <td class="instruction">DEFW <a href="CF06.html#cf7e">anim_wait_tr</a></td>
-<td class="comment-1" rowspan="1">anim_wait_tr</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ce06"></span>CE06</td>
 <td class="instruction">DEFW <a href="CF06.html#cf86">anim_wait_br</a></td>
-<td class="comment-1" rowspan="1">anim_wait_br</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ce08"></span>CE08</td>
 <td class="instruction">DEFW <a href="CF06.html#cf8e">anim_wait_bl</a></td>
-<td class="comment-1" rowspan="1">anim_wait_bl</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ce0a"></span>
+<div class="comments">
+<div class="paragraph">
+Note that when crawling the hero won't spin around in the tunnel. He'll retain his orientation until specficially spun around using the controls opposite to the direction of the tunnel.
+</div>
+<div class="paragraph">
+Crawling
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ce0a"></span>CE0A</td>
 <td class="instruction">DEFW <a href="CF06.html#cfc6">anim_crawl_tl</a></td>
-<td class="comment-1" rowspan="1">anim_crawl_tl</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ce0c"></span>CE0C</td>
 <td class="instruction">DEFW <a href="CF06.html#cfd2">anim_crawl_tr</a></td>
-<td class="comment-1" rowspan="1">anim_crawl_tr</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ce0e"></span>CE0E</td>
 <td class="instruction">DEFW <a href="CF06.html#cfde">anim_crawl_br</a></td>
-<td class="comment-1" rowspan="1">anim_crawl_br</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ce10"></span>CE10</td>
 <td class="instruction">DEFW <a href="CF06.html#cfea">anim_crawl_bl</a></td>
-<td class="comment-1" rowspan="1">anim_crawl_bl</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ce12"></span>
+<div class="comments">
+<div class="paragraph">
+Crawling + turning
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ce12"></span>CE12</td>
 <td class="instruction">DEFW <a href="CF06.html#cff6">anim_crawlturn_tl</a></td>
-<td class="comment-1" rowspan="1">anim_crawlturn_tl</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ce14"></span>CE14</td>
 <td class="instruction">DEFW <a href="CF06.html#d002">anim_crawlturn_tr</a></td>
-<td class="comment-1" rowspan="1">anim_crawlturn_tr</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ce16"></span>CE16</td>
 <td class="instruction">DEFW <a href="CF06.html#d00e">anim_crawlturn_br</a></td>
-<td class="comment-1" rowspan="1">anim_crawlturn_br</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ce18"></span>CE18</td>
 <td class="instruction">DEFW <a href="CF06.html#d01a">anim_crawlturn_bl</a></td>
-<td class="comment-1" rowspan="1">anim_crawlturn_bl</td>
+<td class="comment-0" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ce1a"></span>
+<div class="comments">
+<div class="paragraph">
+Crawling still
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ce1a"></span>CE1A</td>
 <td class="instruction">DEFW <a href="CF06.html">anim_crawlwait_tl</a></td>
-<td class="comment-1" rowspan="1">anim_crawlwait_tl</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ce1c"></span>CE1C</td>
 <td class="instruction">DEFW <a href="CF06.html#cf0e">anim_crawlwait_tr</a></td>
-<td class="comment-1" rowspan="1">anim_crawlwait_tr</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ce1e"></span>CE1E</td>
 <td class="instruction">DEFW <a href="CF06.html#cf16">anim_crawlwait_br</a></td>
-<td class="comment-1" rowspan="1">anim_crawlwait_br</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ce20"></span>CE20</td>
 <td class="instruction">DEFW <a href="CF06.html#cf1e">anim_crawlwait_bl</a></td>
-<td class="comment-1" rowspan="1">anim_crawlwait_bl</td>
+<td class="comment-0" rowspan="1"></td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -192,7 +255,7 @@ Next: <a href="CE22.html">CE22</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

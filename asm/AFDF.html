@@ -24,11 +24,14 @@ Next: <a href="B107.html">B107</a>
 </td>
 </tr>
 </table>
-<div class="description">AFDF: Handle collisions, including items being pushed around.</div>
+<div class="description">AFDF: Collision</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This handles collisions, including items being pushed around.
+</div>
 <div class="paragraph">
 Used by the routines at <a href="AF8F.html">touch</a> and <a href="C4E0.html">spawn_character</a>.
 </div>
@@ -574,7 +577,7 @@ Currently tested vischar (HL) is the hero's.
 <span id="b063"></span>
 <div class="comments">
 <div class="paragraph">
-Vischar IY is a bribed character pursuing the hero.
+Vischar <span class="register">IY</span> is a bribed character pursuing the hero.
 </div>
 <div class="paragraph">
 When the pursuer catches the hero the bribe will be accepted.
@@ -599,7 +602,7 @@ When the pursuer catches the hero the bribe will be accepted.
 <span id="b068"></span>
 <div class="comments">
 <div class="paragraph">
-Vischar IY is a hostile who's caught the hero!
+Vischar <span class="register">IY</span> is a hostile who's caught the hero!
 </div>
 </div>
 </td>
@@ -620,7 +623,7 @@ Vischar IY is a hostile who's caught the hero!
 <td class="asm-label"></td>
 <td class="address-1"><span id="b06a"></span>B06A</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment-1" rowspan="3">Unused sequence: HL = IY + 1</td>
+<td class="comment-1" rowspan="3">Unused sequence: <span class="register">HL</span> = <span class="register">IY</span> + 1</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1309,7 +1312,7 @@ Next: <a href="B107.html">B107</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

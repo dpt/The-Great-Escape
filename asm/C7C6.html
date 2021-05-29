@@ -24,16 +24,16 @@ Next: <a href="C891.html">C891</a>
 </td>
 </tr>
 </table>
-<div class="description">C7C6: Character event.</div>
+<div class="description">C7C6: Character event</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="C6A0.html">move_a_character</a> and <a href="CB2D.html">route_ended</a>.
+This is called when a route has ended. It makes characters wander around, sit, sleep, etc.
 </div>
 <div class="paragraph">
-Makes characters sit, sleep or other things TBD.
+Used by the routines at <a href="C6A0.html">move_a_character</a> and <a href="CB2D.html">route_ended</a>.
 </div>
 </div>
 <table class="input">
@@ -633,7 +633,7 @@ charevnt_wander_left
 <td class="asm-label">charevnt_wander_left</td>
 <td class="address-1"><span id="c85c"></span>C85C</td>
 <td class="instruction">LD C,$10</td>
-<td class="comment-1" rowspan="1">C = 0x10; // 0xFF10</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span> = 0x10; // 0xFF10</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -655,7 +655,7 @@ charevnt_wander_yard
 <td class="asm-label">charevnt_wander_yard</td>
 <td class="address-1"><span id="c860"></span>C860</td>
 <td class="instruction">LD C,$38</td>
-<td class="comment-1" rowspan="1">C = 0x38; // 0xFF38</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span> = 0x38; // 0xFF38</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -677,7 +677,7 @@ charevnt_wander_top
 <td class="asm-label">charevnt_wander_top</td>
 <td class="address-2"><span id="c864"></span>C864</td>
 <td class="instruction">LD C,$08</td>
-<td class="comment-1" rowspan="1">C = 0x08; // 0xFF08 // sampled HL=$8022,$8042,$8002,$8062</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span> = 0x08; // 0xFF08 // sampled HL=$8022,$8042,$8002,$8062</td>
 </tr>
 <tr>
 <td class="asm-label">character_event_3</td>
@@ -878,7 +878,7 @@ Next: <a href="C891.html">C891</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>

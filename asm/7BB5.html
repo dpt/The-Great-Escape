@@ -24,11 +24,14 @@ Next: <a href="7BD0.html">7BD0</a>
 </td>
 </tr>
 </table>
-<div class="description">7BB5: Drop item, tail part.</div>
+<div class="description">7BB5: Drop item, tail part</div>
 <table class="disassembly">
 <tr>
 <td class="routine-comment" colspan="5">
 <div class="details">
+<div class="paragraph">
+This updates the itemstruct with the dropped item. It is its own function so that <a href="B387.html">action_red_cross_parcel</a> can make use of it.
+</div>
 <div class="paragraph">
 Used by the routine at <a href="B387.html">action_red_cross_parcel</a>.
 </div>
@@ -106,7 +109,7 @@ Outdoors.
 <td class="asm-label"></td>
 <td class="address-1"><span id="7bc2"></span>7BC2</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="2">Bug: HL is incremented by two here but then is immediately overwritten by the LD HL at $7BC5.</td>
+<td class="comment-1" rowspan="2">Bug: <span class="register">HL</span> is incremented by two here but then is immediately overwritten by the LD HL at $7BC5.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -176,7 +179,7 @@ Next: <a href="7BD0.html">7BD0</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210319</div>
+<div class="release">The complete The Great Escape disassembly 20210529</div>
 <div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
 </footer>
