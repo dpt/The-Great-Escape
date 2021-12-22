@@ -11,7 +11,7 @@ _The Great Escape_ is a 1986 isometric 3D prison break game for the 48K ZX Spect
 The Disassembly
 ---------------
 
-[Read the current version of the disassembly here](http://dpt.github.com/The-Great-Escape/). It's not only an assembly listing: it has decoded game graphics, characters, items, animations and various other details about the game's workings.
+[Read the current version of the disassembly here](https://dpt.github.io/The-Great-Escape/). It's not only an assembly listing: it has decoded game graphics, characters, items, animations and various other details about the game's workings.
 
 Note that the disassembly may lag behind the head of the source tree: it might not feature the very latest changes until I push an updated build.
 
