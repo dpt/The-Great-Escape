@@ -8,7 +8,7 @@
 > $4000 ; https://github.com/dpt/The-Great-Escape
 > $4000 ;
 > $4000 ; Copyright 1986 Ocean Software Ltd. (The Great Escape)
-> $4000 ; Copyright 2012-2020 David Thomas <dave@davespace.co.uk> (this disassembly)
+> $4000 ; Copyright 2012-2022 David Thomas <dave@davespace.co.uk> (this disassembly)
 > $4000 ;
 > $4000 @ofix+begin
 > $4000 ; This disassembly contains ofix changes (operand fixes):
@@ -13626,8 +13626,8 @@ C $FEA2,1 Return
 ;
 c $FEA3 Input routine: Fuller
 D $FEA3 This is the Fuller joystick input routine. Reading port $7F yields a byte of format F---RLDU, where the bits are active low
-R $FEA3 This is unused by the game!
-N $FEA3 O:A Input value (as per enum input).
+D $FEA3 This is unused by the game!
+R $FEA3 O:A Input value (as per enum input).
 @ $FEA3 label=inputroutine_fuller
 C $FEA3,3 Load #REGbc with port number $7F
 C $FEA6,2 Read that port. We'll receive FxxxRLDU
