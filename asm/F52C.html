@@ -30,7 +30,7 @@ Next: <a href="F541.html">F541</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-This returns the frequency that the beeper should be played at to generate the given semitone. The frequency returned is the number of iterations that the music routine should count for before flipping the speaker output bit.
+This returns the period (or half period? not frequency) required to generate the specified semitone from the Spectrum's speaker. Since there is no absolute time to work from, the value returned is the number of iterations that the speaker routine should idle for between pulses. This will obviously only sound correct on a "standard" ZX Spectrum.
 </div>
 <div class="paragraph">
 Used by the routine at <a href="F4B7.html">menu_screen</a>.
@@ -42,7 +42,7 @@ Used by the routine at <a href="F4B7.html">menu_screen</a>.
 </tr>
 <tr>
 <td class="register">A</td>
-<td class="register-desc">Semitone index (never larger than 42 in this game).</td>
+<td class="register-desc">Semitone index. (Note: This is never larger than 42 in this game).</td>
 </tr>
 </table>
 <table class="output">
@@ -55,11 +55,11 @@ Used by the routine at <a href="F4B7.html">menu_screen</a>.
 </tr>
 <tr>
 <td class="register">DE</td>
-<td class="register-desc">Frequency.</td>
+<td class="register-desc">Frequency (same value).</td>
 </tr>
 <tr>
 <td class="register">L</td>
-<td class="register-desc">Zero.</td>
+<td class="register-desc">Zero (border + beeper value).</td>
 </tr>
 </table>
 </td>
@@ -74,7 +74,7 @@ Used by the routine at <a href="F4B7.html">menu_screen</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="f52d"></span>F52D</td>
 <td class="instruction">LD HL,$FA48</td>
-<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the semitone to frequency table</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at the <a href="F546.html#fa48">semitone_to_frequency</a> table</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -178,9 +178,9 @@ Next: <a href="F541.html">F541</a>
 </tr>
 </table>
 <footer>
-<div class="release">The complete The Great Escape disassembly 20210529</div>
-<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2021 David Thomas (this disassembly).</div>
-<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 8.4.</div>
+<div class="release">The complete The Great Escape disassembly 20240104</div>
+<div class="copyright">&copy; 1986 Denton Designs &amp; Ocean Software Ltd. (The Great Escape). &copy; 2012-2024 David Thomas (this disassembly).</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 9.0.</div>
 </footer>
 </body>
 </html>
