@@ -11116,7 +11116,7 @@ B $DAFE,72,8 mask: CRATE
 N $DB46 #UDGTABLE { #UDGARRAY2,7,4,2;$DB46-$DB71-1-16{0,0,64,88}(bitmap-stove) } TABLE#
 @ $DB46 label=bitmap_stove
 B $DB46,44,8*5,4 bitmap: STOVE
-N $DB72 #UDGTABLE { #UDGARRAY2,7,4,2;$DB72-$DB9D-1-16(mask-stove) } TABLE#
+N $DB72 #UDGTABLE { #UDGARRAY2,7,4,2;$DB72-$DB9D-1-16{0,0,64,88}(mask-stove) } TABLE#
 @ $DB72 label=mask_stove
 B $DB72,44,8*5,4 mask: STOVE
 ;
