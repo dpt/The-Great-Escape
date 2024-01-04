@@ -13348,15 +13348,15 @@ C $F525,4 ...loop (major tune speed) / 24 iterations
 C $F529,3 ...loop (infinite)
 ;
 c $F52C Frequency for semitone
-D $F52C This returns the frequency that the beeper should be played at to generate the given semitone. The frequency returned is the number of iterations that the music routine should count for before flipping the speaker output bit.
+D $F52C This returns the period (or half period? not frequency) required to generate the specified semitone from the Spectrum's speaker. Since there is no absolute time to work from, the value returned is the number of iterations that the speaker routine should idle for between pulses. This will obviously only sound correct on a "standard" ZX Spectrum.
 D $F52C Used by the routine at #R$F4B7.
-R $F52C I:A Semitone index (never larger than 42 in this game).
+R $F52C I:A Semitone index. (Note: This is never larger than 42 in this game).
 R $F52C O:BC Frequency.
-R $F52C O:DE Frequency.
-R $F52C O:L Zero.
+R $F52C O:DE Frequency (same value).
+R $F52C O:L Zero (border + beeper value).
 @ $F52C label=frequency_for_semitone
 C $F52C,1 Double #REGa for index
-C $F52D,3 Point #REGhl at the semitone to frequency table
+C $F52D,3 Point #REGhl at the #R$FA48 table
 C $F530,3 Widen: #REGde = #REGa
 C $F533,1 Add
 C $F534,3 Fetch frequency from table
